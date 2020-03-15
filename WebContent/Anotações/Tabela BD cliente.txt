@@ -1,0 +1,36 @@
+create database ecommerce;
+
+drop table cliente;
+
+create table cliente (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	login		VARCHAR(50),
+	senha		VARCHAR(50),
+	nome		VARCHAR(50),
+	cpf		    VARCHAR(14),
+	dt_nasc 	DATE,
+	cd_cliente	VARCHAR(30),
+	sexo        VARCHAR(10),
+	telefone    VARCHAR(20),
+	fl_ativo    NUMERIC(1),
+	primary	key	(id)
+);
+
+use ecommerce;
+
+select * from cliente;
+
+-----------------------------
+Teste:
+
+create table cliente (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	login		VARCHAR(50) NOT NULL,
+	senha		VARCHAR(50) NOT NULL,
+	nome		VARCHAR(50) NOT NULL,
+	cpf		VARCHAR(14) NOT NULL,
+	dt_nasc 	DATE NOT NULL,
+	cd_cliente	VARCHAR(30) NOT NULL,
+	fl_ativo NUMERIC(1) NOT NULL,
+	primary	key	(id)
+);

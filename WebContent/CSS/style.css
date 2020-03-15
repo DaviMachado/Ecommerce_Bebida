@@ -1,0 +1,33 @@
+form {
+    /* Apenas para centralizar o form na página */
+    margin: 0 auto;
+    width: 1200px;
+    /* Para ver as bordas do formulário */
+    padding: 1em;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+}
+
+input:focus, textarea:focus {
+    /* Dar um pouco de destaque nos elementos ativos */
+    border-color: #000;
+}
+
+button {
+    /* Esta margem extra representa aproximadamente o mesmo espaço que o espaço entre as labels e os seus campos de texto*/
+    margin-left: .5em;
+}
+
+fieldset{
+    /* muda a posição dos textos da label */
+    text-align: left;
+
+    /* Deixei a mesma configuração do form (primeira tag desse arquivo) */
+    /* Apenas para centralizar o fieldset na página */
+    margin: 0 auto;
+    width: 400px;
+    /* Para ver as bordas do fieldset */
+    padding: 1em;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+}

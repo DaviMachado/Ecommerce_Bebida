@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- @author Davi Rodrigues-->
+<!-- @date 23/10/2019 -->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Cadastro de Bolos</title>
+		<!-- <link href="../CSS/style.css" rel="stylesheet" type="text/css"> -->
+		<link href="../CSS/bootstrap.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<fieldset class="form-group">
+		<legend align="center">Formulário de Cadastro de Bolos</legend>
+			<form action="http://localhost:8080/GLPI/cadastro">
+			
+				<!-- Nome -->
+			  	<div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label>Nome</label>
+				      <input type="text" class="form-control" name="nome" placeholder="Nome" required>
+				    </div>
+			  	</div>
+			  	
+			  	<!-- Sabor -->
+			  	<div class="form-row">
+   				    <div class="form-group col-md-6">
+				      <label>Sabor</label>
+				      <input type="text" class="form-control" name="sabor" placeholder="Sabor" required>
+				    </div>
+			  	</div>
+			  	
+			  	<!-- Preço -->
+			  	<div class="form-row">
+   				    <div class="form-group col-md-6">
+				      <label>Preço</label>
+				      <input type="number" class="form-control" name="preco" placeholder="Preço" required>
+				    </div>
+			  	</div>
+				
+				<!-- Tamanho -->
+				<div class="form-group col-md-6">
+				    <label>Tamanho</label>
+				    <select class="form-control">
+					    <option selected>Escolher...</option>
+					    <option value="P">Pequeno</option>
+					    <option value="M">Médio</option>
+					    <option value="G">Grande</option>
+				    </select>
+				</div>
+				
+				<!-- Observação -->
+			    <div class="form-group col-md-12">
+        			<label>Observação</label>
+        			<textarea cols='60' rows='7' class="form-control" name="observacao" placeholder="Observação"></textarea>
+    			</div>
+				
+				<!-- Botões -->
+				<div col-md-2 align="center">
+					<button class="btn btn-primary" name="operacao" value="SALVAR">Cadastrar</button>
+					<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
+					<button class="btn btn-primary" name="operacao" value="ALTERAR">Alterar</button>
+					<button class="btn btn-primary" name="operacao" value="EXCLUIR">Excluir</button>
+				</div>
+
+			</form>
+		</fieldset>
+	</body>
+</html>
