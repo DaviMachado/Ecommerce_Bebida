@@ -1,11 +1,14 @@
 package com.les.bebida.core.fachada.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.les.bebida.core.dao.IDAO;
 import com.les.bebida.core.dao.impl.ClienteDAO;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Cliente;
 import com.les.bebida.core.dominio.Resultado;
 import com.les.bebida.core.fachada.IFachada;
 import com.les.bebida.core.strategy.impl.ValidarCPF;
@@ -19,12 +22,22 @@ import com.les.bebida.core.strategy.impl.ValidarSenha;
 /**
  * Classe Fachada
  * @author Davi Rodrigues
- * @date 23/10/2019
+ * @date 21/02/2021
  */
 public class Fachada implements IFachada {
 	
 	private Resultado resultado;
-	private ClienteDAO dao;
+	private static Map<String, IDAO> daos;
+	
+	// Construtor da Fachada
+	public Fachada() {
+		// Mapa dos DAO's
+		daos = new HashMap<String, IDAO>();
+		
+		// Criando instancias dos DAOS a serem utilizados,
+		// adicionando cada dado no MAP indexado pelo nome da classe
+		daos.put(Cliente.class.getName(), new ClienteDAO());
+	}
 	
 	/* ------------ Declaração dos Strategy ------------ */
 	ValidarFlgAtivo vFlgAtivo = new ValidarFlgAtivo();
@@ -39,14 +52,15 @@ public class Fachada implements IFachada {
 	@Override
 	public Resultado salvar(EntidadeDominio entidade) {
 		resultado = new Resultado();
-		dao = new ClienteDAO();
+		// retornar o nome do pacote com o nome da classe desta entidade de dominio
+		String nmClasse = entidade.getClass().getName();
 		
 		String msg = executarRegras(entidade, "SALVAR");
 		
-		// TESTE
-		//String nmClasse = entidade.getClass().getName();
-		
 		if (msg == null || msg == "") {
+			// Obtém o DAO correspondente ao nome do pacote com o nome da classe,
+			// que esta dentro do HashMap do "daos"
+			IDAO dao = daos.get(nmClasse);
 			try {
 				dao.salvar(entidade);
 				
@@ -69,11 +83,12 @@ public class Fachada implements IFachada {
 	@Override
 	public Resultado alterar(EntidadeDominio entidade) {
 		resultado = new Resultado();
-		dao = new ClienteDAO();
+		String nmClasse = entidade.getClass().getName();
 		
 		String msg = executarRegras(entidade, "ALTERAR");
 		
 		if (msg == null || msg == "") {
+			IDAO dao = daos.get(nmClasse);
 			try {
 				dao.alterar(entidade);
 				
@@ -96,11 +111,12 @@ public class Fachada implements IFachada {
 	@Override
 	public Resultado excluir(EntidadeDominio entidade) {
 		resultado = new Resultado();
-		dao = new ClienteDAO();
+		String nmClasse = entidade.getClass().getName();
 		
 		String msg = executarRegras(entidade, "EXCLUIR");
 		
 		if (msg == null || msg == "") {
+			IDAO dao = daos.get(nmClasse);
 			try {
 				dao.excluir(entidade);
 				
@@ -123,11 +139,12 @@ public class Fachada implements IFachada {
 	@Override
 	public Resultado consultar(EntidadeDominio entidade) {
 		resultado = new Resultado();
-		dao = new ClienteDAO();
+		String nmClasse = entidade.getClass().getName();
 		
 		String msg = executarRegras(entidade, "CONSULTAR");
-		
+
 		if (msg == null || msg == "") {
+			IDAO dao = daos.get(nmClasse);
 			try {
 				resultado.setEntidades(dao.consultar(entidade));
 			} catch (Exception e) {
