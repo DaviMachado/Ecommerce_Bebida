@@ -11,8 +11,9 @@ create table endereco (
 	bairro	      VARCHAR(30),
     complemento   VARCHAR(50),
     estado        VARCHAR(3),
+    id_cliente BIGINT,
 	primary	key	(id),
-	CONSTRAINT fk_cliente FOREIGN KEY (id) REFERENCES cliente (id)
+	CONSTRAINT fk_EnderecoCliente FOREIGN KEY (id_cliente) REFERENCES cliente (id)
 );
 
 use ecommerce;

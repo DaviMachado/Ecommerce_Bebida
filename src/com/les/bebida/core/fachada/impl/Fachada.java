@@ -7,8 +7,10 @@ import java.util.Map;
 
 import com.les.bebida.core.dao.IDAO;
 import com.les.bebida.core.dao.impl.ClienteDAO;
+import com.les.bebida.core.dao.impl.EnderecoDAO;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Cliente;
+import com.les.bebida.core.dominio.Endereco;
 import com.les.bebida.core.dominio.Resultado;
 import com.les.bebida.core.fachada.IFachada;
 import com.les.bebida.core.strategy.impl.ValidarCPF;
@@ -22,7 +24,7 @@ import com.les.bebida.core.strategy.impl.ValidarSenha;
 /**
  * Classe Fachada
  * @author Davi Rodrigues
- * @date 21/02/2021
+ * @date 26/02/2021
  */
 public class Fachada implements IFachada {
 	
@@ -37,6 +39,7 @@ public class Fachada implements IFachada {
 		// Criando instancias dos DAOS a serem utilizados,
 		// adicionando cada dado no MAP indexado pelo nome da classe
 		daos.put(Cliente.class.getName(), new ClienteDAO());
+		daos.put(Endereco.class.getName(), new EnderecoDAO());
 	}
 	
 	/* ------------ Declaração dos Strategy ------------ */
@@ -163,20 +166,34 @@ public class Fachada implements IFachada {
 	private String executarRegras (EntidadeDominio entidade, String operacao) {
 		String msg = null;
 		
+		// verifica o nome da classe para chamar as suas 
+		// respectivas strategy's
+		String nmClasse = entidade.getClass().getName();
+		
 		if (("CONSULTAR").equals(operacao)) {
 			return msg;
 		}
 		else if (("SALVAR").equals(operacao)) {
-			msg = vNome.validar(entidade, msg);
-			msg = vCPF.validar(entidade, msg);
-			msg = vDataNascimento.validar(entidade, msg);
+			if (("com.les.bebida.core.dominio.Cliente").equals(nmClasse)) {
+				msg = vNome.validar(entidade, msg);
+				msg = vCPF.validar(entidade, msg);
+				msg = vDataNascimento.validar(entidade, msg);
+			}
+			else if (("com.les.bebida.core.dominio.Endereco").equals(nmClasse)) {
+				
+			}
 			
 			return msg;
 		}
 		else if (("ALTERAR").equals(operacao)) {
-			msg = vNome.validar(entidade, msg);
-			msg = vCPF.validar(entidade, msg);
-			msg = vDataNascimento.validar(entidade, msg);
+			if (("com.les.bebida.core.dominio.Cliente").equals(nmClasse)) {
+				msg = vNome.validar(entidade, msg);
+				msg = vCPF.validar(entidade, msg);
+				msg = vDataNascimento.validar(entidade, msg);
+			}
+			else if (("com.les.bebida.core.dominio.Endereco").equals(nmClasse)) {
+				
+			}
 			
 			return msg;
 		}

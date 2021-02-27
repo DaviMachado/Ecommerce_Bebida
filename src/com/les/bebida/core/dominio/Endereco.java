@@ -3,16 +3,17 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Endereço
  * @author Davi Rodrigues
- * @date 23/10/2019
+ * @date 26/02/2021
  */
 public class Endereco extends EntidadeDominio {
 	private String logradouro;
-	private int numero;
+	private String numero;
 	private String bairro;
-	private int cep;
+	private String cep;
 	private String cidade;
 	private String estado;
 	private String complemento;
+	private String id_cliente;
 	
 	public String getLogradouro() {
 		return logradouro;
@@ -20,10 +21,10 @@ public class Endereco extends EntidadeDominio {
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 	}
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 	public String getBairro() {
@@ -32,10 +33,10 @@ public class Endereco extends EntidadeDominio {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	public int getCep() {
+	public String getCep() {
 		return cep;
 	}
-	public void setCep(int cep) {
+	public void setCep(String cep) {
 		this.cep = cep;
 	}
 	public String getCidade() {
@@ -55,5 +56,11 @@ public class Endereco extends EntidadeDominio {
 	}
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
+	}
+	public String getIdCliente() {
+		return id_cliente;
+	}
+	public void setIdCliente(String idCliente) {
+		this.id_cliente = idCliente;
 	}
 }
