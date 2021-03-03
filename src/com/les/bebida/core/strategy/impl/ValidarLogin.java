@@ -13,16 +13,16 @@ import com.les.bebida.core.strategy.IStrategy;
 public class ValidarLogin implements IStrategy {
 
 	@Override
-	public String validar(EntidadeDominio entidade, String msg) {
+	public String validar(EntidadeDominio entidade) {
 		
 		Cliente cliente = (Cliente) entidade;
 		Usuario usuario = cliente.getUsuario();
 		
 		if(usuario.getLogin() == null || usuario.getLogin().equals("")) {
-			return (msg + "- Favor insira um login. \n");
+			return ("Favor insira um login.");
 		}
 		else {
-			return msg;
+			return null;
 		}
 	}
 

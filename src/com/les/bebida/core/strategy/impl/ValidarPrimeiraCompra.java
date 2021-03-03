@@ -11,7 +11,7 @@ import com.les.bebida.core.strategy.IStrategy;
 public class ValidarPrimeiraCompra implements IStrategy {
 
 	@Override
-	public String validar(EntidadeDominio entidade, String msg) {
+	public String validar(EntidadeDominio entidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}

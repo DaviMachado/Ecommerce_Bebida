@@ -12,14 +12,14 @@ import com.les.bebida.core.strategy.IStrategy;
 public class ValidarCodigoClienteSys implements IStrategy {
 
 	@Override
-	public String validar(EntidadeDominio entidade, String msg) {
+	public String validar(EntidadeDominio entidade) {
 		Cliente cliente = (Cliente) entidade;
 		
 		if(cliente.getCdCliente() == null || cliente.getCdCliente().equals("")) {
-			return (msg + "- Favor insira um codigo p/ o sistema. \n");
+			return ("Favor insira um codigo p/ o sistema.");
 		}
 		else {
-			return msg;
+			return null;
 		}
 	}
 

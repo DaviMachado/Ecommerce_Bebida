@@ -9,6 +9,6 @@ import com.les.bebida.core.dominio.EntidadeDominio;
  */
 public interface IStrategy {
 	
-	public String validar (EntidadeDominio entidade, String msg);
+	public String validar (EntidadeDominio entidade);
 	
 }

@@ -12,14 +12,14 @@ import com.les.bebida.core.strategy.IStrategy;
 public class ValidarDataNascimento implements IStrategy {
 
 	@Override
-	public String validar(EntidadeDominio entidade, String msg) {
+	public String validar(EntidadeDominio entidade) {
 		Cliente cliente = (Cliente) entidade;
 		
 		if(cliente.getDt_nasc() == null || cliente.getDt_nasc().equals("")) {
-			return (msg + "- Favor insira uma Data de Nascimento. \n");
+			return ("Favor insira uma Data de Nascimento.");
 		}
 		else {
-			return msg;
+			return null;
 		}
 	}
 

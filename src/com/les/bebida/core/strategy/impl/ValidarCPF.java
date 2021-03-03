@@ -12,14 +12,14 @@ import com.les.bebida.core.strategy.IStrategy;
 public class ValidarCPF implements IStrategy {
 
 	@Override
-	public String validar(EntidadeDominio entidade, String msg) {
+	public String validar(EntidadeDominio entidade) {
 		Cliente cliente = (Cliente) entidade;
 		
 		if(cliente.getCpf() == null || cliente.getCpf().equals("")) {
-			return (msg + "- Favor insira um CPF. \n");
+			return ("Favor insira um CPF.");
 		}
 		else {
-			return msg;
+			return null;
 		}
 	}
 

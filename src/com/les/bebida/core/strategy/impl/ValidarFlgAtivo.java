@@ -12,14 +12,16 @@ import com.les.bebida.core.strategy.IStrategy;
 public class ValidarFlgAtivo implements IStrategy {
 
 	@Override
-	public String validar(EntidadeDominio entidade, String msg) {
+	public String validar(EntidadeDominio entidade) {
 		Cliente cliente = (Cliente) entidade;
 		
 		if (cliente.getFlgAtivo() == null) {
 			cliente.setFlgAtivo("0"); // para não deixar o campo nulo, passa zerado
 		}
-		
-		return "";
+		else {
+			cliente.setFlgAtivo("1");
+		}
+		return null;
 	}
 
 }
