@@ -1,13 +1,15 @@
 package com.les.bebida.core.dominio;
 
+import java.util.Date;
+
 /**
  * Classe entidade dominio
  * @author Davi Rodrigues
- * @date 23/10/2019
+ * @date 10/03/2021
  */
 public class EntidadeDominio implements IEntidade {
 	private String id;
-	private String dt_cadastro;
+	private Date dtCadastro;
 	
 	
 	public String getId() {
@@ -16,10 +18,10 @@ public class EntidadeDominio implements IEntidade {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getDt_cadastro() {
-		return dt_cadastro;
+	public Date getDtCadastro() {
+		return dtCadastro;
 	}
-	public void setDt_cadastro(String dt_cadastro) {
-		this.dt_cadastro = dt_cadastro;
+	public void setDtCadastro(Date dtCadastro) {
+		this.dtCadastro = dtCadastro;
 	}
 }

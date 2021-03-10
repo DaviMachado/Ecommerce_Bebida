@@ -3,13 +3,14 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar uma Pessoa
  * @author Davi Rodrigues
- * @date 23/10/2019
+ * @date 10/03/2021
  */
 public class Pessoa extends EntidadeDominio {
 	private String nome;
 	private String cpf;
 	private String dt_nasc;
 	private String sexo;
+	private Documento documento;
 	
 	public String getNome() {
 		return nome;
@@ -35,4 +36,10 @@ public class Pessoa extends EntidadeDominio {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
+	public Documento getDocumento() {
+        return documento;
+    }
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
+    }
 }
