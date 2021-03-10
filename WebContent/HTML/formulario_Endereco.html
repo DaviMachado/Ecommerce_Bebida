@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 06/03/2020 -->
+<!-- @date 10/03/2021 -->
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -14,58 +14,45 @@
 			<form action="http://localhost:8080/Ecommerce_Bebida/cadastroEndereco">
 				
 				<!-- CEP -->
-			  	<div class="form-row">
-				    <div class="form-group col-md-6">
-				      <label>CEP</label>
-				      <input type="number" class="form-control" name="cep" placeholder="CEP"> <!-- required -->
-				    </div>
-			  	</div>
+			    <div class="form-group col-md-6">
+			      <label>CEP</label>
+			      <input type="number" class="form-control" name="cep" placeholder="CEP"> <!-- required -->
+			    </div>
 			  	
 			  	<!-- Cidade -->
-				<div class="form-row">
-				    <div class="form-group col-md-6">
-				      <label>Cidade</label>
-				      <input type="text" class="form-control" name="cidade" placeholder="Cidade"> <!-- required -->
-				    </div>
-			  	</div>
+			    <div class="form-group col-md-6">
+			      <label>Cidade</label>
+			      <input type="text" class="form-control" name="cidade" placeholder="Cidade"> <!-- required -->
+			    </div>
 			  	
 			  	<!-- Logradouro -->
-				<div class="form-row">
-				    <div class="form-group col-md-6">
-				      <label>Logradouro</label>
-				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)">
-				    </div>
-			  	</div>
-				
+			    <div class="form-group col-md-6">
+			      <label>Logradouro</label>
+			      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)">
+			    </div>
+			  	
 			  	<!-- Numero -->
-				<div class="form-row">
-				    <div class="form-group col-md-2">
-				      <label>Numero</label>
-				      <input type="number" class="form-control" name="numero" placeholder="Numero">
-				    </div>
-			  	</div>
+			    <div class="form-group col-md-2">
+			      <label>Numero</label>
+			      <input type="number" class="form-control" name="numero" placeholder="Numero">
+			    </div>
 			  	
 				<!-- Bairro -->
-				<div class="form-row">
-				    <div class="form-group col-md-4">
-				      <label>Bairro</label>
-				      <input type="text" class="form-control" name="bairro" placeholder="Bairro">
-				    </div>
-			  	</div>
+			    <div class="form-group col-md-4">
+			      <label>Bairro</label>
+			      <input type="text" class="form-control" name="bairro" placeholder="Bairro">
+			    </div>
 			  	
 				<!-- Complemento -->
-				<div class="form-row">
-				    <div class="form-group col-md-6">
-				      <label>Complemento</label>
-				      <input type="text" class="form-control" name="complemento" placeholder="Complemento">
-				    </div>
-			  	</div>
+			    <div class="form-group col-md-6">
+			      <label>Complemento</label>
+			      <input type="text" class="form-control" name="complemento" placeholder="Complemento">
+			    </div>
 			  	
 				<!-- Estado -->
-				<div > <!-- class="form-row" -->
-				    <div > <!-- class="form-group" col-md-2 -->
-				    <label style="position: relative; top: 30px">Estado</label>
-				      <select name="selecioneEstado" placeholder="Selecione um Estado" style="position: relative; top: 30px;">
+				<div class="form-group col-md-2">
+			    	<label>Estado</label>
+		        	<select name="selecioneEstado" class="form-control" placeholder="Selecione um Estado">
 				      	<option disabled selected>Selecione uma opção...</option>
 				      	<option value="AC">AC</option> <!-- Acre -->
 				      	<option value="AL">AL</option> <!-- Alagoas -->
@@ -94,18 +81,18 @@
 				      	<option value="SP">SP</option> <!-- São Paulo -->
 				      	<option value="SE">SE</option> <!-- Sergipe -->
 				      	<option value="TO">TO</option> <!-- Tocantins -->
-				      </select>
-				    </div>
-			  	</div>
+			    	</select>
+			    </div>
 				
 				<!-- Botões -->
-				<div col-md-2 align="right" margin-button:230px>
+				<div align="right" style="margin-top: 170px;">
 					<button class="btn btn-primary" name="operacao" value="SALVAR">Cadastrar</button>
 					<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
 					<button class="btn btn-primary" name="operacao" value="ALTERAR">Alterar</button>
 					<button class="btn btn-primary" name="operacao" value="EXCLUIR">Excluir</button>
 				</div>
-
+			
+			<br/>
 			</form>
 		</fieldset>
 	</body>
