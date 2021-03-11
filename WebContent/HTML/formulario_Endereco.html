@@ -8,7 +8,7 @@
 		<link href="../CSS/bootstrap.css" rel="stylesheet" type="text/css">
 		<link href="../CSS/style.css" rel="stylesheet" type="text/css">
 	</head>
-	<body>
+	<body onload="PegaParametroURL()">
 		<fieldset class="form-group">
 		<legend align="center">Formulário de Endereço</legend>
 			<form action="http://localhost:8080/Ecommerce_Bebida/cadastroEndereco">
@@ -92,8 +92,24 @@
 					<button class="btn btn-primary" name="operacao" value="EXCLUIR">Excluir</button>
 				</div>
 			
-			<br/>
+			<br />
+				
+				<input type="hidden" name="idCliente" id="idCliente">
 			</form>
 		</fieldset>
 	</body>
 </html>
+
+<script>
+// Função para pegar o parametro idCliente passado pela tela de listagem de clientes,
+// essa função é carregada junto ao carregamento da página com o evento ONLOAD, dentro da tag <body>.
+function PegaParametroURL(){
+	var query = location.search.slice(1);
+	var partes = query.split('=');
+	
+	// partes[0] = "idCliente"
+	// partes[1] = "1" (valor do id passado)
+	// seta o "value" do campo com o valor do id passado, com o campo que estiver com o id = idCliente.
+	document.getElementById('idCliente').value = partes[1];
+}
+</script>

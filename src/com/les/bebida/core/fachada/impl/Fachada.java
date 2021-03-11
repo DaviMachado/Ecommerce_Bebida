@@ -26,7 +26,7 @@ import com.les.bebida.core.strategy.impl.ValidarSenha;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 02/03/2021
+ * @date 10/03/2021
  */
 public class Fachada implements IFachada {
 
@@ -49,10 +49,13 @@ public class Fachada implements IFachada {
 	List<IStrategy> regrasSalvarEndereco = new ArrayList<>();
 	/* ------------ CONSULTAR ------------ */
 	List<IStrategy> regrasConsultarCliente = new ArrayList<>();
+	List<IStrategy> regrasConsultarEndereco = new ArrayList<>();
 	/* ------------ ALTERAR ------------ */
 	List<IStrategy> regrasAlterarCliente = new ArrayList<>();
+	List<IStrategy> regrasAlterarEndereco = new ArrayList<>();
 	/* ------------ EXCLUIR ------------ */
 	List<IStrategy> regrasExcluirCliente = new ArrayList<>();
+	List<IStrategy> regrasExcluirEndereco = new ArrayList<>();
 	/* -------------------------------------------------------------------------- */
 	
 	/* ------------ Declaração dos MAP's das Regras de Negócios dos Dominios ------------ */
@@ -82,7 +85,7 @@ public class Fachada implements IFachada {
 		/* ---------------------------------------------------------- */
 		
 		/* ----- Adicionando as Strategy's na lista do Endereço ----- */
-		regrasSalvarEndereco.add(null);
+//		regrasSalvarEndereco.add(null);
 		/* ---------------------------------------------------------- */
 
 		/* ----- REGRAS DA ENTIDADE CLIENTE ----- */
@@ -99,6 +102,12 @@ public class Fachada implements IFachada {
 		/* ----- REGRAS DA ENTIDADE ENDEREÇO ----- */
 		/* ----- SALVAR ----- */
 		regrasEndereco.put("SALVAR", regrasSalvarEndereco);
+		/* ----- CONSULTAR ----- */
+		regrasEndereco.put("CONSULTAR", regrasConsultarEndereco);
+		/* ----- ALTERAR ----- */
+		regrasEndereco.put("ALTERAR", regrasAlterarEndereco);
+		/* ----- EXCLUIR ----- */
+		regrasEndereco.put("EXCLUIR", regrasExcluirEndereco);
 		/* --------------------------------------- */
 		
 		/* ----- REGRAS GERAIS ----- */

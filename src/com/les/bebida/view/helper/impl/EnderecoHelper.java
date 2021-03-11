@@ -28,6 +28,7 @@ public class EnderecoHelper implements IViewHelper {
         String bairro = null;
         String complemento = null;
         String estado = null;
+        String idCliente = null;
 		
 		if (("CONSULTAR").equals(operacao)) {
 			endereco = new Endereco();
@@ -44,6 +45,7 @@ public class EnderecoHelper implements IViewHelper {
 			bairro = request.getParameter("bairro");
 			complemento = request.getParameter("complemento");
 			estado = request.getParameter("selecioneEstado");
+			idCliente = request.getParameter("idCliente");
 			
 			// Atribuindo os valores capturados do HTML para o endereço
 			endereco.setCep(cep);
@@ -53,6 +55,7 @@ public class EnderecoHelper implements IViewHelper {
 			endereco.setBairro(bairro);
 			endereco.setComplemento(complemento);
 			endereco.setEstado(estado);
+			endereco.setIdCliente(idCliente);
 		}
 		
 		else if (("ALTERAR").equals(operacao)) {
@@ -66,6 +69,7 @@ public class EnderecoHelper implements IViewHelper {
 			bairro = request.getParameter("bairro");
 			complemento = request.getParameter("complemento");
 			estado = request.getParameter("selecioneEstado");
+			idCliente = request.getParameter("idCliente");
 			
 			// Atribuindo os valores capturados do HTML para o endereço
 			endereco.setCep(cep);
@@ -75,14 +79,15 @@ public class EnderecoHelper implements IViewHelper {
 			endereco.setBairro(bairro);
 			endereco.setComplemento(complemento);
 			endereco.setEstado(estado);
+			endereco.setIdCliente(idCliente);
 		}
 		
 		else if (("EXCLUIR").equals(operacao)) {
 			endereco = new Endereco();
 			
-			cep = request.getParameter("cep");
+			idCliente = request.getParameter("idCliente");
 			
-			endereco.setCep(cep);
+			endereco.setIdCliente(idCliente);
 		}
 		
 		return endereco;

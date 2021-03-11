@@ -123,6 +123,8 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				Cliente cliente = new Cliente();
 				Usuario usuario = new Usuario();
 				
+				cliente.setId(rs.getString("id"));
+				
 				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
 				cliente.setUsuario(usuario);
@@ -131,6 +133,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				cliente.setCpf(rs.getString("cpf"));
 				cliente.setDt_nasc(rs.getString("dt_Nasc"));
 				cliente.setCdCliente(rs.getString("cd_cliente"));
+				cliente.setTelefone(rs.getString("telefone"));
 				cliente.setSexo(rs.getString("sexo"));
 				cliente.setFlgAtivo(rs.getString("fl_ativo"));
 				

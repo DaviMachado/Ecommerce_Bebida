@@ -6,7 +6,7 @@
 
 <html>
 <head>
-	<title></title>
+	<title>Listagem dos Clientes</title>
 </head>
 <body>
 	<table border="1">
@@ -23,13 +23,14 @@
         </tr>
 		<%
 		ClienteDAO dao = new ClienteDAO();
-		Cliente c2 = new Cliente();
+		Cliente cliente = new Cliente();
 		
-		List<EntidadeDominio> clientes = dao.consultar(c2);
+		List<EntidadeDominio> clientes = dao.consultar(cliente);
 		
 		for(EntidadeDominio e : clientes) {
 		
-		// Aplicado o CAST para poder popular o cliente
+		// Aplicado o CAST para poder popular o cliente,
+		// fazendo o CAST para uma referência mais genérica, no caso para o cliente
 		Cliente c = (Cliente) e;
 		// pega o usuario que esta dentro do cliente
 		Usuario u = c.getUsuario();
@@ -44,8 +45,8 @@
 				<td><%=c.getSexo() %></td>
 				<td><%=c.getTelefone() %></td>
 				<td><%=c.getFlgAtivo() %></td>
-				<!-- <td><a href="preAlterar_cliente.jsp?id=<%= c.getCdCliente()%>">Alterar</a></td> -->
-                <!-- <td><a href="DeletarCliente?id=<%= c.getCdCliente()%>&acao=deletar">Deletar</a></td> -->
+				<td><a href="/Ecommerce_Bebida/HTML/formulario_Endereco.html?id=<%= c.getId()%>"><button>Endereço</button></a></td>
+                <!--<td><a href="/Ecommerce_Bebida/cadastro?id=<%= c.getId()%>&operacao=EXCLUIR">Deletar</a></td>-->
 			</tr>
 		<%
 		}
