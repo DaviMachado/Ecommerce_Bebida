@@ -7,6 +7,7 @@
 <html>
 <head>
 	<title>Listagem dos Clientes</title>
+	<link href="./CSS/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<table border="1">
@@ -45,13 +46,13 @@
 				<td><%=c.getTelefone() %></td>
 				<td><%=c.getCdCliente() %></td>
 				<td><%=c.getFlgAtivo() %></td>
-				<td><a href="/Ecommerce_Bebida/HTML/formulario_Endereco.html?id=<%= c.getId()%>"><button>Endereço</button></a></td>
-                <td><a href="/Ecommerce_Bebida/cadastro?id=<%= c.getId()%>&operacao=EXCLUIR">Deletar</a></td>
+				<td><a href="/Ecommerce_Bebida/HTML/formulario_Endereco.html?id=<%= c.getId()%>"><button class="btn btn-secondary">Endereço</button></a></td>
+                <td><a href="/Ecommerce_Bebida/cadastro?id=<%= c.getId()%>&operacao=EXCLUIR"><button class="btn btn-danger">Deletar</button></a></td>
 			</tr>
 		<%
 		}
 		%>
 	</table>
-	 <a href="/Ecommerce_Bebida/HTML/formulario_Cliente.html"><input type="button" value="Retornar"></a>
+	 <a href="/Ecommerce_Bebida/HTML/formulario_Cliente.html"><input type="button" value="Retornar" style="margin-top: 10px;"></a>
 </body>
 </html>
