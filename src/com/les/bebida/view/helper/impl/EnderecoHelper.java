@@ -21,6 +21,7 @@ public class EnderecoHelper implements IViewHelper {
 		// Verifica qual operação do botão foi acionada
 		String operacao = request.getParameter("operacao");
 		
+		String id = null;
         String cep = null;
         String cidade = null;
         String logradouro = null;
@@ -32,6 +33,10 @@ public class EnderecoHelper implements IViewHelper {
 		
 		if (("CONSULTAR").equals(operacao)) {
 			endereco = new Endereco();
+			
+			idCliente = request.getParameter("idCliente");
+			
+			endereco.setIdCliente(idCliente);
 		}
 		
 		else if (("SALVAR").equals(operacao)) {
@@ -62,6 +67,7 @@ public class EnderecoHelper implements IViewHelper {
 			endereco = new Endereco();
 			
 			// Atributos da classe endereço
+			id = request.getParameter("idEndereco");
 			cep = request.getParameter("cep");
 			cidade = request.getParameter("cidade");
 			logradouro = request.getParameter("logradouro");
@@ -69,9 +75,9 @@ public class EnderecoHelper implements IViewHelper {
 			bairro = request.getParameter("bairro");
 			complemento = request.getParameter("complemento");
 			estado = request.getParameter("selecioneEstado");
-			idCliente = request.getParameter("idCliente");
 			
 			// Atribuindo os valores capturados do HTML para o endereço
+			endereco.setId(id);
 			endereco.setCep(cep);
 			endereco.setCidade(cidade);
 			endereco.setLogradouro(logradouro);
@@ -79,15 +85,14 @@ public class EnderecoHelper implements IViewHelper {
 			endereco.setBairro(bairro);
 			endereco.setComplemento(complemento);
 			endereco.setEstado(estado);
-			endereco.setIdCliente(idCliente);
 		}
 		
 		else if (("EXCLUIR").equals(operacao)) {
 			endereco = new Endereco();
 			
-			idCliente = request.getParameter("idCliente");
+			id = request.getParameter("idEndereco");
 			
-			endereco.setIdCliente(idCliente);
+			endereco.setId(id);
 		}
 		
 		return endereco;
@@ -105,8 +110,13 @@ public class EnderecoHelper implements IViewHelper {
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				String idCliente = request.getParameter("idCliente");
+				
+				// pendura o "idCliente" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("idCliente", idCliente);
+				
 				// Redireciona para o arquivo .jsp
-				//request.getRequestDispatcher("JSP/lista-clientes-scriptlet.jsp").forward(request, response);
+				request.getRequestDispatcher("JSP/lista-enderecos-scriptlet.jsp").forward(request, response);
 			} 
 			else {
 				// mostra as mensagens de ERRO se houver
@@ -144,8 +154,13 @@ public class EnderecoHelper implements IViewHelper {
 		
 		else if (("EXCLUIR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				writer.println("<h1>Endereço Removido com sucesso!</h1>");
-				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+				String idCliente = request.getParameter("idCliente");
+				
+				// pendura o "idCliente" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("idCliente", idCliente);
+				
+				// Redireciona para o arquivo .jsp, para poder listar os endereços atualizados novamente
+				request.getRequestDispatcher("JSP/lista-enderecos-scriptlet.jsp").forward(request, response);
 			} 
 			else {
 				// mostra as mensagens de ERRO se houver

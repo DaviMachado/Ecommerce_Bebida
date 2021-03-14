@@ -94,11 +94,16 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		try {
 			Cliente cliente = (Cliente) entidade;
 			
-			PreparedStatement stmt = connection.prepareStatement("delete from cliente where cpf=?");
-			
-			stmt.setString(1, cliente.getCpf());
-			
+			// Exclui os endereços relacionados com o cliente
+			PreparedStatement stmt = connection.prepareStatement("delete from endereco where id_cliente=?");
+			stmt.setString(1, cliente.getId());
 			stmt.executeUpdate();
+			
+			// Exclui o cliente
+			stmt = connection.prepareStatement("delete from cliente where id=?");
+			stmt.setString(1, cliente.getId());
+			stmt.executeUpdate();
+			
 			stmt.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);

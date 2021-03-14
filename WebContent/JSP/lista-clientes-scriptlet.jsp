@@ -11,14 +11,14 @@
 <body>
 	<table border="1">
 		<tr>
-            <th>Login</th>
-            <th>Senha</th>
+            <!--<th>Login</th>-->
+            <!--<th>Senha</th>-->
             <th>Nome</th>
             <th>CPF</th>
             <th>Dt Nascimento</th>
-            <th>Cd Cliente</th>
             <th>Sexo</th>
             <th>Telefone</th>
+            <th>Cd Cliente</th>
             <th>Flg Ativo</th>
         </tr>
 		<%
@@ -36,22 +36,22 @@
 		Usuario u = c.getUsuario();
 		%>
 			<tr>
-				<td><%=u.getLogin() %></td>
-				<td><%=u.getSenha() %></td>
+				<!--<td><%=u.getLogin() %></td>-->
+				<!--<td><%=u.getSenha() %></td>-->
 				<td><%=c.getNome() %></td>
 				<td><%=c.getCpf() %></td>
 				<td><%=c.getDt_nasc() %></td>
-				<td><%=c.getCdCliente() %></td>
 				<td><%=c.getSexo() %></td>
 				<td><%=c.getTelefone() %></td>
+				<td><%=c.getCdCliente() %></td>
 				<td><%=c.getFlgAtivo() %></td>
 				<td><a href="/Ecommerce_Bebida/HTML/formulario_Endereco.html?id=<%= c.getId()%>"><button>Endereço</button></a></td>
-                <!--<td><a href="/Ecommerce_Bebida/cadastro?id=<%= c.getId()%>&operacao=EXCLUIR">Deletar</a></td>-->
+                <td><a href="/Ecommerce_Bebida/cadastro?id=<%= c.getId()%>&operacao=EXCLUIR">Deletar</a></td>
 			</tr>
 		<%
 		}
 		%>
 	</table>
-	 <input type="button" value="Retornar" onclick="history.back()">
+	 <a href="/Ecommerce_Bebida/HTML/formulario_Cliente.html"><input type="button" value="Retornar"></a>
 </body>
 </html>

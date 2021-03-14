@@ -24,6 +24,7 @@ public class ClienteHelper implements IViewHelper {
 		// Verifica qual operação do botão foi acionada
 		String operacao = request.getParameter("operacao");
 		
+		String id = null;
         String nome = null;
         String cpf = null;
         String dtNasc = null;
@@ -80,9 +81,9 @@ public class ClienteHelper implements IViewHelper {
 		else if (("EXCLUIR").equals(operacao)) {
 			cliente = new Cliente();
 			
-			cpf = request.getParameter("cpf");
+			id = request.getParameter("id");
 			
-			cliente.setCpf(cpf);
+			cliente.setId(id);
 		}
 		
 		return cliente;
@@ -138,9 +139,9 @@ public class ClienteHelper implements IViewHelper {
 		}
 		
 		else if (("EXCLUIR").equals(operacao)) {
-			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				writer.println("<h1>Cadastro Removido com sucesso!</h1>");
-				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {				
+				// Redireciona para o arquivo .jsp, para poder listar os clientes atualizados novamente
+				request.getRequestDispatcher("JSP/lista-clientes-scriptlet.jsp").forward(request, response);
 			} 
 			else {
 				// mostra as mensagens de ERRO se houver
