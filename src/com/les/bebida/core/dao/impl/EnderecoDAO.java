@@ -65,19 +65,28 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 		try {
 			Endereco endereco = (Endereco) entidade;
 			
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			
-			stmt.setString(1, endereco.getCep());
-			stmt.setString(2, endereco.getCidade());
-			stmt.setString(3, endereco.getLogradouro());
-			stmt.setString(4, endereco.getNumero());
-			stmt.setString(5, endereco.getBairro());
-			stmt.setString(6, endereco.getComplemento());
-			stmt.setString(7, endereco.getEstado());
-			stmt.setString(8, endereco.getId());
-			
-			stmt.execute();
-			stmt.close();
+			// se tiver algo no "idCliente", altera o endereço
+			if (endereco.getIdCliente() != null) {
+				PreparedStatement stmt = connection.prepareStatement(sql);
+				
+				stmt.setString(1, endereco.getCep());
+				stmt.setString(2, endereco.getCidade());
+				stmt.setString(3, endereco.getLogradouro());
+				stmt.setString(4, endereco.getNumero());
+				stmt.setString(5, endereco.getBairro());
+				stmt.setString(6, endereco.getComplemento());
+				stmt.setString(7, endereco.getEstado());
+				stmt.setString(8, endereco.getId());
+				
+				stmt.execute();
+				stmt.close();
+			}
+			// caso contrário, não faz alteração e somente fecha a conexão com o banco,
+			// e no EnderecoHelper, irá ter outra verificação para poder chamar a JSP de edição do endereço
+			else {
+				PreparedStatement stmt = connection.prepareStatement(sql);
+				stmt.close();
+			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -150,30 +159,35 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 	 * @param entidade
 	 * @return
 	 */
-	public Endereco consultarEnderecoById (EntidadeDominio entidade){
+	public List<Endereco> consultarEnderecoById (String idEndereco){
 		openConnection();
 		try {
-			Endereco endereco = (Endereco) entidade;
 			PreparedStatement stmt = connection.prepareStatement("select * from endereco where id=?");
-			stmt.setString(1, endereco.getId());
+			stmt.setString(1, idEndereco);
 			ResultSet rs = stmt.executeQuery();
 			
-			// criando o objeto Endereço
-			Endereco enderecoItem = new Endereco();
-			
-			enderecoItem.setId(rs.getString("id"));
-			enderecoItem.setCep(rs.getString("cep"));
-			enderecoItem.setCidade(rs.getString("cidade"));
-			enderecoItem.setLogradouro(rs.getString("logradouro"));
-			enderecoItem.setNumero(rs.getString("numero"));
-			enderecoItem.setBairro(rs.getString("bairro"));
-			enderecoItem.setComplemento(rs.getString("complemento"));
-			enderecoItem.setEstado(rs.getString("estado"));
-			enderecoItem.setIdCliente(rs.getString("id_cliente"));
+			List<Endereco> enderecos = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Endereço
+				Endereco enderecoItem = new Endereco();
+				
+				enderecoItem.setId(rs.getString("id"));
+				enderecoItem.setCep(rs.getString("cep"));
+				enderecoItem.setCidade(rs.getString("cidade"));
+				enderecoItem.setLogradouro(rs.getString("logradouro"));
+				enderecoItem.setNumero(rs.getString("numero"));
+				enderecoItem.setBairro(rs.getString("bairro"));
+				enderecoItem.setComplemento(rs.getString("complemento"));
+				enderecoItem.setEstado(rs.getString("estado"));
+				enderecoItem.setIdCliente(rs.getString("id_cliente"));
+				
+				// adicionando o objeto à lista
+				enderecos.add(enderecoItem);
+			}
 				
 			rs.close();
 			stmt.close();
-			return enderecoItem;
+			return enderecos;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

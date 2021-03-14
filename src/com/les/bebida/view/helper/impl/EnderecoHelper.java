@@ -75,6 +75,7 @@ public class EnderecoHelper implements IViewHelper {
 			bairro = request.getParameter("bairro");
 			complemento = request.getParameter("complemento");
 			estado = request.getParameter("selecioneEstado");
+			idCliente = request.getParameter("idCliente");
 			
 			// Atribuindo os valores capturados do HTML para o endereço
 			endereco.setId(id);
@@ -85,6 +86,7 @@ public class EnderecoHelper implements IViewHelper {
 			endereco.setBairro(bairro);
 			endereco.setComplemento(complemento);
 			endereco.setEstado(estado);
+			endereco.setIdCliente(idCliente);
 		}
 		
 		else if (("EXCLUIR").equals(operacao)) {
@@ -141,8 +143,22 @@ public class EnderecoHelper implements IViewHelper {
 		
 		else if (("ALTERAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				writer.println("<h1>Endereço Alterado com sucesso!</h1>");
-				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+				String idCliente = request.getParameter("idCliente");
+				String idEndereco = request.getParameter("idEndereco");
+				
+				// chama o arquivo .JSP para edição do endereço
+				if (idCliente == null) {					
+					// pendura o "idEndereco" na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("idEndereco", idEndereco);
+					
+					// Redireciona para o arquivo .jsp
+					request.getRequestDispatcher("JSP/editar_endereco.jsp").forward(request, response);
+				}
+				// caso contrário, esta alterando um endereço, então mostrar a mensagem de sucesso
+				else {
+					writer.println("<h1>Endereço Alterado com sucesso!</h1>");
+					writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+				}
 			} 
 			else {
 				// mostra as mensagens de ERRO se houver

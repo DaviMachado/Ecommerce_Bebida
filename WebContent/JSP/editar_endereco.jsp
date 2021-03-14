@@ -1,59 +1,74 @@
-<!DOCTYPE html>
-<!-- @author Davi Rodrigues-->
-<!-- @date 14/03/2021 -->
+<%@page import='com.les.bebida.core.dao.*'%>
+<%@page import='com.les.bebida.core.dominio.*'%>
+<%@page import='com.les.bebida.core.dao.impl.*'%>
+
+<%@page import="java.util.List"%>
+
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Cadastro de Endere√ßo</title>
-		<link href="../CSS/bootstrap.css" rel="stylesheet" type="text/css">
-		<link href="../CSS/style.css" rel="stylesheet" type="text/css">
+		<title>EdiÁ„o de EndereÁo</title>
+		<link href="./CSS/bootstrap.css" rel="stylesheet" type="text/css">
+		<link href="./CSS/style.css" rel="stylesheet" type="text/css">
 	</head>
-	<body onload="PegaParametroURL()">
+	<%
+		EnderecoDAO dao = new EnderecoDAO();
+		
+		// pega o id do endereÁo que estava pendurado na requisiÁ„o,
+		// que foi enviado pelo arquivo "EnderecoHelper"
+		String idEndereco = (String)request.getAttribute("idEndereco");
+		
+		List<Endereco> endereco = dao.consultarEnderecoById(idEndereco);
+		
+		String idCliente = endereco.get(0).getIdCliente();
+	%>
+	<body>
 		<fieldset class="form-group">
-		<legend align="center">Formul√°rio de Endere√ßo</legend>
+		<legend align="center">Formul·rio de AlteraÁ„o do EndereÁo</legend>
 			<form action="http://localhost:8080/Ecommerce_Bebida/cadastroEndereco">
 				
 				<!-- CEP -->
 			    <div class="form-group col-md-6">
 			      <label>CEP</label>
-			      <input type="number" class="form-control" name="cep" placeholder="CEP"> <!-- required -->
+			      <input type="number" class="form-control" name="cep" placeholder="CEP" value="<%=endereco.get(0).getCep() %>"> <!-- required -->
 			    </div>
 			  	
 			  	<!-- Cidade -->
 			    <div class="form-group col-md-6">
 			      <label>Cidade</label>
-			      <input type="text" class="form-control" name="cidade" placeholder="Cidade"> <!-- required -->
+			      <input type="text" class="form-control" name="cidade" placeholder="Cidade" value="<%=endereco.get(0).getCidade() %>"> <!-- required -->
 			    </div>
 			  	
 			  	<!-- Logradouro -->
 			    <div class="form-group col-md-6">
 			      <label>Logradouro</label>
-			      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)">
+			      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)" value="<%=endereco.get(0).getLogradouro() %>">
 			    </div>
 			  	
 			  	<!-- Numero -->
 			    <div class="form-group col-md-2">
 			      <label>Numero</label>
-			      <input type="number" class="form-control" name="numero" placeholder="Numero">
+			      <input type="number" class="form-control" name="numero" placeholder="Numero" value="<%=endereco.get(0).getNumero() %>">
 			    </div>
 			  	
 				<!-- Bairro -->
 			    <div class="form-group col-md-4">
 			      <label>Bairro</label>
-			      <input type="text" class="form-control" name="bairro" placeholder="Bairro">
+			      <input type="text" class="form-control" name="bairro" placeholder="Bairro" value="<%=endereco.get(0).getBairro() %>">
 			    </div>
 			  	
 				<!-- Complemento -->
 			    <div class="form-group col-md-6">
 			      <label>Complemento</label>
-			      <input type="text" class="form-control" name="complemento" placeholder="Complemento">
+			      <input type="text" class="form-control" name="complemento" placeholder="Complemento" value="<%=endereco.get(0).getComplemento() %>">
 			    </div>
 			  	
 				<!-- Estado -->
 				<div class="form-group col-md-2">
 			    	<label>Estado</label>
 		        	<select name="selecioneEstado" class="form-control" placeholder="Selecione um Estado">
-				      	<option disabled selected>Selecione uma op√ß√£o...</option>
+				      	<option disabled>Selecione uma opÁ„o...</option>
+				      	<option><%=endereco.get(0).getEstado() %></option> <!-- Acre -->
 				      	<option value="AC">AC</option> <!-- Acre -->
 				      	<option value="AL">AL</option> <!-- Alagoas -->
 				      	<option value="AP">AP</option> <!-- Amap√° -->
@@ -84,37 +99,19 @@
 			    	</select>
 			    </div>
 				
-				<!-- Bot√µes -->
+				<!-- Botıes -->
 				<div align="right" style="margin-top: 170px;">
-					<button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
-					<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
-					<!--<button class="btn btn-primary" name="operacao" value="ALTERAR">Alterar</button>-->
-					<!--<button class="btn btn-primary" name="operacao" value="EXCLUIR">Excluir</button>-->
+					<button class="btn btn-warning" name="operacao" value="ALTERAR">Alterar</button>
 				</div>
-			
-			<br />
 				
 				<!-- ID do Cliente -->
-				<input type="hidden" name="idCliente" id="idCliente">
+			    <input type="hidden" name="idCliente" id="idCliente" value="<%=idCliente %>">
+			    <!-- ID do Endereco -->
+			    <input type="hidden" name="idEndereco" id="idEndereco" value="<%=idEndereco %>">
 			</form>
-			
 			<div align="right" style="margin-top: 10px;">
-				<a href="/Ecommerce_Bebida/HTML/formulario_Cliente.html"><button class="btn btn-primary" name="operacao" value="SALVAR">Voltar p/ Tela de Cientes</button></a>
+				<button class="btn btn-secondary" onclick="history.back()">Retornar</button>
 			</div>
 		</fieldset>
 	</body>
 </html>
-
-<script>
-// Fun√ß√£o para pegar o parametro idCliente passado pela tela de listagem de clientes,
-// essa fun√ß√£o √© carregada junto ao carregamento da p√°gina com o evento ONLOAD, dentro da tag <body>.
-function PegaParametroURL(){
-	var query = location.search.slice(1);
-	var partes = query.split('=');
-	
-	// partes[0] = "idCliente"
-	// partes[1] = "1" (valor do id passado)
-	// seta o "value" do campo com o valor do id passado, com o campo que estiver com o id = idCliente.
-	document.getElementById('idCliente').value = partes[1];
-}
-</script>

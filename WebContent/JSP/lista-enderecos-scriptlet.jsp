@@ -45,7 +45,7 @@
 				<td><%=address.getComplemento() %></td>
 				<td><%=address.getCidade() %></td>
 				<td><%=address.getEstado() %></td>
-				<td><a href="/Ecommerce_Bebida/cadastroEndereco?idCliente=<%= address.getIdCliente()%>&idEndereco=<%= address.getId()%>&operacao=ALTERAR"><button class="btn btn-warning">Alterar</button></a></td>
+				<td><a href="/Ecommerce_Bebida/cadastroEndereco?idEndereco=<%= address.getId()%>&operacao=ALTERAR"><button class="btn btn-warning">Alterar</button></a></td>
                 <td><a href="/Ecommerce_Bebida/cadastroEndereco?idCliente=<%= address.getIdCliente()%>&idEndereco=<%= address.getId()%>&operacao=EXCLUIR"><button class="btn btn-danger">Deletar</button></a></td>
 			</tr>
 		<%
