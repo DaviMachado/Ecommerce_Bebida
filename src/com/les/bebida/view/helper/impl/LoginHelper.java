@@ -26,6 +26,10 @@ public class LoginHelper implements IViewHelper {
 		
         String login = null;
         String senha = null;
+        String confirmarSenha = null;
+		String id = null;
+        String nome = null;
+        String telefone = null;
 		
 		if (("CONSULTAR").equals(operacao)) {
 			cliente = new Cliente();
@@ -35,12 +39,19 @@ public class LoginHelper implements IViewHelper {
 			cliente = new Cliente();
 			usuario = new Usuario();
 			
+			// Atributos da classe Usuario
 			login = request.getParameter("email");
 			senha = request.getParameter("senha");
+			confirmarSenha = request.getParameter("confirmarSenha");
+			nome = request.getParameter("nome");
+			telefone = request.getParameter("telefone");
 			
+			// Atribuindo os valores capturados do HTML para o Usuario
 			usuario.setLogin(login);
 			usuario.setSenha(senha);
-			cliente.setUsuario(usuario);
+			usuario.setConfirmarSenha(confirmarSenha);	
+			usuario.setNome(nome);
+			usuario.setTelefone(telefone);
 		}
 		
 		else if (("ALTERAR").equals(operacao)) {
@@ -51,7 +62,7 @@ public class LoginHelper implements IViewHelper {
 			
 		}
 		
-		return cliente;
+		return usuario;
 	}
 
 	@Override
@@ -83,10 +94,13 @@ public class LoginHelper implements IViewHelper {
 				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
 			}
 			else {
-				// mostra as mensagens de ERRO se houver
-				writer.println(resultado.getMensagem());
 				System.out.println("ERRO PARA SALVAR!");
-				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+				
+				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("mensagemStrategy", resultado.getMensagem());
+				
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/login.jsp").forward(request, response);
 			}
 		}
 		
