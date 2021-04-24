@@ -33,8 +33,8 @@ public class LoginHelper implements IViewHelper {
 			usuario = new Usuario();
 			
 			// Atributos da classe Usuario
-			login = request.getParameter("emailSouCadastrado");
-			senha = request.getParameter("senhaSouCadastrado");
+			login = request.getParameter("email");
+			senha = request.getParameter("senha");
 			
 			// Atribuindo os valores capturados do HTML para o Usuario
 			usuario.setLogin(login);
@@ -45,11 +45,11 @@ public class LoginHelper implements IViewHelper {
 			usuario = new Usuario();
 			
 			// Atributos da classe Usuario
-			login = request.getParameter("emailNaoSouCadastrado");
-			senha = request.getParameter("senhaNaoSouCadastrado");
-			confirmarSenha = request.getParameter("confirmarSenhaNaoSouCadastrado");
-			nome = request.getParameter("nomeNaoSouCadastrado");
-			telefone = request.getParameter("telefoneNaoSouCadastrado");
+			login = request.getParameter("email");
+			senha = request.getParameter("senha");
+			confirmarSenha = request.getParameter("confirmarSenha");
+			nome = request.getParameter("nome");
+			telefone = request.getParameter("telefone");
 			
 			// Atribuindo os valores capturados do HTML para o Usuario
 			usuario.setLogin(login);

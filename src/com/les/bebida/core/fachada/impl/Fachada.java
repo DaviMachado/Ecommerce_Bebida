@@ -104,7 +104,6 @@ public class Fachada implements IFachada {
 		/* ----- Adicionando as Strategy's na lista do Login ----- */
 		/* ----- SALVAR ----- */
 		regrasSalvarLogin.add(vLogin);
-		regrasSalvarLogin.add(vSenha);
 		regrasSalvarLogin.add(vSenhaIgual);
 		regrasSalvarLogin.add(vExistenciaLogin);
 		/* ----- CONSULTAR ----- */

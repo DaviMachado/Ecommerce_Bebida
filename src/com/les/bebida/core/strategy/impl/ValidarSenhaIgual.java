@@ -17,7 +17,10 @@ public class ValidarSenhaIgual implements IStrategy {
 		
 		Usuario usuario = (Usuario) entidade;
 		
-		if(usuario.getConfirmarSenha() == null || usuario.getConfirmarSenha().equals("")) {
+		if (usuario.getSenha() == null || usuario.getSenha().equals("")) {
+			return ("Favor insira uma senha.");
+		}
+		else if (usuario.getConfirmarSenha() == null || usuario.getConfirmarSenha().equals("")) {
 			return ("Favor insira uma confirmar senha.");
 		}
 		else if (!usuario.getSenha().equals(usuario.getConfirmarSenha())) {
