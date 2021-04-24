@@ -43,48 +43,7 @@ public class LoginDAO extends AbstractJdbcDAO {
 			throw new RuntimeException(e);
 		}
 	} // Salvar
-	
-	/**
-	 * Metodo para Listar o Cliente
-	 * @param entidade
-	 * @return
-	 */
-	public List<EntidadeDominio> consultar (EntidadeDominio entidade){
-		openConnection();
-		try {
-			List<EntidadeDominio> clientes = new ArrayList<>();
-			PreparedStatement stmt = connection.prepareStatement("select * from cliente");
-			ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				// criando o objeto Cliente
-				Cliente cliente = new Cliente();
-				Usuario usuario = new Usuario();
-				
-				cliente.setId(rs.getString("id"));
-				
-				usuario.setLogin(rs.getString("login"));
-				usuario.setSenha(rs.getString("senha"));
-				cliente.setUsuario(usuario);
-				
-				cliente.setNome(rs.getString("nome"));
-				cliente.setCpf(rs.getString("cpf"));
-				cliente.setDt_nasc(rs.getString("dt_Nasc"));
-				cliente.setCdCliente(rs.getString("cd_cliente"));
-				cliente.setTelefone(rs.getString("telefone"));
-				cliente.setSexo(rs.getString("sexo"));
-				cliente.setFlgAtivo(rs.getString("fl_ativo"));
-				
-				// adicionando o objeto à lista
-				clientes.add(cliente);
-			}
-			rs.close();
-			stmt.close();
-			return clientes;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	} // Listar
+
 	
 	/**
 	 * Metodo para Listar/Verificar o Usuario por LOGIN
@@ -120,17 +79,76 @@ public class LoginDAO extends AbstractJdbcDAO {
 			throw new RuntimeException(e);
 		}
 	} // Listar/Verificar Usuario por LOGIN
-
+	
+	
+	/**
+	 * Metodo para Listar/Verificar o Usuario por LOGIN e SENHA
+	 * @param entidade
+	 * @return
+	 */
+	public List<Usuario> consultarUsuarioByLoginAndSenha (String loginUsuario, String loginSenha){
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from cliente where login=? and senha=?");
+			stmt.setString(1, loginUsuario);
+			stmt.setString(2, loginSenha);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Usuario> usuarios = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Usuario
+				Usuario usuarioItem = new Usuario();
+				
+				usuarioItem.setId(rs.getString("id"));
+				usuarioItem.setLogin(rs.getString("login"));
+				usuarioItem.setSenha(rs.getString("senha"));
+				usuarioItem.setNome(rs.getString("nome"));
+				usuarioItem.setTelefone(rs.getString("telefone"));
+				
+				// adicionando o objeto à lista
+				usuarios.add(usuarioItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return usuarios;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar/Verificar Usuario por LOGIN e SENHA
+	
+	
+	/**
+	 * Metodo para consultar o Usuario
+	 * o retorno será null pois vou validar a exitencia dele na Strategy
+	 * @param entidade
+	 */
+	@Override
+	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	} // Consultar
+	
+	
+	/**
+	 * Metodo para alterar o Usuario
+	 * @param entidade
+	 */
 	@Override
 	public void alterar(EntidadeDominio entidade) throws SQLException {
 		// TODO Auto-generated method stub
 		
-	}
-
+	} // Alterar
+	
+	
+	/**
+	 * Metodo para excluir o Usuario
+	 * @param entidade
+	 */
 	@Override
 	public void excluir(EntidadeDominio entidade) throws SQLException {
 		// TODO Auto-generated method stub
 		
-	}
+	} // Excluir
 	
 }

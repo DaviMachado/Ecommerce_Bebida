@@ -20,16 +20,18 @@ import com.les.bebida.core.strategy.impl.ValidarCPF;
 import com.les.bebida.core.strategy.impl.ValidarCodigoClienteSys;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLogin;
+import com.les.bebida.core.strategy.impl.ValidarExistenciaLoginAndSenha;
 import com.les.bebida.core.strategy.impl.ValidarFlgAtivo;
 import com.les.bebida.core.strategy.impl.ValidarLogin;
 import com.les.bebida.core.strategy.impl.ValidarNome;
 import com.les.bebida.core.strategy.impl.ValidarSenha;
+import com.les.bebida.core.strategy.impl.ValidarSenhaIgual;
 
 /**
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 21/04/2021
+ * @date 24/04/2021
  */
 public class Fachada implements IFachada {
 
@@ -40,11 +42,13 @@ public class Fachada implements IFachada {
 	ValidarFlgAtivo vFlgAtivo = new ValidarFlgAtivo();
 	ValidarLogin vLogin = new ValidarLogin();
 	ValidarSenha vSenha = new ValidarSenha();
+	ValidarSenhaIgual vSenhaIgual = new ValidarSenhaIgual();
 	ValidarNome vNome = new ValidarNome();
 	ValidarCPF vCPF = new ValidarCPF();
 	ValidarDataNascimento vDataNascimento = new ValidarDataNascimento();
 	ValidarCodigoClienteSys vCodigoClienteSys = new ValidarCodigoClienteSys();
 	ValidarExistenciaLogin vExistenciaLogin = new ValidarExistenciaLogin();
+	ValidarExistenciaLoginAndSenha vExistenciaLoginAndSenha = new ValidarExistenciaLoginAndSenha();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -86,6 +90,7 @@ public class Fachada implements IFachada {
 		daos.put(Usuario.class.getName(), new LoginDAO());
 		
 		/* ----- Adicionando as Strategy's na lista do Cliente ----- */
+		/* ----- SALVAR ----- */
 		regrasSalvarCliente.add(vNome);
 		regrasSalvarCliente.add(vCPF);
 		regrasSalvarCliente.add(vDataNascimento);
@@ -97,9 +102,15 @@ public class Fachada implements IFachada {
 		/* ---------------------------------------------------------- */
 		
 		/* ----- Adicionando as Strategy's na lista do Login ----- */
+		/* ----- SALVAR ----- */
 		regrasSalvarLogin.add(vLogin);
 		regrasSalvarLogin.add(vSenha);
+		regrasSalvarLogin.add(vSenhaIgual);
 		regrasSalvarLogin.add(vExistenciaLogin);
+		/* ----- CONSULTAR ----- */
+		regrasConsultarLogin.add(vLogin);
+		regrasConsultarLogin.add(vSenha);
+		regrasConsultarLogin.add(vExistenciaLoginAndSenha);
 		/* ---------------------------------------------------------- */
 
 		/* ----- REGRAS DA ENTIDADE CLIENTE ----- */
