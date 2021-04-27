@@ -82,8 +82,8 @@ public class LoginHelper implements IViewHelper {
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				// Redireciona para o arquivo .HTML
-				request.getRequestDispatcher("HTML/Home_Page.html").forward(request, response);
+				// Redireciona para o arquivo .JSP
+				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
 			} 
 			else {
 				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
