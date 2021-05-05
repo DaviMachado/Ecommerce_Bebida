@@ -62,9 +62,9 @@
 
         <h1 class="my-4">Drink Fast</h1>
         <div class="list-group">
-          <a href="#" class="list-group-item">Category 1</a>
-          <a href="#" class="list-group-item">Category 2</a>
-          <a href="#" class="list-group-item">Category 3</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/HTML/formulario_Cliente.html" class="list-group-item">Cliente's</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/HTML/formulario_Endereco.html" class="list-group-item">Endereço's</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/HTML/CartaoDeCredito.html" class="list-group-item">Cartão de crédito's</a>
         </div>
 
       </div>
