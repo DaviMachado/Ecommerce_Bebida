@@ -61,6 +61,8 @@ public class ClienteHelper implements IViewHelper {
 			cliente = new Cliente();
 			usuario = new Usuario();
 			
+			id = request.getParameter("id");
+			
 			// Atributos da classe cliente
 			telefone = request.getParameter("telefone");
 			
@@ -68,9 +70,10 @@ public class ClienteHelper implements IViewHelper {
 			nome = request.getParameter("nome");
 			cpf = request.getParameter("cpf");
 			dtNasc = request.getParameter("dtNasc");
-			sexo = request.getParameter("sexo");
+			sexo = request.getParameter("selecioneSexo");
 			
 			// Atribuindo os valores capturados do HTML para o cliente
+			cliente.setId(id);
 			cliente.setNome(nome);
 			cliente.setCpf(cpf);
 			cliente.setDt_nasc(dtNasc);
@@ -127,14 +130,22 @@ public class ClienteHelper implements IViewHelper {
 		
 		else if (("ALTERAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				writer.println("<h1>Cadastro Alterado com sucesso!</h1>");
-				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+				// atribui a nova mensagem para poder mostra na pagina .JSP
+				resultado.setMensagem("Cadastro do Cliente alterado com sucesso!");
+				
+				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("mensagemStrategy", resultado.getMensagem());
+				
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
 			} 
 			else {
 				// mostra as mensagens de ERRO se houver
-				writer.println(resultado.getMensagem());
-				System.out.println("ERRO PARA ALTERAR!");
-				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("mensagemStrategy", resultado.getMensagem());
+				
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
 			}
 		}
 		

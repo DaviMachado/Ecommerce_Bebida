@@ -23,7 +23,36 @@
 
 </head>
 
-<body>
+	<%
+		// pega a mensagem que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "ClienteHelper"
+		String mensagemStrategy = (String)request.getAttribute("mensagemStrategy");
+		  
+		// IF adicionado para não estourar NullPointerException na variavel
+		// "mensagemStrategy", pois quando ela esta sendo aberta pela primeira vez,
+		// (apos validar o Login), ela fica nula
+		if(mensagemStrategy == null){
+			mensagemStrategy = "Bem Vindo(a) ao site Drink Fast !";
+		}
+	%>
+
+	<!-- Verifica se tem alguma mensagem do BackEnd, para poder ativar a Modal -->
+	<%
+		if(mensagemStrategy != null || !mensagemStrategy.equals("")) {
+	%>
+		<body onload="AtivaModal()">
+	<%
+		}
+	%>
+	
+	<!-- Se não tiver nenhuma mensagem do BackEnd, mostra o body sem ativar a Modal -->
+	<%
+		if(mensagemStrategy == null || mensagemStrategy.equals("")) {
+	%>
+		<body>
+	<%
+		}
+	%>
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -58,7 +87,7 @@
 
         <h1 class="my-4">Drink Fast</h1>
         <div class="list-group">
-          <a href="http://localhost:8080/Ecommerce_Bebida/HTML/formulario_Cliente.html" class="list-group-item">Cliente's</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Cliente.jsp" class="list-group-item">Meus Dados</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/HTML/formulario_Endereco.html" class="list-group-item">Endereço's</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/HTML/CartaoDeCredito.html" class="list-group-item">Cartão de crédito's</a>
         </div>
@@ -220,6 +249,41 @@
   <!-- Bootstrap core JavaScript -->
   <script src="./JQUERY/jquery.min.js"></script>
   <script src="./JS/bootstrap.bundle.min.js"></script>
+  
+  	<!-- Modal -->
+	<div class="modal fade" id="modal-mensagem">
+	   <div class="modal-dialog">
+	   		<div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+	                <h4 class="modal-title">Mensagem</h4>
+	            </div>
+	            <div class="modal-body">
+	                <p><% out.println(mensagemStrategy); %></p>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+		
+	<!-- Botão para chamar a Modal -->
+	<button style="display: none" id="idModal" class="btn btn-primary" data-toggle="modal" data-target="#modal-mensagem">
+		Exibir mensagem da modal
+	</button>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+    // Função que irá ativar a Modal com a mensagem retornada do BackEnd,
+    // essa função é carregada junto ao carregamento da página com o evento ONLOAD, dentro da tag <body>.
+	    function AtivaModal(){
+    		// metodo para poder ativar o "onClick" sem precisar clicar no botão
+	    	document.getElementById('idModal').click();
+	    }
+    </script>
+   	<!-- Fim Modal -->
 
 </body>
 

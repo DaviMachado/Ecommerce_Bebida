@@ -57,7 +57,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "update cliente set " + // login=?, senha=?,
-					 "nome=?, cpf=?, dt_nasc=?, cd_cliente=?, sexo=?, telefone=?, fl_ativo=? where cpf=?";
+					 "nome=?, cpf=?, dt_nasc=?, cd_cliente=?, sexo=?, telefone=?, fl_ativo=? where id=?";
 		
 		try {
 			Cliente cliente = (Cliente) entidade;
@@ -74,7 +74,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 			stmt.setString(5, cliente.getSexo());
 			stmt.setString(6, cliente.getTelefone());
 			stmt.setString(7, cliente.getFlgAtivo());
-			stmt.setString(8, cliente.getCpf());
+			stmt.setString(8, cliente.getId());
 			
 			stmt.execute();
 			stmt.close();
@@ -152,5 +152,48 @@ public class ClienteDAO extends AbstractJdbcDAO {
 			throw new RuntimeException(e);
 		}
 	} // Listar
+	
+	/**
+	 * Metodo para Listar o Cliente por ID
+	 * @param entidade
+	 * @return
+	 */
+	public List<Cliente> consultarClienteById (String idCliente){
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from cliente where id=?");
+			stmt.setString(1, idCliente);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Cliente> clientes = new ArrayList<>();
+			while (rs.next()) {
+				Cliente cliente = new Cliente();
+				Usuario usuario = new Usuario();
+				
+				cliente.setId(rs.getString("id"));
+				
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				cliente.setUsuario(usuario);
+				
+				cliente.setNome(rs.getString("nome"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setDt_nasc(rs.getString("dt_Nasc"));
+				cliente.setCdCliente(rs.getString("cd_cliente"));
+				cliente.setTelefone(rs.getString("telefone"));
+				cliente.setSexo(rs.getString("sexo"));
+				cliente.setFlgAtivo(rs.getString("fl_ativo"));
+				
+				// adicionando o objeto à lista
+				clientes.add(cliente);
+			}
+				
+			rs.close();
+			stmt.close();
+			return clientes;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar Cliente por ID
 	
 }
