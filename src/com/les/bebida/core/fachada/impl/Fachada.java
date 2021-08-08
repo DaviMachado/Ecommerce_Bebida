@@ -68,6 +68,7 @@ public class Fachada implements IFachada {
 	/* ------------ EXCLUIR ------------ */
 	List<IStrategy> regrasExcluirCliente = new ArrayList<>();
 	List<IStrategy> regrasExcluirEndereco = new ArrayList<>();
+	List<IStrategy> regrasExcluirLogin = new ArrayList<>();
 	/* -------------------------------------------------------------------------- */
 	
 	/* ------------ Declaração dos MAP's das Regras de Negócios dos Dominios ------------ */
@@ -142,6 +143,8 @@ public class Fachada implements IFachada {
 		regrasLogin.put("SALVAR", regrasSalvarLogin);
 		/* ----- CONSULTAR ----- */
 		regrasLogin.put("CONSULTAR", regrasConsultarLogin);
+		/* ----- EXCLUIR ----- */
+		regrasLogin.put("EXCLUIR", regrasExcluirLogin);
 		/* --------------------------------------- */
 		
 		/* ----- REGRAS GERAIS ----- */

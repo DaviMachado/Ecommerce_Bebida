@@ -131,7 +131,27 @@ public class LoginHelper implements IViewHelper {
 		}
 		
 		else if (("EXCLUIR").equals(operacao)) {
-			
+			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// Limpa a sessão
+				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+				HttpSession sessao = request.getSession();
+				//sessao.removeAttribute("usuarioLogado"); // remove somente 1 atributo criado
+				sessao.invalidate(); // destroi o cookie JSESSIONID inteiro e cria outro
+				  
+				// atribui a nova mensagem para poder mostra na pagina .JSP
+				resultado.setMensagem("Logout com sucesso!");
+				
+				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("mensagemStrategy", resultado.getMensagem());
+				
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/login.jsp").forward(request, response);
+			}
+			else {
+				// se tiver alguma mensagem da Strategy, irá redirecionar para a tela de Login do mesmo jeito
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/login.jsp").forward(request, response);
+			}
 		}
 		
 	}

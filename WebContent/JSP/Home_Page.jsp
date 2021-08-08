@@ -39,6 +39,11 @@
             <a class="nav-link">Bem vindo ${usuarioLogado.nome} !</a>
             <span class="sr-only">(current)</span>
           </li>
+          <li class="nav-item">
+            <form action="http://localhost:8080/Ecommerce_Bebida/login">
+            	<button type="submit" class="btn btn-danger pull-right" name="operacao" value="EXCLUIR">Sair</button>
+            </form>
+          </li>
         </ul>
       </div>
     </div>
