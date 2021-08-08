@@ -41,15 +41,11 @@
 	
         <div id="body" class="hold-transition skin-red sidebar-mini">
             <header class="main-header">
-                <a href="index.html" class="logo"> <span class="logo-lg">Drink Fast</span> </a>
+                <a class="logo"> <span class="logo-lg">Drink Fast</span> </a>
                 <nav class="navbar navbar-static-top" role="navigation">
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
-                            <li class="dropdown user user-menu">
-                                <a href="/marmitex">
-                                    <span class="hidden-xs">Inicio</span>
-                                </a>
-                            </li>
+                            <li class="dropdown user user-menu"></li>
                         </ul>
                     </div>
                 </nav>

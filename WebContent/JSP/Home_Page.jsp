@@ -13,7 +13,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Shop Homepage - Start Bootstrap Template</title>
+  <title>Drink Fast</title>
 
   <!-- Bootstrap core CSS -->
   <link href="./CSS/bootstrap.min.css" rel="stylesheet">
@@ -28,29 +28,16 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Start Bootstrap</a>
+      <a class="navbar-brand">Ecommerce de Bebida</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
           <li class="nav-item">
             <%// foi utilizado a tag "${}" para poder escrever o objeto salvo em sessão dentro da tela %>
-            <a class="nav-link" href="#">${usuarioLogado.nome}</a>
+            <a class="nav-link">Bem vindo ${usuarioLogado.nome} !</a>
+            <span class="sr-only">(current)</span>
           </li>
         </ul>
       </div>
