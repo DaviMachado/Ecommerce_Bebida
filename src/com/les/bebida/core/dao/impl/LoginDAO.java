@@ -120,13 +120,43 @@ public class LoginDAO extends AbstractJdbcDAO {
 	
 	/**
 	 * Metodo para consultar o Usuario
-	 * o retorno será null pois vou validar a exitencia dele na Strategy
+	 * função criada para consultar o Login após acessar o sistema,
+	 * quando a Fachada realizar a função de consulta, esta função de Consultar será chamada para
+	 * poder fazer o setEntidades do Resultado, com isso feito, será salvo esse Login em sessão no arquivo LoginHelper.
 	 * @param entidade
 	 */
 	@Override
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		openConnection();
+		try {
+			Usuario usuario = (Usuario) entidade;
+			PreparedStatement stmt = connection.prepareStatement("select * from cliente where login=? and senha=?");
+			stmt.setString(1, usuario.getLogin());
+			stmt.setString(2, usuario.getSenha());
+			ResultSet rs = stmt.executeQuery();
+			
+			List<EntidadeDominio> usuarios = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Usuario
+				Usuario usuarioItem = new Usuario();
+				
+				usuarioItem.setId(rs.getString("id"));
+				usuarioItem.setLogin(rs.getString("login"));
+				usuarioItem.setSenha(rs.getString("senha"));
+				usuarioItem.setNome(rs.getString("nome"));
+				usuarioItem.setTelefone(rs.getString("telefone"));
+				
+				// adicionando o objeto à lista
+				usuarios.add(usuarioItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return usuarios;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+				
 	} // Consultar
 	
 	

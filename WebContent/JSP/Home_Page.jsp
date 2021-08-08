@@ -48,6 +48,10 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
           </li>
+          <li class="nav-item">
+            <%// foi utilizado a tag "${}" para poder escrever o objeto salvo em sessão dentro da tela %>
+            <a class="nav-link" href="#">${usuarioLogado.nome}</a>
+          </li>
         </ul>
       </div>
     </div>

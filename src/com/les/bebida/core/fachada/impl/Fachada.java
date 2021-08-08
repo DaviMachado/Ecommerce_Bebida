@@ -24,6 +24,7 @@ import com.les.bebida.core.strategy.impl.ValidarExistenciaLoginAndSenha;
 import com.les.bebida.core.strategy.impl.ValidarFlgAtivo;
 import com.les.bebida.core.strategy.impl.ValidarLogin;
 import com.les.bebida.core.strategy.impl.ValidarNome;
+import com.les.bebida.core.strategy.impl.ValidarNomeLogin;
 import com.les.bebida.core.strategy.impl.ValidarSenha;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgual;
 
@@ -31,7 +32,7 @@ import com.les.bebida.core.strategy.impl.ValidarSenhaIgual;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 24/04/2021
+ * @date 08/08/2021
  */
 public class Fachada implements IFachada {
 
@@ -44,6 +45,7 @@ public class Fachada implements IFachada {
 	ValidarSenha vSenha = new ValidarSenha();
 	ValidarSenhaIgual vSenhaIgual = new ValidarSenhaIgual();
 	ValidarNome vNome = new ValidarNome();
+	ValidarNomeLogin vNomeLogin = new ValidarNomeLogin();
 	ValidarCPF vCPF = new ValidarCPF();
 	ValidarDataNascimento vDataNascimento = new ValidarDataNascimento();
 	ValidarCodigoClienteSys vCodigoClienteSys = new ValidarCodigoClienteSys();
@@ -103,6 +105,7 @@ public class Fachada implements IFachada {
 		
 		/* ----- Adicionando as Strategy's na lista do Login ----- */
 		/* ----- SALVAR ----- */
+		regrasSalvarLogin.add(vNomeLogin);
 		regrasSalvarLogin.add(vLogin);
 		regrasSalvarLogin.add(vSenhaIgual);
 		regrasSalvarLogin.add(vExistenciaLogin);

@@ -2,10 +2,12 @@ package com.les.bebida.view.helper.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Resultado;
@@ -82,6 +84,16 @@ public class LoginHelper implements IViewHelper {
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o Login consultado
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Usuario (pegando o primeiro indice de Entidade)
+				Usuario usuario = (Usuario) entidades.get(0);
+				
+				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+				HttpSession sessao = request.getSession();
+				// salva na sessão o objeto "usuarioLogado", recebendo o valor de "usuario"
+				sessao.setAttribute("usuarioLogado", usuario);
+				
 				// Redireciona para o arquivo .JSP
 				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
 			} 
