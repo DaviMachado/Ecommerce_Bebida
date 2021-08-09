@@ -24,7 +24,7 @@
 		EnderecoDAO dao = new EnderecoDAO();
 		Endereco endereco = new Endereco();
 		
-		// pega o "id" do usuario logado que estava pendurado na requisição,
+		// pega o id do cliente que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "EnderecoHelper"
 		String idCliente = (String)request.getAttribute("idCliente");
 		endereco.setIdCliente(idCliente);
@@ -51,7 +51,7 @@
 		<%
 		}
 		%>
-	</table>		
-	 <a href="/Ecommerce_Bebida/JSP/formulario_Endereco.jsp"><input type="button" value="Voltar" style="margin-top: 10px;"></a>
+	</table>
+	 <a href="/Ecommerce_Bebida/HTML/formulario_Endereco.html?id=<%= idCliente%>"><input type="button" value="Retornar" style="margin-top: 10px;"></a>
 </body>
 </html>

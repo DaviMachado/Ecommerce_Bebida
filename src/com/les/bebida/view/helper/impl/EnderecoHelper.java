@@ -6,10 +6,12 @@ import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.les.bebida.core.dominio.Endereco;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Resultado;
+import com.les.bebida.core.dominio.Usuario;
 import com.les.bebida.view.helper.IViewHelper;
 
 public class EnderecoHelper implements IViewHelper {
@@ -112,10 +114,16 @@ public class EnderecoHelper implements IViewHelper {
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				String idCliente = request.getParameter("idCliente");
+				Usuario usuarioLogado = new Usuario();
 				
-				// pendura o "idCliente" na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("idCliente", idCliente);
+				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+				HttpSession sessao = request.getSession();
+				// pega o objeto salvo em Sessão com o nome "usuarioLogado",
+				// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
+				usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+				
+				// pendura o "id" do usuario logado na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("idCliente", usuarioLogado.getId());
 				
 				// Redireciona para o arquivo .jsp
 				request.getRequestDispatcher("JSP/lista-enderecos-scriptlet.jsp").forward(request, response);
@@ -130,14 +138,22 @@ public class EnderecoHelper implements IViewHelper {
 		
 		else if (("SALVAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				writer.println("<h1>Endereço Salvo com sucesso!</h1>");
-				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+				// atribui a nova mensagem para poder mostra na pagina .JSP
+				resultado.setMensagem("Cadastro do Endereço salvo com sucesso!");
+				
+				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("mensagemStrategy", resultado.getMensagem());
+				
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
 			}
 			else {
 				// mostra as mensagens de ERRO se houver
-				writer.println(resultado.getMensagem());
-				System.out.println("ERRO PARA SALVAR!");
-				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("mensagemStrategy", resultado.getMensagem());
+				
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
 			}
 		}
 		
@@ -145,8 +161,9 @@ public class EnderecoHelper implements IViewHelper {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
 				String idCliente = request.getParameter("idCliente");
 				String idEndereco = request.getParameter("idEndereco");
-				
-				// chama o arquivo .JSP para edição do endereço
+
+				// Se eu estiver pela tela de listagem de endereços (lista-enderecos-scriplet.jsp),
+				// não vou mandar o parametro "idCliente", para poder chama o arquivo .JSP para edição do endereço
 				if (idCliente == null) {					
 					// pendura o "idEndereco" na requisição para poder mandar para o arquivo .JSP
 					request.setAttribute("idEndereco", idEndereco);
@@ -154,17 +171,27 @@ public class EnderecoHelper implements IViewHelper {
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/editar_endereco.jsp").forward(request, response);
 				}
-				// caso contrário, esta alterando um endereço, então mostrar a mensagem de sucesso
+				// caso contrário, se eu estiver pela tela de edição do endereço (editar_endereco.jsp),
+				// vou ter/mandar o parametro "idClietne", para poder editar o endereço,
+				// dentro da DAO de endereço, vai ter um IF verificando se tem o "idCliente"
 				else {
-					writer.println("<h1>Endereço Alterado com sucesso!</h1>");
-					writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+					// atribui a nova mensagem para poder mostra na pagina .JSP
+					resultado.setMensagem("Cadastro do Endereço alterado com sucesso!");
+					
+					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("mensagemStrategy", resultado.getMensagem());
+					
+					// Redireciona para o arquivo .jsp
+					request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
 				}
 			} 
 			else {
 				// mostra as mensagens de ERRO se houver
-				writer.println(resultado.getMensagem());
-				System.out.println("ERRO PARA ALTERAR!");
-				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("mensagemStrategy", resultado.getMensagem());
+				
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
 			}
 		}
 		
@@ -180,9 +207,11 @@ public class EnderecoHelper implements IViewHelper {
 			} 
 			else {
 				// mostra as mensagens de ERRO se houver
-				writer.println(resultado.getMensagem());
-				System.out.println("ERRO PARA EXCLUIR!");
-				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("mensagemStrategy", resultado.getMensagem());
+				
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
 			}
 		}
 	}

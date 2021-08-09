@@ -88,7 +88,7 @@
         <h1 class="my-4">Drink Fast</h1>
         <div class="list-group">
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Cliente.jsp" class="list-group-item">Meus Dados</a>
-          <a href="http://localhost:8080/Ecommerce_Bebida/HTML/formulario_Endereco.html" class="list-group-item">Endereço's</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Endereco.jsp" class="list-group-item">Endereço's</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/HTML/CartaoDeCredito.html" class="list-group-item">Cartão de crédito's</a>
         </div>
 
