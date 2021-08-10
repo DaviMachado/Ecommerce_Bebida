@@ -19,8 +19,8 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into cliente "+ // login,senha,
-				"(nome,cpf,dt_nasc,cd_cliente,sexo,telefone,fl_ativo)" +
-				"values (?,?,?,?,?,?,?)";
+				"(nome, cpf, dt_nasc, cd_cliente, sexo, telefone, fl_ativo, dt_cadastro, tipo)" +
+				"values (?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			Cliente cliente = (Cliente) entidade;
@@ -39,6 +39,8 @@ public class ClienteDAO extends AbstractJdbcDAO {
 			stmt.setString(5, cliente.getSexo());
 			stmt.setString(6, cliente.getTelefone());
 			stmt.setString(7, cliente.getFlgAtivo());
+			stmt.setString(8, cliente.getDtCadastro());
+			stmt.setString(9, cliente.getTipo());
 			
 			// executa
 			stmt.execute();
@@ -57,7 +59,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "update cliente set " + // login=?, senha=?,
-					 "nome=?, cpf=?, dt_nasc=?, cd_cliente=?, sexo=?, telefone=?, fl_ativo=? where id=?";
+					 "nome=?, cpf=?, dt_nasc=?, cd_cliente=?, sexo=?, telefone=? where id=?";
 		
 		try {
 			Cliente cliente = (Cliente) entidade;
@@ -73,8 +75,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 			stmt.setString(4, cliente.getCdCliente());
 			stmt.setString(5, cliente.getSexo());
 			stmt.setString(6, cliente.getTelefone());
-			stmt.setString(7, cliente.getFlgAtivo());
-			stmt.setString(8, cliente.getId());
+			stmt.setString(7, cliente.getId());
 			
 			stmt.execute();
 			stmt.close();
@@ -138,9 +139,11 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				cliente.setCpf(rs.getString("cpf"));
 				cliente.setDt_nasc(rs.getString("dt_Nasc"));
 				cliente.setCdCliente(rs.getString("cd_cliente"));
-				cliente.setTelefone(rs.getString("telefone"));
 				cliente.setSexo(rs.getString("sexo"));
+				cliente.setTelefone(rs.getString("telefone"));
 				cliente.setFlgAtivo(rs.getString("fl_ativo"));
+				cliente.setDtCadastro(rs.getString("dt_cadastro"));
+				cliente.setTipo(rs.getString("tipo"));
 				
 				// adicionando o objeto à lista
 				clientes.add(cliente);
@@ -180,9 +183,11 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				cliente.setCpf(rs.getString("cpf"));
 				cliente.setDt_nasc(rs.getString("dt_Nasc"));
 				cliente.setCdCliente(rs.getString("cd_cliente"));
-				cliente.setTelefone(rs.getString("telefone"));
 				cliente.setSexo(rs.getString("sexo"));
+				cliente.setTelefone(rs.getString("telefone"));
 				cliente.setFlgAtivo(rs.getString("fl_ativo"));
+				cliente.setDtCadastro(rs.getString("dt_cadastro"));
+				cliente.setTipo(rs.getString("tipo"));
 				
 				// adicionando o objeto à lista
 				clientes.add(cliente);

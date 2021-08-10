@@ -13,12 +13,19 @@ create table cliente (
 	sexo        VARCHAR(10),
 	telefone    VARCHAR(20),
 	fl_ativo    NUMERIC(1),
+	dt_cadastro DATE,
+	tipo		VARCHAR(14),
 	primary	key	(id)
 );
 
 use ecommerce;
 
 select * from cliente;
+-----------------------------
+insert do ADMIN:
+
+insert into cliente (login, senha, nome, cpf, dt_nasc, cd_cliente, sexo, telefone, fl_ativo, dt_cadastro, tipo)
+values ('admin@outlook.com', '123', 'administrador', '123456789', '2021/08/09', '1', 'masculino', '11912341234', 1, '2021/08/09', 'admin');
 
 -----------------------------
 Teste:

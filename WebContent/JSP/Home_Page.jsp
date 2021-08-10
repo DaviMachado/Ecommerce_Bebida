@@ -24,6 +24,18 @@
 </head>
 
 	<%
+		ClienteDAO dao = new ClienteDAO();
+		Usuario userLogado = new Usuario();
+		
+		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+		HttpSession sessao = request.getSession();
+		// pega o objeto salvo em Sessão com o nome "usuarioLogado",
+		// e passa para o novo objeto criado com o nome "userLogado", (fazendo o CAST para o tipo Usuario)
+		userLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+		
+		// faz um consulta no banco para pegar todos os dados do cliente logado
+		List<Cliente> clienteLogado = dao.consultarClienteById(userLogado.getId());
+		
 		// pega a mensagem que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "ClienteHelper"
 		String mensagemStrategy = (String)request.getAttribute("mensagemStrategy");
@@ -36,23 +48,7 @@
 		}
 	%>
 
-	<!-- Verifica se tem alguma mensagem do BackEnd, para poder ativar a Modal -->
-	<%
-		if(mensagemStrategy != null || !mensagemStrategy.equals("")) {
-	%>
-		<body onload="AtivaModal()">
-	<%
-		}
-	%>
-	
-	<!-- Se não tiver nenhuma mensagem do BackEnd, mostra o body sem ativar a Modal -->
-	<%
-		if(mensagemStrategy == null || mensagemStrategy.equals("")) {
-	%>
-		<body>
-	<%
-		}
-	%>
+<body onload="AtivaModal()">
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -86,11 +82,32 @@
       <div class="col-lg-3">
 
         <h1 class="my-4">Drink Fast</h1>
+        
+        <%
+        // verifica se o cliente logado é do tipo ADMIN,
+        // para mostrar somente as telas do administrador
+        	if(clienteLogado.get(0).getTipo().equals("admin")) {
+        %>
+       	<div class="list-group">
+          <a href="#" class="list-group-item">Gerenciamento de Clientes</a>
+        </div>
+        <%
+        	}
+        %>
+        
+        <%
+        // verifica se o cliente logado é do tipo CLIENTE,
+        // para mostrar somente as telas do cliente
+        	if(clienteLogado.get(0).getTipo().equals("cliente")) {
+        %>
         <div class="list-group">
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Cliente.jsp" class="list-group-item">Meus Dados</a>
-          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Endereco.jsp" class="list-group-item">Endereço's</a>
-          <a href="http://localhost:8080/Ecommerce_Bebida/HTML/CartaoDeCredito.html" class="list-group-item">Cartão de crédito's</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Endereco.jsp" class="list-group-item">Meus Endereços</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/HTML/CartaoDeCredito.html" class="list-group-item">Meus Cartões de créditos</a>
         </div>
+        <%
+        	}
+        %>
 
       </div>
       <!-- /.col-lg-3 -->

@@ -21,8 +21,8 @@ public class LoginDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into cliente "+
-				"(login, senha, nome, telefone)" +
-				"values (?,?,?,?)";
+				"(login, senha, nome, telefone, fl_ativo, dt_cadastro, tipo)" +
+				"values (?,?,?,?,?,?,?)";
 		
 		try {
 			Usuario usuario = (Usuario) entidade;
@@ -35,6 +35,9 @@ public class LoginDAO extends AbstractJdbcDAO {
 			stmt.setString(2,usuario.getSenha());
 			stmt.setString(3,usuario.getNome());
 			stmt.setString(4, usuario.getTelefone());
+			stmt.setString(5, usuario.getFlgAtivo());
+			stmt.setString(6, usuario.getDtCadastro());
+			stmt.setString(7, usuario.getTipo());
 			
 			// executa
 			stmt.execute();
@@ -67,6 +70,9 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setSenha(rs.getString("senha"));
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
+				usuarioItem.setFlgAtivo(rs.getString("fl_ativo"));
+				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
+				usuarioItem.setTipo(rs.getString("tipo"));
 				
 				// adicionando o objeto à lista
 				usuarios.add(usuarioItem);
@@ -104,6 +110,9 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setSenha(rs.getString("senha"));
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
+				usuarioItem.setFlgAtivo(rs.getString("fl_ativo"));
+				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
+				usuarioItem.setTipo(rs.getString("tipo"));
 				
 				// adicionando o objeto à lista
 				usuarios.add(usuarioItem);
@@ -145,6 +154,9 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setSenha(rs.getString("senha"));
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
+				usuarioItem.setFlgAtivo(rs.getString("fl_ativo"));
+				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
+				usuarioItem.setTipo(rs.getString("tipo"));
 				
 				// adicionando o objeto à lista
 				usuarios.add(usuarioItem);

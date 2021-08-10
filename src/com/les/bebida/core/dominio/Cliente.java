@@ -3,14 +3,14 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Cliente
  * @author Davi Rodrigues
- * @date 10/03/2021
+ * @date 09/08/2021
  */
 public class Cliente extends Pessoa {
 	private String cdCliente;
 	private String flgAtivo;
 	private String telefone;
 	private Usuario usuario;
-	private TipoCliente tipoCliente;
+	private String tipo;
 	private Endereco endereco;
 	
 	public String getCdCliente() {
@@ -37,11 +37,11 @@ public class Cliente extends Pessoa {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public TipoCliente getTipoCliente() {
-        return tipoCliente;
+	public String getTipo() {
+        return tipo;
     }
-    public void setTipoCliente(TipoCliente tipoCliente) {
-        this.tipoCliente = tipoCliente;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 	public Endereco getEndereco() {
 		return endereco;

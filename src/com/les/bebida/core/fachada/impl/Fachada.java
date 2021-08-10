@@ -18,21 +18,26 @@ import com.les.bebida.core.fachada.IFachada;
 import com.les.bebida.core.strategy.IStrategy;
 import com.les.bebida.core.strategy.impl.ValidarCPF;
 import com.les.bebida.core.strategy.impl.ValidarCodigoClienteSys;
+import com.les.bebida.core.strategy.impl.ValidarDataCadastroCliente;
+import com.les.bebida.core.strategy.impl.ValidarDataCadastroUsuario;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLogin;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLoginAndSenha;
-import com.les.bebida.core.strategy.impl.ValidarFlgAtivo;
+import com.les.bebida.core.strategy.impl.ValidarFlgAtivoCliente;
+import com.les.bebida.core.strategy.impl.ValidarFlgAtivoUsuario;
 import com.les.bebida.core.strategy.impl.ValidarLogin;
 import com.les.bebida.core.strategy.impl.ValidarNome;
 import com.les.bebida.core.strategy.impl.ValidarNomeLogin;
 import com.les.bebida.core.strategy.impl.ValidarSenha;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgual;
+import com.les.bebida.core.strategy.impl.ValidarTipoCliente;
+import com.les.bebida.core.strategy.impl.ValidarTipoUsuario;
 
 /**
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 08/08/2021
+ * @date 10/08/2021
  */
 public class Fachada implements IFachada {
 
@@ -40,7 +45,10 @@ public class Fachada implements IFachada {
 	private static Map<String, IDAO> daos;
 
 	/* ------------ Declaração de TODAS as Strategy's ------------ */
-	ValidarFlgAtivo vFlgAtivo = new ValidarFlgAtivo();
+	ValidarFlgAtivoCliente vFlgAtivoCliente = new ValidarFlgAtivoCliente();
+	ValidarFlgAtivoUsuario vFlgAtivoUsuario = new ValidarFlgAtivoUsuario();
+	ValidarTipoCliente vTipoCliente = new ValidarTipoCliente();
+	ValidarTipoUsuario vTipoUsuario = new ValidarTipoUsuario();
 	ValidarLogin vLogin = new ValidarLogin();
 	ValidarSenha vSenha = new ValidarSenha();
 	ValidarSenhaIgual vSenhaIgual = new ValidarSenhaIgual();
@@ -48,6 +56,8 @@ public class Fachada implements IFachada {
 	ValidarNomeLogin vNomeLogin = new ValidarNomeLogin();
 	ValidarCPF vCPF = new ValidarCPF();
 	ValidarDataNascimento vDataNascimento = new ValidarDataNascimento();
+	ValidarDataCadastroCliente vDataCadastroCliente = new ValidarDataCadastroCliente();
+	ValidarDataCadastroUsuario vDataCadastroUsuario = new ValidarDataCadastroUsuario();
 	ValidarCodigoClienteSys vCodigoClienteSys = new ValidarCodigoClienteSys();
 	ValidarExistenciaLogin vExistenciaLogin = new ValidarExistenciaLogin();
 	ValidarExistenciaLoginAndSenha vExistenciaLoginAndSenha = new ValidarExistenciaLoginAndSenha();
@@ -97,7 +107,9 @@ public class Fachada implements IFachada {
 		regrasSalvarCliente.add(vNome);
 		regrasSalvarCliente.add(vCPF);
 		regrasSalvarCliente.add(vDataNascimento);
-		regrasSalvarCliente.add(vFlgAtivo);
+		regrasSalvarCliente.add(vFlgAtivoCliente);
+		regrasSalvarCliente.add(vDataCadastroCliente);
+		regrasSalvarCliente.add(vTipoCliente);
 		/* ---------------------------------------------------------- */
 		
 		/* ----- Adicionando as Strategy's na lista do Endereço ----- */
@@ -110,6 +122,9 @@ public class Fachada implements IFachada {
 		regrasSalvarLogin.add(vLogin);
 		regrasSalvarLogin.add(vSenhaIgual);
 		regrasSalvarLogin.add(vExistenciaLogin);
+		regrasSalvarLogin.add(vFlgAtivoUsuario);
+		regrasSalvarLogin.add(vDataCadastroUsuario);
+		regrasSalvarLogin.add(vTipoUsuario);
 		/* ----- CONSULTAR ----- */
 		regrasConsultarLogin.add(vLogin);
 		regrasConsultarLogin.add(vSenha);

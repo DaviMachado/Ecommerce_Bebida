@@ -3,7 +3,7 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Usuario
  * @author Davi Rodrigues
- * @date 21/04/2021
+ * @date 10/08/2021
  */
 public class Usuario extends EntidadeDominio {
 	private String login;
@@ -11,6 +11,8 @@ public class Usuario extends EntidadeDominio {
 	private String confirmarSenha;
 	private String nome;
 	private String telefone;
+	private String flgAtivo;
+	private String tipo;
 	
 	
 	public String getLogin() {
@@ -56,4 +58,16 @@ public class Usuario extends EntidadeDominio {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	public String getFlgAtivo() {
+		return flgAtivo;
+	}
+	public void setFlgAtivo(String flgAtivo) {
+		this.flgAtivo = flgAtivo;
+	}
+	public String getTipo() {
+        return tipo;
+    }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 }
