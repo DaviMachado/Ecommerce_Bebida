@@ -63,7 +63,7 @@
 			  		<label>Sexo</label>
 
 			  			<select name="selecioneSexo" class="form-control" placeholder="Selecione um Sexo">
-					      	<option disabled selected>Selecione uma opção...</option>
+					      	<option disabled>Selecione uma opção...</option>
 					      	<option><%=cliente.get(0).getSexo() %></option>
 					      	<option value="masculino">Masculino</option>
 					      	<option value="feminino">Feminino</option>
