@@ -65,20 +65,30 @@ public class ClienteDAO extends AbstractJdbcDAO {
 			Cliente cliente = (Cliente) entidade;
 //			Usuario usuario = cliente.getUsuario();
 			
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			
-//			stmt.setString(1, usuario.getLogin());
-//			stmt.setString(2, usuario.getSenha());
-			stmt.setString(1, cliente.getNome());
-			stmt.setString(2, cliente.getCpf());
-			stmt.setString(3, cliente.getDt_nasc());
-			stmt.setString(4, cliente.getCdCliente());
-			stmt.setString(5, cliente.getSexo());
-			stmt.setString(6, cliente.getTelefone());
-			stmt.setString(7, cliente.getId());
-			
-			stmt.execute();
-			stmt.close();
+			// se tiver algo no "alteraCliente", altera o cliente
+			if(cliente.getAlteraCliente().contentEquals("1")) {
+				PreparedStatement stmt = connection.prepareStatement(sql);
+				
+//				stmt.setString(1, usuario.getLogin());
+//				stmt.setString(2, usuario.getSenha());
+				stmt.setString(1, cliente.getNome());
+				stmt.setString(2, cliente.getCpf());
+				stmt.setString(3, cliente.getDt_nasc());
+				stmt.setString(4, cliente.getCdCliente());
+				stmt.setString(5, cliente.getSexo());
+				stmt.setString(6, cliente.getTelefone());
+				stmt.setString(7, cliente.getId());
+				
+				stmt.execute();
+				stmt.close();
+			}
+			// caso contrário, não faz alteração e somente fecha a conexão com o banco,
+			// e no ClienteoHelper, irá ter outra verificação para poder chamar a JSP de edição do cliente ADMIN
+			else {
+				PreparedStatement stmt = connection.prepareStatement(sql);
+				stmt.close();
+			}
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -200,5 +210,49 @@ public class ClienteDAO extends AbstractJdbcDAO {
 			throw new RuntimeException(e);
 		}
 	} // Listar Cliente por ID
+	
+	/**
+	 * Metodo para Listar somente Cliente do tipo CLIENTE
+	 * @param entidade
+	 * @return
+	 */
+	public List<EntidadeDominio> consultarClienteByTipoSomenteCliente (EntidadeDominio entidade){
+		openConnection();
+		try {
+			List<EntidadeDominio> clientes = new ArrayList<>();
+			PreparedStatement stmt = connection.prepareStatement("select * from cliente where tipo = 'cliente'");
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				// criando o objeto Cliente
+				Cliente cliente = new Cliente();
+				Usuario usuario = new Usuario();
+				
+				cliente.setId(rs.getString("id"));
+				
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				cliente.setUsuario(usuario);
+				
+				cliente.setNome(rs.getString("nome"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setDt_nasc(rs.getString("dt_Nasc"));
+				cliente.setCdCliente(rs.getString("cd_cliente"));
+				cliente.setSexo(rs.getString("sexo"));
+				cliente.setTelefone(rs.getString("telefone"));
+				cliente.setFlgAtivo(rs.getString("fl_ativo"));
+				cliente.setDtCadastro(rs.getString("dt_cadastro"));
+				cliente.setTipo(rs.getString("tipo"));
+				
+				// adicionando o objeto à lista
+				clientes.add(cliente);
+			}
+			rs.close();
+			stmt.close();
+			return clientes;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar Cliente do tipo CLIENTE
 	
 }

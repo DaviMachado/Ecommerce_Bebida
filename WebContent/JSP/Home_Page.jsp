@@ -89,7 +89,7 @@
         	if(clienteLogado.get(0).getTipo().equals("admin")) {
         %>
        	<div class="list-group">
-          <a href="#" class="list-group-item">Gerenciamento de Clientes</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp" class="list-group-item">Gerenciamento de Clientes</a>
         </div>
         <%
         	}
