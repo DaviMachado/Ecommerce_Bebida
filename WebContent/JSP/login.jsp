@@ -77,7 +77,7 @@
 	                                </div>
 	                                <div class="row">
 	                                    <div class="form-group col-md-7">
-	                                        <button type="submit" class="btn btn-google pull-right" name="operacao" value="CONSULTAR">Entrar</button>
+	                                        <button type="submit" class="btn btn-success pull-right" name="operacao" value="CONSULTAR">Entrar</button>
 	                                    </div>
 	                                </div>
 	                            </div>
