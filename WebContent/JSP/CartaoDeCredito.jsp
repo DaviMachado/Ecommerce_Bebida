@@ -165,6 +165,10 @@
 	            <label for="securitycode">Security Code</label>
 	            <input id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric">
 	        </div>
+       	    <div>
+	   		  <label>Preferencial</label>
+			  <input type="checkbox" id="preferencial" name="preferencial">
+			</div>
 	    </div>
 	    
 	    <div align="right" style="margin-top: 10px; margin-bottom: 10px;">

@@ -1,0 +1,19 @@
+create database ecommerce;
+
+drop table cartao_de_credito;
+
+create table cartao_de_credito (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	nome		       VARCHAR(50),
+	num_cartao	       VARCHAR(50),
+	bandeira      	   VARCHAR(50),
+	cod_seguranca      VARCHAR(10),
+    fl_preferencial    NUMERIC(1),
+    id_cliente BIGINT,
+	primary	key	(id),
+	CONSTRAINT fk_CartaoCliente FOREIGN KEY (id_cliente) REFERENCES cliente (id)
+);
+
+use ecommerce;
+
+select * from cartao_de_credito;

@@ -19,3 +19,9 @@ create table endereco (
 use ecommerce;
 
 select * from endereco;
+-----------------------------
+Teste:
+
+create database ecommerce;
+
+ALTER TABLE `endereco` ADD CONSTRAINT `fk_cliente` FOREIGN KEY ( `id` ) REFERENCES `cliente` ( ` id ` ) ;
