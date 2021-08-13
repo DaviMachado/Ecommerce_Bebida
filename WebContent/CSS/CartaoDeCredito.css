@@ -58,6 +58,8 @@ body {
     max-width: 400px;
     padding: 20px;
     color: #707070;
+    margin-left: 500px;
+    margin-top: -50px;
 }
 
 label {
@@ -94,7 +96,7 @@ input {
     width: 100%;
     max-width: 400px;
     max-height: 251px;
-    height: 54vw;
+   /*height: 54vw;*/
     padding: 20px;
 }
 
@@ -332,6 +334,7 @@ input {
     transition: transform 0.6s;
     transition: transform 0.6s, -webkit-transform 0.6s;
     cursor: pointer;
+    margin-left: 200px;
 }
 
 .creditcard .front,
@@ -353,4 +356,8 @@ input {
 .creditcard.flipped {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
+}
+
+#footer{
+	width: 1400px;
 }
