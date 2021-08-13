@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!-- @author Davi Rodrigues-->
+<!-- @date 13/08/2021 -->
+
+<%@page import='com.les.bebida.core.dao.*'%>
+<%@page import='com.les.bebida.core.dominio.*'%>
+<%@page import='com.les.bebida.core.dao.impl.*'%>
+
+<%@page import="java.util.List"%>
+
 <html>
 <head>
 	<title>Cartao De Credito</title>
@@ -10,8 +19,22 @@
 	<!-- importações para funcionar o Header e o Footer -->
 	<link href="../CSS/bootstrap.min.css" rel="stylesheet">
  	<link href="../CSS/shop-homepage.css" rel="stylesheet">
-
 </head>
+
+<%
+	ClienteDAO dao = new ClienteDAO();
+	Usuario usuarioLogado = new Usuario();
+	
+	// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+	HttpSession sessao = request.getSession();
+	// pega o objeto salvo em Sessão com o nome "usuarioLogado",
+	// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
+	usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+	
+	// faz um consulta no banco para pegar todos os dados do cliente logado
+	List<Cliente> cliente = dao.consultarClienteById(usuarioLogado.getId());
+%>
+
 <body>
 	<!-- Header -->
 	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -143,31 +166,31 @@
     </div>
     <!-- FIM Cartão fisico da tela -->
     
-    <form>
+    <form action="http://localhost:8080/Ecommerce_Bebida/cadastroCartaoCredito">
 	    <div class="form-container">
 	        <div class="field-container">
-	            <label for="name">Name</label>
-	            <input id="name" maxlength="20" type="text">
+	            <label for="name">Nome</label>
+	            <input id="name" name="nome" maxlength="20" type="text">
 	        </div>
 	        <div class="field-container">
-	            <label for="cardnumber">Card Number</label><span id="generatecard">generate random</span>
-	            <input id="cardnumber" type="text" pattern="[0-9]*" inputmode="numeric">
+	            <label for="cardnumber">Número do Cartão</label><span id="generatecard">generate random</span>
+	            <input id="cardnumber" name="num_cartao" type="text" inputmode="numeric"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	            <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
 	                xmlns:xlink="http://www.w3.org/1999/xlink">
 	
 	            </svg>
 	        </div>
 	        <div class="field-container">
-	            <label for="expirationdate">Expiration (mm/yy)</label>
-	            <input id="expirationdate" type="text" pattern="[0-9]*" inputmode="numeric">
+	            <label for="expirationdate">Validade (mm/yy)</label>
+	            <input id="expirationdate" name="dt_validade" type="text" inputmode="numeric"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	        </div>
 	        <div class="field-container">
-	            <label for="securitycode">Security Code</label>
-	            <input id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric">
+	            <label for="securitycode">Código de Segurança</label>
+	            <input id="securitycode" name="cod_seguranca" type="text" inputmode="numeric"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	        </div>
        	    <div>
 	   		  <label>Preferencial</label>
-			  <input type="checkbox" id="preferencial" name="preferencial">
+			  <input type="checkbox" id="preferencial" name="flg_preferencial">
 			</div>
 	    </div>
 	    
@@ -175,6 +198,9 @@
 		    <button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
 		    <button class="btn btn-secondary" onclick="history.back()">Voltar</button>
 	    </div>
+	    
+	    <!-- ID do Cliente -->
+		<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
     </form>
 
 </body>

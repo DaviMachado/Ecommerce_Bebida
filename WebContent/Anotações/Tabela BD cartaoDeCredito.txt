@@ -7,9 +7,11 @@ create table cartao_de_credito (
 	nome		       VARCHAR(50),
 	num_cartao	       VARCHAR(50),
 	bandeira      	   VARCHAR(50),
-	cod_seguranca      VARCHAR(10),
-    fl_preferencial    NUMERIC(1),
-    id_cliente BIGINT,
+	cd_seguranca       VARCHAR(10),
+	dt_validade 	   VARCHAR(7),
+    flg_preferencial   NUMERIC(1),
+    dt_cadastro 	   DATE,
+    id_cliente         BIGINT,
 	primary	key	(id),
 	CONSTRAINT fk_CartaoCliente FOREIGN KEY (id_cliente) REFERENCES cliente (id)
 );

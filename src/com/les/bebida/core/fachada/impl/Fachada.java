@@ -9,7 +9,9 @@ import com.les.bebida.core.dao.IDAO;
 import com.les.bebida.core.dao.impl.ClienteDAO;
 import com.les.bebida.core.dao.impl.EnderecoDAO;
 import com.les.bebida.core.dao.impl.LoginDAO;
+import com.les.bebida.core.dao.impl.CartaoDeCreditoDAO;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.CartaoDeCredito;
 import com.les.bebida.core.dominio.Cliente;
 import com.les.bebida.core.dominio.Endereco;
 import com.les.bebida.core.dominio.Resultado;
@@ -18,6 +20,7 @@ import com.les.bebida.core.fachada.IFachada;
 import com.les.bebida.core.strategy.IStrategy;
 import com.les.bebida.core.strategy.impl.ValidarCPF;
 import com.les.bebida.core.strategy.impl.ValidarCodigoClienteSys;
+import com.les.bebida.core.strategy.impl.ValidarDataCadastroCartaoDeCredito;
 import com.les.bebida.core.strategy.impl.ValidarDataCadastroCliente;
 import com.les.bebida.core.strategy.impl.ValidarDataCadastroUsuario;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
@@ -37,7 +40,7 @@ import com.les.bebida.core.strategy.impl.ValidarTipoUsuario;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 10/08/2021
+ * @date 13/08/2021
  */
 public class Fachada implements IFachada {
 
@@ -58,6 +61,7 @@ public class Fachada implements IFachada {
 	ValidarDataNascimento vDataNascimento = new ValidarDataNascimento();
 	ValidarDataCadastroCliente vDataCadastroCliente = new ValidarDataCadastroCliente();
 	ValidarDataCadastroUsuario vDataCadastroUsuario = new ValidarDataCadastroUsuario();
+	ValidarDataCadastroCartaoDeCredito vDataCadastroCartao = new ValidarDataCadastroCartaoDeCredito();
 	ValidarCodigoClienteSys vCodigoClienteSys = new ValidarCodigoClienteSys();
 	ValidarExistenciaLogin vExistenciaLogin = new ValidarExistenciaLogin();
 	ValidarExistenciaLoginAndSenha vExistenciaLoginAndSenha = new ValidarExistenciaLoginAndSenha();
@@ -68,6 +72,7 @@ public class Fachada implements IFachada {
 	List<IStrategy> regrasSalvarCliente = new ArrayList<>();
 	List<IStrategy> regrasSalvarEndereco = new ArrayList<>();
 	List<IStrategy> regrasSalvarLogin = new ArrayList<>();
+	List<IStrategy> regrasSalvarCartaoDeCredito = new ArrayList<>();
 	/* ------------ CONSULTAR ------------ */
 	List<IStrategy> regrasConsultarCliente = new ArrayList<>();
 	List<IStrategy> regrasConsultarEndereco = new ArrayList<>();
@@ -85,6 +90,7 @@ public class Fachada implements IFachada {
 	Map<String, List<IStrategy>> regrasCliente = new HashMap<>();
 	Map<String, List<IStrategy>> regrasEndereco = new HashMap<>();
 	Map<String, List<IStrategy>> regrasLogin = new HashMap<>();
+	Map<String, List<IStrategy>> regrasCartaoDeCredito = new HashMap<>();
 	/* ----------------------------------------------------------------------------------- */
 	
 	/* ------------ Declaração da Regra de Negócio Geral ------------ */
@@ -101,6 +107,7 @@ public class Fachada implements IFachada {
 		daos.put(Cliente.class.getName(), new ClienteDAO());
 		daos.put(Endereco.class.getName(), new EnderecoDAO());
 		daos.put(Usuario.class.getName(), new LoginDAO());
+		daos.put(CartaoDeCredito.class.getName(), new CartaoDeCreditoDAO());
 		
 		/* ----- Adicionando as Strategy's na lista do Cliente ----- */
 		/* ----- SALVAR ----- */
@@ -129,6 +136,11 @@ public class Fachada implements IFachada {
 		regrasConsultarLogin.add(vLogin);
 		regrasConsultarLogin.add(vSenha);
 		regrasConsultarLogin.add(vExistenciaLoginAndSenha);
+		/* ---------------------------------------------------------- */
+		
+		/* ----- Adicionando as Strategy's na lista do Cartao de Credito ----- */
+		/* ----- SALVAR ----- */
+		regrasSalvarCartaoDeCredito.add(vDataCadastroCartao);
 		/* ---------------------------------------------------------- */
 
 		/* ----- REGRAS DA ENTIDADE CLIENTE ----- */
@@ -162,10 +174,16 @@ public class Fachada implements IFachada {
 		regrasLogin.put("EXCLUIR", regrasExcluirLogin);
 		/* --------------------------------------- */
 		
+		/* ----- REGRAS DA ENTIDADE CARTAO DE CREDITO ----- */
+		/* ----- SALVAR ----- */
+		regrasCartaoDeCredito.put("SALVAR", regrasSalvarCartaoDeCredito);
+		/* --------------------------------------- */
+		
 		/* ----- REGRAS GERAIS ----- */
 		regrasGeral.put(Cliente.class.getName(), regrasCliente);
 		regrasGeral.put(Endereco.class.getName(), regrasEndereco);
 		regrasGeral.put(Usuario.class.getName(), regrasLogin);
+		regrasGeral.put(CartaoDeCredito.class.getName(), regrasCartaoDeCredito);
 		/* -------------------------- */
 	}
 
