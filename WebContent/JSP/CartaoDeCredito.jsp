@@ -194,10 +194,15 @@
 			</div>
 	    </div>
 	    
+	    <!-- Botão CRUD -->
 	    <div align="right" style="margin-top: 10px; margin-bottom: 10px;">
 		    <button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
-		    <button class="btn btn-secondary" onclick="history.back()">Voltar</button>
 	    </div>
+	    
+	    <!-- Botão Voltar -->
+	    <div align="right" style="margin-top: 10px;">
+			<input style="width: 10% !important; padding: 5px !important; margin-bottom: 10px" type="button" value="Voltar" onclick="history.back()">
+		</div>
 	    
 	    <!-- ID do Cliente -->
 		<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
