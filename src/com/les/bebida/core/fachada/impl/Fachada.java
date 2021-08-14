@@ -77,13 +77,17 @@ public class Fachada implements IFachada {
 	List<IStrategy> regrasConsultarCliente = new ArrayList<>();
 	List<IStrategy> regrasConsultarEndereco = new ArrayList<>();
 	List<IStrategy> regrasConsultarLogin = new ArrayList<>();
+	List<IStrategy> regrasConsultarCartaoDeCredito = new ArrayList<>();
 	/* ------------ ALTERAR ------------ */
 	List<IStrategy> regrasAlterarCliente = new ArrayList<>();
 	List<IStrategy> regrasAlterarEndereco = new ArrayList<>();
+	List<IStrategy> regrasAlterarLogin = new ArrayList<>();
+	List<IStrategy> regrasAlterarCartaoDeCredito = new ArrayList<>();
 	/* ------------ EXCLUIR ------------ */
 	List<IStrategy> regrasExcluirCliente = new ArrayList<>();
 	List<IStrategy> regrasExcluirEndereco = new ArrayList<>();
 	List<IStrategy> regrasExcluirLogin = new ArrayList<>();
+	List<IStrategy> regrasExcluirCartaoDeCredito = new ArrayList<>();
 	/* -------------------------------------------------------------------------- */
 	
 	/* ------------ Declaração dos MAP's das Regras de Negócios dos Dominios ------------ */
@@ -170,6 +174,8 @@ public class Fachada implements IFachada {
 		regrasLogin.put("SALVAR", regrasSalvarLogin);
 		/* ----- CONSULTAR ----- */
 		regrasLogin.put("CONSULTAR", regrasConsultarLogin);
+		/* ----- ALTERAR ----- */
+		regrasLogin.put("ALTERAR", regrasAlterarLogin);
 		/* ----- EXCLUIR ----- */
 		regrasLogin.put("EXCLUIR", regrasExcluirLogin);
 		/* --------------------------------------- */
@@ -177,6 +183,12 @@ public class Fachada implements IFachada {
 		/* ----- REGRAS DA ENTIDADE CARTAO DE CREDITO ----- */
 		/* ----- SALVAR ----- */
 		regrasCartaoDeCredito.put("SALVAR", regrasSalvarCartaoDeCredito);
+		/* ----- CONSULTAR ----- */
+		regrasCartaoDeCredito.put("CONSULTAR", regrasConsultarCartaoDeCredito);
+		/* ----- ALTERAR ----- */
+		regrasCartaoDeCredito.put("ALTERAR", regrasAlterarCartaoDeCredito);
+		/* ----- EXCLUIR ----- */
+		regrasCartaoDeCredito.put("EXCLUIR", regrasExcluirCartaoDeCredito);
 		/* --------------------------------------- */
 		
 		/* ----- REGRAS GERAIS ----- */

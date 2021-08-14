@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 13/08/2021 -->
+<!-- @date 14/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -11,28 +11,33 @@
 <html>
 <head>
 	<title>Cartao De Credito</title>
-	<link href="../CSS/CartaoDeCredito.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="../JS/CartaoDeCredito.js"></script>
+	<link href="./CSS/CartaoDeCredito.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="./JS/CartaoDeCredito.js"></script>
     <script src="https://unpkg.com/imask"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
     
 	<!-- importações para funcionar o Header e o Footer -->
-	<link href="../CSS/bootstrap.min.css" rel="stylesheet">
- 	<link href="../CSS/shop-homepage.css" rel="stylesheet">
+	<link href="./CSS/bootstrap.min.css" rel="stylesheet">
+ 	<link href="./CSS/shop-homepage.css" rel="stylesheet">
 </head>
 
 <%
-	ClienteDAO dao = new ClienteDAO();
-	Usuario usuarioLogado = new Usuario();
+	CartaoDeCreditoDAO dao = new CartaoDeCreditoDAO();
 	
-	// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
-	HttpSession sessao = request.getSession();
-	// pega o objeto salvo em Sessão com o nome "usuarioLogado",
-	// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
-	usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+	// pega o id do cartao de credito que estava pendurado na requisição,
+	// que foi enviado pelo arquivo "CartaoDeCreditoHelper"
+	String idCartaoDeCredito = (String)request.getAttribute("idCartaoDeCredito");
+
+	List<CartaoDeCredito> cartao = dao.consultarCartaoDeCreditoById(idCartaoDeCredito);
 	
-	// faz um consulta no banco para pegar todos os dados do cliente logado
-	List<Cliente> cliente = dao.consultarClienteById(usuarioLogado.getId());
+	// teve que ser atribuidos os valores do objeto "cartao" em variaveis separadas, 
+	// pois estava dando erro se colocasse o objeto direto na tela,
+	// EX: se colocasse "cartao.get(0).getNome();" dentro do value do campo name, acusava erro de não existir esse campo
+	String id = cartao.get(0).getId();
+	String nome = cartao.get(0).getNome();
+	String numero = cartao.get(0).getNum_cartao();
+	String validade = cartao.get(0).getDt_validade();
+	String cdSeguranca = cartao.get(0).getCod_seguranca();
 %>
 
 <body>
@@ -170,11 +175,11 @@
 	    <div class="form-container">
 	        <div class="field-container">
 	            <label for="name">Nome</label>
-	            <input id="name" name="nome" maxlength="20" type="text">
+	            <input id="name" name="nome" maxlength="20" type="text" value="<%=nome %>">
 	        </div>
 	        <div class="field-container">
 	            <label for="cardnumber">Número do Cartão</label><span id="generatecard">generate random</span>
-	            <input id="cardnumber" name="num_cartao" type="text" inputmode="numeric"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
+	            <input id="cardnumber" name="num_cartao" type="text" inputmode="numeric" value="<%=numero %>"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	            <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
 	                xmlns:xlink="http://www.w3.org/1999/xlink">
 	
@@ -182,11 +187,11 @@
 	        </div>
 	        <div class="field-container">
 	            <label for="expirationdate">Validade (mm/yy)</label>
-	            <input id="expirationdate" name="dt_validade" type="text" inputmode="numeric"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
+	            <input id="expirationdate" name="dt_validade" type="text" inputmode="numeric" value="<%=validade %>"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	        </div>
 	        <div class="field-container">
 	            <label for="securitycode">Código de Segurança</label>
-	            <input id="securitycode" name="cod_seguranca" type="text" inputmode="numeric"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
+	            <input id="securitycode" name="cod_seguranca" type="text" inputmode="numeric" value="<%=cdSeguranca %>"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	        </div>
        	    <div>
 	   		  <label>Preferencial</label>
@@ -196,8 +201,7 @@
 	    
 	    <!-- Botão CRUD -->
 	    <div align="right" style="margin-top: 10px; margin-bottom: 10px;">
-		    <button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
-		    <button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
+		    <button class="btn btn-warning" name="operacao" value="ALTERAR">Alterar</button>
 	    </div>
 	    
 	    <!-- Botão Voltar -->
@@ -206,7 +210,9 @@
 		</div>
 	    
 	    <!-- ID do Cliente -->
-		<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
+		<input type="hidden" name="idCartaoDeCredito" id="idCartaoDeCredito" value="<%=id %>">
+		<!-- Parametro que é verificado se pode alterar um Cartao de Credito ou não -->
+	    <input type="hidden" name="alteraCartao" id="alteraCartao" value="1">
     </form>
 
 </body>

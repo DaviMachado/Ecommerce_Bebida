@@ -13,6 +13,7 @@ public class CartaoDeCredito extends EntidadeDominio {
 	private String flgPreferencial;
 	private String id_cliente;
 	private String dt_validade;
+	private String AlteraCartao;
 	
 	
 	public String getNum_cartao() {
@@ -56,5 +57,11 @@ public class CartaoDeCredito extends EntidadeDominio {
 	}
 	public void setDt_validade(String dt_validade) {
 		this.dt_validade = dt_validade;
+	}
+	public String getAlteraCartao() {
+		return AlteraCartao;
+	}
+	public void setAlteraCartao(String AlteraCartao) {
+		this.AlteraCartao = AlteraCartao;
 	}
 }

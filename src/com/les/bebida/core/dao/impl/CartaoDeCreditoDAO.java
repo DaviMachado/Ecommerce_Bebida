@@ -55,32 +55,29 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 	public void alterar (EntidadeDominio entidade) {
 		openConnection();
 		
-		String sql = "update cliente set " + // login=?, senha=?,
-					 "nome=?, cpf=?, dt_nasc=?, cd_cliente=?, sexo=?, telefone=? where id=?";
+		String sql = "update cartao_de_credito set " +
+					 "nome=?, num_cartao=?, bandeira=?, cd_seguranca=?, dt_validade=?, flg_preferencial=? where id=?";
 		
 		try {
-			Cliente cliente = (Cliente) entidade;
-//			Usuario usuario = cliente.getUsuario();
+			CartaoDeCredito cartao = (CartaoDeCredito) entidade;
 			
-			// se tiver algo no "alteraCliente", altera o cliente
-			if(cliente.getAlteraCliente().contentEquals("1")) {
+			// se tiver algo no "alteraCartao", altera o cartao de credito
+			if(cartao.getAlteraCartao().contentEquals("1")) {
 				PreparedStatement stmt = connection.prepareStatement(sql);
 				
-//				stmt.setString(1, usuario.getLogin());
-//				stmt.setString(2, usuario.getSenha());
-				stmt.setString(1, cliente.getNome());
-				stmt.setString(2, cliente.getCpf());
-				stmt.setString(3, cliente.getDt_nasc());
-				stmt.setString(4, cliente.getCdCliente());
-				stmt.setString(5, cliente.getSexo());
-				stmt.setString(6, cliente.getTelefone());
-				stmt.setString(7, cliente.getId());
+				stmt.setString(1, cartao.getNome());
+				stmt.setString(2, cartao.getNum_cartao());
+				stmt.setString(3, cartao.getBandeira());
+				stmt.setString(4, cartao.getCod_seguranca());
+				stmt.setString(5, cartao.getDt_validade());
+				stmt.setString(6, cartao.getFlgPreferencial());
+				stmt.setString(7, cartao.getId());
 				
 				stmt.execute();
 				stmt.close();
 			}
 			// caso contrário, não faz alteração e somente fecha a conexão com o banco,
-			// e no ClienteoHelper, irá ter outra verificação para poder chamar a JSP de edição do cliente ADMIN
+			// e no CartaoDeCreditoHelper, irá ter outra verificação para poder chamar a JSP de edição do cartao de credito
 			else {
 				PreparedStatement stmt = connection.prepareStatement(sql);
 				stmt.close();
@@ -100,16 +97,11 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		try {
-			Cliente cliente = (Cliente) entidade;
+			CartaoDeCredito cartao = (CartaoDeCredito) entidade;
 			
-			// Exclui os endereços relacionados com o cliente
-			PreparedStatement stmt = connection.prepareStatement("delete from endereco where id_cliente=?");
-			stmt.setString(1, cliente.getId());
-			stmt.executeUpdate();
-			
-			// Exclui o cliente
-			stmt = connection.prepareStatement("delete from cliente where id=?");
-			stmt.setString(1, cliente.getId());
+			// Exclui o cartao de credito
+			PreparedStatement stmt = connection.prepareStatement("delete from cartao_de_credito where id=?");
+			stmt.setString(1, cartao.getId());
 			stmt.executeUpdate();
 			
 			stmt.close();
@@ -127,40 +119,73 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 	public List<EntidadeDominio> consultar (EntidadeDominio entidade){
 		openConnection();
 		try {
-			List<EntidadeDominio> clientes = new ArrayList<>();
-			PreparedStatement stmt = connection.prepareStatement("select * from cliente");
+			CartaoDeCredito cartao = (CartaoDeCredito) entidade;
+			PreparedStatement stmt = connection.prepareStatement("select * from cartao_de_credito where id_cliente=?");
+			stmt.setString(1, cartao.getIdCliente());
 			ResultSet rs = stmt.executeQuery();
 			
+			List<EntidadeDominio> cartoes = new ArrayList<>();
 			while (rs.next()) {
-				// criando o objeto Cliente
-				Cliente cliente = new Cliente();
-				Usuario usuario = new Usuario();
+				// criando o objeto Cartao de Credito
+				CartaoDeCredito cartaoItem = new CartaoDeCredito();
 				
-				cliente.setId(rs.getString("id"));
-				
-				usuario.setLogin(rs.getString("login"));
-				usuario.setSenha(rs.getString("senha"));
-				cliente.setUsuario(usuario);
-				
-				cliente.setNome(rs.getString("nome"));
-				cliente.setCpf(rs.getString("cpf"));
-				cliente.setDt_nasc(rs.getString("dt_Nasc"));
-				cliente.setCdCliente(rs.getString("cd_cliente"));
-				cliente.setSexo(rs.getString("sexo"));
-				cliente.setTelefone(rs.getString("telefone"));
-				cliente.setFlgAtivo(rs.getString("fl_ativo"));
-				cliente.setDtCadastro(rs.getString("dt_cadastro"));
-				cliente.setTipo(rs.getString("tipo"));
+				cartaoItem.setId(rs.getString("id"));
+				cartaoItem.setNome(rs.getString("nome"));
+				cartaoItem.setNum_cartao(rs.getString("num_cartao"));
+				cartaoItem.setBandeira(rs.getString("bandeira"));
+				cartaoItem.setCod_seguranca(rs.getString("cd_seguranca"));
+				cartaoItem.setDt_validade(rs.getString("dt_validade"));
+				cartaoItem.setFlgPreferencial(rs.getString("flg_preferencial"));
+				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				cartaoItem.setIdCliente(rs.getString("id_cliente"));
 				
 				// adicionando o objeto à lista
-				clientes.add(cliente);
+				cartoes.add(cartaoItem);
 			}
 			rs.close();
 			stmt.close();
-			return clientes;
+			return cartoes;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	} // Listar
+	
+	/**
+	 * Metodo para Listar o Cartao de Credito por ID
+	 * @param entidade
+	 * @return
+	 */
+	public List<CartaoDeCredito> consultarCartaoDeCreditoById (String idCartaoDeCredito){
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from cartao_de_credito where id=?");
+			stmt.setString(1, idCartaoDeCredito);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<CartaoDeCredito> cartoes = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Cartao de Credito
+				CartaoDeCredito cartaoItem = new CartaoDeCredito();
+				
+				cartaoItem.setId(rs.getString("id"));
+				cartaoItem.setNome(rs.getString("nome"));
+				cartaoItem.setNum_cartao(rs.getString("num_cartao"));
+				cartaoItem.setBandeira(rs.getString("bandeira"));
+				cartaoItem.setCod_seguranca(rs.getString("cd_seguranca"));
+				cartaoItem.setDt_validade(rs.getString("dt_validade"));
+				cartaoItem.setFlgPreferencial(rs.getString("flg_preferencial"));
+				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				cartaoItem.setIdCliente(rs.getString("id_cliente"));
+				
+				// adicionando o objeto à lista
+				cartoes.add(cartaoItem);
+			}
+			rs.close();
+			stmt.close();
+			return cartoes;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar Cartao de Credito por ID
 	
 }
