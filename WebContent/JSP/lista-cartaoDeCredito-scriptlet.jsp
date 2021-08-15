@@ -76,7 +76,7 @@
 		}
 		%>
 	</table>		
-	 <a href="/Ecommerce_Bebida/JSP/CartaoDeCredito.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 300px; margin-bottom: 386px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/formulario_cartaoDeCredito.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 300px; margin-bottom: 386px;"></a>
 	 
   	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">
