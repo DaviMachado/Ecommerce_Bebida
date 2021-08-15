@@ -202,7 +202,8 @@
 	    
 	    <!-- Botão Voltar -->
 	    <div align="right" style="margin-top: 10px;">
-			<input style="width: 10% !important; padding: 5px !important; margin-bottom: 10px" type="button" value="Voltar" onclick="history.back()">
+			<!--<input style="width: 10% !important; padding: 5px !important; margin-bottom: 10px" type="button" value="Voltar" onclick="history.back()">-->
+			<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 300px; width: 10% !important; padding: 5px !important; margin-bottom: 10px"></a>
 		</div>
 	    
 	    <!-- ID do Cliente -->

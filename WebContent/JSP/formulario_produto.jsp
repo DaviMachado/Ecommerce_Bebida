@@ -139,7 +139,8 @@
 				
 		  		<!-- Botão Voltar -->
 				<div align="right" style="margin-top: 10px;">
-					<input style="margin-left: 600px" type="button" value="Voltar" onclick="history.back()">
+					<!--<input style="margin-left: 600px" type="button" value="Voltar" onclick="history.back()">-->
+					<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 300px;"></a>
 				</div>
 			</form>
 		</fieldset>
