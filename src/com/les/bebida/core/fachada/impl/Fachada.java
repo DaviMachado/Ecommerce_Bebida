@@ -9,8 +9,10 @@ import com.les.bebida.core.dao.IDAO;
 import com.les.bebida.core.dao.impl.ClienteDAO;
 import com.les.bebida.core.dao.impl.EnderecoDAO;
 import com.les.bebida.core.dao.impl.LoginDAO;
+import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dao.impl.CartaoDeCreditoDAO;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.CartaoDeCredito;
 import com.les.bebida.core.dominio.Cliente;
 import com.les.bebida.core.dominio.Endereco;
@@ -38,7 +40,7 @@ import com.les.bebida.core.strategy.impl.ValidarTipoUsuario;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 14/08/2021
+ * @date 15/08/2021
  */
 public class Fachada implements IFachada {
 
@@ -69,21 +71,25 @@ public class Fachada implements IFachada {
 	List<IStrategy> regrasSalvarEndereco = new ArrayList<>();
 	List<IStrategy> regrasSalvarLogin = new ArrayList<>();
 	List<IStrategy> regrasSalvarCartaoDeCredito = new ArrayList<>();
+	List<IStrategy> regrasSalvarProduto = new ArrayList<>();
 	/* ------------ CONSULTAR ------------ */
 	List<IStrategy> regrasConsultarCliente = new ArrayList<>();
 	List<IStrategy> regrasConsultarEndereco = new ArrayList<>();
 	List<IStrategy> regrasConsultarLogin = new ArrayList<>();
 	List<IStrategy> regrasConsultarCartaoDeCredito = new ArrayList<>();
+	List<IStrategy> regrasConsultarProduto = new ArrayList<>();
 	/* ------------ ALTERAR ------------ */
 	List<IStrategy> regrasAlterarCliente = new ArrayList<>();
 	List<IStrategy> regrasAlterarEndereco = new ArrayList<>();
 	List<IStrategy> regrasAlterarLogin = new ArrayList<>();
 	List<IStrategy> regrasAlterarCartaoDeCredito = new ArrayList<>();
+	List<IStrategy> regrasAlterarProduto = new ArrayList<>();
 	/* ------------ EXCLUIR ------------ */
 	List<IStrategy> regrasExcluirCliente = new ArrayList<>();
 	List<IStrategy> regrasExcluirEndereco = new ArrayList<>();
 	List<IStrategy> regrasExcluirLogin = new ArrayList<>();
 	List<IStrategy> regrasExcluirCartaoDeCredito = new ArrayList<>();
+	List<IStrategy> regrasExcluirProduto = new ArrayList<>();
 	/* -------------------------------------------------------------------------- */
 	
 	/* ------------ Declaração dos MAP's das Regras de Negócios dos Dominios ------------ */
@@ -91,6 +97,7 @@ public class Fachada implements IFachada {
 	Map<String, List<IStrategy>> regrasEndereco = new HashMap<>();
 	Map<String, List<IStrategy>> regrasLogin = new HashMap<>();
 	Map<String, List<IStrategy>> regrasCartaoDeCredito = new HashMap<>();
+	Map<String, List<IStrategy>> regrasProduto = new HashMap<>();
 	/* ----------------------------------------------------------------------------------- */
 	
 	/* ------------ Declaração da Regra de Negócio Geral ------------ */
@@ -108,6 +115,7 @@ public class Fachada implements IFachada {
 		daos.put(Endereco.class.getName(), new EnderecoDAO());
 		daos.put(Usuario.class.getName(), new LoginDAO());
 		daos.put(CartaoDeCredito.class.getName(), new CartaoDeCreditoDAO());
+		daos.put(Produto.class.getName(), new ProdutoDAO());
 		
 		/* ----- Adicionando as Strategy's na lista do Cliente ----- */
 		/* ----- SALVAR ----- */
@@ -141,6 +149,11 @@ public class Fachada implements IFachada {
 		/* ----- Adicionando as Strategy's na lista do Cartao de Credito ----- */
 		/* ----- SALVAR ----- */
 		regrasSalvarCartaoDeCredito.add(VDataCadastro);
+		/* ---------------------------------------------------------- */
+		
+		/* ----- Adicionando as Strategy's na lista do Produto ----- */
+		/* ----- SALVAR ----- */
+		regrasSalvarProduto.add(VDataCadastro);
 		/* ---------------------------------------------------------- */
 
 		/* ----- REGRAS DA ENTIDADE CLIENTE ----- */
@@ -187,11 +200,23 @@ public class Fachada implements IFachada {
 		regrasCartaoDeCredito.put("EXCLUIR", regrasExcluirCartaoDeCredito);
 		/* --------------------------------------- */
 		
+		/* ----- REGRAS DA ENTIDADE PRODUTO ----- */
+		/* ----- SALVAR ----- */
+		regrasProduto.put("SALVAR", regrasSalvarProduto);
+		/* ----- CONSULTAR ----- */
+		regrasProduto.put("CONSULTAR", regrasConsultarProduto);
+		/* ----- ALTERAR ----- */
+		regrasProduto.put("ALTERAR", regrasAlterarProduto);
+		/* ----- EXCLUIR ----- */
+		regrasProduto.put("EXCLUIR", regrasExcluirProduto);
+		/* --------------------------------------- */
+		
 		/* ----- REGRAS GERAIS ----- */
 		regrasGeral.put(Cliente.class.getName(), regrasCliente);
 		regrasGeral.put(Endereco.class.getName(), regrasEndereco);
 		regrasGeral.put(Usuario.class.getName(), regrasLogin);
 		regrasGeral.put(CartaoDeCredito.class.getName(), regrasCartaoDeCredito);
+		regrasGeral.put(Produto.class.getName(), regrasProduto);
 		/* -------------------------- */
 	}
 

@@ -22,13 +22,14 @@ import com.les.bebida.view.helper.impl.CartaoCreditoHelper;
 import com.les.bebida.view.helper.impl.ClienteHelper;
 import com.les.bebida.view.helper.impl.EnderecoHelper;
 import com.les.bebida.view.helper.impl.LoginHelper;
+import com.les.bebida.view.helper.impl.ProdutoHelper;
 
 /**
  * Responsavel por processar todas as requisições feita pelo usuario,
  * configurado conforme o arquivo web.xml
  * 
  * @author Davi Rodrigues
- * @date 23/10/2019
+ * @date 14/08/2021
  */
 public class ControllerServlet extends HttpServlet {
 	
@@ -54,6 +55,7 @@ public class ControllerServlet extends HttpServlet {
 		viewHelper.put("/Ecommerce_Bebida/cadastro", new ClienteHelper());
 		viewHelper.put("/Ecommerce_Bebida/cadastroEndereco", new EnderecoHelper());
 		viewHelper.put("/Ecommerce_Bebida/cadastroCartaoCredito", new CartaoCreditoHelper());
+		viewHelper.put("/Ecommerce_Bebida/cadastroProduto", new ProdutoHelper());
 	}
 	
 	// Servlet Principal do sistema

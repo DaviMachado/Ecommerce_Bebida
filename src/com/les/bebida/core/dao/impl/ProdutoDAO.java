@@ -1,0 +1,199 @@
+package com.les.bebida.core.dao.impl;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Produto;
+
+public class ProdutoDAO extends AbstractJdbcDAO {
+	
+	/**
+	 * Metodo para salvar o Produto
+	 * @param entidade
+	 */
+	public void salvar(EntidadeDominio entidade) {
+		openConnection();
+		
+		String sql = "insert into produto "+ 
+				"(nome, descricao, categoria, preco_de_compra, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)" +
+				"values (?,?,?,?,?,?,?,?,?,?)";
+		
+		try {
+			Produto produto = (Produto) entidade;
+			
+			// prepared statement para inserção
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			// seta os valores
+			stmt.setString(1,produto.getNome());
+			stmt.setString(2,produto.getDescricao());
+			stmt.setString(3,produto.getCategoria());
+			stmt.setString(4,produto.getPrecoDeCompra());
+			stmt.setString(5, produto.getFoto());
+			stmt.setString(6, produto.getGrupoDePrecificacao());
+			stmt.setString(7, produto.getQuantidade());
+			stmt.setString(8, produto.getStatus());
+			stmt.setString(9, produto.getDtCadastro());
+			stmt.setString(10, produto.getObservacao());
+			
+			// executa
+			stmt.execute();
+			stmt.close();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Salvar
+	
+	
+	/**
+	 * Metodo para alterar o Produto
+	 * @param entidade
+	 */
+	public void alterar (EntidadeDominio entidade) {
+		openConnection();
+		
+		String sql = "update produto set " +
+					 "nome=?, descricao=?, categoria=?, preco_de_compra=?, foto=?, grupo_de_precificacao=?, quantidade=?, " +
+					 "status=?, observacao=? where id=?";
+		
+		try {
+			Produto produto = (Produto) entidade;
+			
+			// se tiver algo no "alteraProduto", altera o produto
+			if(produto.getAlteraProduto().contentEquals("1")) {
+				PreparedStatement stmt = connection.prepareStatement(sql);
+				
+				stmt.setString(1, produto.getNome());
+				stmt.setString(2, produto.getDescricao());
+				stmt.setString(3, produto.getCategoria());
+				stmt.setString(4, produto.getPrecoDeCompra());
+				stmt.setString(5, produto.getFoto());
+				stmt.setString(6, produto.getGrupoDePrecificacao());
+				stmt.setString(7, produto.getQuantidade());
+				stmt.setString(8, produto.getStatus());
+				stmt.setString(9, produto.getObservacao());
+				stmt.setString(10, produto.getId());
+				
+				stmt.execute();
+				stmt.close();
+			}
+			// caso contrário, não faz alteração e somente fecha a conexão com o banco,
+			// e no ProdutoHelper, irá ter outra verificação para poder chamar a JSP de edição do produto
+			else {
+				PreparedStatement stmt = connection.prepareStatement(sql);
+				stmt.close();
+			}
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Alterar
+	
+	
+	/**
+	 * Metodo para Excluir o Produto
+	 * @param entidade
+	 */
+	public void excluir (EntidadeDominio entidade) {
+		openConnection();
+		
+		try {
+			Produto produto = (Produto) entidade;
+			
+			// Exclui o produto
+			PreparedStatement stmt = connection.prepareStatement("delete from produto where id=?");
+			stmt.setString(1, produto.getId());
+			stmt.executeUpdate();
+			
+			stmt.close();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Excluir
+	
+	
+	/**
+	 * Metodo para Listar o Produto
+	 * @param entidade
+	 * @return
+	 */
+	public List<EntidadeDominio> consultar (EntidadeDominio entidade){
+		openConnection();
+		try {
+			List<EntidadeDominio> produtos = new ArrayList<>();
+			PreparedStatement stmt = connection.prepareStatement("select * from produto");
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				// criando o objeto Produto
+				Produto produtoItem = new Produto();
+				
+				produtoItem.setId(rs.getString("id"));
+				produtoItem.setNome(rs.getString("nome"));
+				produtoItem.setDescricao(rs.getString("descricao"));
+				produtoItem.setCategoria(rs.getString("categoria"));
+				produtoItem.setPrecoDeCompra(rs.getString("preco_de_compra"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setGrupoDePrecificacao(rs.getString("grupo_de_precificacao"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setQuantidade(rs.getString("quantidade"));
+				produtoItem.setStatus(rs.getString("status"));
+				produtoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				produtoItem.setObservacao(rs.getString("observacao"));
+				
+				// adicionando o objeto à lista
+				produtos.add(produtoItem);
+			}
+			rs.close();
+			stmt.close();
+			return produtos;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar
+	
+	/**
+	 * Metodo para Listar o Produto por ID
+	 * @param entidade
+	 * @return
+	 */
+	public List<Produto> consultarProdutoById (String idProduto){
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from produto where id=?");
+			stmt.setString(1, idProduto);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Produto> produtos = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Produto
+				Produto produtoItem = new Produto();
+				
+				produtoItem.setId(rs.getString("id"));
+				produtoItem.setNome(rs.getString("nome"));
+				produtoItem.setDescricao(rs.getString("descricao"));
+				produtoItem.setCategoria(rs.getString("categoria"));
+				produtoItem.setPrecoDeCompra(rs.getString("preco_de_compra"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setGrupoDePrecificacao(rs.getString("grupo_de_precificacao"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setQuantidade(rs.getString("quantidade"));
+				produtoItem.setStatus(rs.getString("status"));
+				produtoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				produtoItem.setObservacao(rs.getString("observacao"));
+				
+				// adicionando o objeto à lista
+				produtos.add(produtoItem);
+			}
+			rs.close();
+			stmt.close();
+			return produtos;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar Produto por ID
+	
+}

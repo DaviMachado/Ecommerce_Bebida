@@ -34,6 +34,11 @@
     <servlet-name>ControllerServlet</servlet-name>
     <url-pattern>/cadastroCartaoCredito</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ControllerServlet</servlet-name>
+    <url-pattern>/cadastroProduto</url-pattern>
+  </servlet-mapping>
  
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

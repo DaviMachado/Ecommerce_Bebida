@@ -90,6 +90,7 @@
         %>
        	<div class="list-group">
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp" class="list-group-item">Gerenciamento de Clientes</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_produto.jsp" class="list-group-item">Gerenciamento de Produtos</a>
         </div>
         <%
         	}
