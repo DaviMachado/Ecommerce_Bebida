@@ -1,0 +1,21 @@
+create database ecommerce;
+
+drop table estoque;
+
+create table estoque (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	id_produto	  				  BIGINT,
+	tipo				    	  VARCHAR(10),
+	quantidade_entrada_saida	  VARCHAR(10),
+	valor_custo		      		  VARCHAR(10),
+	fornecedor		       		  VARCHAR(50),
+	dt_entrada  	   			  DATE,
+	quantidade_final			  VARCHAR(10),
+    dt_cadastro 	   			  DATE,
+	primary	key	(id),
+	CONSTRAINT fk_EstoqueProduto FOREIGN KEY (id_produto) REFERENCES produto (id)
+);
+
+use ecommerce;
+
+select * from estoque;

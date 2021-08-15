@@ -8,10 +8,12 @@ import java.util.Map;
 import com.les.bebida.core.dao.IDAO;
 import com.les.bebida.core.dao.impl.ClienteDAO;
 import com.les.bebida.core.dao.impl.EnderecoDAO;
+import com.les.bebida.core.dao.impl.EstoqueDAO;
 import com.les.bebida.core.dao.impl.LoginDAO;
 import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dao.impl.CartaoDeCreditoDAO;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Estoque;
 import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.CartaoDeCredito;
 import com.les.bebida.core.dominio.Cliente;
@@ -72,12 +74,14 @@ public class Fachada implements IFachada {
 	List<IStrategy> regrasSalvarLogin = new ArrayList<>();
 	List<IStrategy> regrasSalvarCartaoDeCredito = new ArrayList<>();
 	List<IStrategy> regrasSalvarProduto = new ArrayList<>();
+	List<IStrategy> regrasSalvarEstoque = new ArrayList<>();
 	/* ------------ CONSULTAR ------------ */
 	List<IStrategy> regrasConsultarCliente = new ArrayList<>();
 	List<IStrategy> regrasConsultarEndereco = new ArrayList<>();
 	List<IStrategy> regrasConsultarLogin = new ArrayList<>();
 	List<IStrategy> regrasConsultarCartaoDeCredito = new ArrayList<>();
 	List<IStrategy> regrasConsultarProduto = new ArrayList<>();
+	List<IStrategy> regrasConsultarEstoque = new ArrayList<>();
 	/* ------------ ALTERAR ------------ */
 	List<IStrategy> regrasAlterarCliente = new ArrayList<>();
 	List<IStrategy> regrasAlterarEndereco = new ArrayList<>();
@@ -98,6 +102,7 @@ public class Fachada implements IFachada {
 	Map<String, List<IStrategy>> regrasLogin = new HashMap<>();
 	Map<String, List<IStrategy>> regrasCartaoDeCredito = new HashMap<>();
 	Map<String, List<IStrategy>> regrasProduto = new HashMap<>();
+	Map<String, List<IStrategy>> regrasEstoque = new HashMap<>();
 	/* ----------------------------------------------------------------------------------- */
 	
 	/* ------------ Declaração da Regra de Negócio Geral ------------ */
@@ -116,6 +121,7 @@ public class Fachada implements IFachada {
 		daos.put(Usuario.class.getName(), new LoginDAO());
 		daos.put(CartaoDeCredito.class.getName(), new CartaoDeCreditoDAO());
 		daos.put(Produto.class.getName(), new ProdutoDAO());
+		daos.put(Estoque.class.getName(), new EstoqueDAO());
 		
 		/* ----- Adicionando as Strategy's na lista do Cliente ----- */
 		/* ----- SALVAR ----- */
@@ -154,6 +160,11 @@ public class Fachada implements IFachada {
 		/* ----- Adicionando as Strategy's na lista do Produto ----- */
 		/* ----- SALVAR ----- */
 		regrasSalvarProduto.add(VDataCadastro);
+		/* ---------------------------------------------------------- */
+		
+		/* ----- Adicionando as Strategy's na lista do Estoque ----- */
+		/* ----- SALVAR ----- */
+		regrasSalvarEstoque.add(VDataCadastro);
 		/* ---------------------------------------------------------- */
 
 		/* ----- REGRAS DA ENTIDADE CLIENTE ----- */
@@ -211,12 +222,22 @@ public class Fachada implements IFachada {
 		regrasProduto.put("EXCLUIR", regrasExcluirProduto);
 		/* --------------------------------------- */
 		
+		/* ----- REGRAS DA ENTIDADE ESTOQUE ----- */
+		/* ----- SALVAR ----- */
+		regrasEstoque.put("SALVAR", regrasSalvarEstoque);
+		/* ----- CONSULTAR ----- */
+		regrasEstoque.put("CONSULTAR", regrasConsultarEstoque);
+		/* ----- ALTERAR ----- */
+		/* ----- EXCLUIR ----- */
+		/* --------------------------------------- */
+		
 		/* ----- REGRAS GERAIS ----- */
 		regrasGeral.put(Cliente.class.getName(), regrasCliente);
 		regrasGeral.put(Endereco.class.getName(), regrasEndereco);
 		regrasGeral.put(Usuario.class.getName(), regrasLogin);
 		regrasGeral.put(CartaoDeCredito.class.getName(), regrasCartaoDeCredito);
 		regrasGeral.put(Produto.class.getName(), regrasProduto);
+		regrasGeral.put(Estoque.class.getName(), regrasEstoque);
 		/* -------------------------- */
 	}
 
