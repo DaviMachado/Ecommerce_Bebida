@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 12/08/2021 -->
+<!-- @date 16/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -63,19 +63,19 @@
 					<!-- Nome -->
 				    <div class="form-group col-md-8">
 				      <label>Nome</label>
-				      <input type="text" class="form-control" name="nome" placeholder="Nome" value="<%=cliente.get(0).getNome() %>"> <!-- required -->
+				      <input type="text" class="form-control" name="nome" placeholder="Nome" value="<%=cliente.get(0).getNome() %>" required>
 				    </div>
 
 				    <!-- CPF -->
 				    <div class="form-group col-md-2">
 				      <label>CPF</label>
-				      <input type="text" class="form-control" name="cpf" placeholder="000.000.000-00" value="<%=cliente.get(0).getCpf() %>">
+				      <input type="text" class="form-control" name="cpf" placeholder="000.000.000-00" value="<%=cliente.get(0).getCpf() %>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" minlength="11" maxlength="11" required>
 				    </div>
 
 				    <!-- Data Nascimento -->
 				    <div class="form-group col-md-2">
 				      <label>Data Nascimento</label>
-				      <input type="date" class="form-control" name="dtNasc" placeholder="Data Nascimento" value="<%=cliente.get(0).getDt_nasc() %>">
+				      <input type="date" class="form-control" name="dtNasc" placeholder="Data Nascimento" value="<%=cliente.get(0).getDt_nasc() %>" required>
 				    </div>
 			  	</div>
 			  	
@@ -83,16 +83,16 @@
 					<!-- Telefone -->
 				    <div class="form-group col-md-2">
 				      <label>Telefone</label>
-				      <input type="number" class="form-control" name="telefone" placeholder="(11)1234-5678" value="<%=cliente.get(0).getTelefone() %>">
+				      <input type="text" class="form-control" name="telefone" placeholder="(11)1234-5678" value="<%=cliente.get(0).getTelefone() %>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="11">
 				    </div>
 
 				    <!-- Sexo -->
 			  		<div class="form-group col-md-2">
 			  		<label>Sexo</label>
 
-			  			<select name="selecioneSexo" class="form-control" placeholder="Selecione um Sexo">
+			  			<select name="selecioneSexo" class="form-control" placeholder="Selecione um Sexo" required>
 					      	<option disabled>Selecione uma opção...</option>
-					      	<option><%=cliente.get(0).getSexo() %></option>
+					      	<option value="<%=cliente.get(0).getSexo() %>"><%=cliente.get(0).getSexo() %></option>
 					      	<option value="masculino">Masculino</option>
 					      	<option value="feminino">Feminino</option>
 				      	</select>

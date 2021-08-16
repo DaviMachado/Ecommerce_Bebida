@@ -40,7 +40,7 @@
   </nav>
   <!-- Fim Header -->
   
-	<table border="1" style="margin-top: 30px; margin-left: 300px;">
+	<table border="1" style="margin-top: 30px; margin-left: 200px;">
 		<tr>
             <th>E-mail</th>
             <!--<th>Senha</th>-->
@@ -83,7 +83,7 @@
 		}
 		%>
 	</table>
-	 <a href="/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 300px; margin-bottom: 386px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 200px; margin-bottom: 386px;"></a>
 	 
  	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">

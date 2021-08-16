@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 15/08/2021 -->
+<!-- @date 16/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -54,19 +54,19 @@
 					<!-- Nome -->
 				    <div class="form-group col-md-8">
 				      <label>Nome</label>
-				      <input type="text" class="form-control" name="nome" placeholder="Nome"> <!-- required -->
+				      <input type="text" class="form-control" name="nome" placeholder="Nome" maxlength="50" required>
 				    </div>
 
 				    <!-- CPF -->
 				    <div class="form-group col-md-2">
 				      <label>CPF</label>
-				      <input type="text" class="form-control" name="cpf" placeholder="000.000.000-00">
+				      <input type="text" class="form-control" name="cpf" placeholder="000.000.000-00" onkeypress="return event.charCode >= 48 && event.charCode <= 57" minlength="11" maxlength="11" required>
 				    </div>
 
 				    <!-- Data Nascimento -->
 				    <div class="form-group col-md-2">
 				      <label>Data Nascimento</label>
-				      <input type="date" class="form-control" name="dtNasc" placeholder="Data Nascimento">
+				      <input type="date" class="form-control" name="dtNasc" placeholder="Data Nascimento" required>
 				    </div>
 			  	</div>
 			  	
@@ -74,15 +74,15 @@
 					<!-- Telefone -->
 				    <div class="form-group col-md-2">
 				      <label>Telefone</label>
-				      <input type="number" class="form-control" name="telefone" placeholder="(11)1234-5678">
+				      <input type="text" class="form-control" name="telefone" placeholder="(11)1234-5678" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="11">
 				    </div>
 
 				    <!-- Sexo -->
 			  		<div class="form-group col-md-2">
 			  		<label>Sexo</label>
 
-			  			<select name="selecioneSexo" class="form-control" placeholder="Selecione um Sexo">
-					      	<option disabled selected>Selecione uma opção...</option>
+			  			<select name="selecioneSexo" class="form-control" placeholder="Selecione um Sexo" required>
+					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<option value="masculino">Masculino</option>
 					      	<option value="feminino">Feminino</option>
 				      	</select>
@@ -92,8 +92,8 @@
 			  		<div class="form-group col-md-2">
 			  		<label>Status</label>
 
-			  			<select name="status" class="form-control" placeholder="Selecione um Status">
-					      	<option disabled selected>Selecione uma opção...</option>
+			  			<select name="status" class="form-control" placeholder="Selecione um Status" required>
+					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<option value="ativo">Ativo</option>
 					      	<option value="inativo">Inativo</option>
 				      	</select>
@@ -108,31 +108,39 @@
 			  		<!-- E-mail -->
 				  	<div class="form-group col-md-4">
 				  		<label for="exampleInput">E-mail</label>
-                    	<input type="email" class="form-control" name="email" placeholder="E-mail">
+                    	<input type="email" class="form-control" name="email" placeholder="E-mail" maxlength="50" required>
 				  	</div>
 				  	
 				  	<!-- Senha -->
 				  	<div class="form-group col-md-2">
 				  		<label for="exampleInput">Senha</label>
-	                	<input type="password" class="form-control" name="senha" placeholder="Senha">
+	                	<input type="password" class="form-control" name="senha" placeholder="Senha" minlength="8" required>
 				  	</div>
 				  	
 				  	<!-- Confirmar senha -->
 				  	<div class="form-group col-md-2">
 				  		<label for="exampleInput">Confirmar senha</label>
-	                	<input type="password" class="form-control" name="confirmarSenha" placeholder="Confirmar senha">
+	                	<input type="password" class="form-control" name="confirmarSenha" placeholder="Confirmar senha" minlength="8" required>
 				  	</div>
 				  	
 			  		<!-- Botões CRUD -->
 			  		<div class="form-group col-md-4">
 			  			<div align="right" style="margin-top: 32px">
 							<button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
-							<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
 						</div>
 			  		</div>
 			  	</div>
+			</form>
+			
+			<!-- Consultar -->
+			<form class="form" action="http://localhost:8080/Ecommerce_Bebida/cadastro">
+
+				<!-- Botões CRUD -->
+	  			<div align="right" style="margin-top: 10px">
+					<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
+				</div>
 				
-		  		<!-- Botão Voltar -->
+				<!-- Botão Voltar -->
 				<div align="right" style="margin-top: 10px;">
 					<!--<input style="margin-left: 600px" type="button" value="Voltar" onclick="history.back()">-->
 					<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 300px;"></a>
