@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<!-- @author Davi Rodrigues-->
+<!-- @date 16/08/2021 -->
+
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
 <%@page import='com.les.bebida.core.dao.impl.*'%>
@@ -66,13 +70,13 @@
 	                                <div class="row">
 	                                    <div class="form-group col-md-11">
 	                                        <label for="txtEmail">E-mail</label>
-	                                        <input type="email" class="form-control" name="email" placeholder="E-mail">
+	                                        <input type="email" class="form-control" name="email" placeholder="E-mail" maxlength="50" required>
 	                                    </div>
 	                                </div>
 	                                <div class="row">
 	                                    <div class="form-group col-md-11">
 	                                        <label for="txtSenha">Senha</label>
-	                                        <input type="password" class="form-control" name="senha" placeholder="Senha">
+	                                        <input type="password" class="form-control" name="senha" placeholder="Senha" minlength="8" required>
 	                                    </div>
 	                                </div>
 	                                <div class="row">
@@ -99,11 +103,11 @@
 	                                <div class="row">
 	                                    <div class="form-group col-md-6">
 	                                        <label for="exampleInput">Nome</label>
-	                                        <input type="text" class="form-control" name="nome" placeholder="Nome">
+	                                        <input type="text" class="form-control" name="nome" placeholder="Nome" maxlength="50" required>
 	                                    </div>
 	                                    <div class="form-group col-md-6">
 	                                        <label for="exampleInput">Telefone</label>
-	                                        <input type="tel" class="form-control" name="telefone" placeholder="Telefone">
+	                                        <input type="tel" class="form-control" name="telefone" placeholder="Telefone" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="11">
 	                                    </div>
 	                                </div>
 	
@@ -116,19 +120,19 @@
 	                                <div class="row">
 	                                    <div class="form-group col-md-10">
 	                                        <label for="exampleInput">E-mail</label>
-	                                        <input type="email" class="form-control" name="email" placeholder="E-mail">
+	                                        <input type="email" class="form-control" name="email" placeholder="E-mail" maxlength="50" required>
 	                                    </div>
 	                                </div>
 	                                <div class="row">
 	                                    <div class="form-group col-md-10">
 	                                        <label for="exampleInput">Senha</label>
-	                                        <input type="password" class="form-control col-md-10" name="senha" placeholder="Senha">
+	                                        <input type="password" class="form-control col-md-10" name="senha" placeholder="Senha" minlength="8" required>
 	                                    </div>
 	                                </div>
 	                                <div class="row">
 	                                    <div class="form-group col-md-10">
 	                                        <label for="exampleInput">Confirmar senha</label>
-	                                        <input type="password" class="form-control col-md-10" name="confirmarSenha" placeholder="Confirmar senha">
+	                                        <input type="password" class="form-control col-md-10" name="confirmarSenha" placeholder="Confirmar senha" minlength="8" required>
 	                                    </div>
 	                                </div>
 	                                <!-- QUINTA LINHA -->
