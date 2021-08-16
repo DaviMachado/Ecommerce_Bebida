@@ -42,15 +42,15 @@
   
 	<table border="1" style="margin-top: 30px; margin-left: 300px;">
 		<tr>
-            <!--<th>Login</th>-->
+            <th>E-mail</th>
             <!--<th>Senha</th>-->
             <th>Nome</th>
             <th>CPF</th>
             <th>Dt Nascimento</th>
             <th>Sexo</th>
             <th>Telefone</th>
-            <th>Cd Cliente</th>
-            <th>Flg Ativo</th>
+            <th>Código Sistema</th>
+            <th>Status</th>
         </tr>
 		<%
 		ClienteDAO dao = new ClienteDAO();
@@ -67,15 +67,15 @@
 		Usuario u = c.getUsuario();
 		%>
 			<tr>
-				<!--<td><%=u.getLogin() %></td>-->
+				<td><%=u.getLogin() %></td>
 				<!--<td><%=u.getSenha() %></td>-->
 				<td><%=c.getNome() %></td>
 				<td><%=c.getCpf() %></td>
 				<td><%=c.getDt_nasc() %></td>
 				<td><%=c.getSexo() %></td>
 				<td><%=c.getTelefone() %></td>
-				<td><%=c.getCdCliente() %></td>
-				<td><%=c.getFlgAtivo() %></td>
+				<td><%=c.getCdSistema() %></td>
+				<td><%=c.getStatus()%></td>
 				<td><a href="/Ecommerce_Bebida/cadastro?id=<%= c.getId()%>&alteraCliente=<%= "0"%>&operacao=ALTERAR"><button class="btn btn-warning">Alterar</button></a></td>
                 <td><a href="/Ecommerce_Bebida/cadastro?id=<%= c.getId()%>&operacao=EXCLUIR"><button class="btn btn-danger">Deletar</button></a></td>
 			</tr>

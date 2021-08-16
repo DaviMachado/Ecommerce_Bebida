@@ -31,6 +31,10 @@ public class ClienteHelper implements IViewHelper {
         String dtNasc = null;
         String telefone = null;
         String sexo = null;
+        String status = null;
+        String login = null;
+        String senha = null;
+        String confirmarSenha = null;
         String alteraCliente = null;
 		
 		if (("CONSULTAR").equals(operacao)) {
@@ -41,9 +45,15 @@ public class ClienteHelper implements IViewHelper {
 			cliente = new Cliente();
 			usuario = new Usuario();
 			
+			// Atributos da classe Usuario
+			login = request.getParameter("email");
+			senha = request.getParameter("senha");
+			confirmarSenha = request.getParameter("confirmarSenha");
+						
 			// Atributos da classe cliente
 			telefone = request.getParameter("telefone");
 			alteraCliente = request.getParameter("alteraCliente");
+			status = request.getParameter("status");
 			
 			// Atributos da classe pessoa
 			nome = request.getParameter("nome");
@@ -52,13 +62,17 @@ public class ClienteHelper implements IViewHelper {
 			sexo = request.getParameter("selecioneSexo");
 			
 			// Atribuindo os valores capturados do HTML para o cliente
+			usuario.setLogin(login);
+			usuario.setSenha(senha);
+			usuario.setConfirmarSenha(confirmarSenha);	
+			cliente.setUsuario(usuario);
 			cliente.setNome(nome);
 			cliente.setCpf(cpf);
 			cliente.setDt_nasc(dtNasc);
 			cliente.setTelefone(telefone);
 			cliente.setSexo(sexo);
 			cliente.setAlteraCliente(alteraCliente);
-			
+			cliente.setStatus(status);
 		}
 		
 		else if (("ALTERAR").equals(operacao)) {
@@ -67,9 +81,15 @@ public class ClienteHelper implements IViewHelper {
 			
 			id = request.getParameter("id");
 			
+			// Atributos da classe Usuario
+			login = request.getParameter("email");
+			senha = request.getParameter("senha");
+			confirmarSenha = request.getParameter("confirmarSenha");
+			
 			// Atributos da classe cliente
 			telefone = request.getParameter("telefone");
 			alteraCliente = request.getParameter("alteraCliente");
+			status = request.getParameter("status");
 			
 			// Atributos da classe pessoa
 			nome = request.getParameter("nome");
@@ -79,12 +99,17 @@ public class ClienteHelper implements IViewHelper {
 			
 			// Atribuindo os valores capturados do HTML para o cliente
 			cliente.setId(id);
+			usuario.setLogin(login);
+			usuario.setSenha(senha);
+			usuario.setConfirmarSenha(confirmarSenha);	
+			cliente.setUsuario(usuario);
 			cliente.setNome(nome);
 			cliente.setCpf(cpf);
 			cliente.setDt_nasc(dtNasc);
 			cliente.setTelefone(telefone);
 			cliente.setSexo(sexo);
 			cliente.setAlteraCliente(alteraCliente);
+			cliente.setStatus(status);
 		}
 		
 		else if (("EXCLUIR").equals(operacao)) {

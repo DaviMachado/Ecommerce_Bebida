@@ -23,13 +23,12 @@ import com.les.bebida.core.dominio.Usuario;
 import com.les.bebida.core.fachada.IFachada;
 import com.les.bebida.core.strategy.IStrategy;
 import com.les.bebida.core.strategy.impl.ValidarCPF;
-import com.les.bebida.core.strategy.impl.ValidarCodigoClienteSys;
+import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaCliente;
 import com.les.bebida.core.strategy.impl.ValidarDataCadastro;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLogin;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLoginAndSenha;
-import com.les.bebida.core.strategy.impl.ValidarFlgAtivoCliente;
-import com.les.bebida.core.strategy.impl.ValidarFlgAtivoUsuario;
+import com.les.bebida.core.strategy.impl.ValidarStatusUsuario;
 import com.les.bebida.core.strategy.impl.ValidarLogin;
 import com.les.bebida.core.strategy.impl.ValidarNome;
 import com.les.bebida.core.strategy.impl.ValidarNomeLogin;
@@ -50,8 +49,7 @@ public class Fachada implements IFachada {
 	private static Map<String, IDAO> daos;
 
 	/* ------------ Declaração de TODAS as Strategy's ------------ */
-	ValidarFlgAtivoCliente vFlgAtivoCliente = new ValidarFlgAtivoCliente();
-	ValidarFlgAtivoUsuario vFlgAtivoUsuario = new ValidarFlgAtivoUsuario();
+	ValidarStatusUsuario vStatusUsuario = new ValidarStatusUsuario();
 	ValidarTipoCliente vTipoCliente = new ValidarTipoCliente();
 	ValidarTipoUsuario vTipoUsuario = new ValidarTipoUsuario();
 	ValidarLogin vLogin = new ValidarLogin();
@@ -62,7 +60,7 @@ public class Fachada implements IFachada {
 	ValidarCPF vCPF = new ValidarCPF();
 	ValidarDataNascimento vDataNascimento = new ValidarDataNascimento();
 	ValidarDataCadastro VDataCadastro = new ValidarDataCadastro();
-	ValidarCodigoClienteSys vCodigoClienteSys = new ValidarCodigoClienteSys();
+	ValidarCodigoSistemaCliente vCodigoClienteSys = new ValidarCodigoSistemaCliente();
 	ValidarExistenciaLogin vExistenciaLogin = new ValidarExistenciaLogin();
 	ValidarExistenciaLoginAndSenha vExistenciaLoginAndSenha = new ValidarExistenciaLoginAndSenha();
 	/* ------------------------------------------------------------ */
@@ -128,7 +126,6 @@ public class Fachada implements IFachada {
 		regrasSalvarCliente.add(vNome);
 		regrasSalvarCliente.add(vCPF);
 		regrasSalvarCliente.add(vDataNascimento);
-		regrasSalvarCliente.add(vFlgAtivoCliente);
 		regrasSalvarCliente.add(VDataCadastro);
 		regrasSalvarCliente.add(vTipoCliente);
 		/* ---------------------------------------------------------- */
@@ -143,7 +140,7 @@ public class Fachada implements IFachada {
 		regrasSalvarLogin.add(vLogin);
 		regrasSalvarLogin.add(vSenhaIgual);
 		regrasSalvarLogin.add(vExistenciaLogin);
-		regrasSalvarLogin.add(vFlgAtivoUsuario);
+		regrasSalvarLogin.add(vStatusUsuario);
 		regrasSalvarLogin.add(VDataCadastro);
 		regrasSalvarLogin.add(vTipoUsuario);
 		/* ----- CONSULTAR ----- */

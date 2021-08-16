@@ -100,7 +100,7 @@
 			  		
 			  		<!-- Botóes CRUD -->
 			  		<div class="form-group col-md-8">
-				  		<div align="right" style="margin-top: 50px">
+				  		<div align="right" style="margin-top: 32px">
 				  			<button class="btn btn-warning" name="operacao" value="ALTERAR">Alterar</button>
 				  		</div>
 			  		</div>
@@ -116,6 +116,15 @@
 			    <input type="hidden" name="id" id="id" value="<%=cliente.get(0).getId() %>">
 			    <!-- Parametro que é verificado se pode alterar um Cliente ou não -->
 			    <input type="hidden" name="alteraCliente" id="alteraCliente" value="1">
+			    
+			    <!-- os atributos "status", "login" e "senha", foram preenchidos, porem ficaram com o tipo "hidden", -->
+			    <!-- para não mandar NULL quando estiver alterando um cliente, e consequentemente salvar NULL no banco de dados -->
+		  		<!-- Status -->
+		  		<input type="hidden" name="status" value="<%=cliente.get(0).getStatus() %>">
+		  		<!-- E-mail -->
+               	<input type="hidden" name="email" value="<%=cliente.get(0).getUsuario().getLogin() %>">
+			  	<!-- Senha -->
+               	<input type="hidden" name="senha" value="<%=cliente.get(0).getUsuario().getSenha() %>">
 
 			</form>
 		</fieldset>

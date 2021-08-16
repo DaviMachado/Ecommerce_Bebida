@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 12/08/2021 -->
+<!-- @date 15/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -88,9 +88,44 @@
 				      	</select>
 			  		</div>
 			  		
+				    <!-- Status -->
+			  		<div class="form-group col-md-2">
+			  		<label>Status</label>
+
+			  			<select name="status" class="form-control" placeholder="Selecione um Status">
+					      	<option disabled selected>Selecione uma opção...</option>
+					      	<option value="ativo">Ativo</option>
+					      	<option value="inativo">Inativo</option>
+				      	</select>
+			  		</div>
+			  		
+			  		<div class="form-group col-md-6">
+			  			<!-- adicionado uma coluna com tamanho md-6 em branca para alinhar os campos da pagina -->
+			  		</div>
+			  	</div>
+			  	
+			  	<div class="form-row">
+			  		<!-- E-mail -->
+				  	<div class="form-group col-md-4">
+				  		<label for="exampleInput">E-mail</label>
+                    	<input type="email" class="form-control" name="email" placeholder="E-mail">
+				  	</div>
+				  	
+				  	<!-- Senha -->
+				  	<div class="form-group col-md-2">
+				  		<label for="exampleInput">Senha</label>
+	                	<input type="password" class="form-control" name="senha" placeholder="Senha">
+				  	</div>
+				  	
+				  	<!-- Confirmar senha -->
+				  	<div class="form-group col-md-2">
+				  		<label for="exampleInput">Confirmar senha</label>
+	                	<input type="password" class="form-control" name="confirmarSenha" placeholder="Confirmar senha">
+				  	</div>
+				  	
 			  		<!-- Botões CRUD -->
-			  		<div class="form-group col-md-8">
-			  			<div align="right" style="margin-top: 50px">
+			  		<div class="form-group col-md-4">
+			  			<div align="right" style="margin-top: 32px">
 							<button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
 							<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
 						</div>

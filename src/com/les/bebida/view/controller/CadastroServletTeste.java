@@ -40,7 +40,7 @@ public class CadastroServletTeste extends HttpServlet {
 			Usuario usuario = new Usuario();
 			
 			// Pegando as informações digitadas nos Forms do HTML
-			cliente.setFlgAtivo(request.getParameter("flgAtivo"));
+			//cliente.setFlgAtivo(request.getParameter("flgAtivo"));
 			
 			usuario.setLogin(request.getParameter("login"));
 			usuario.setSenha(request.getParameter("senha"));
@@ -49,7 +49,7 @@ public class CadastroServletTeste extends HttpServlet {
 			cliente.setNome(request.getParameter("nome"));
 			cliente.setCpf(request.getParameter("cpf"));
 			cliente.setDt_nasc(request.getParameter("dtNasc"));
-			cliente.setCdCliente(request.getParameter("cdCliente"));
+			//cliente.setCdCliente(request.getParameter("cdCliente"));
 			
 			// Verificando quais botões foram clicados na tela
 			String operacao = (request.getParameter("operacao"));
@@ -62,13 +62,13 @@ public class CadastroServletTeste extends HttpServlet {
 				
 				// Mostra o que foi gravado
 				writer.println("<ul>");
-				writer.println("<li>Ativo: " + cliente.getFlgAtivo() + "</li>");
+				//writer.println("<li>Ativo: " + cliente.getFlgAtivo() + "</li>");
 				writer.println("<li>Login: " + usuario.getLogin() + "</li>");
 				writer.println("<li>Senha: " + usuario.getSenha() + "</li>");
 				writer.println("<li>Nome: " + cliente.getNome() + "</li>");
 				writer.println("<li>CPF: " + cliente.getCpf() + "</li>");
 				writer.println("<li>Data Nascimento: " + cliente.getDt_nasc() + "</li>");
-				writer.println("<li>Codigo Cliente: " + cliente.getCdCliente() + "</li>");
+				//writer.println("<li>Codigo Cliente: " + cliente.getCdCliente() + "</li>");
 				writer.println("</ul>");
 				
 				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
@@ -80,13 +80,13 @@ public class CadastroServletTeste extends HttpServlet {
 				writer.println("<h1>Cadastro Alterado com sucesso!</h1>");
 				
 				writer.println("<ul>");
-				writer.println("<li>Ativo: " + cliente.getFlgAtivo() + "</li>");
+				//writer.println("<li>Ativo: " + cliente.getFlgAtivo() + "</li>");
 				writer.println("<li>Login: " + usuario.getLogin() + "</li>");
 				writer.println("<li>Senha: " + usuario.getSenha() + "</li>");
 				writer.println("<li>Nome: " + cliente.getNome() + "</li>");
 				writer.println("<li>CPF: " + cliente.getCpf() + "</li>");
 				writer.println("<li>Data Nascimento: " + cliente.getDt_nasc() + "</li>");
-				writer.println("<li>Codigo Cliente: " + cliente.getCdCliente() + "</li>");
+				//writer.println("<li>Codigo Cliente: " + cliente.getCdCliente() + "</li>");
 				writer.println("</ul>");
 				
 				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");

@@ -3,28 +3,28 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Cliente
  * @author Davi Rodrigues
- * @date 11/08/2021
+ * @date 15/08/2021
  */
 public class Cliente extends Pessoa {
-	private String cdCliente;
-	private String flgAtivo;
+	private String status;
+	private String cd_sistema;
 	private String telefone;
 	private Usuario usuario;
 	private String tipo;
 	private Endereco endereco;
-	private String AlteraCliente;
+	private String alteraCliente;
 	
-	public String getCdCliente() {
-		return cdCliente;
+	public String getStatus() {
+		return status;
 	}
-	public void setCdCliente(String cdCliente) {
-		this.cdCliente = cdCliente;
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	public String getFlgAtivo() {
-		return flgAtivo;
+	public String getCdSistema() {
+		return cd_sistema;
 	}
-	public void setFlgAtivo(String flgAtivo) {
-		this.flgAtivo = flgAtivo;
+	public void setCdSistema(String cd_sistema) {
+		this.cd_sistema = cd_sistema;
 	}
 	public String getTelefone() {
 		return telefone;
@@ -51,9 +51,9 @@ public class Cliente extends Pessoa {
 		this.endereco = endereco;
 	}
 	public String getAlteraCliente() {
-		return AlteraCliente;
+		return alteraCliente;
 	}
-	public void setAlteraCliente(String AlteraCliente) {
-		this.AlteraCliente = AlteraCliente;
+	public void setAlteraCliente(String alteraCliente) {
+		this.alteraCliente = alteraCliente;
 	}
 }

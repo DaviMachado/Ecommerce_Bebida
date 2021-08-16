@@ -9,10 +9,10 @@ create table cliente (
 	nome		VARCHAR(50),
 	cpf		    VARCHAR(14),
 	dt_nasc 	DATE,
-	cd_cliente	VARCHAR(30),
 	sexo        VARCHAR(10),
 	telefone    VARCHAR(20),
-	fl_ativo    NUMERIC(1),
+	cd_sistema	VARCHAR(10),
+	status		VARCHAR(10),
 	dt_cadastro DATE,
 	tipo		VARCHAR(14),
 	primary	key	(id)
@@ -24,8 +24,8 @@ select * from cliente;
 -----------------------------
 insert do ADMIN:
 
-insert into cliente (login, senha, nome, cpf, dt_nasc, cd_cliente, sexo, telefone, fl_ativo, dt_cadastro, tipo)
-values ('admin@outlook.com', '123', 'administrador', '123456789', '2021/08/09', '1', 'masculino', '11912341234', 1, '2021/08/09', 'admin');
+insert into cliente (login, senha, nome, cpf, dt_nasc, sexo, telefone, cd_sistema, status, dt_cadastro, tipo)
+values ('admin@outlook.com', '123', 'administrador', '123456789', '2021/08/09', 'masculino', '11912341234', '1', 'ativo', '2021/08/09', 'admin');
 
 -----------------------------
 Teste:

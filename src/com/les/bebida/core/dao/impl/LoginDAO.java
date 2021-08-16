@@ -21,7 +21,7 @@ public class LoginDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into cliente "+
-				"(login, senha, nome, telefone, fl_ativo, dt_cadastro, tipo)" +
+				"(login, senha, nome, telefone, status, dt_cadastro, tipo)" +
 				"values (?,?,?,?,?,?,?)";
 		
 		try {
@@ -35,7 +35,7 @@ public class LoginDAO extends AbstractJdbcDAO {
 			stmt.setString(2,usuario.getSenha());
 			stmt.setString(3,usuario.getNome());
 			stmt.setString(4, usuario.getTelefone());
-			stmt.setString(5, usuario.getFlgAtivo());
+			stmt.setString(5, usuario.getStatus());
 			stmt.setString(6, usuario.getDtCadastro());
 			stmt.setString(7, usuario.getTipo());
 			
@@ -70,7 +70,7 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setSenha(rs.getString("senha"));
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
-				usuarioItem.setFlgAtivo(rs.getString("fl_ativo"));
+				usuarioItem.setStatus(rs.getString("status"));
 				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
 				usuarioItem.setTipo(rs.getString("tipo"));
 				
@@ -110,7 +110,7 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setSenha(rs.getString("senha"));
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
-				usuarioItem.setFlgAtivo(rs.getString("fl_ativo"));
+				usuarioItem.setStatus(rs.getString("status"));
 				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
 				usuarioItem.setTipo(rs.getString("tipo"));
 				
@@ -154,7 +154,7 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setSenha(rs.getString("senha"));
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
-				usuarioItem.setFlgAtivo(rs.getString("fl_ativo"));
+				usuarioItem.setStatus(rs.getString("status"));
 				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
 				usuarioItem.setTipo(rs.getString("tipo"));
 				
