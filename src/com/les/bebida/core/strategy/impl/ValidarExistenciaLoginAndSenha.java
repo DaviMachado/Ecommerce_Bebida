@@ -8,9 +8,10 @@ import com.les.bebida.core.dominio.Usuario;
 import com.les.bebida.core.strategy.IStrategy;
 
 /**
- * Classe para validar a existencia do Usuario pelo Login e Senha
+ * Classe para validar a existencia do Usuario pelo Login e Senha,
+ * e validar se o mesmo esta ativo ou inativo
  * @author Davi Rodrigues
- * @date 24/04/2021
+ * @date 16/08/2021
  */
 public class ValidarExistenciaLoginAndSenha implements IStrategy {
 
@@ -26,7 +27,12 @@ public class ValidarExistenciaLoginAndSenha implements IStrategy {
 			return ("Email e/ou senha inválidos. Por favor, tente novamente.");
 		}
 		else {
-			return null;
+			if(usuarios.get(0).getStatus().equals("inativo")) {
+				return ("Usuário provisoriamente Inativo!. Por favor, entre em contato com o Administrador!");
+			}
+			else {
+				return null;
+			}
 		}
 	}
 	
