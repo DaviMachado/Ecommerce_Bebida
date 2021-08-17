@@ -30,10 +30,14 @@ import com.les.bebida.core.strategy.impl.ValidarExistenciaLogin;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLoginAndSenha;
 import com.les.bebida.core.strategy.impl.ValidarStatusUsuario;
 import com.les.bebida.core.strategy.impl.ValidarLogin;
+import com.les.bebida.core.strategy.impl.ValidarLoginCliente;
 import com.les.bebida.core.strategy.impl.ValidarNome;
 import com.les.bebida.core.strategy.impl.ValidarNomeLogin;
 import com.les.bebida.core.strategy.impl.ValidarSenha;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgual;
+import com.les.bebida.core.strategy.impl.ValidarSenhaIgualCliente;
+import com.les.bebida.core.strategy.impl.ValidarSexo;
+import com.les.bebida.core.strategy.impl.ValidarStatusCliente;
 import com.les.bebida.core.strategy.impl.ValidarTipoCliente;
 import com.les.bebida.core.strategy.impl.ValidarTipoUsuario;
 
@@ -41,7 +45,7 @@ import com.les.bebida.core.strategy.impl.ValidarTipoUsuario;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 15/08/2021
+ * @date 17/08/2021
  */
 public class Fachada implements IFachada {
 
@@ -50,6 +54,7 @@ public class Fachada implements IFachada {
 
 	/* ------------ Declaração de TODAS as Strategy's ------------ */
 	ValidarStatusUsuario vStatusUsuario = new ValidarStatusUsuario();
+	ValidarStatusCliente vStatusCliente = new ValidarStatusCliente();
 	ValidarTipoCliente vTipoCliente = new ValidarTipoCliente();
 	ValidarTipoUsuario vTipoUsuario = new ValidarTipoUsuario();
 	ValidarLogin vLogin = new ValidarLogin();
@@ -59,6 +64,9 @@ public class Fachada implements IFachada {
 	ValidarNomeLogin vNomeLogin = new ValidarNomeLogin();
 	ValidarCPF vCPF = new ValidarCPF();
 	ValidarDataNascimento vDataNascimento = new ValidarDataNascimento();
+	ValidarSexo vSexo = new ValidarSexo();
+	ValidarLoginCliente vLoginCliente = new ValidarLoginCliente();
+	ValidarSenhaIgualCliente vSenhaIgualCliente = new ValidarSenhaIgualCliente();
 	ValidarDataCadastro VDataCadastro = new ValidarDataCadastro();
 	ValidarCodigoSistemaCliente vCodigoClienteSys = new ValidarCodigoSistemaCliente();
 	ValidarExistenciaLogin vExistenciaLogin = new ValidarExistenciaLogin();
@@ -126,8 +134,20 @@ public class Fachada implements IFachada {
 		regrasSalvarCliente.add(vNome);
 		regrasSalvarCliente.add(vCPF);
 		regrasSalvarCliente.add(vDataNascimento);
+		regrasSalvarCliente.add(vSexo);
+		regrasSalvarCliente.add(vStatusCliente);
+		regrasSalvarCliente.add(vLoginCliente);
+		regrasSalvarCliente.add(vSenhaIgualCliente);
 		regrasSalvarCliente.add(VDataCadastro);
 		regrasSalvarCliente.add(vTipoCliente);
+		/* ----- ALTERAR ----- */
+		regrasAlterarCliente.add(vNome);
+		regrasAlterarCliente.add(vCPF);
+		regrasAlterarCliente.add(vDataNascimento);
+		regrasAlterarCliente.add(vSexo);
+		regrasAlterarCliente.add(vStatusCliente);
+		regrasAlterarCliente.add(vLoginCliente);
+		regrasAlterarCliente.add(vSenhaIgualCliente);
 		/* ---------------------------------------------------------- */
 		
 		/* ----- Adicionando as Strategy's na lista do Endereço ----- */

@@ -117,7 +117,7 @@
 			    <!-- Parametro que é verificado se pode alterar um Cliente ou não -->
 			    <input type="hidden" name="alteraCliente" id="alteraCliente" value="1">
 			    
-			    <!-- os atributos "status", "login" e "senha", foram preenchidos, porem ficaram com o tipo "hidden", -->
+			    <!-- os atributos "status", "login", "senha" e "confirmarSenha", foram preenchidos, porem ficaram com o tipo "hidden", -->
 			    <!-- para não mandar NULL quando estiver alterando um cliente, e consequentemente salvar NULL no banco de dados -->
 		  		<!-- Status -->
 		  		<input type="hidden" name="status" value="<%=cliente.get(0).getStatus() %>">
@@ -125,6 +125,8 @@
                	<input type="hidden" name="email" value="<%=cliente.get(0).getUsuario().getLogin() %>">
 			  	<!-- Senha -->
                	<input type="hidden" name="senha" value="<%=cliente.get(0).getUsuario().getSenha() %>">
+               	<!-- Confirmar Senha -->
+               	<input type="hidden" name="confirmarSenha" value="<%=cliente.get(0).getUsuario().getSenha() %>">
 
 			</form>
 		</fieldset>
