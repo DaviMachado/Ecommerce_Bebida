@@ -32,6 +32,7 @@ public class EnderecoHelper implements IViewHelper {
         String complemento = null;
         String estado = null;
         String idCliente = null;
+        String alteraEndereco = null;
 		
 		if (("CONSULTAR").equals(operacao)) {
 			endereco = new Endereco();
@@ -53,6 +54,7 @@ public class EnderecoHelper implements IViewHelper {
 			complemento = request.getParameter("complemento");
 			estado = request.getParameter("selecioneEstado");
 			idCliente = request.getParameter("idCliente");
+			alteraEndereco = request.getParameter("alteraEndereco");
 			
 			// Atribuindo os valores capturados do HTML para o endereço
 			endereco.setCep(cep);
@@ -63,6 +65,7 @@ public class EnderecoHelper implements IViewHelper {
 			endereco.setComplemento(complemento);
 			endereco.setEstado(estado);
 			endereco.setIdCliente(idCliente);
+			endereco.setAlteraEndereco(alteraEndereco);
 		}
 		
 		else if (("ALTERAR").equals(operacao)) {
@@ -78,6 +81,7 @@ public class EnderecoHelper implements IViewHelper {
 			complemento = request.getParameter("complemento");
 			estado = request.getParameter("selecioneEstado");
 			idCliente = request.getParameter("idCliente");
+			alteraEndereco = request.getParameter("alteraEndereco");
 			
 			// Atribuindo os valores capturados do HTML para o endereço
 			endereco.setId(id);
@@ -89,6 +93,7 @@ public class EnderecoHelper implements IViewHelper {
 			endereco.setComplemento(complemento);
 			endereco.setEstado(estado);
 			endereco.setIdCliente(idCliente);
+			endereco.setAlteraEndereco(alteraEndereco);
 		}
 		
 		else if (("EXCLUIR").equals(operacao)) {
@@ -159,12 +164,12 @@ public class EnderecoHelper implements IViewHelper {
 		
 		else if (("ALTERAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				String idCliente = request.getParameter("idCliente");
+				String alteraEndereco = request.getParameter("alteraEndereco");
 				String idEndereco = request.getParameter("idEndereco");
 
 				// Se eu estiver pela tela de listagem de endereços (lista-enderecos-scriplet.jsp),
-				// não vou mandar o parametro "idCliente", para poder chama o arquivo .JSP para edição do endereço
-				if (idCliente == null) {					
+				// não vou mandar o parametro "alteraEndereco" igual a zero, para poder chama o arquivo .JSP para edição do endereço
+				if (alteraEndereco.equals("0")) {					
 					// pendura o "idEndereco" na requisição para poder mandar para o arquivo .JSP
 					request.setAttribute("idEndereco", idEndereco);
 					
@@ -172,8 +177,8 @@ public class EnderecoHelper implements IViewHelper {
 					request.getRequestDispatcher("JSP/editar_endereco.jsp").forward(request, response);
 				}
 				// caso contrário, se eu estiver pela tela de edição do endereço (editar_endereco.jsp),
-				// vou ter/mandar o parametro "idClietne", para poder editar o endereço,
-				// dentro da DAO de endereço, vai ter um IF verificando se tem o "idCliente"
+				// vou ter/mandar o parametro "alteraEndereco" igual a um, para poder editar o endereço,
+				// dentro da DAO de endereço, vai ter um IF verificando se tem o "alteraEndereco"
 				else {
 					// atribui a nova mensagem para poder mostra na pagina .JSP
 					resultado.setMensagem("Cadastro do Endereço alterado com sucesso!");

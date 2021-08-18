@@ -12,7 +12,7 @@ import com.les.bebida.core.dominio.EntidadeDominio;
  * Classe EnderecoDAO,
  * responsável para salvar o endereço no BD.
  * @author Davi Rodrigues
- * @date 14/03/2021
+ * @date 17/08/2021
  */
 public class EnderecoDAO extends AbstractJdbcDAO {
 	
@@ -65,8 +65,8 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 		try {
 			Endereco endereco = (Endereco) entidade;
 			
-			// se tiver algo no "idCliente", altera o endereço
-			if (endereco.getIdCliente() != null) {
+			// se tiver algo no "alteraEndereco", altera o endereço
+			if (endereco.getAlteraEndereco().contentEquals("1")) {
 				PreparedStatement stmt = connection.prepareStatement(sql);
 				
 				stmt.setString(1, endereco.getCep());

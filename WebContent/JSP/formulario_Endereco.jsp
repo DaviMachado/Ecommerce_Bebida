@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 12/08/2021 -->
+<!-- @date 17/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -159,6 +159,8 @@
 				
 				<!-- ID do Cliente -->
 				<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
+				<!-- Parametro que é verificado se pode alterar um Endereço ou não -->
+			    <input type="hidden" name="alteraEndereco" id="alteraEndereco" value="1">
 			</form>
 		</fieldset>
 		  <!-- Footer -->

@@ -149,6 +149,8 @@
 			    <input type="hidden" name="idCliente" id="idCliente" value="<%=idCliente %>">
 			    <!-- ID do Endereco -->
 			    <input type="hidden" name="idEndereco" id="idEndereco" value="<%=idEndereco %>">
+			    <!-- Parametro que é verificado se pode alterar um Endereço ou não -->
+			    <input type="hidden" name="alteraEndereco" id="alteraEndereco" value="1">
 			</form>
 			
 			<!--  outro jeito de fazer o botão voltar
