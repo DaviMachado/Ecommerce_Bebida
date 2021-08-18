@@ -15,9 +15,18 @@ public class ValidarLoginCliente implements IStrategy {
 	public String validar(EntidadeDominio entidade) {
 		Cliente cliente = (Cliente) entidade;
 		
-		if(cliente.getUsuario().getLogin() == null || cliente.getUsuario().getLogin().equals("")) {
-			return "Favor insira um login.";
+		// se o "alteraCliente" for igual a 1, executa essa regra
+		if(cliente.getAlteraCliente().contentEquals("1")) {
+			if(cliente.getUsuario().getLogin() == null || cliente.getUsuario().getLogin().equals("")) {
+				return "Favor insira um login.";
+			}
+			else {
+				return null;
+			}
 		}
+		// se não, o "alteraCliente" é igual a 0, e não executa essa regra,
+		// solução provisoria para poder editar um cliente atraves do arquivo de listagem do mesmo,
+		// pois quando tentava editar um cliente pela listagem, ele não abria a tela de edição, pois caia nessa validação
 		else {
 			return null;
 		}

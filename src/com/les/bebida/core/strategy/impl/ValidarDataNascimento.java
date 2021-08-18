@@ -7,7 +7,7 @@ import com.les.bebida.core.strategy.IStrategy;
 /**
  * Classe para validar o campo data nascimento do cliente
  * @author Davi Rodrigues
- * @date 27/11/2019
+ * @date 17/08/2021
  */
 public class ValidarDataNascimento implements IStrategy {
 
@@ -15,9 +15,18 @@ public class ValidarDataNascimento implements IStrategy {
 	public String validar(EntidadeDominio entidade) {
 		Cliente cliente = (Cliente) entidade;
 		
-		if(cliente.getDt_nasc() == null || cliente.getDt_nasc().equals("")) {
-			return ("Favor insira uma Data de Nascimento.");
+		// se o "alteraCliente" for igual a 1, executa essa regra
+		if(cliente.getAlteraCliente().contentEquals("1")) {
+			if(cliente.getDt_nasc() == null || cliente.getDt_nasc().equals("")) {
+				return ("Favor insira uma Data de Nascimento.");
+			}
+			else {
+				return null;
+			}
 		}
+		// se não, o "alteraCliente" é igual a 0, e não executa essa regra,
+		// solução provisoria para poder editar um cliente atraves do arquivo de listagem do mesmo,
+		// pois quando tentava editar um cliente pela listagem, ele não abria a tela de edição, pois caia nessa validação
 		else {
 			return null;
 		}

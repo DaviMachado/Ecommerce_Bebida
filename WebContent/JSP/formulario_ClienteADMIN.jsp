@@ -130,6 +130,9 @@
 						</div>
 			  		</div>
 			  	</div>
+			  	
+			  	<!-- Parametro que é verificado se pode alterar um Cliente ou não -->
+			    <input type="hidden" name="alteraCliente" id="alteraCliente" value="1">
 			</form>
 			
 			<!-- Consultar -->
