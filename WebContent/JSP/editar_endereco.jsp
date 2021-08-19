@@ -65,13 +65,13 @@
 					<!-- CEP -->
 				    <div class="form-group col-md-2">
 				      <label>CEP</label>
-				      <input type="number" class="form-control" name="cep" placeholder="CEP" value="<%=endereco.get(0).getCep() %>"> <!-- required -->
+				      <input type="text" class="form-control" name="cep" placeholder="CEP" value="<%=endereco.get(0).getCep() %>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" minlength="8" maxlength="8" required>
 				    </div>
 				    
 				    <!-- Estado -->
 					<div class="form-group col-md-2">
 				    	<label>Estado</label>
-			        	<select name="selecioneEstado" class="form-control" placeholder="Selecione um Estado">
+			        	<select name="selecioneEstado" class="form-control" placeholder="Selecione um Estado" required>
 					      	<option disabled>Selecione uma opção...</option>
 					      	<option><%=endereco.get(0).getEstado() %></option> <!-- Acre -->
 					      	<option value="AC">AC</option> <!-- Acre -->
@@ -107,7 +107,7 @@
 				  	<!-- Cidade -->
 				    <div class="form-group col-md-4">
 				      <label>Cidade</label>
-				      <input type="text" class="form-control" name="cidade" placeholder="Cidade" value="<%=endereco.get(0).getCidade() %>"> <!-- required -->
+				      <input type="text" class="form-control" name="cidade" placeholder="Cidade" value="<%=endereco.get(0).getCidade() %>" required>
 				    </div>
 			    </div>
 			  	
@@ -115,19 +115,19 @@
 				  	<!-- Logradouro -->
 				    <div class="form-group col-md-6">
 				      <label>Logradouro</label>
-				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)" value="<%=endereco.get(0).getLogradouro() %>">
+				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)" value="<%=endereco.get(0).getLogradouro() %>" required>
 				    </div>
 				  	
 				  	<!-- Numero -->
 				    <div class="form-group col-md-2">
 				      <label>Numero</label>
-				      <input type="number" class="form-control" name="numero" placeholder="Numero" value="<%=endereco.get(0).getNumero() %>">
+				      <input type="text" class="form-control" name="numero" placeholder="Numero" value="<%=endereco.get(0).getNumero() %>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6" required>
 				    </div>
 				  	
 					<!-- Bairro -->
 				    <div class="form-group col-md-4">
 				      <label>Bairro</label>
-				      <input type="text" class="form-control" name="bairro" placeholder="Bairro" value="<%=endereco.get(0).getBairro() %>">
+				      <input type="text" class="form-control" name="bairro" placeholder="Bairro" value="<%=endereco.get(0).getBairro() %>" required>
 				    </div>
 			    </div>
 			    
@@ -136,8 +136,8 @@
 			  		<div class="form-group col-md-2">
 			  		<label>Tipo de Endereço</label>
 
-			  			<select name="tipoEndereco" class="form-control" placeholder="Selecione um Tipo de Endereço">
-					      	<option value="" disabled>Selecione uma opção...</option>
+			  			<select name="tipoEndereco" class="form-control" placeholder="Selecione um Tipo de Endereço" required>
+					      	<option disabled>Selecione uma opção...</option>
 					      	<option><%=endereco.get(0).getTipo_Endereco() %></option>
 					      	<option value="entrega">Entrega</option>
 					      	<option value="cobranca">Cobrança</option>
@@ -148,8 +148,8 @@
 			  		<div class="form-group col-md-2">
 			  		<label>Tipo de Residência</label>
 
-			  			<select name="tipoResidencia" class="form-control" placeholder="Selecione um Tipo de Residência">
-					      	<option value="" disabled>Selecione uma opção...</option>
+			  			<select name="tipoResidencia" class="form-control" placeholder="Selecione um Tipo de Residência" required>
+					      	<option disabled>Selecione uma opção...</option>
 					      	<option><%=endereco.get(0).getTipoResidencia() %></option>
 					      	<option value="casa">Casa</option>
 					      	<option value="apartamento">Apartamento</option>
@@ -164,8 +164,8 @@
 			  		<div class="form-group col-md-2">
 			  		<label>País</label>
 
-			  			<select name="pais" class="form-control" placeholder="Selecione um País">
-					      	<option value="" disabled>Selecione uma opção...</option>
+			  			<select name="pais" class="form-control" placeholder="Selecione um País" required>
+					      	<option disabled>Selecione uma opção...</option>
 					      	<option><%=endereco.get(0).getPais() %></option>
 					      	<option value="brasil">Brasil</option>
 				      	</select>
@@ -176,7 +176,7 @@
 			  		<!-- Observação -->
 				    <div class="form-group col-md-12">
 				      <label>Observação</label>
-				      <textarea  class="form-control" name="observacao" placeholder="Observação" rows="3"><%=endereco.get(0).getObservacao() %></textarea> <!-- required -->
+				      <textarea  class="form-control" name="observacao" placeholder="Observação" rows="3"><%=endereco.get(0).getObservacao() %></textarea>
 				    </div>
 			    </div>
 			  	

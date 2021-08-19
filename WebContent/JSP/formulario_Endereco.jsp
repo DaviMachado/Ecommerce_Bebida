@@ -74,14 +74,14 @@
 					<!-- CEP -->
 				    <div class="form-group col-md-2">
 				      <label>CEP</label>
-				      <input type="number" class="form-control" name="cep" placeholder="CEP"> <!-- required -->
+				      <input type="text" class="form-control" name="cep" placeholder="CEP" onkeypress="return event.charCode >= 48 && event.charCode <= 57" minlength="8" maxlength="8" required>
 				    </div>
 				    
 				    <!-- Estado -->
 					<div class="form-group col-md-2">
 				    	<label>Estado</label>
-			        	<select name="selecioneEstado" class="form-control" placeholder="Selecione um Estado">
-					      	<option disabled selected>Selecione uma opção...</option>
+			        	<select name="selecioneEstado" class="form-control" placeholder="Selecione um Estado" required>
+					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<option value="AC">AC</option> <!-- Acre -->
 					      	<option value="AL">AL</option> <!-- Alagoas -->
 					      	<option value="AP">AP</option> <!-- Amapá -->
@@ -115,7 +115,7 @@
 				  	<!-- Cidade -->
 				    <div class="form-group col-md-4">
 				      <label>Cidade</label>
-				      <input type="text" class="form-control" name="cidade" placeholder="Cidade"> <!-- required -->
+				      <input type="text" class="form-control" name="cidade" placeholder="Cidade" required>
 				    </div>
 			    </div>
 			  	
@@ -123,19 +123,19 @@
 				  	<!-- Logradouro -->
 				    <div class="form-group col-md-6">
 				      <label>Logradouro</label>
-				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)">
+				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)" required>
 				    </div>
 				  	
 				  	<!-- Numero -->
 				    <div class="form-group col-md-2">
 				      <label>Numero</label>
-				      <input type="number" class="form-control" name="numero" placeholder="Numero">
+				      <input type="text" class="form-control" name="numero" placeholder="Numero" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6" required>
 				    </div>
 				  	
 					<!-- Bairro -->
 				    <div class="form-group col-md-4">
 				      <label>Bairro</label>
-				      <input type="text" class="form-control" name="bairro" placeholder="Bairro">
+				      <input type="text" class="form-control" name="bairro" placeholder="Bairro" required>
 				    </div>
 			    </div>
 			  	
@@ -144,7 +144,7 @@
 			  		<div class="form-group col-md-2">
 			  		<label>Tipo de Endereço</label>
 
-			  			<select name="tipoEndereco" class="form-control" placeholder="Selecione um Tipo de Endereço">
+			  			<select name="tipoEndereco" class="form-control" placeholder="Selecione um Tipo de Endereço" required>
 					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<option value="entrega">Entrega</option>
 					      	<option value="cobranca">Cobrança</option>
@@ -155,7 +155,7 @@
 			  		<div class="form-group col-md-2">
 			  		<label>Tipo de Residência</label>
 
-			  			<select name="tipoResidencia" class="form-control" placeholder="Selecione um Tipo de Residência">
+			  			<select name="tipoResidencia" class="form-control" placeholder="Selecione um Tipo de Residência" required>
 					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<option value="casa">Casa</option>
 					      	<option value="apartamento">Apartamento</option>
@@ -170,7 +170,7 @@
 			  		<div class="form-group col-md-2">
 			  		<label>País</label>
 
-			  			<select name="pais" class="form-control" placeholder="Selecione um País">
+			  			<select name="pais" class="form-control" placeholder="Selecione um País" required>
 					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<option value="brasil">Brasil</option>
 				      	</select>
@@ -181,7 +181,7 @@
 			  		<!-- Observação -->
 				    <div class="form-group col-md-12">
 				      <label>Observação</label>
-				      <textarea  class="form-control" name="observacao" placeholder="Observação" rows="3"></textarea> <!-- required -->
+				      <textarea  class="form-control" name="observacao" placeholder="Observação" rows="3"></textarea>
 				    </div>
 			    </div>
 			    
