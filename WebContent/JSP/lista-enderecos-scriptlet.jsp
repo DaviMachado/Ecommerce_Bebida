@@ -40,15 +40,18 @@
   </nav>
   <!-- Fim Header -->
 
-	<table border="1" style="margin-top: 30px; margin-left: 300px;">
+	<table border="1" style="margin-top: 30px; margin-left: 100px;">
 		<tr>
+			<th>Apelido</th>
             <th>CEP</th>
+            <th>Estado</th>
+            <th>Cidade</th>
             <th>Logradouro</th>
             <th>Numero</th>
             <th>Bairro</th>
-            <th>Complemento</th>
-            <th>Cidade</th>
-            <th>Estado</th>
+            <th>Tipo de Endereço</th>
+            <th>Tipo de Residência</th>
+            <th>País</th>
         </tr>
 		<%
 		EnderecoDAO dao = new EnderecoDAO();
@@ -68,13 +71,16 @@
 		Endereco address = (Endereco) e;
 		%>
 			<tr>
+				<td><%=address.getApelido() %></td>
 				<td><%=address.getCep() %></td>
+				<td><%=address.getEstado() %></td>
+				<td><%=address.getCidade() %></td>
 				<td><%=address.getLogradouro() %></td>
 				<td><%=address.getNumero() %></td>
 				<td><%=address.getBairro() %></td>
-				<td><%=address.getComplemento() %></td>
-				<td><%=address.getCidade() %></td>
-				<td><%=address.getEstado() %></td>
+				<td><%=address.getTipo_Endereco() %></td>
+				<td><%=address.getTipoResidencia() %></td>
+				<td><%=address.getPais() %></td>
 				<td><a href="/Ecommerce_Bebida/cadastroEndereco?idEndereco=<%= address.getId()%>&alteraEndereco=<%= "0"%>&operacao=ALTERAR"><button class="btn btn-warning">Alterar</button></a></td>
                 <td><a href="/Ecommerce_Bebida/cadastroEndereco?idCliente=<%= address.getIdCliente()%>&idEndereco=<%= address.getId()%>&operacao=EXCLUIR"><button class="btn btn-danger">Deletar</button></a></td>
 			</tr>
@@ -82,7 +88,7 @@
 		}
 		%>
 	</table>		
-	 <a href="/Ecommerce_Bebida/JSP/formulario_Endereco.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 300px; margin-bottom: 386px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/formulario_Endereco.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 100px; margin-bottom: 386px;"></a>
 	 
   	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">

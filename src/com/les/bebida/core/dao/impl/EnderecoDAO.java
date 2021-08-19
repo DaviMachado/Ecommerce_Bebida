@@ -12,7 +12,7 @@ import com.les.bebida.core.dominio.EntidadeDominio;
  * Classe EnderecoDAO,
  * responsável para salvar o endereço no BD.
  * @author Davi Rodrigues
- * @date 17/08/2021
+ * @date 18/08/2021
  */
 public class EnderecoDAO extends AbstractJdbcDAO {
 	
@@ -24,8 +24,9 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into endereco "+
-				"(cep, cidade, logradouro, numero, bairro, complemento, estado, id_cliente)" +
-				"values (?,?,?,?,?,?,?,?)";
+				"(apelido, cep, estado, cidade, numero, bairro, logradouro, tipo_residencia, " +
+				"pais, tipo_endereco, observacao, id_cliente)" +
+				"values (?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			Endereco endereco = (Endereco) entidade;
@@ -34,14 +35,19 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			
 			// seta os valores
-			stmt.setString(1,endereco.getCep());
-			stmt.setString(2,endereco.getCidade());
-			stmt.setString(3,endereco.getLogradouro());
-			stmt.setString(4,endereco.getNumero());
-			stmt.setString(5, endereco.getBairro());
-			stmt.setString(6, endereco.getComplemento());
-			stmt.setString(7, endereco.getEstado());
-			stmt.setString(8,endereco.getIdCliente());
+			stmt.setString(1,endereco.getApelido());
+			stmt.setString(2,endereco.getCep());
+			stmt.setString(3, endereco.getEstado());
+			stmt.setString(4,endereco.getCidade());
+			stmt.setString(5,endereco.getNumero());
+			stmt.setString(6, endereco.getBairro());
+			stmt.setString(7,endereco.getLogradouro());
+			stmt.setString(8,endereco.getTipoResidencia());
+			stmt.setString(9, endereco.getPais());
+			stmt.setString(10, endereco.getTipo_Endereco());
+			stmt.setString(11, endereco.getObservacao());
+			
+			stmt.setString(12,endereco.getIdCliente());
 			
 			// executa
 			stmt.execute();
@@ -60,7 +66,8 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "update endereco set " +
-					 "cep=?, cidade=?, logradouro=?, numero=?, bairro=?, complemento=?, estado=? where id=?";
+					 "apelido=?, cep=?, estado=?, cidade=?, numero=?, bairro=?, logradouro=?, " +
+					 "tipo_residencia=?, pais=?, tipo_endereco=?, observacao=?  where id=?";
 		
 		try {
 			Endereco endereco = (Endereco) entidade;
@@ -69,14 +76,19 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 			if (endereco.getAlteraEndereco().contentEquals("1")) {
 				PreparedStatement stmt = connection.prepareStatement(sql);
 				
-				stmt.setString(1, endereco.getCep());
-				stmt.setString(2, endereco.getCidade());
-				stmt.setString(3, endereco.getLogradouro());
-				stmt.setString(4, endereco.getNumero());
-				stmt.setString(5, endereco.getBairro());
-				stmt.setString(6, endereco.getComplemento());
-				stmt.setString(7, endereco.getEstado());
-				stmt.setString(8, endereco.getId());
+				stmt.setString(1, endereco.getApelido());
+				stmt.setString(2, endereco.getCep());
+				stmt.setString(3, endereco.getEstado());
+				stmt.setString(4, endereco.getCidade());
+				stmt.setString(5, endereco.getNumero());
+				stmt.setString(6, endereco.getBairro());
+				stmt.setString(7, endereco.getLogradouro());
+				stmt.setString(8, endereco.getTipoResidencia());
+				stmt.setString(9, endereco.getPais());
+				stmt.setString(10, endereco.getTipo_Endereco());
+				stmt.setString(11, endereco.getObservacao());
+				
+				stmt.setString(12, endereco.getId());
 				
 				stmt.execute();
 				stmt.close();
@@ -134,13 +146,18 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 				Endereco enderecoItem = new Endereco();
 				
 				enderecoItem.setId(rs.getString("id"));
+				enderecoItem.setApelido(rs.getString("apelido"));
 				enderecoItem.setCep(rs.getString("cep"));
+				enderecoItem.setEstado(rs.getString("estado"));
 				enderecoItem.setCidade(rs.getString("cidade"));
-				enderecoItem.setLogradouro(rs.getString("logradouro"));
 				enderecoItem.setNumero(rs.getString("numero"));
 				enderecoItem.setBairro(rs.getString("bairro"));
-				enderecoItem.setComplemento(rs.getString("complemento"));
-				enderecoItem.setEstado(rs.getString("estado"));
+				enderecoItem.setLogradouro(rs.getString("logradouro"));
+				enderecoItem.setTipoResidencia(rs.getString("tipo_residencia"));
+				enderecoItem.setPais(rs.getString("pais"));
+				enderecoItem.setTipo_Endereco(rs.getString("tipo_endereco"));
+				enderecoItem.setObservacao(rs.getString("observacao"));
+				
 				enderecoItem.setIdCliente(rs.getString("id_cliente"));
 				
 				// adicionando o objeto à lista
@@ -172,13 +189,18 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 				Endereco enderecoItem = new Endereco();
 				
 				enderecoItem.setId(rs.getString("id"));
+				enderecoItem.setApelido(rs.getString("apelido"));
 				enderecoItem.setCep(rs.getString("cep"));
+				enderecoItem.setEstado(rs.getString("estado"));
 				enderecoItem.setCidade(rs.getString("cidade"));
-				enderecoItem.setLogradouro(rs.getString("logradouro"));
 				enderecoItem.setNumero(rs.getString("numero"));
 				enderecoItem.setBairro(rs.getString("bairro"));
-				enderecoItem.setComplemento(rs.getString("complemento"));
-				enderecoItem.setEstado(rs.getString("estado"));
+				enderecoItem.setLogradouro(rs.getString("logradouro"));
+				enderecoItem.setTipoResidencia(rs.getString("tipo_residencia"));
+				enderecoItem.setPais(rs.getString("pais"));
+				enderecoItem.setTipo_Endereco(rs.getString("tipo_endereco"));
+				enderecoItem.setObservacao(rs.getString("observacao"));
+				
 				enderecoItem.setIdCliente(rs.getString("id_cliente"));
 				
 				// adicionando o objeto à lista

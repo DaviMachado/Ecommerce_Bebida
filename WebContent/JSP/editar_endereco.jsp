@@ -56,47 +56,19 @@
 			<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastroEndereco">
 				
 				<div class="form-row">
+					<!-- Apelido -->
+				    <div class="form-group col-md-4">
+				      <label>Apelido</label>
+				      <input type="text" class="form-control" name="apelido" placeholder="Apelido" value="<%=endereco.get(0).getApelido() %>">
+				    </div>
+				    
 					<!-- CEP -->
-				    <div class="form-group col-md-6">
+				    <div class="form-group col-md-2">
 				      <label>CEP</label>
 				      <input type="number" class="form-control" name="cep" placeholder="CEP" value="<%=endereco.get(0).getCep() %>"> <!-- required -->
 				    </div>
-				  	
-				  	<!-- Cidade -->
-				    <div class="form-group col-md-6">
-				      <label>Cidade</label>
-				      <input type="text" class="form-control" name="cidade" placeholder="Cidade" value="<%=endereco.get(0).getCidade() %>"> <!-- required -->
-				    </div>
-			    </div>
-			  	
-			  	<div class="form-row">
-				  	<!-- Logradouro -->
-				    <div class="form-group col-md-6">
-				      <label>Logradouro</label>
-				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)" value="<%=endereco.get(0).getLogradouro() %>">
-				    </div>
-				  	
-				  	<!-- Numero -->
-				    <div class="form-group col-md-2">
-				      <label>Numero</label>
-				      <input type="number" class="form-control" name="numero" placeholder="Numero" value="<%=endereco.get(0).getNumero() %>">
-				    </div>
-				  	
-					<!-- Bairro -->
-				    <div class="form-group col-md-4">
-				      <label>Bairro</label>
-				      <input type="text" class="form-control" name="bairro" placeholder="Bairro" value="<%=endereco.get(0).getBairro() %>">
-				    </div>
-			    </div>
-			  	
-			  	<div class="form-row">
-					<!-- Complemento -->
-				    <div class="form-group col-md-6">
-				      <label>Complemento</label>
-				      <input type="text" class="form-control" name="complemento" placeholder="Complemento" value="<%=endereco.get(0).getComplemento() %>">
-				    </div>
-			  	
-					<!-- Estado -->
+				    
+				    <!-- Estado -->
 					<div class="form-group col-md-2">
 				    	<label>Estado</label>
 			        	<select name="selecioneEstado" class="form-control" placeholder="Selecione um Estado">
@@ -130,6 +102,87 @@
 					      	<option value="SE">SE</option> <!-- Sergipe -->
 					      	<option value="TO">TO</option> <!-- Tocantins -->
 				    	</select>
+				    </div>
+				  	
+				  	<!-- Cidade -->
+				    <div class="form-group col-md-4">
+				      <label>Cidade</label>
+				      <input type="text" class="form-control" name="cidade" placeholder="Cidade" value="<%=endereco.get(0).getCidade() %>"> <!-- required -->
+				    </div>
+			    </div>
+			  	
+			  	<div class="form-row">
+				  	<!-- Logradouro -->
+				    <div class="form-group col-md-6">
+				      <label>Logradouro</label>
+				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)" value="<%=endereco.get(0).getLogradouro() %>">
+				    </div>
+				  	
+				  	<!-- Numero -->
+				    <div class="form-group col-md-2">
+				      <label>Numero</label>
+				      <input type="number" class="form-control" name="numero" placeholder="Numero" value="<%=endereco.get(0).getNumero() %>">
+				    </div>
+				  	
+					<!-- Bairro -->
+				    <div class="form-group col-md-4">
+				      <label>Bairro</label>
+				      <input type="text" class="form-control" name="bairro" placeholder="Bairro" value="<%=endereco.get(0).getBairro() %>">
+				    </div>
+			    </div>
+			    
+			    <div class="form-row">
+			  		<!-- Tipo de Endereço -->
+			  		<div class="form-group col-md-2">
+			  		<label>Tipo de Endereço</label>
+
+			  			<select name="tipoEndereco" class="form-control" placeholder="Selecione um Tipo de Endereço">
+					      	<option value="" disabled>Selecione uma opção...</option>
+					      	<option><%=endereco.get(0).getTipo_Endereco() %></option>
+					      	<option value="entrega">Entrega</option>
+					      	<option value="cobranca">Cobrança</option>
+				      	</select>
+			  		</div>
+				    
+   				    <!-- Tipo de Residência -->
+			  		<div class="form-group col-md-2">
+			  		<label>Tipo de Residência</label>
+
+			  			<select name="tipoResidencia" class="form-control" placeholder="Selecione um Tipo de Residência">
+					      	<option value="" disabled>Selecione uma opção...</option>
+					      	<option><%=endereco.get(0).getTipoResidencia() %></option>
+					      	<option value="casa">Casa</option>
+					      	<option value="apartamento">Apartamento</option>
+					      	<option value="sobrado">Sobrado</option>
+					      	<option value="quitinete">Quitinete</option>
+					      	<option value="loft">Loft</option>
+					      	<option value="mansao">Mansão</option>
+				      	</select>
+			  		</div>
+			  		
+				    <!-- País -->
+			  		<div class="form-group col-md-2">
+			  		<label>País</label>
+
+			  			<select name="pais" class="form-control" placeholder="Selecione um País">
+					      	<option value="" disabled>Selecione uma opção...</option>
+					      	<option><%=endereco.get(0).getPais() %></option>
+					      	<option value="brasil">Brasil</option>
+				      	</select>
+			  		</div>
+				</div>
+				
+				<div class="form-row">
+			  		<!-- Observação -->
+				    <div class="form-group col-md-12">
+				      <label>Observação</label>
+				      <textarea  class="form-control" name="observacao" placeholder="Observação" rows="3"><%=endereco.get(0).getObservacao() %></textarea> <!-- required -->
+				    </div>
+			    </div>
+			  	
+			  	<div class="form-row">
+					<div class="form-group col-md-8">
+				    	<!-- adicionado uma coluna com tamanho md-8 em branca para alinhar o botão Editar da pagina -->
 				    </div>
 				
 					<!-- Botões CRUD-->

@@ -3,7 +3,7 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Endereço
  * @author Davi Rodrigues
- * @date 17/08/2021
+ * @date 18/08/2021
  */
 public class Endereco extends EntidadeDominio {
 	private String logradouro;
@@ -17,6 +17,11 @@ public class Endereco extends EntidadeDominio {
 //	private Cidade cidade;
 	private TipoEndereco tipoEndereco;
 	private String alteraEndereco;
+	private String apelido;
+	private String observacao;
+	private String tipo_endereco;
+	private String tipo_residencia;
+	private String pais;
 	
 	public String getLogradouro() {
 		return logradouro;
@@ -83,5 +88,35 @@ public class Endereco extends EntidadeDominio {
 	}
 	public void setAlteraEndereco(String alteraEndereco) {
 		this.alteraEndereco = alteraEndereco;
+	}
+	public String getApelido() {
+		return apelido;
+	}
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
+	}
+	public String getObservacao() {
+		return observacao;
+	}
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+	public String getTipo_Endereco() {
+		return tipo_endereco;
+	}
+	public void setTipo_Endereco(String tipo_endereco) {
+		this.tipo_endereco = tipo_endereco;
+	}
+	public String getTipoResidencia() {
+		return tipo_residencia;
+	}
+	public void setTipoResidencia(String tipo_residencia) {
+		this.tipo_residencia = tipo_residencia;
+	}
+	public String getPais() {
+		return pais;
+	}
+	public void setPais(String pais) {
+		this.pais = pais;
 	}
 }

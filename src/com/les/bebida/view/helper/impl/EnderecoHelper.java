@@ -31,6 +31,12 @@ public class EnderecoHelper implements IViewHelper {
         String bairro = null;
         String complemento = null;
         String estado = null;
+        String apelido = null;
+        String tipoEndereco = null;
+        String tipoResidencia = null;
+        String pais = null;
+        String observacao = null;
+        
         String idCliente = null;
         String alteraEndereco = null;
 		
@@ -53,6 +59,12 @@ public class EnderecoHelper implements IViewHelper {
 			bairro = request.getParameter("bairro");
 			complemento = request.getParameter("complemento");
 			estado = request.getParameter("selecioneEstado");
+			apelido = request.getParameter("apelido");
+			tipoEndereco = request.getParameter("tipoEndereco");
+			tipoResidencia = request.getParameter("tipoResidencia");
+			pais = request.getParameter("pais");
+			observacao = request.getParameter("observacao");
+			
 			idCliente = request.getParameter("idCliente");
 			alteraEndereco = request.getParameter("alteraEndereco");
 			
@@ -64,6 +76,12 @@ public class EnderecoHelper implements IViewHelper {
 			endereco.setBairro(bairro);
 			endereco.setComplemento(complemento);
 			endereco.setEstado(estado);
+			endereco.setApelido(apelido);
+			endereco.setTipo_Endereco(tipoEndereco);
+			endereco.setTipoResidencia(tipoResidencia);
+			endereco.setPais(pais);
+			endereco.setObservacao(observacao);
+			
 			endereco.setIdCliente(idCliente);
 			endereco.setAlteraEndereco(alteraEndereco);
 		}
@@ -80,6 +98,12 @@ public class EnderecoHelper implements IViewHelper {
 			bairro = request.getParameter("bairro");
 			complemento = request.getParameter("complemento");
 			estado = request.getParameter("selecioneEstado");
+			apelido = request.getParameter("apelido");
+			tipoEndereco = request.getParameter("tipoEndereco");
+			tipoResidencia = request.getParameter("tipoResidencia");
+			pais = request.getParameter("pais");
+			observacao = request.getParameter("observacao");
+			
 			idCliente = request.getParameter("idCliente");
 			alteraEndereco = request.getParameter("alteraEndereco");
 			
@@ -92,6 +116,12 @@ public class EnderecoHelper implements IViewHelper {
 			endereco.setBairro(bairro);
 			endereco.setComplemento(complemento);
 			endereco.setEstado(estado);
+			endereco.setApelido(apelido);
+			endereco.setTipo_Endereco(tipoEndereco);
+			endereco.setTipoResidencia(tipoResidencia);
+			endereco.setPais(pais);
+			endereco.setObservacao(observacao);
+			
 			endereco.setIdCliente(idCliente);
 			endereco.setAlteraEndereco(alteraEndereco);
 		}

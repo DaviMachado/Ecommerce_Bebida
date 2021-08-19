@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 17/08/2021 -->
+<!-- @date 18/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -65,47 +65,19 @@
 			<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastroEndereco">
 				
 				<div class="form-row">
+					<!-- Apelido -->
+				    <div class="form-group col-md-4">
+				      <label>Apelido</label>
+				      <input type="text" class="form-control" name="apelido" placeholder="Apelido">
+				    </div>
+				    
 					<!-- CEP -->
-				    <div class="form-group col-md-6">
+				    <div class="form-group col-md-2">
 				      <label>CEP</label>
 				      <input type="number" class="form-control" name="cep" placeholder="CEP"> <!-- required -->
 				    </div>
-				  	
-				  	<!-- Cidade -->
-				    <div class="form-group col-md-6">
-				      <label>Cidade</label>
-				      <input type="text" class="form-control" name="cidade" placeholder="Cidade"> <!-- required -->
-				    </div>
-			    </div>
-			  	
-			  	<div class="form-row">
-				  	<!-- Logradouro -->
-				    <div class="form-group col-md-6">
-				      <label>Logradouro</label>
-				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)">
-				    </div>
-				  	
-				  	<!-- Numero -->
-				    <div class="form-group col-md-2">
-				      <label>Numero</label>
-				      <input type="number" class="form-control" name="numero" placeholder="Numero">
-				    </div>
-				  	
-					<!-- Bairro -->
-				    <div class="form-group col-md-4">
-				      <label>Bairro</label>
-				      <input type="text" class="form-control" name="bairro" placeholder="Bairro">
-				    </div>
-			    </div>
-			  	
-			  	<div class="form-row">
-					<!-- Complemento -->
-				    <div class="form-group col-md-6">
-				      <label>Complemento</label>
-				      <input type="text" class="form-control" name="complemento" placeholder="Complemento">
-				    </div>
-			  	
-					<!-- Estado -->
+				    
+				    <!-- Estado -->
 					<div class="form-group col-md-2">
 				    	<label>Estado</label>
 			        	<select name="selecioneEstado" class="form-control" placeholder="Selecione um Estado">
@@ -139,28 +111,114 @@
 					      	<option value="TO">TO</option> <!-- Tocantins -->
 				    	</select>
 				    </div>
+				  	
+				  	<!-- Cidade -->
+				    <div class="form-group col-md-4">
+				      <label>Cidade</label>
+				      <input type="text" class="form-control" name="cidade" placeholder="Cidade"> <!-- required -->
+				    </div>
+			    </div>
+			  	
+			  	<div class="form-row">
+				  	<!-- Logradouro -->
+				    <div class="form-group col-md-6">
+				      <label>Logradouro</label>
+				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)">
+				    </div>
+				  	
+				  	<!-- Numero -->
+				    <div class="form-group col-md-2">
+				      <label>Numero</label>
+				      <input type="number" class="form-control" name="numero" placeholder="Numero">
+				    </div>
+				  	
+					<!-- Bairro -->
+				    <div class="form-group col-md-4">
+				      <label>Bairro</label>
+				      <input type="text" class="form-control" name="bairro" placeholder="Bairro">
+				    </div>
+			    </div>
+			  	
+			  	<div class="form-row">
+			  		<!-- Tipo de Endereço -->
+			  		<div class="form-group col-md-2">
+			  		<label>Tipo de Endereço</label>
+
+			  			<select name="tipoEndereco" class="form-control" placeholder="Selecione um Tipo de Endereço">
+					      	<option value="" disabled selected>Selecione uma opção...</option>
+					      	<option value="entrega">Entrega</option>
+					      	<option value="cobranca">Cobrança</option>
+				      	</select>
+			  		</div>
+				    
+   				    <!-- Tipo de Residência -->
+			  		<div class="form-group col-md-2">
+			  		<label>Tipo de Residência</label>
+
+			  			<select name="tipoResidencia" class="form-control" placeholder="Selecione um Tipo de Residência">
+					      	<option value="" disabled selected>Selecione uma opção...</option>
+					      	<option value="casa">Casa</option>
+					      	<option value="apartamento">Apartamento</option>
+					      	<option value="sobrado">Sobrado</option>
+					      	<option value="quitinete">Quitinete</option>
+					      	<option value="loft">Loft</option>
+					      	<option value="mansao">Mansão</option>
+				      	</select>
+			  		</div>
+			  		
+				    <!-- País -->
+			  		<div class="form-group col-md-2">
+			  		<label>País</label>
+
+			  			<select name="pais" class="form-control" placeholder="Selecione um País">
+					      	<option value="" disabled selected>Selecione uma opção...</option>
+					      	<option value="brasil">Brasil</option>
+				      	</select>
+			  		</div>
+				</div>
 				
-					<!-- Botões CRUD-->
+				<div class="form-row">
+			  		<!-- Observação -->
+				    <div class="form-group col-md-12">
+				      <label>Observação</label>
+				      <textarea  class="form-control" name="observacao" placeholder="Observação" rows="3"></textarea> <!-- required -->
+				    </div>
+			    </div>
+			    
+			    <div class="form-row">
+				    <div class="form-group col-md-8">
+				    	<!-- adicionado uma coluna com tamanho md-8 em branca para alinhar o botão Salvar da pagina -->
+				    </div>
+				    
+   					<!-- Botões CRUD-->
 					<div class="form-group col-md-4">
-						<div align="right" style="margin-top: 50px;">
+						<div align="right" >
 							<button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
-							<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
 						</div>
 					</div>
-				</div>
-				
-				<!-- Botão Voltar -->
-				<div align="right" style="margin-top: 10px;">
-					<!--<input style="margin-left: 600px" type="button" value="Voltar" onclick="history.back()">-->
-					<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 300px;"></a>
-				</div>
-			
-				<br />
+			    </div>
 				
 				<!-- ID do Cliente -->
 				<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
 				<!-- Parametro que é verificado se pode alterar um Endereço ou não -->
 			    <input type="hidden" name="alteraEndereco" id="alteraEndereco" value="1">
+			</form>
+			
+			<!-- Consultar -->
+			<form class="form" action="http://localhost:8080/Ecommerce_Bebida/cadastroEndereco">
+				<!-- Botões CRUD -->
+	  			<div align="right" style="margin-top: 10px">
+	  				<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
+	  			</div>
+	  			
+				<!-- Botão Voltar -->
+				<div align="right" style="margin-top: 10px;">
+					<!--<input style="margin-left: 600px" type="button" value="Voltar" onclick="history.back()">-->
+					<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 300px;"></a>
+				</div>
+				
+				<!-- ID do Cliente -->
+				<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
 			</form>
 		</fieldset>
 		  <!-- Footer -->
