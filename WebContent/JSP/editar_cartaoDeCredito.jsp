@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 14/08/2021 -->
+<!-- @date 19/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -38,6 +38,8 @@
 	String numero = cartao.get(0).getNum_cartao();
 	String validade = cartao.get(0).getDt_validade();
 	String cdSeguranca = cartao.get(0).getCod_seguranca();
+	String bandeira = cartao.get(0).getBandeira();
+	String preferencial = cartao.get(0).getFlgPreferencial();
 %>
 
 <body>
@@ -193,9 +195,36 @@
 	            <label for="securitycode">Código de Segurança</label>
 	            <input id="securitycode" name="cod_seguranca" type="text" inputmode="numeric" value="<%=cdSeguranca %>"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	        </div>
-       	    <div>
-	   		  <label>Preferencial</label>
-			  <input type="checkbox" id="preferencial" name="flg_preferencial">
+	        
+	        <div class="field-container">
+				<!-- Bandeira -->
+		  		<div class="form-group">
+		  		<label>Bandeira</label>
+
+		  			<select name="bandeira" class="form-control" placeholder="Selecione uma Bandeira" required>
+				      	<option disabled>Selecione uma opção...</option>
+				      	<option value="<%=bandeira %>"><%=bandeira %></option>
+				      	<option value="Mastercard">Mastercard</option>
+				      	<option value="Visa">Visa</option>
+				      	<option value="American Express">American Express</option>
+				      	<option value="Hipercard">Hipercard</option>
+				      	<option value="Elo">Elo</option>
+			      	</select>
+		  		</div>
+			</div>
+			
+			<div class="field-container">
+				<!-- Preferencial -->
+		  		<div class="form-group">
+		  		<label>Preferencial</label>
+	
+		  			<select name="flg_preferencial" class="form-control" placeholder="Selecione uma Preferência" required>
+				      	<option disabled>Selecione uma opção...</option>
+				      	<option value="<%=preferencial %>"><%=preferencial %></option>
+				      	<option value="sim">Sim</option>
+				      	<option value="nao">Não</option>
+			      	</select>
+		  		</div>
 			</div>
 	    </div>
 	    

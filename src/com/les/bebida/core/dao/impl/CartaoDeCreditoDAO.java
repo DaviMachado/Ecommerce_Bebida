@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.les.bebida.core.dominio.CartaoDeCredito;
-import com.les.bebida.core.dominio.Cliente;
 import com.les.bebida.core.dominio.EntidadeDominio;
-import com.les.bebida.core.dominio.Usuario;
 
 public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 	
@@ -20,7 +18,7 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into cartao_de_credito "+ 
-				"(nome, num_cartao, bandeira, cd_seguranca, dt_validade, flg_preferencial, dt_cadastro, id_cliente)" +
+				"(nome, num_cartao, bandeira, cd_seguranca, dt_validade, preferencial, dt_cadastro, id_cliente)" +
 				"values (?,?,?,?,?,?,?,?)";
 		
 		try {
@@ -56,7 +54,7 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "update cartao_de_credito set " +
-					 "nome=?, num_cartao=?, bandeira=?, cd_seguranca=?, dt_validade=?, flg_preferencial=? where id=?";
+					 "nome=?, num_cartao=?, bandeira=?, cd_seguranca=?, dt_validade=?, preferencial=? where id=?";
 		
 		try {
 			CartaoDeCredito cartao = (CartaoDeCredito) entidade;
@@ -135,7 +133,7 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 				cartaoItem.setBandeira(rs.getString("bandeira"));
 				cartaoItem.setCod_seguranca(rs.getString("cd_seguranca"));
 				cartaoItem.setDt_validade(rs.getString("dt_validade"));
-				cartaoItem.setFlgPreferencial(rs.getString("flg_preferencial"));
+				cartaoItem.setFlgPreferencial(rs.getString("preferencial"));
 				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				cartaoItem.setIdCliente(rs.getString("id_cliente"));
 				
@@ -173,7 +171,7 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 				cartaoItem.setBandeira(rs.getString("bandeira"));
 				cartaoItem.setCod_seguranca(rs.getString("cd_seguranca"));
 				cartaoItem.setDt_validade(rs.getString("dt_validade"));
-				cartaoItem.setFlgPreferencial(rs.getString("flg_preferencial"));
+				cartaoItem.setFlgPreferencial(rs.getString("preferencial"));
 				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				cartaoItem.setIdCliente(rs.getString("id_cliente"));
 				

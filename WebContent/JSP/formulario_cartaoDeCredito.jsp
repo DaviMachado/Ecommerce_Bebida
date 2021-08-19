@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 13/08/2021 -->
+<!-- @date 19/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -188,27 +188,71 @@
 	            <label for="securitycode">Código de Segurança</label>
 	            <input id="securitycode" name="cod_seguranca" type="text" inputmode="numeric"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	        </div>
-       	    <div>
-	   		  <label>Preferencial</label>
-			  <input type="checkbox" id="preferencial" name="flg_preferencial">
+	        
+	        <div class="field-container">
+				<!-- Bandeira -->
+		  		<div class="form-group">
+		  		<label>Bandeira</label>
+
+		  			<select name="bandeira" class="form-control" placeholder="Selecione uma Bandeira" required>
+				      	<option value="" disabled selected>Selecione uma opção...</option>
+				      	<option value="Mastercard">Mastercard</option>
+				      	<option value="Visa">Visa</option>
+				      	<option value="American Express">American Express</option>
+				      	<option value="Hipercard">Hipercard</option>
+				      	<option value="Elo">Elo</option>
+			      	</select>
+		  		</div>
+			</div>
+			
+			<div class="field-container">
+				<!-- Preferencial -->
+		  		<div class="form-group">
+		  		<label>Preferencial</label>
+	
+		  			<select name="flg_preferencial" class="form-control" placeholder="Selecione uma Preferência" required>
+				      	<option value="" disabled selected>Selecione uma opção...</option>
+				      	<option value="sim">Sim</option>
+				      	<option value="nao">Não</option>
+			      	</select>
+		  		</div>
 			</div>
 	    </div>
 	    
-	    <!-- Botão CRUD -->
-	    <div align="right" style="margin-top: 10px; margin-bottom: 10px;">
-		    <button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
-		    <button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
+	    <div class="field-container" style="display: block; !important">
+		    <!-- Botão CRUD -->
+		    <div align="right" style="margin-bottom: 10px;">
+			    <button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
+		    </div>
 	    </div>
-	    
-	    <!-- Botão Voltar -->
-	    <div align="right" style="margin-top: 10px;">
-			<!--<input style="width: 10% !important; padding: 5px !important; margin-bottom: 10px" type="button" value="Voltar" onclick="history.back()">-->
-			<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 300px; width: 10% !important; padding: 5px !important; margin-bottom: 10px"></a>
-		</div>
 	    
 	    <!-- ID do Cliente -->
 		<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
+		<!-- Parametro que é verificado se pode alterar um Cartao de Credito ou não -->
+	    <input type="hidden" name="alteraCartao" id="alteraCartao" value="1">
     </form>
+    
+    <!-- Consultar -->
+	<form action="http://localhost:8080/Ecommerce_Bebida/cadastroCartaoCredito">
+		<div class="form-container" style="display: block; !important">
+			<!-- Botão CRUD -->
+		    <div align="right" style="margin-top: 30px; margin-left: 287px;">
+			    <button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
+		    </div>
+		</div>
+		
+		<div class="form-container" style="display: block; !important">
+		    <!-- Botão Voltar -->
+		    <div align="right" style="margin-top: 20px;">
+				<!--<input style="width: 10% !important; padding: 5px !important; margin-bottom: 10px" type="button" value="Voltar" onclick="history.back()">-->
+				<!-- style="margin-left: 300px; width: 10% !important; padding: 5px !important; margin-bottom: 10px" -->
+				<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 286px; padding: 5px !important; margin-bottom: 10px; width: 94px;"></a>
+			</div>
+		</div>
+		
+		<!-- ID do Cliente -->
+		<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
+	</form>
 
 </body>
     <!-- Footer -->

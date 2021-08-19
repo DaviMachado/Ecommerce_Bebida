@@ -46,6 +46,7 @@
             <th>Numero</th>
             <th>Bandeira</th>
             <th>Validade</th>
+            <th>Preferencial</th>
         </tr>
 		<%
 		CartaoDeCreditoDAO dao = new CartaoDeCreditoDAO();
@@ -69,6 +70,7 @@
 				<td><%=creditCard.getNum_cartao() %></td>
 				<td><%=creditCard.getBandeira() %></td>
 				<td><%=creditCard.getDt_validade() %></td>
+				<td><%=creditCard.getFlgPreferencial() %></td>
 				<td><a href="/Ecommerce_Bebida/cadastroCartaoCredito?idCartaoDeCredito=<%= creditCard.getId()%>&alteraCartao=<%= "0"%>&operacao=ALTERAR"><button class="btn btn-warning">Alterar</button></a></td>
                 <td><a href="/Ecommerce_Bebida/cadastroCartaoCredito?idCartaoDeCredito=<%= creditCard.getId()%>&idCliente=<%= creditCard.getIdCliente()%>&operacao=EXCLUIR"><button class="btn btn-danger">Deletar</button></a></td>
 			</tr>
