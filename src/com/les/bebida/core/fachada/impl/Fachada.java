@@ -22,23 +22,32 @@ import com.les.bebida.core.dominio.Resultado;
 import com.les.bebida.core.dominio.Usuario;
 import com.les.bebida.core.fachada.IFachada;
 import com.les.bebida.core.strategy.IStrategy;
+import com.les.bebida.core.strategy.impl.ValidarBairro;
+import com.les.bebida.core.strategy.impl.ValidarCEP;
 import com.les.bebida.core.strategy.impl.ValidarCPF;
+import com.les.bebida.core.strategy.impl.ValidarCidade;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaCliente;
 import com.les.bebida.core.strategy.impl.ValidarDataCadastro;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
+import com.les.bebida.core.strategy.impl.ValidarEstado;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLogin;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLoginAndSenha;
 import com.les.bebida.core.strategy.impl.ValidarStatusUsuario;
 import com.les.bebida.core.strategy.impl.ValidarLogin;
 import com.les.bebida.core.strategy.impl.ValidarLoginCliente;
+import com.les.bebida.core.strategy.impl.ValidarLogradouro;
 import com.les.bebida.core.strategy.impl.ValidarNome;
 import com.les.bebida.core.strategy.impl.ValidarNomeLogin;
+import com.les.bebida.core.strategy.impl.ValidarNumeroEndereco;
+import com.les.bebida.core.strategy.impl.ValidarPais;
 import com.les.bebida.core.strategy.impl.ValidarSenha;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgual;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgualCliente;
 import com.les.bebida.core.strategy.impl.ValidarSexo;
 import com.les.bebida.core.strategy.impl.ValidarStatusCliente;
 import com.les.bebida.core.strategy.impl.ValidarTipoCliente;
+import com.les.bebida.core.strategy.impl.ValidarTipoEndereco;
+import com.les.bebida.core.strategy.impl.ValidarTipoResidencia;
 import com.les.bebida.core.strategy.impl.ValidarTipoUsuario;
 
 /**
@@ -71,6 +80,15 @@ public class Fachada implements IFachada {
 	ValidarCodigoSistemaCliente vCodigoClienteSys = new ValidarCodigoSistemaCliente();
 	ValidarExistenciaLogin vExistenciaLogin = new ValidarExistenciaLogin();
 	ValidarExistenciaLoginAndSenha vExistenciaLoginAndSenha = new ValidarExistenciaLoginAndSenha();
+	ValidarCEP vCEP = new ValidarCEP();
+	ValidarEstado vEstado = new ValidarEstado();
+	ValidarCidade vCidade = new ValidarCidade();
+	ValidarLogradouro vLogradouro = new ValidarLogradouro();
+	ValidarNumeroEndereco vNumeroEndereco = new ValidarNumeroEndereco();
+	ValidarBairro vBairro = new ValidarBairro();
+	ValidarTipoEndereco vTipoEndereco = new ValidarTipoEndereco();
+	ValidarTipoResidencia vTipoResidencia = new ValidarTipoResidencia();
+	ValidarPais vPais = new ValidarPais();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -151,7 +169,26 @@ public class Fachada implements IFachada {
 		/* ---------------------------------------------------------- */
 		
 		/* ----- Adicionando as Strategy's na lista do Endereço ----- */
-//		regrasSalvarEndereco.add(null);
+		/* ----- SALVAR ----- */
+		regrasSalvarEndereco.add(vCEP);
+		regrasSalvarEndereco.add(vEstado);
+		regrasSalvarEndereco.add(vCidade);
+		regrasSalvarEndereco.add(vLogradouro);
+		regrasSalvarEndereco.add(vNumeroEndereco);
+		regrasSalvarEndereco.add(vBairro);
+		regrasSalvarEndereco.add(vTipoEndereco);
+		regrasSalvarEndereco.add(vTipoResidencia);
+		regrasSalvarEndereco.add(vPais);
+		/* ----- ALTERAR ----- */
+		regrasAlterarEndereco.add(vCEP);
+		regrasAlterarEndereco.add(vEstado);
+		regrasAlterarEndereco.add(vCidade);
+		regrasAlterarEndereco.add(vLogradouro);
+		regrasAlterarEndereco.add(vNumeroEndereco);
+		regrasAlterarEndereco.add(vBairro);
+		regrasAlterarEndereco.add(vTipoEndereco);
+		regrasAlterarEndereco.add(vTipoResidencia);
+		regrasAlterarEndereco.add(vPais);
 		/* ---------------------------------------------------------- */
 		
 		/* ----- Adicionando as Strategy's na lista do Login ----- */
