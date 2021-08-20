@@ -170,11 +170,11 @@
 	    <div class="form-container">
 	        <div class="field-container">
 	            <label for="name">Nome</label>
-	            <input id="name" name="nome" maxlength="20" type="text">
+	            <input id="name" name="nome" maxlength="20" type="text" required>
 	        </div>
 	        <div class="field-container">
 	            <label for="cardnumber">Número do Cartão</label><span id="generatecard">generate random</span>
-	            <input id="cardnumber" name="num_cartao" type="text" inputmode="numeric"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
+	            <input id="cardnumber" name="num_cartao" type="text" inputmode="numeric" minlength="19" required> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	            <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
 	                xmlns:xlink="http://www.w3.org/1999/xlink">
 	
@@ -182,11 +182,11 @@
 	        </div>
 	        <div class="field-container">
 	            <label for="expirationdate">Validade (mm/yy)</label>
-	            <input id="expirationdate" name="dt_validade" type="text" inputmode="numeric"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
+	            <input id="expirationdate" name="dt_validade" type="text" inputmode="numeric" required> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	        </div>
 	        <div class="field-container">
 	            <label for="securitycode">Código de Segurança</label>
-	            <input id="securitycode" name="cod_seguranca" type="text" inputmode="numeric"> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
+	            <input id="securitycode" name="cod_seguranca" type="text" inputmode="numeric" required> <!-- pattern="[0-9]*" --> <!-- tag ao lado foi retirada pois tinha validação e não deixava salvar -->
 	        </div>
 	        
 	        <div class="field-container">
