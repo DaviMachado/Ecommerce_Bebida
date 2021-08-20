@@ -23,12 +23,15 @@ import com.les.bebida.core.dominio.Usuario;
 import com.les.bebida.core.fachada.IFachada;
 import com.les.bebida.core.strategy.IStrategy;
 import com.les.bebida.core.strategy.impl.ValidarBairro;
+import com.les.bebida.core.strategy.impl.ValidarBandeiraCartao;
 import com.les.bebida.core.strategy.impl.ValidarCEP;
 import com.les.bebida.core.strategy.impl.ValidarCPF;
 import com.les.bebida.core.strategy.impl.ValidarCidade;
+import com.les.bebida.core.strategy.impl.ValidarCodigoSegurancaCartao;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaCliente;
 import com.les.bebida.core.strategy.impl.ValidarDataCadastro;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
+import com.les.bebida.core.strategy.impl.ValidarDataValidadeCartao;
 import com.les.bebida.core.strategy.impl.ValidarEstado;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLogin;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLoginAndSenha;
@@ -37,7 +40,9 @@ import com.les.bebida.core.strategy.impl.ValidarLogin;
 import com.les.bebida.core.strategy.impl.ValidarLoginCliente;
 import com.les.bebida.core.strategy.impl.ValidarLogradouro;
 import com.les.bebida.core.strategy.impl.ValidarNome;
+import com.les.bebida.core.strategy.impl.ValidarNomeCartao;
 import com.les.bebida.core.strategy.impl.ValidarNomeLogin;
+import com.les.bebida.core.strategy.impl.ValidarNumeroCartao;
 import com.les.bebida.core.strategy.impl.ValidarNumeroEndereco;
 import com.les.bebida.core.strategy.impl.ValidarPais;
 import com.les.bebida.core.strategy.impl.ValidarSenha;
@@ -45,6 +50,7 @@ import com.les.bebida.core.strategy.impl.ValidarSenhaIgual;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgualCliente;
 import com.les.bebida.core.strategy.impl.ValidarSexo;
 import com.les.bebida.core.strategy.impl.ValidarStatusCliente;
+import com.les.bebida.core.strategy.impl.ValidarStatusPreferencialCartao;
 import com.les.bebida.core.strategy.impl.ValidarTipoCliente;
 import com.les.bebida.core.strategy.impl.ValidarTipoEndereco;
 import com.les.bebida.core.strategy.impl.ValidarTipoResidencia;
@@ -54,7 +60,7 @@ import com.les.bebida.core.strategy.impl.ValidarTipoUsuario;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 17/08/2021
+ * @date 19/08/2021
  */
 public class Fachada implements IFachada {
 
@@ -89,6 +95,12 @@ public class Fachada implements IFachada {
 	ValidarTipoEndereco vTipoEndereco = new ValidarTipoEndereco();
 	ValidarTipoResidencia vTipoResidencia = new ValidarTipoResidencia();
 	ValidarPais vPais = new ValidarPais();
+	ValidarNomeCartao vNomeCartao = new ValidarNomeCartao();
+	ValidarNumeroCartao vNumeroCartao = new ValidarNumeroCartao();
+	ValidarDataValidadeCartao vDataValidadeCartao = new ValidarDataValidadeCartao();
+	ValidarCodigoSegurancaCartao vCodigoSegurancaCartao = new ValidarCodigoSegurancaCartao();
+	ValidarBandeiraCartao vBandeiraCartao = new ValidarBandeiraCartao();
+	ValidarStatusPreferencialCartao vStatusPreferencialCartao = new ValidarStatusPreferencialCartao();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -208,7 +220,20 @@ public class Fachada implements IFachada {
 		
 		/* ----- Adicionando as Strategy's na lista do Cartao de Credito ----- */
 		/* ----- SALVAR ----- */
+		regrasSalvarCartaoDeCredito.add(vNomeCartao);
+		regrasSalvarCartaoDeCredito.add(vNumeroCartao);
+		regrasSalvarCartaoDeCredito.add(vDataValidadeCartao);
+		regrasSalvarCartaoDeCredito.add(vCodigoSegurancaCartao);
+		regrasSalvarCartaoDeCredito.add(vBandeiraCartao);
+		regrasSalvarCartaoDeCredito.add(vStatusPreferencialCartao);
 		regrasSalvarCartaoDeCredito.add(VDataCadastro);
+		/* ----- ALTERAR ----- */
+		regrasAlterarCartaoDeCredito.add(vNomeCartao);
+		regrasAlterarCartaoDeCredito.add(vNumeroCartao);
+		regrasAlterarCartaoDeCredito.add(vDataValidadeCartao);
+		regrasAlterarCartaoDeCredito.add(vCodigoSegurancaCartao);
+		regrasAlterarCartaoDeCredito.add(vBandeiraCartao);
+		regrasAlterarCartaoDeCredito.add(vStatusPreferencialCartao);
 		/* ---------------------------------------------------------- */
 		
 		/* ----- Adicionando as Strategy's na lista do Produto ----- */

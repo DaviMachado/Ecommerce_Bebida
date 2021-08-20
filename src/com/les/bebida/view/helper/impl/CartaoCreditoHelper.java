@@ -52,6 +52,7 @@ public class CartaoCreditoHelper implements IViewHelper{
         	cod_seguranca = request.getParameter("cod_seguranca");
         	flg_preferencial = request.getParameter("flg_preferencial");
         	idCliente = request.getParameter("idCliente");
+        	alteraCartao = request.getParameter("alteraCartao");
         	
         	// Atribuindo os valores capturados do HTML para o Cartao de Credito
         	cartaoDeCredito.setNome(nome);
@@ -61,6 +62,7 @@ public class CartaoCreditoHelper implements IViewHelper{
         	cartaoDeCredito.setCod_seguranca(cod_seguranca);
         	cartaoDeCredito.setFlgPreferencial(flg_preferencial);
         	cartaoDeCredito.setIdCliente(idCliente);
+        	cartaoDeCredito.setAlteraCartao(alteraCartao);
         }
         
         else if (("ALTERAR").equals(operacao)) {
