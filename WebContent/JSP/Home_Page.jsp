@@ -154,7 +154,7 @@
               <a href="#"><img class="card-img-top" src="./Imagens/itens/coca_cola.png" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">Coca-Cola 350ml</a>
+	                <a href="http://localhost:8080/Ecommerce_Bebida/itemCarrinho?idProduto=5&operacao=SALVAR">Coca-Cola 350ml</a>
                 </h4>
                 <h5>$24.99</h5>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
