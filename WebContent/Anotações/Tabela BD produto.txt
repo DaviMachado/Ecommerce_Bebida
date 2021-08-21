@@ -5,18 +5,40 @@ drop table produto;
 create table produto (
 	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
 	nome		       		VARCHAR(50),
-	descricao	       		VARCHAR(50),
+	descricao	       		VARCHAR(200),
 	categoria	       		VARCHAR(50),
 	preco_de_compra    		VARCHAR(10),
-	foto		       		VARCHAR(50),
+	preco_de_venda    		VARCHAR(10),
+	foto		       		VARCHAR(150),
 	grupo_de_precificacao	VARCHAR(50),
 	quantidade	 	   		VARCHAR(10),
     status			   		VARCHAR(10),
     dt_cadastro 	   		DATE,
-    observacao		       	VARCHAR(50),
+    observacao		       	VARCHAR(200),
 	primary	key	(id)
 );
 
 use ecommerce;
 
 select * from produto;
+-----------------------------
+insert dos produtos:
+
+insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
+values ('Coca-Cola 350ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'refrigerante', '5,99', '7,99', './Imagens/itens/coca_cola.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao coca');
+
+insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
+values ('Heineken 330ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'cerveja', '5,99', '7,99', './Imagens/itens/heineken.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao heineken');
+
+insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
+values ('Vodka Sky 980ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'destilada', '5,99', '7,99', './Imagens/itens/vodka_sky.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao vodka');
+
+insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
+values ('Budweiser 330ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'cerveja', '5,99', '7,99', './Imagens/itens/budweiser.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao budweiser');
+
+insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
+values ('Guaraná 350ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'refrigerante', '5,99', '7,99', './Imagens/itens/guarana.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao guarana');
+
+insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
+values ('Benjamin 750ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'vinho', '5,99', '7,99', './Imagens/itens/vinho.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao vinho');
+-----------------------------

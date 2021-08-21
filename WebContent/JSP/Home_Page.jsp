@@ -25,7 +25,12 @@
 
 	<%
 		ClienteDAO dao = new ClienteDAO();
+		ProdutoDAO produtoDAO = new ProdutoDAO();
 		Usuario userLogado = new Usuario();
+		Produto produto = new Produto();
+		
+		// guarda todos os produtos cadastrados no sistema na variavel "produtos", para ser listada na Home Page
+		List<EntidadeDominio> produtos = produtoDAO.consultar(produto);
 		
 		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 		HttpSession sessao = request.getSession();
@@ -146,105 +151,34 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-
+        
+        <!-- Listagens dos produtos cadastrados no sistema -->
         <div class="row">
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="./Imagens/itens/coca_cola.png" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-	                <a href="http://localhost:8080/Ecommerce_Bebida/itemCarrinho?idProduto=5&operacao=SALVAR">Coca-Cola 350ml</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="./Imagens/itens/heineken.png" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Heineken 330ml</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="./Imagens/itens/vodka_sky.png" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Vodka Sky 980ml</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="./Imagens/itens/budweiser.png" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Budweiser 330ml</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="./Imagens/itens/guarana.png" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Guaraná 350ml</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="./Imagens/itens/vinho.png" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Benjamin 750ml</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
+        	<%
+        		for(EntidadeDominio e : produtos) {
+        			
+       			// Aplicado o CAST para poder popular o produto,
+       			// fazendo o CAST para uma referência mais genérica, no caso para o produto
+       			Produto product = (Produto) e;
+        	%>
+	          <div class="col-lg-4 col-md-6 mb-4">
+	            <div class="card h-100">
+	              <a href="http://localhost:8080/Ecommerce_Bebida/itemCarrinho?idProduto=<%=product.getId() %>&operacao=SALVAR"><img class="card-img-top" src="<%=product.getFoto() %>" alt=""></a>
+	              <div class="card-body">
+	                <h4 class="card-title">
+	                  <a href="http://localhost:8080/Ecommerce_Bebida/itemCarrinho?idProduto=<%=product.getId() %>&operacao=SALVAR"><%=product.getNome() %></a>
+	                </h4>
+	                <h5>$24.99</h5>
+	                <p class="card-text"><%=product.getDescricao() %></p>
+	              </div>
+	              <div class="card-footer">
+	                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+	              </div>
+	            </div>
+	          </div>
+        	<%
+			}
+			%>
         </div>
         <!-- /.row -->
 
