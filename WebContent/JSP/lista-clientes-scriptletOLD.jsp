@@ -44,8 +44,8 @@
 				<td><%=c.getDt_nasc() %></td>
 				<td><%=c.getSexo() %></td>
 				<td><%=c.getTelefone() %></td>
-				<td><%=c.getCdCliente() %></td>
-				<td><%=c.getFlgAtivo() %></td>
+				<td><%--c.getCdCliente() --%></td> <!-- para usar comentarios em JSP usar "<%-- comment --%>" -->
+				<td><%--c.getFlgAtivo() --%></td>
 				<td><a href="/Ecommerce_Bebida/HTML/formulario_Endereco.html?id=<%= c.getId()%>"><button class="btn btn-secondary">Endereço</button></a></td>
                 <td><a href="/Ecommerce_Bebida/cadastro?id=<%= c.getId()%>&operacao=EXCLUIR"><button class="btn btn-danger">Deletar</button></a></td>
 			</tr>
