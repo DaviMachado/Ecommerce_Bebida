@@ -2,6 +2,7 @@ package com.les.bebida.view.helper.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.Resultado;
 import com.les.bebida.core.dominio.Usuario;
 import com.les.bebida.view.helper.IViewHelper;
@@ -93,6 +95,11 @@ public class LoginHelper implements IViewHelper {
 				HttpSession sessao = request.getSession();
 				// salva na sessão o objeto "usuarioLogado", recebendo o valor de "usuario"
 				sessao.setAttribute("usuarioLogado", usuario);
+				
+				List<Produto> itensCarrinho = new ArrayList<>();
+				// salva na sessão o objeto "itensCarrinho", para quando for clicado no botão de "Adicionar ao carrinho",
+				// da tela do detalhes do produto, ele poder adicionar os produtos selecionados para o carrinho
+				sessao.setAttribute("itensCarrinho", itensCarrinho);
 				
 				// Redireciona para o arquivo .JSP
 				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);

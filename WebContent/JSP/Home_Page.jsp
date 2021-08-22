@@ -97,6 +97,7 @@
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp" class="list-group-item">Gerenciamento de Clientes</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_produto.jsp" class="list-group-item">Gerenciamento de Produtos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_estoque.jsp" class="list-group-item">Gerenciamento de Estoque</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-carrinho-scriptlet.jsp" class="list-group-item">Carrinho</a>
         </div>
         <%
         	}
@@ -111,6 +112,7 @@
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Cliente.jsp" class="list-group-item">Meus Dados</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Endereco.jsp" class="list-group-item">Meus Endereços</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cartaoDeCredito.jsp" class="list-group-item">Meus Cartões de créditos</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-carrinho-scriptlet.jsp" class="list-group-item">Carrinho</a>
         </div>
         <%
         	}

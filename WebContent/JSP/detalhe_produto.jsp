@@ -122,6 +122,9 @@
           </div>
           
 		<form class="form" action="http://localhost:8080/Ecommerce_Bebida/carrinho">
+			<!-- ID do Cliente -->
+			<input type="hidden" name="idProduto" id="idProduto" value="<%=produto.get(0).getId() %>">
+				
 			<!-- Botões CRUD -->
   			<div align="right" style="margin-top: 10px; margin-right: 10px;">
 				<button class="btn btn-success" name="operacao" value="SALVAR">Adicionar ao carrinho</button>
