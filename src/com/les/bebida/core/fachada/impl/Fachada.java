@@ -49,6 +49,7 @@ import com.les.bebida.core.strategy.impl.ValidarNomeLogin;
 import com.les.bebida.core.strategy.impl.ValidarNumeroCartao;
 import com.les.bebida.core.strategy.impl.ValidarNumeroEndereco;
 import com.les.bebida.core.strategy.impl.ValidarPais;
+import com.les.bebida.core.strategy.impl.ValidarQuantidadeSelecionada;
 import com.les.bebida.core.strategy.impl.ValidarSenha;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgual;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgualCliente;
@@ -105,6 +106,7 @@ public class Fachada implements IFachada {
 	ValidarCodigoSegurancaCartao vCodigoSegurancaCartao = new ValidarCodigoSegurancaCartao();
 	ValidarBandeiraCartao vBandeiraCartao = new ValidarBandeiraCartao();
 	ValidarStatusPreferencialCartao vStatusPreferencialCartao = new ValidarStatusPreferencialCartao();
+	ValidarQuantidadeSelecionada vQuantidadeSelecionada = new ValidarQuantidadeSelecionada();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -130,6 +132,7 @@ public class Fachada implements IFachada {
 	List<IStrategy> regrasAlterarLogin = new ArrayList<>();
 	List<IStrategy> regrasAlterarCartaoDeCredito = new ArrayList<>();
 	List<IStrategy> regrasAlterarProduto = new ArrayList<>();
+	List<IStrategy> regrasAlterarCarrinho = new ArrayList<>();
 	/* ------------ EXCLUIR ------------ */
 	List<IStrategy> regrasExcluirCliente = new ArrayList<>();
 	List<IStrategy> regrasExcluirEndereco = new ArrayList<>();
@@ -255,6 +258,13 @@ public class Fachada implements IFachada {
 		/* ----- SALVAR ----- */
 		regrasSalvarEstoque.add(VDataCadastro);
 		/* ---------------------------------------------------------- */
+		
+		/* ----- Adicionando as Strategy's na lista do Carrinho ----- */
+		/* ----- SALVAR ----- */
+		regrasSalvarCarrinho.add(vQuantidadeSelecionada);
+		/* ----- ALTERAR ----- */
+		regrasAlterarCarrinho.add(vQuantidadeSelecionada);
+		/* ---------------------------------------------------------- */
 
 		/* ----- REGRAS DA ENTIDADE CLIENTE ----- */
 		/* ----- SALVAR ----- */
@@ -333,6 +343,7 @@ public class Fachada implements IFachada {
 		regrasCarrinho.put("SALVAR", regrasSalvarCarrinho);
 		/* ----- CONSULTAR ----- */
 		/* ----- ALTERAR ----- */
+		regrasCarrinho.put("ALTERAR", regrasAlterarCarrinho);
 		/* ----- EXCLUIR ----- */
 		/* --------------------------------------- */
 		

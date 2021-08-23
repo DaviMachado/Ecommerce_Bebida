@@ -50,6 +50,8 @@
     </div>
   </nav>
   <!-- Fim Header -->
+  
+  	<h2 style="margin-top: 30px; margin-left: 100px">Carrinho</h2>
 
 	<table border="1" style="margin-top: 30px; margin-left: 100px;">
 		<tr>
@@ -62,14 +64,31 @@
 			<tr>
 				<td><%=produto.getNome() %></td>
 				<td><%=produto.getDescricao() %></td>
-				<td><a href="#"><button class="btn btn-warning">Alterar</button></a></td>
-                <td><a href="#"><button class="btn btn-danger">Deletar</button></a></td>
+				<td>
+					<form class="form" action="http://localhost:8080/Ecommerce_Bebida/carrinho">
+						<div class="form-row">
+							<button class="btn btn-success" name="tipoDeOperacao" value="adicao" style="height: 40px !important; margin-top: 26px;">+</button>
+							
+							<div style="width: 60px !important; margin-left: 10px;">
+						      <label>Qtde</label>
+						      <input type="text" class="form-control" name="quantidadeSelecionada" placeholder="Qtde" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" value="<%=produto.getQuantidadeSelecionada() %>">
+						    </div>
+						    
+						    <button class="btn btn-danger" name="tipoDeOperacao" value="subtracao" style="height: 40px !important; margin-top: 26px;">-</button>
+					    </div>
+					    
+					    <!-- operação que é acionada através do form -->
+			    		<input type="hidden" name="operacao" id="operacao" value="ALTERAR">
+			    		<!-- ID do Cliente -->
+						<input type="hidden" name="idProduto" id="idProduto" value="<%=produto.getId() %>">
+					</form>
+				</td>
 			</tr>
 		<%
 		}
 		%>
 	</table>		
-	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 100px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 100px; margin-top: 10px; margin-bottom: 318px;"></a>
 	 
   	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">

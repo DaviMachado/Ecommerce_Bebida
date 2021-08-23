@@ -87,6 +87,7 @@
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp" class="list-group-item">Gerenciamento de Clientes</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_produto.jsp" class="list-group-item">Gerenciamento de Produtos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_estoque.jsp" class="list-group-item">Gerenciamento de Estoque</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-carrinho-scriptlet.jsp" class="list-group-item">Carrinho</a>
         </div>
         <%
         	}
@@ -101,6 +102,7 @@
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Cliente.jsp" class="list-group-item">Meus Dados</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Endereco.jsp" class="list-group-item">Meus Endereços</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cartaoDeCredito.jsp" class="list-group-item">Meus Cartões de créditos</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-carrinho-scriptlet.jsp" class="list-group-item">Carrinho</a>
         </div>
         <%
         	}
@@ -122,11 +124,21 @@
           </div>
           
 		<form class="form" action="http://localhost:8080/Ecommerce_Bebida/carrinho">
-			<!-- ID do Cliente -->
-			<input type="hidden" name="idProduto" id="idProduto" value="<%=produto.get(0).getId() %>">
+			<div class="form-row" style="margin-right: 10px;">
+				<div class="form-group col-md-10">
+					<!-- adicionado uma coluna com tamanho md-10 em branca para alinhar os botão de quantidade da pagina -->
+				</div>
+				
+				<!-- Quantidade -->
+			    <div class="form-group col-md-2">
+			      <label>Quantidade</label>
+			      <input type="text" class="form-control" name="quantidadeSelecionada" placeholder="Qtde" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3">
+			    </div>
+		    </div>
+			
 				
 			<!-- Botões CRUD -->
-  			<div align="right" style="margin-top: 10px; margin-right: 10px;">
+  			<div align="right" style="margin-right: 10px;">
 				<button class="btn btn-success" name="operacao" value="SALVAR">Adicionar ao carrinho</button>
 			</div>
 			
@@ -135,6 +147,9 @@
 				<!--<input style="margin-left: 600px" type="button" value="Voltar" onclick="history.back()">-->
 				<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 300px;"></a>
 			</div>
+			
+			<!-- ID do Cliente -->
+			<input type="hidden" name="idProduto" id="idProduto" value="<%=produto.get(0).getId() %>">
 		</form>
           
         </div>

@@ -3,7 +3,7 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Produto
  * @author Davi Rodrigues
- * @date 14/08/2021
+ * @date 22/08/2021
  */
 public class Produto extends EntidadeDominio {
 	private String nome;
@@ -16,6 +16,7 @@ public class Produto extends EntidadeDominio {
 	private String status;
 	private String observacao;
 	private String alteraProduto;
+	private String quantidadeSelecionada;
 	
 	
 	public String getNome() {
@@ -77,5 +78,11 @@ public class Produto extends EntidadeDominio {
 	}
 	public void setAlteraProduto(String alteraProduto) {
 		this.alteraProduto = alteraProduto;
+	}
+	public String getQuantidadeSelecionada() {
+		return quantidadeSelecionada;
+	}
+	public void setQuantidadeSelecionada(String quantidadeSelecionada) {
+		this.quantidadeSelecionada = quantidadeSelecionada;
 	}
 }
