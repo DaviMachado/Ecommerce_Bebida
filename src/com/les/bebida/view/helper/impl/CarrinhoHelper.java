@@ -129,31 +129,46 @@ public class CarrinhoHelper implements IViewHelper {
 				List<Produto> produtoSelecionado = dao.consultarProdutoById(id);
 				List<Produto> produtoParaAdicionarAoCarrinho = new ArrayList<>();
 				
-				// guarda no produto, o valor da quantidade selecionada da tela, 
-				// para poder listar a quantidade selecionada no arquivo "lista-carrinho-scriptlet.jsp"
-				produtoSelecionado.get(0).setQuantidadeSelecionada(quantidadeSelecionada);
+				// se a quantidade selecionada é maior que ZERO, então adiciona o item selecionado na lista da Sessão
+				if (Integer.parseInt(quantidadeSelecionada) > 0) {
+					// guarda no produto, o valor da quantidade selecionada da tela, 
+					// para poder listar a quantidade selecionada no arquivo "lista-carrinho-scriptlet.jsp"
+					produtoSelecionado.get(0).setQuantidadeSelecionada(quantidadeSelecionada);
+					
+					// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+					HttpSession sessao = request.getSession();
+					// pega o objeto salvo em Sessão com o nome "itensCarrinho",
+					// e passa para o "produtoParaAdicionarAoCarrinho" (fazendo o CAST para o tipo List<Produto>)
+					produtoParaAdicionarAoCarrinho = (List<Produto>) sessao.getAttribute("itensCarrinho");
+					
+					// passa o produto selecionado para a variavel que será responsavel para atualizar a sessão dos itens do carrinho
+					produtoParaAdicionarAoCarrinho.add(produtoSelecionado.get(0));
+					
+					// adiciona o produto selecionado ao carrinho da sessão
+					// atualiza o objeto "itensCarrinho" que esta salvo em sessão, com o novo produto selecionado
+					sessao.setAttribute("itensCarrinho", produtoParaAdicionarAoCarrinho);
+					
+					// atribui a nova mensagem para poder mostra na pagina .JSP
+					resultado.setMensagem("Item adicionado ao Carrinho com sucesso!");
+					
+					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("mensagemStrategy", resultado.getMensagem());
+					
+					// Redireciona para o arquivo .jsp
+					request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
+				}
 				
-				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
-				HttpSession sessao = request.getSession();
-				// pega o objeto salvo em Sessão com o nome "itensCarrinho",
-				// e passa para o "produtoParaAdicionarAoCarrinho" (fazendo o CAST para o tipo List<Produto>)
-				produtoParaAdicionarAoCarrinho = (List<Produto>) sessao.getAttribute("itensCarrinho");
-				
-				// passa o produto selecionado para a variavel que será responsavel para atualizar a sessão dos itens do carrinho
-				produtoParaAdicionarAoCarrinho.add(produtoSelecionado.get(0));
-				
-				// adiciona o produto selecionado ao carrinho da sessão
-				// atualiza o objeto "itensCarrinho" que esta salvo em sessão, com o novo produto selecionado
-				sessao.setAttribute("itensCarrinho", produtoParaAdicionarAoCarrinho);
-				
-				// atribui a nova mensagem para poder mostra na pagina .JSP
-				resultado.setMensagem("Item adicionado ao Carrinho com sucesso!");
-				
-				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("mensagemStrategy", resultado.getMensagem());
-				
-				// Redireciona para o arquivo .jsp
-				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
+				// se não, a quantidade selecionada é igual a ZERO, então mostra mensagem de erro na JSP
+				else {
+					// atribui a nova mensagem para poder mostra na pagina .JSP
+					resultado.setMensagem("Selecione uma quantidade maior que ZERO!");
+					
+					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("mensagemStrategy", resultado.getMensagem());
+					
+					// Redireciona para o arquivo .jsp
+					request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
+				}
 			}
 			else {
 				// mostra as mensagens de ERRO se houver
@@ -201,43 +216,76 @@ public class CarrinhoHelper implements IViewHelper {
 					quantidadeSelecionada = Integer.toString(quantidadeSelecionadaInteiro);
 				}
 				
-				// guarda no produto, o valor da quantidade selecionada da tela,
-				// ja com o valor atualizado com o tipo de operação, 
-				// para poder listar a quantidade selecionada no arquivo "lista-carrinho-scriptlet.jsp"
-				produtoSelecionado.get(0).setQuantidadeSelecionada(quantidadeSelecionada);
-				
-				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
-				HttpSession sessao = request.getSession();
-				// pega o objeto salvo em Sessão com o nome "itensCarrinho",
-				// e passa para o "produtoParaAdicionarAoCarrinho" (fazendo o CAST para o tipo List<Produto>)
-				produtoParaAdicionarAoCarrinho = (List<Produto>) sessao.getAttribute("itensCarrinho");
-				
-				// faz um laço de repetição para encontrar o produto que será atualizado na Sessão
-				for (int i = 0; i< produtoParaAdicionarAoCarrinho.size(); i++) {
-					// se o ID do carrinho for igual ao ID do "produto atualizado", ele será adicionado ao carrinho
-					if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.get(0).getId())) {
-						// ".set" do ArrayList faz o seguinte:
-						// set(int index, Object element):
-						// Substitui o i-ésimo elemento da lista pelo elemento especificado.
-						produtoParaAdicionarAoCarrinho.set(i, produtoSelecionado.get(0));
-						
-						// outra forma de "atualizar" a lista dos produtos:
-						//produtoParaAdicionarAoCarrinho.remove(i);
-						//produtoParaAdicionarAoCarrinho.add(i, produtoSelecionado.get(0));
+				// se a quantidade selecionada é maior que ZERO, então atualiza a lista da Sessão
+				if (Integer.parseInt(quantidadeSelecionada) > 0) {
+					// guarda no produto, o valor da quantidade selecionada da tela,
+					// ja com o valor atualizado com o tipo de operação, 
+					// para poder listar a quantidade selecionada no arquivo "lista-carrinho-scriptlet.jsp"
+					produtoSelecionado.get(0).setQuantidadeSelecionada(quantidadeSelecionada);
+					
+					// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+					HttpSession sessao = request.getSession();
+					// pega o objeto salvo em Sessão com o nome "itensCarrinho",
+					// e passa para o "produtoParaAdicionarAoCarrinho" (fazendo o CAST para o tipo List<Produto>)
+					produtoParaAdicionarAoCarrinho = (List<Produto>) sessao.getAttribute("itensCarrinho");
+					
+					// faz um laço de repetição para encontrar o produto que será atualizado na Sessão
+					for (int i = 0; i< produtoParaAdicionarAoCarrinho.size(); i++) {
+						// se o ID do carrinho for igual ao ID do "produto atualizado", ele será adicionado ao carrinho
+						if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.get(0).getId())) {
+							// ".set" do ArrayList faz o seguinte:
+							// set(int index, Object element):
+							// Substitui o i-ésimo elemento da lista pelo elemento especificado.
+							produtoParaAdicionarAoCarrinho.set(i, produtoSelecionado.get(0));
+							
+							// outra forma de "atualizar" a lista dos produtos:
+							//produtoParaAdicionarAoCarrinho.remove(i);
+							//produtoParaAdicionarAoCarrinho.add(i, produtoSelecionado.get(0));
+						}
 					}
+					
+					// atualiza o objeto "itensCarrinho" que esta salvo em sessão, com o novo produto selecionado atualizado
+					sessao.setAttribute("itensCarrinho", produtoParaAdicionarAoCarrinho);
+					
+					// atribui a nova mensagem para poder mostra na pagina .JSP
+					resultado.setMensagem("Item do Carrinho atualizado com sucesso!");
+					
+					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("mensagemStrategy", resultado.getMensagem());
+					
+					// Redireciona para o arquivo .jsp
+					request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
 				}
 				
-				// atualiza o objeto "itensCarrinho" que esta salvo em sessão, com o novo produto selecionado atualizado
-				sessao.setAttribute("itensCarrinho", produtoParaAdicionarAoCarrinho);
-				
-				// atribui a nova mensagem para poder mostra na pagina .JSP
-				resultado.setMensagem("Item do Carrinho atualizado com sucesso!");
-				
-				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("mensagemStrategy", resultado.getMensagem());
-				
-				// Redireciona para o arquivo .jsp
-				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
+				// se não, a quantidade selecionada é igual a ZERO, então retira da lista da Sessão
+				else {
+					// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+					HttpSession sessao = request.getSession();
+					// pega o objeto salvo em Sessão com o nome "itensCarrinho",
+					// e passa para o "produtoParaAdicionarAoCarrinho" (fazendo o CAST para o tipo List<Produto>)
+					produtoParaAdicionarAoCarrinho = (List<Produto>) sessao.getAttribute("itensCarrinho");
+					
+					// faz um laço de repetição para encontrar o produto selecionado e retirar da lista da Sessão
+					for (int i = 0; i< produtoParaAdicionarAoCarrinho.size(); i++) {
+						// se o ID do carrinho for igual ao ID do "produto selecionado", ele será retirado do carrinho
+						if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.get(0).getId())) {
+							// remove o item inteiro da Sessão
+							produtoParaAdicionarAoCarrinho.remove(i);
+						}
+					}
+					
+					// atualiza o objeto "itensCarrinho" que esta salvo em sessão, a nova lista atualizada
+					sessao.setAttribute("itensCarrinho", produtoParaAdicionarAoCarrinho);
+					
+					// atribui a nova mensagem para poder mostra na pagina .JSP
+					resultado.setMensagem("Item do Carrinho removido com sucesso!");
+					
+					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("mensagemStrategy", resultado.getMensagem());
+					
+					// Redireciona para o arquivo .jsp
+					request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
+				}
 			}
 			else {
 				// mostra as mensagens de ERRO se houver

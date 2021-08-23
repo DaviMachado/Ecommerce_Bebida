@@ -10,7 +10,8 @@ import com.les.bebida.core.strategy.IStrategy;
 
 /**
  * Classe para validar se a quantidade selecionada no item do carrinho, 
- * não seja maior que a quantidade disponivel do estoque
+ * não seja maior que a quantidade disponivel do estoque,
+ * e verifica se a quantidade selecionada é menor que zero
  * @author Davi Rodrigues
  * @date 22/08/2021
  */
@@ -25,9 +26,13 @@ public class ValidarQuantidadeSelecionada implements IStrategy {
 		// pesquisa no banco o produto selecionado
 		List<Produto> produtoSelecionado = dao.consultarProdutoById(carrinho.getItemCarrinho().getProduto().getId());
 		
+		// verifica se a quantidade selecionada é menor que zero
+		if (Integer.parseInt(carrinho.getItemCarrinho().getProduto().getQuantidadeSelecionada()) < 0) {
+			return ("Selecione uma quantidade maior que ZERO!");
+		}
 		// verifica se a quantidade selecionada no item do carrinho, é maior que disponivel no estoque,
 		// feito o CAST de String para INT, para poder fazer o calculo "Integer.parseInt(String)"
-		if(Integer.parseInt(carrinho.getItemCarrinho().getProduto().getQuantidadeSelecionada()) > Integer.parseInt(produtoSelecionado.get(0).getQuantidade())) {
+		else if(Integer.parseInt(carrinho.getItemCarrinho().getProduto().getQuantidadeSelecionada()) > Integer.parseInt(produtoSelecionado.get(0).getQuantidade())) {
 			return ("Quantidade selecionada é maior que disponivel no estoque!");
 		}
 		else {
