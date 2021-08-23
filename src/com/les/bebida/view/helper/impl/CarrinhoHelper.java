@@ -129,6 +129,7 @@ public class CarrinhoHelper implements IViewHelper {
 				// capturando os valores do HTML
 				String id = request.getParameter("idProduto");
 				String quantidadeSelecionada = request.getParameter("quantidadeSelecionada");
+				boolean adicionaNovoItemAoCarrinho = true;
 				
 				// verificação necessaria para o usuario não clicar no botão de
 				// "adicionar ao carrinho" com o campo "quantidade" vazia
@@ -153,15 +154,58 @@ public class CarrinhoHelper implements IViewHelper {
 					// e passa para o "produtoParaAdicionarAoCarrinho" (fazendo o CAST para o tipo List<Produto>)
 					produtoParaAdicionarAoCarrinho = (List<Produto>) sessao.getAttribute("itensCarrinho");
 					
-					// passa o produto selecionado para a variavel que será responsavel para atualizar a sessão dos itens do carrinho
-					produtoParaAdicionarAoCarrinho.add(produtoSelecionado.get(0));
+					// faz um laço de repetição para encontrar se o produto selecionado já existe na Sessão,
+					// caso exista, atualiza somente a "quantidadeSelecionada",
+					// se não, adiciona o novo item inteiro na lista de produtos da Sessão
+					for (int i = 0; i< produtoParaAdicionarAoCarrinho.size(); i++) {
+						// se o ID do carrinho for igual ao ID do "produto selecionado", 
+						// o atributo "quantidadeSelecionada" será atualizada
+						if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.get(0).getId())) {
+							int somatoriaDasQuantidades = (Integer.parseInt(produtoParaAdicionarAoCarrinho.get(i).getQuantidadeSelecionada()) + Integer.parseInt(produtoSelecionado.get(0).getQuantidadeSelecionada()));
+							
+							// verifica se a somatoria das quantidades selecionadas é maior que a quantidade do estoque disponivel
+							if (somatoriaDasQuantidades > Integer.parseInt(produtoSelecionado.get(0).getQuantidade())) {
+								// atribui a nova mensagem para poder mostra na pagina .JSP
+								resultado.setMensagem("Quantidade selecionada é maior que disponivel no estoque!");
+								
+								adicionaNovoItemAoCarrinho = false;
+								break;
+							}
+							else {
+								// feito o CAST de INT para String, para poder atualizar a quantidade selecionada com a somatoria
+								produtoSelecionado.get(0).setQuantidadeSelecionada(Integer.toString(somatoriaDasQuantidades));
+								
+								// ".set" do ArrayList faz o seguinte:
+								// set(int index, Object element):
+								// Substitui o i-ésimo elemento da lista pelo elemento especificado.
+								produtoParaAdicionarAoCarrinho.set(i, produtoSelecionado.get(0));
+								
+								// atribui a nova mensagem para poder mostra na pagina .JSP
+								resultado.setMensagem("Item do Carrinho atualizado com sucesso!");
+								
+								adicionaNovoItemAoCarrinho = false;
+								break;
+							}
+						}
+						else {
+							// não encontrou nenhum item igual no Carrinho da Sessão,
+							// então seta a variavel "adicionaNovoItemAoCarrinho" como TRUE
+							adicionaNovoItemAoCarrinho = true;
+						}
+					}
+					
+					// verifica se é para adicionar um novo item ao Carrinho
+					if (adicionaNovoItemAoCarrinho) {
+						// passa o produto selecionado para a variavel que será responsavel para atualizar a sessão dos itens do carrinho
+						produtoParaAdicionarAoCarrinho.add(produtoSelecionado.get(0));
+						
+						// atribui a nova mensagem para poder mostra na pagina .JSP
+						resultado.setMensagem("Item adicionado ao Carrinho com sucesso!");
+					}
 					
 					// adiciona o produto selecionado ao carrinho da sessão
 					// atualiza o objeto "itensCarrinho" que esta salvo em sessão, com o novo produto selecionado
 					sessao.setAttribute("itensCarrinho", produtoParaAdicionarAoCarrinho);
-					
-					// atribui a nova mensagem para poder mostra na pagina .JSP
-					resultado.setMensagem("Item adicionado ao Carrinho com sucesso!");
 					
 					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
 					request.setAttribute("mensagemStrategy", resultado.getMensagem());
