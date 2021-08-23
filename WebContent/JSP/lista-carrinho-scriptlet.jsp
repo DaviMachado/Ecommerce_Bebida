@@ -65,6 +65,7 @@
 				<td><%=produto.getNome() %></td>
 				<td><%=produto.getDescricao() %></td>
 				<td>
+					<!-- form responsavel por adicionar ou retirar 1 item do carrinho selecionado -->
 					<form class="form" action="http://localhost:8080/Ecommerce_Bebida/carrinho">
 						<div class="form-row">
 							<button class="btn btn-success" name="tipoDeOperacao" value="adicao" style="height: 40px !important; margin-top: 26px;">+</button>
@@ -79,7 +80,15 @@
 					    
 					    <!-- operação que é acionada através do form -->
 			    		<input type="hidden" name="operacao" id="operacao" value="ALTERAR">
-			    		<!-- ID do Cliente -->
+			    		<!-- ID do Produto -->
+						<input type="hidden" name="idProduto" id="idProduto" value="<%=produto.getId() %>">
+					</form>
+					
+					<!-- form responsavel por excluir o item inteiro do carrinho selecionado -->
+					<form class="form" action="http://localhost:8080/Ecommerce_Bebida/carrinho">
+						<button class="btn btn-danger" name="operacao" value="EXCLUIR">Deletar</button>
+						
+						<!-- ID do Produto -->
 						<input type="hidden" name="idProduto" id="idProduto" value="<%=produto.getId() %>">
 					</form>
 				</td>
