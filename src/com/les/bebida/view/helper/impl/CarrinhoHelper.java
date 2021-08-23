@@ -49,6 +49,12 @@ public class CarrinhoHelper implements IViewHelper {
 			id = request.getParameter("idProduto");
 			quantidadeSelecionada = request.getParameter("quantidadeSelecionada");
 			
+			// verificação necessaria para o usuario não clicar no botão de
+			// "adicionar ao carrinho" com o campo "quantidade" vazia
+			if (quantidadeSelecionada.equals("")) {
+				quantidadeSelecionada = "0";
+			}
+			
 			// Atribuindo os valores capturados do HTML para o Item Carrinho, logo em sequencia passando para o Carrinho
 			produto.setId(id);
 			produto.setQuantidadeSelecionada(quantidadeSelecionada);
@@ -123,6 +129,12 @@ public class CarrinhoHelper implements IViewHelper {
 				// capturando os valores do HTML
 				String id = request.getParameter("idProduto");
 				String quantidadeSelecionada = request.getParameter("quantidadeSelecionada");
+				
+				// verificação necessaria para o usuario não clicar no botão de
+				// "adicionar ao carrinho" com o campo "quantidade" vazia
+				if (quantidadeSelecionada.equals("")) {
+					quantidadeSelecionada = "0";
+				}
 				
 				ProdutoDAO dao = new ProdutoDAO();
 				// pesquisa no banco o produto selecionado
@@ -254,7 +266,7 @@ public class CarrinhoHelper implements IViewHelper {
 					request.setAttribute("mensagemStrategy", resultado.getMensagem());
 					
 					// Redireciona para o arquivo .jsp
-					request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
+					request.getRequestDispatcher("JSP/lista-carrinho-scriptlet-mensagem.jsp").forward(request, response);
 				}
 				
 				// se não, a quantidade selecionada é igual a ZERO, então retira da lista da Sessão
@@ -284,7 +296,7 @@ public class CarrinhoHelper implements IViewHelper {
 					request.setAttribute("mensagemStrategy", resultado.getMensagem());
 					
 					// Redireciona para o arquivo .jsp
-					request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
+					request.getRequestDispatcher("JSP/lista-carrinho-scriptlet-mensagem.jsp").forward(request, response);
 				}
 			}
 			else {
@@ -332,7 +344,7 @@ public class CarrinhoHelper implements IViewHelper {
 				request.setAttribute("mensagemStrategy", resultado.getMensagem());
 				
 				// Redireciona para o arquivo .jsp
-				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
+				request.getRequestDispatcher("JSP/lista-carrinho-scriptlet-mensagem.jsp").forward(request, response);
 			}
 			else {
 				// mostra as mensagens de ERRO se houver
