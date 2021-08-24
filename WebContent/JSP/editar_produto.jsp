@@ -92,7 +92,13 @@
 					<!-- Preço de Compra -->
 				    <div class="form-group col-md-2">
 				      <label>Preço de Compra</label>
-				      <input type="number" class="form-control" name="preco_de_compra" placeholder="Digite um Preço" value="<%=produto.get(0).getPrecoDeCompra()%>">
+				      <input type="number" class="form-control" name="preco_de_compra" placeholder="Digite um Preço de Compra" value="<%=produto.get(0).getPrecoDeCompra()%>">
+				    </div>
+				    
+				    <!-- Preço de Venda -->
+				    <div class="form-group col-md-2">
+				      <label>Preço de Venda</label>
+				      <input type="number" class="form-control" name="preco_de_venda" placeholder="Digite um Preço de Venda" value="<%=produto.get(0).getPrecoDeVenda()%>">
 				    </div>
 				    
    				    <!-- Quantidade -->
@@ -102,7 +108,7 @@
 				    </div>
 				    
    				    <!-- Grupo de Precificacao -->
-				    <div class="form-group col-md-6">
+				    <div class="form-group col-md-4">
 				      <label>Grupo de Precificacao</label>
 				      <input type="text" class="form-control" name="grupo_de_precificacao" placeholder="Grupo de Precificacao" value="<%=produto.get(0).getGrupoDePrecificacao()%>"> <!-- required -->
 				    </div>

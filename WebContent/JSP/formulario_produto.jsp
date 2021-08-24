@@ -81,7 +81,13 @@
 					<!-- Preço de Compra -->
 				    <div class="form-group col-md-2">
 				      <label>Preço de Compra</label>
-				      <input type="number" class="form-control" name="preco_de_compra" placeholder="Digite um Preço">
+				      <input type="number" class="form-control" name="preco_de_compra" placeholder="Digite um Preço de Compra">
+				    </div>
+				    
+				    <!-- Preço de Venda -->
+				    <div class="form-group col-md-2">
+				      <label>Preço de Venda</label>
+				      <input type="number" class="form-control" name="preco_de_venda" placeholder="Digite um Preço de Venda">
 				    </div>
 				    
    				    <!-- Quantidade -->
@@ -91,7 +97,7 @@
 				    </div>
 				    
    				    <!-- Grupo de Precificacao -->
-				    <div class="form-group col-md-6">
+				    <div class="form-group col-md-4">
 				      <label>Grupo de Precificacao</label>
 				      <input type="text" class="form-control" name="grupo_de_precificacao" placeholder="Grupo de Precificacao"> <!-- required -->
 				    </div>
@@ -130,13 +136,23 @@
 			  		</div>
 			  		<!-- Botões CRUD -->
 			  		<div class="form-group col-md-8">
-			  			<div align="right" style="margin-top: 50px">
+			  			<div align="right" style="margin-top: 10px">
 							<button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
-							<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
 						</div>
 			  		</div>
 			  	</div>
 				
+				<!-- Parametro que é verificado se pode alterar um Produto ou não -->
+	    		<input type="hidden" name="alteraProduto" id="alteraProduto" value="1">
+			</form>
+			
+			<!-- Consultar -->
+			<form class="form" action="http://localhost:8080/Ecommerce_Bebida/cadastroProduto">
+				<!-- Botões CRUD -->
+	  			<div align="right" style="margin-top: 10px">
+	  				<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
+	  			</div>
+	  			
 		  		<!-- Botão Voltar -->
 				<div align="right" style="margin-top: 10px;">
 					<!--<input style="margin-left: 600px" type="button" value="Voltar" onclick="history.back()">-->

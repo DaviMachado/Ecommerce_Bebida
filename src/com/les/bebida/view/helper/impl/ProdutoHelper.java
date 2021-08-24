@@ -27,6 +27,7 @@ public class ProdutoHelper implements IViewHelper{
         String descricao = null;
         String categoria = null;
         String preco_de_compra = null;
+        String preco_de_venda = null;
         String foto = null;
         String grupo_de_precificacao = null;
         String quantidade = null;
@@ -46,6 +47,7 @@ public class ProdutoHelper implements IViewHelper{
         	descricao = request.getParameter("descricao");
         	categoria = request.getParameter("selecioneCategoria");
         	preco_de_compra = request.getParameter("preco_de_compra");
+        	preco_de_venda = request.getParameter("preco_de_venda");
         	foto = request.getParameter("foto");
         	grupo_de_precificacao = request.getParameter("grupo_de_precificacao");
         	quantidade = request.getParameter("quantidade");
@@ -57,6 +59,7 @@ public class ProdutoHelper implements IViewHelper{
         	produto.setDescricao(descricao);
         	produto.setCategoria(categoria);
         	produto.setPrecoDeCompra(preco_de_compra);
+        	produto.setPrecoDeVenda(preco_de_venda);
         	produto.setFoto(foto);
         	produto.setGrupoDePrecificacao(grupo_de_precificacao);
         	produto.setQuantidade(quantidade);
@@ -73,6 +76,7 @@ public class ProdutoHelper implements IViewHelper{
         	descricao = request.getParameter("descricao");
         	categoria = request.getParameter("selecioneCategoria");
         	preco_de_compra = request.getParameter("preco_de_compra");
+        	preco_de_venda = request.getParameter("preco_de_venda");
         	foto = request.getParameter("foto");
         	grupo_de_precificacao = request.getParameter("grupo_de_precificacao");
         	quantidade = request.getParameter("quantidade");
@@ -86,6 +90,7 @@ public class ProdutoHelper implements IViewHelper{
         	produto.setDescricao(descricao);
         	produto.setCategoria(categoria);
         	produto.setPrecoDeCompra(preco_de_compra);
+        	produto.setPrecoDeVenda(preco_de_venda);
         	produto.setFoto(foto);
         	produto.setGrupoDePrecificacao(grupo_de_precificacao);
         	produto.setQuantidade(quantidade);
