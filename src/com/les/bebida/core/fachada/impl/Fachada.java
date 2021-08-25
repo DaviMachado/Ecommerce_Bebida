@@ -30,15 +30,19 @@ import com.les.bebida.core.strategy.impl.ValidarBairro;
 import com.les.bebida.core.strategy.impl.ValidarBandeiraCartao;
 import com.les.bebida.core.strategy.impl.ValidarCEP;
 import com.les.bebida.core.strategy.impl.ValidarCPF;
+import com.les.bebida.core.strategy.impl.ValidarCategoriaProduto;
 import com.les.bebida.core.strategy.impl.ValidarCidade;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSegurancaCartao;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaCliente;
 import com.les.bebida.core.strategy.impl.ValidarDataCadastro;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
 import com.les.bebida.core.strategy.impl.ValidarDataValidadeCartao;
+import com.les.bebida.core.strategy.impl.ValidarDescricaoProduto;
 import com.les.bebida.core.strategy.impl.ValidarEstado;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLogin;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLoginAndSenha;
+import com.les.bebida.core.strategy.impl.ValidarFotoProduto;
+import com.les.bebida.core.strategy.impl.ValidarGrupoPrecificacaoProduto;
 import com.les.bebida.core.strategy.impl.ValidarStatusUsuario;
 import com.les.bebida.core.strategy.impl.ValidarLogin;
 import com.les.bebida.core.strategy.impl.ValidarLoginCliente;
@@ -46,9 +50,13 @@ import com.les.bebida.core.strategy.impl.ValidarLogradouro;
 import com.les.bebida.core.strategy.impl.ValidarNome;
 import com.les.bebida.core.strategy.impl.ValidarNomeCartao;
 import com.les.bebida.core.strategy.impl.ValidarNomeLogin;
+import com.les.bebida.core.strategy.impl.ValidarNomeProduto;
 import com.les.bebida.core.strategy.impl.ValidarNumeroCartao;
 import com.les.bebida.core.strategy.impl.ValidarNumeroEndereco;
 import com.les.bebida.core.strategy.impl.ValidarPais;
+import com.les.bebida.core.strategy.impl.ValidarPrecoCompraProduto;
+import com.les.bebida.core.strategy.impl.ValidarPrecoVendaProduto;
+import com.les.bebida.core.strategy.impl.ValidarQuantidadeProduto;
 import com.les.bebida.core.strategy.impl.ValidarQuantidadeSelecionada;
 import com.les.bebida.core.strategy.impl.ValidarSenha;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgual;
@@ -56,6 +64,7 @@ import com.les.bebida.core.strategy.impl.ValidarSenhaIgualCliente;
 import com.les.bebida.core.strategy.impl.ValidarSexo;
 import com.les.bebida.core.strategy.impl.ValidarStatusCliente;
 import com.les.bebida.core.strategy.impl.ValidarStatusPreferencialCartao;
+import com.les.bebida.core.strategy.impl.ValidarStatusProduto;
 import com.les.bebida.core.strategy.impl.ValidarTipoCliente;
 import com.les.bebida.core.strategy.impl.ValidarTipoEndereco;
 import com.les.bebida.core.strategy.impl.ValidarTipoResidencia;
@@ -65,7 +74,7 @@ import com.les.bebida.core.strategy.impl.ValidarTipoUsuario;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 22/08/2021
+ * @date 25/08/2021
  */
 public class Fachada implements IFachada {
 
@@ -107,6 +116,15 @@ public class Fachada implements IFachada {
 	ValidarBandeiraCartao vBandeiraCartao = new ValidarBandeiraCartao();
 	ValidarStatusPreferencialCartao vStatusPreferencialCartao = new ValidarStatusPreferencialCartao();
 	ValidarQuantidadeSelecionada vQuantidadeSelecionada = new ValidarQuantidadeSelecionada();
+	ValidarNomeProduto vNomeProduto = new ValidarNomeProduto();
+	ValidarDescricaoProduto vDescricaoProduto = new ValidarDescricaoProduto();
+	ValidarCategoriaProduto vCategoriaProduto = new ValidarCategoriaProduto();
+	ValidarPrecoCompraProduto vPrecoCompraProduto = new ValidarPrecoCompraProduto();
+	ValidarPrecoVendaProduto vPrecoVendaProduto = new ValidarPrecoVendaProduto();
+	ValidarQuantidadeProduto vQuantidadeProduto = new ValidarQuantidadeProduto();
+	ValidarGrupoPrecificacaoProduto vGrupoPrecificacaoProduto = new ValidarGrupoPrecificacaoProduto();
+	ValidarFotoProduto vFotoProduto = new ValidarFotoProduto();
+	ValidarStatusProduto vStatusProduto = new ValidarStatusProduto();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -252,7 +270,26 @@ public class Fachada implements IFachada {
 		
 		/* ----- Adicionando as Strategy's na lista do Produto ----- */
 		/* ----- SALVAR ----- */
+		regrasSalvarProduto.add(vNomeProduto);
+		regrasSalvarProduto.add(vDescricaoProduto);
+		regrasSalvarProduto.add(vCategoriaProduto);
+		regrasSalvarProduto.add(vPrecoCompraProduto);
+		regrasSalvarProduto.add(vPrecoVendaProduto);
+		regrasSalvarProduto.add(vQuantidadeProduto);
+		regrasSalvarProduto.add(vGrupoPrecificacaoProduto);
+		regrasSalvarProduto.add(vFotoProduto);
+		regrasSalvarProduto.add(vStatusProduto);
 		regrasSalvarProduto.add(VDataCadastro);
+		/* ----- ALTERAR ----- */
+		regrasAlterarProduto.add(vNomeProduto);
+		regrasAlterarProduto.add(vDescricaoProduto);
+		regrasAlterarProduto.add(vCategoriaProduto);
+		regrasAlterarProduto.add(vPrecoCompraProduto);
+		regrasAlterarProduto.add(vPrecoVendaProduto);
+		regrasAlterarProduto.add(vQuantidadeProduto);
+		regrasAlterarProduto.add(vGrupoPrecificacaoProduto);
+		regrasAlterarProduto.add(vFotoProduto);
+		regrasAlterarProduto.add(vStatusProduto);
 		/* ---------------------------------------------------------- */
 		
 		/* ----- Adicionando as Strategy's na lista do Estoque ----- */

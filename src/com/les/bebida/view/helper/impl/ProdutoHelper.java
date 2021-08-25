@@ -53,6 +53,7 @@ public class ProdutoHelper implements IViewHelper{
         	quantidade = request.getParameter("quantidade");
         	status = request.getParameter("status");
         	observacao = request.getParameter("observacao");
+        	alteraProduto = request.getParameter("alteraProduto");
         	
         	// Atribuindo os valores capturados do HTML para o Produto
         	produto.setNome(nome);
@@ -65,6 +66,7 @@ public class ProdutoHelper implements IViewHelper{
         	produto.setQuantidade(quantidade);
         	produto.setStatus(status);
         	produto.setObservacao(observacao);
+        	produto.setAlteraProduto(alteraProduto);
         }
         
         else if (("ALTERAR").equals(operacao)) {
