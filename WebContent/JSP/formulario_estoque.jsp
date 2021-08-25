@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 15/08/2021 -->
+<!-- @date 25/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -54,7 +54,7 @@
 	  </nav>
 	  <!-- Fim Header -->
 	  
-		<fieldset class="form-group fieldset_form" style="margin-top: 30px">
+		<fieldset class="form-group fieldset_form" style="margin-top: 30px; margin-bottom: 10px !important;">
 		<legend align="center">Formulário para cadastro de Estoque</legend>
 			<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastroEstoque">
 			  	
@@ -63,8 +63,8 @@
 			  		<div class="form-group col-md-6">
 			  		<label>Produtos</label>
 	
-			  			<select name="selecioneProduto" class="form-control" placeholder="Selecione um Produto">
-					      	<option disabled selected>Selecione uma opção...</option>
+			  			<select name="selecioneProduto" class="form-control" placeholder="Selecione um Produto" required>
+					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<% 
 						      	for(EntidadeDominio e : allProdutos) {
 				
@@ -84,8 +84,8 @@
 			  		<div class="form-group col-md-4">
 			  		<label>Tipo</label>
 
-			  			<select name="tipo" class="form-control" placeholder="Selecione um Tipo">
-					      	<option disabled selected>Selecione uma opção...</option>
+			  			<select name="tipo" class="form-control" placeholder="Selecione um Tipo" required>
+					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<option value="entrada">Entrada</option>
 					      	<option value="saida">Saida</option>
 				      	</select>
@@ -94,7 +94,7 @@
    				    <!-- Quantidade Entrada/Saida-->
 				    <div class="form-group col-md-2">
 				      <label>Quantidade Entrada/Saida</label>
-				      <input type="number" class="form-control" name="quantidade_entrada_saida" placeholder="Quantidade Entrada/Saida"> <!-- required -->
+				      <input type="text" class="form-control" name="quantidade_entrada_saida" placeholder="Quantidade Entrada/Saida" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" required>
 				    </div>
 				</div>
 				
@@ -102,19 +102,19 @@
    					<!-- Valor de Custo -->
 				    <div class="form-group col-md-2">
 				      <label>Valor de Custo</label>
-				      <input type="number" class="form-control" name="valor_custo" placeholder="Valor de Custo">
+				      <input type="text" class="form-control" name="valor_custo" placeholder="Valor de Custo" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
 				    </div>
 				    
 					<!-- Fornecedor -->
 				    <div class="form-group col-md-8">
 				      <label>Fornecedor</label>
-				      <input type="text" class="form-control" name="fornecedor" placeholder="Fornecedor"> <!-- required -->
+				      <input type="text" class="form-control" name="fornecedor" placeholder="Fornecedor" required>
 				    </div>
 
 				    <!-- Data Entrada -->
 				    <div class="form-group col-md-2">
 				      <label>Data Entrada</label>
-				      <input type="date" class="form-control" name="dt_entrada" placeholder="Data Entrada">
+				      <input type="date" class="form-control" name="dt_entrada" placeholder="Data Entrada" required>
 				    </div>
 				</div>
 			  	
@@ -138,7 +138,7 @@
 			</form>
 		</fieldset>
 		
-		<fieldset class="form-group fieldset_form" style="margin-top: 30px">
+		<fieldset class="form-group fieldset_form" style="margin-top: 30px; margin-bottom: 30px !important;">
 		<legend align="center">Consulta de Estoque</legend>
 			<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastroEstoque">
 			
@@ -147,8 +147,8 @@
 			  		<div class="form-group col-md-8">
 			  		<label>Produtos</label>
 	
-			  			<select name="selecioneProduto" class="form-control" placeholder="Selecione um Produto">
-					      	<option disabled selected>Selecione uma opção...</option>
+			  			<select name="selecioneProduto" class="form-control" placeholder="Selecione um Produto" required>
+					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<% 
 						      	for(EntidadeDominio e : allProdutos) {
 				
@@ -166,7 +166,7 @@
 			  		
 			  		<!-- Botões CRUD -->
 			  		<div class="form-group col-md-4">
-			  			<div align="right" style="margin-top: 50px">
+			  			<div align="right" style="margin-top: 31px">
 							<button class="btn btn-primary" name="operacao" value="CONSULTAR">Consultar</button>
 						</div>
 			  		</div>
