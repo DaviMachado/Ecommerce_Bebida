@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 15/08/2021 -->
+<!-- @date 25/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -54,13 +54,13 @@
 					<!-- Nome -->
 				    <div class="form-group col-md-4">
 				      <label>Nome</label>
-				      <input type="text" class="form-control" name="nome" placeholder="Nome"> <!-- required -->
+				      <input type="text" class="form-control" name="nome" placeholder="Nome" required>
 				    </div>
 
 				    <!-- Descrição -->
 				    <div class="form-group col-md-8">
 				      <label>Descrição</label>
-				      <input type="text" class="form-control" name="descricao" placeholder="Descrição">
+				      <input type="text" class="form-control" name="descricao" placeholder="Descrição" required>
 				    </div>
 				</div>
 				
@@ -69,8 +69,8 @@
 			  		<div class="form-group col-md-2">
 			  		<label>Categoria</label>
 
-			  			<select name="selecioneCategoria" class="form-control" placeholder="Selecione uma Categoria">
-					      	<option disabled selected>Selecione uma opção...</option>
+			  			<select name="selecioneCategoria" class="form-control" placeholder="Selecione uma Categoria" required>
+					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<option value="cervejas">Cervejas</option>
 					      	<option value="destilados">Destilados</option>
 					      	<option value="refrigerantes">Refrigerantes</option>
@@ -81,25 +81,25 @@
 					<!-- Preço de Compra -->
 				    <div class="form-group col-md-2">
 				      <label>Preço de Compra</label>
-				      <input type="number" class="form-control" name="preco_de_compra" placeholder="Digite um Preço de Compra">
+				      <input type="text" class="form-control" name="preco_de_compra" placeholder="Digite um Preço de Compra" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
 				    </div>
 				    
 				    <!-- Preço de Venda -->
 				    <div class="form-group col-md-2">
 				      <label>Preço de Venda</label>
-				      <input type="number" class="form-control" name="preco_de_venda" placeholder="Digite um Preço de Venda">
+				      <input type="text" class="form-control" name="preco_de_venda" placeholder="Digite um Preço de Venda" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
 				    </div>
 				    
    				    <!-- Quantidade -->
 				    <div class="form-group col-md-2">
 				      <label>Quantidade</label>
-				      <input type="number" class="form-control" name="quantidade" placeholder="Quantidade"> <!-- required -->
+				      <input type="text" class="form-control" name="quantidade" placeholder="Quantidade" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" required>
 				    </div>
 				    
    				    <!-- Grupo de Precificacao -->
 				    <div class="form-group col-md-4">
 				      <label>Grupo de Precificacao</label>
-				      <input type="text" class="form-control" name="grupo_de_precificacao" placeholder="Grupo de Precificacao"> <!-- required -->
+				      <input type="text" class="form-control" name="grupo_de_precificacao" placeholder="Grupo de Precificacao" required>
 				    </div>
 			  	</div>
 			  	
@@ -107,15 +107,15 @@
 				    <!-- Foto -->
 				    <div class="form-group col-md-10">
 				      <label>Foto</label>
-				      <input type="text" class="form-control" name="foto" placeholder="Digite o caminho da pasta que esta localizada a Foto ..."> <!-- required -->
+				      <input type="text" class="form-control" name="foto" placeholder="Digite o caminho da pasta que esta localizada a Foto ..." required>
 				    </div>
 				    
 				    <!-- Status -->
 			  		<div class="form-group col-md-2">
 			  		<label>Status</label>
 
-			  			<select name="status" class="form-control" placeholder="Selecione um Status">
-					      	<option disabled selected>Selecione uma opção...</option>
+			  			<select name="status" class="form-control" placeholder="Selecione um Status" required>
+					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<option value="ativo">Ativo</option>
 					      	<option value="inativo">Inativo</option>
 				      	</select>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 15/08/2021 -->
+<!-- @date 25/08/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -64,13 +64,13 @@
 					<!-- Nome -->
 				    <div class="form-group col-md-4">
 				      <label>Nome</label>
-				      <input type="text" class="form-control" name="nome" placeholder="Nome" value="<%=produto.get(0).getNome()%>"> <!-- required -->
+				      <input type="text" class="form-control" name="nome" placeholder="Nome" value="<%=produto.get(0).getNome()%>" required>
 				    </div>
 
 				    <!-- Descrição -->
 				    <div class="form-group col-md-8">
 				      <label>Descrição</label>
-				      <input type="text" class="form-control" name="descricao" placeholder="Descrição" value="<%=produto.get(0).getDescricao()%>">
+				      <input type="text" class="form-control" name="descricao" placeholder="Descrição" value="<%=produto.get(0).getDescricao()%>" required>
 				    </div>
 				</div>
 				
@@ -79,7 +79,7 @@
 			  		<div class="form-group col-md-2">
 			  		<label>Categoria</label>
 
-			  			<select name="selecioneCategoria" class="form-control" placeholder="Selecione uma Categoria">
+			  			<select name="selecioneCategoria" class="form-control" placeholder="Selecione uma Categoria" required>
 					      	<option disabled>Selecione uma opção...</option>
 					      	<option><%=produto.get(0).getCategoria()%></option>
 					      	<option value="cervejas">Cervejas</option>
@@ -92,25 +92,25 @@
 					<!-- Preço de Compra -->
 				    <div class="form-group col-md-2">
 				      <label>Preço de Compra</label>
-				      <input type="number" class="form-control" name="preco_de_compra" placeholder="Digite um Preço de Compra" value="<%=produto.get(0).getPrecoDeCompra()%>">
+				      <input type="text" class="form-control" name="preco_de_compra" placeholder="Digite um Preço de Compra" value="<%=produto.get(0).getPrecoDeCompra()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
 				    </div>
 				    
 				    <!-- Preço de Venda -->
 				    <div class="form-group col-md-2">
 				      <label>Preço de Venda</label>
-				      <input type="number" class="form-control" name="preco_de_venda" placeholder="Digite um Preço de Venda" value="<%=produto.get(0).getPrecoDeVenda()%>">
+				      <input type="text" class="form-control" name="preco_de_venda" placeholder="Digite um Preço de Venda" value="<%=produto.get(0).getPrecoDeVenda()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
 				    </div>
 				    
    				    <!-- Quantidade -->
 				    <div class="form-group col-md-2">
 				      <label>Quantidade</label>
-				      <input type="number" class="form-control" name="quantidade" placeholder="Quantidade" value="<%=produto.get(0).getQuantidade()%>"> <!-- required -->
+				      <input type="text" class="form-control" name="quantidade" placeholder="Quantidade" value="<%=produto.get(0).getQuantidade()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" disabled>
 				    </div>
 				    
    				    <!-- Grupo de Precificacao -->
 				    <div class="form-group col-md-4">
 				      <label>Grupo de Precificacao</label>
-				      <input type="text" class="form-control" name="grupo_de_precificacao" placeholder="Grupo de Precificacao" value="<%=produto.get(0).getGrupoDePrecificacao()%>"> <!-- required -->
+				      <input type="text" class="form-control" name="grupo_de_precificacao" placeholder="Grupo de Precificacao" value="<%=produto.get(0).getGrupoDePrecificacao()%>" required>
 				    </div>
 			  	</div>
 			  	
@@ -118,14 +118,14 @@
 				    <!-- Foto -->
 				    <div class="form-group col-md-10">
 				      <label>Foto</label>
-				      <input type="text" class="form-control" name="foto" placeholder="Digite o caminho da pasta que esta localizada a Foto ..." value="<%=produto.get(0).getFoto()%>"> <!-- required -->
+				      <input type="text" class="form-control" name="foto" placeholder="Digite o caminho da pasta que esta localizada a Foto ..." value="<%=produto.get(0).getFoto()%>" required>
 				    </div>
 				    
 				    <!-- Status -->
 			  		<div class="form-group col-md-2">
 			  		<label>Status</label>
 
-			  			<select name="status" class="form-control" placeholder="Selecione um Status">
+			  			<select name="status" class="form-control" placeholder="Selecione um Status" required>
 					      	<option disabled>Selecione uma opção...</option>
 					      	<option><%=produto.get(0).getStatus()%></option>
 					      	<option value="ativo">Ativo</option>
