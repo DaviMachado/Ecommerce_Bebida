@@ -104,7 +104,7 @@
    				    <!-- Quantidade -->
 				    <div class="form-group col-md-2">
 				      <label>Quantidade</label>
-				      <input type="text" class="form-control" name="quantidade" placeholder="Quantidade" value="<%=produto.get(0).getQuantidade()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" disabled>
+				      <input type="text" class="form-control" placeholder="Quantidade" value="<%=produto.get(0).getQuantidade()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" disabled>
 				    </div>
 				    
    				    <!-- Grupo de Precificacao -->
@@ -163,6 +163,10 @@
 			    <input type="hidden" name="idProduto" id="idProduto" value="<%=produto.get(0).getId() %>">
 			    <!-- Parametro que é verificado se pode alterar um Produto ou não -->
 	    		<input type="hidden" name="alteraProduto" id="alteraProduto" value="1">
+	    		<!-- foi necessario deixar o campo de "quantidade" como hidden, -->
+	    		<!-- pois a tag "disabled" desabilitava o campo e ao cair no ViewHelper, ele não reconhecia o name e deixava como NULL-->
+	    		<!-- posteriormente também caia na Strategy e retornava a mensagem de erro -->
+			    <input type="hidden" name="quantidade" id="quantidade" value="<%=produto.get(0).getQuantidade() %>">
 			</form>
 		</fieldset>
 		
