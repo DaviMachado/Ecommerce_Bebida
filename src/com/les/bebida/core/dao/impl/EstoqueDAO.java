@@ -109,4 +109,56 @@ public class EstoqueDAO extends AbstractJdbcDAO {
 				
 	} // Consultar
 	
+	
+	/**
+	 * Metodo para alterar a quantidade do Produto
+	 * @param entidade
+	 */
+	public void alterarQuantidadeProduto (String quantidadeFinal, String idProduto) {
+		openConnection();
+		
+		String sql = "update produto set " +
+					 "quantidade=? " +
+					 "where id=?";
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, quantidadeFinal);
+			stmt.setString(2, idProduto);
+			
+			stmt.execute();
+			stmt.close();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Alterar quantidade Produto
+	
+	
+	/**
+	 * Metodo para Inativar o Produto sem Estoque
+	 * @param entidade
+	 */
+	public void inativaProdutoSemEstoque (String idProduto, String msgObservacao) {
+		openConnection();
+		
+		String sql = "update produto set " +
+					 "status='inativo', observacao=? " +
+					 "where id=?";
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, msgObservacao);
+			stmt.setString(2, idProduto);
+			
+			stmt.execute();
+			stmt.close();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Inativar Produto sem Estoque
+	
 }

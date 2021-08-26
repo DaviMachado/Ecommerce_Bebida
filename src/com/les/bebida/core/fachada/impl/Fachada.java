@@ -39,6 +39,7 @@ import com.les.bebida.core.strategy.impl.ValidarDataEntradaSaidaEstoque;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
 import com.les.bebida.core.strategy.impl.ValidarDataValidadeCartao;
 import com.les.bebida.core.strategy.impl.ValidarDescricaoProduto;
+import com.les.bebida.core.strategy.impl.ValidarEntradaEstoque;
 import com.les.bebida.core.strategy.impl.ValidarEstado;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLogin;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLoginAndSenha;
@@ -62,6 +63,7 @@ import com.les.bebida.core.strategy.impl.ValidarProdutoEstoque;
 import com.les.bebida.core.strategy.impl.ValidarQuantidadeEstoque;
 import com.les.bebida.core.strategy.impl.ValidarQuantidadeProduto;
 import com.les.bebida.core.strategy.impl.ValidarQuantidadeSelecionada;
+import com.les.bebida.core.strategy.impl.ValidarSaidaEstoque;
 import com.les.bebida.core.strategy.impl.ValidarSenha;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgual;
 import com.les.bebida.core.strategy.impl.ValidarSenhaIgualCliente;
@@ -80,7 +82,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 25/08/2021
+ * @date 26/08/2021
  */
 public class Fachada implements IFachada {
 
@@ -137,6 +139,8 @@ public class Fachada implements IFachada {
 	ValidarValorCustoEstoque vValorCustoEstoque = new ValidarValorCustoEstoque();
 	ValidarFornecedorEstoque vFornecedorEstoque = new ValidarFornecedorEstoque();
 	ValidarDataEntradaSaidaEstoque vDataEntradaSaidaEstoque = new ValidarDataEntradaSaidaEstoque();
+	ValidarEntradaEstoque vEntradaEstoque = new ValidarEntradaEstoque();
+	ValidarSaidaEstoque vSaidaEstoque = new ValidarSaidaEstoque();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -312,6 +316,8 @@ public class Fachada implements IFachada {
 		regrasSalvarEstoque.add(vValorCustoEstoque);
 		regrasSalvarEstoque.add(vFornecedorEstoque);
 		regrasSalvarEstoque.add(vDataEntradaSaidaEstoque);
+		regrasSalvarEstoque.add(vEntradaEstoque);
+		regrasSalvarEstoque.add(vSaidaEstoque);
 		regrasSalvarEstoque.add(VDataCadastro);
 		/* ----- CONSULTAR ----- */
 		regrasConsultarEstoque.add(vProdutoEstoque);
