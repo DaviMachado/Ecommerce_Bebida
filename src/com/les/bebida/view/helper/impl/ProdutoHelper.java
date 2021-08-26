@@ -2,13 +2,17 @@ package com.les.bebida.view.helper.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.les.bebida.core.dao.impl.EstoqueDAO;
+import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Estoque;
 import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.Resultado;
 import com.les.bebida.view.helper.IViewHelper;
@@ -137,6 +141,29 @@ public class ProdutoHelper implements IViewHelper{
 		
 		else if (("SALVAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				ProdutoDAO dao = new ProdutoDAO();
+				EstoqueDAO estoqueDAO = new EstoqueDAO();
+				Produto produto = new Produto();
+				Estoque estoque = new Estoque();
+				
+				// consulta o ultimo Produto cadastrado para poder pegar o ID do Produto,
+				// e salvar na primeira entrada do Estoque
+				List<Produto> ultimoProduto = dao.consultarUltimoProdutoCadastrado(produto);
+				
+				// salva os atributos do ultimo Produto cadastrado no Estoque, 
+				// pra poder dar a primeira entrada no Estoque
+				estoque.setIdProduto(ultimoProduto.get(0).getId());
+				estoque.setTipo("entrada");
+				estoque.setQuantidadeEntradaSaida(ultimoProduto.get(0).getQuantidade());
+				estoque.setValorCusto(ultimoProduto.get(0).getPrecoDeCompra());
+				estoque.setFornecedor("Primeira entrada no Estoque");
+				estoque.setDtEntrada(ultimoProduto.get(0).getDtCadastro());
+				estoque.setQuantidadeFinal(ultimoProduto.get(0).getQuantidade());
+				estoque.setDtCadastro(ultimoProduto.get(0).getDtCadastro());
+				
+				// cria a primeira entrada do produto no "Estoque"
+				estoqueDAO.salvar(estoque);
+				
 				// atribui a nova mensagem para poder mostra na pagina .JSP
 				resultado.setMensagem("Cadastro do Produto salvo com sucesso!");
 				
