@@ -26,6 +26,8 @@
 	
 		// pega todos os produtos cadastrados no sistema
 		List<EntidadeDominio> allProdutos = dao.consultar(produto);
+		// pega todos os produtos ativos cadastrados no sistema
+		List<EntidadeDominio> allProdutosAtivos = dao.consultarSomenteAtivo(produto);
 	%>
 	
 	<body>
@@ -66,7 +68,7 @@
 			  			<select name="selecioneProduto" class="form-control" placeholder="Selecione um Produto" required>
 					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<% 
-						      	for(EntidadeDominio e : allProdutos) {
+						      	for(EntidadeDominio e : allProdutosAtivos) {
 				
 								// Aplicado o CAST para poder popular o produto,
 								// fazendo o CAST para uma referência mais genérica, no caso para o produto,
@@ -124,14 +126,14 @@
 			  		</div>
 			  		<!-- Botões CRUD -->
 			  		<div class="form-group col-md-8">
-			  			<div align="right" style="margin-top: 50px">
+			  			<div align="right" style="margin-top: 5px">
 							<button class="btn btn-success" name="operacao" value="SALVAR">Cadastrar</button>
 						</div>
 			  		</div>
 			  	</div>
 				
 		  		<!-- Botão Voltar -->
-				<div align="right" style="margin-top: 10px;">
+				<div align="right" style="margin-top: 5px;">
 					<!--<input style="margin-left: 600px" type="button" value="Voltar" onclick="history.back()">-->
 					<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 300px;"></a>
 				</div>

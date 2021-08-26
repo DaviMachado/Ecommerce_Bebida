@@ -158,6 +158,7 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 		}
 	} // Listar
 	
+	
 	/**
 	 * Metodo para Listar o Produto por ID
 	 * @param entidade
@@ -199,5 +200,47 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 			throw new RuntimeException(e);
 		}
 	} // Listar Produto por ID
+	
+	
+	/**
+	 * Metodo para Listar os Produtos somente Ativos
+	 * @param entidade
+	 * @return
+	 */
+	public List<EntidadeDominio> consultarSomenteAtivo (EntidadeDominio entidade){
+		openConnection();
+		try {
+			List<EntidadeDominio> produtos = new ArrayList<>();
+			PreparedStatement stmt = connection.prepareStatement("select * from produto where status='ativo'");
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				// criando o objeto Produto
+				Produto produtoItem = new Produto();
+				
+				produtoItem.setId(rs.getString("id"));
+				produtoItem.setNome(rs.getString("nome"));
+				produtoItem.setDescricao(rs.getString("descricao"));
+				produtoItem.setCategoria(rs.getString("categoria"));
+				produtoItem.setPrecoDeCompra(rs.getString("preco_de_compra"));
+				produtoItem.setPrecoDeVenda(rs.getString("preco_de_venda"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setGrupoDePrecificacao(rs.getString("grupo_de_precificacao"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setQuantidade(rs.getString("quantidade"));
+				produtoItem.setStatus(rs.getString("status"));
+				produtoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				produtoItem.setObservacao(rs.getString("observacao"));
+				
+				// adicionando o objeto à lista
+				produtos.add(produtoItem);
+			}
+			rs.close();
+			stmt.close();
+			return produtos;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar Produtos somente Ativos
 	
 }
