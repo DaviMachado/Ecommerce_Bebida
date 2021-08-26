@@ -29,8 +29,8 @@
 		Usuario userLogado = new Usuario();
 		Produto produto = new Produto();
 		
-		// guarda todos os produtos cadastrados no sistema na variavel "produtos", para ser listada na Home Page
-		List<EntidadeDominio> produtos = produtoDAO.consultar(produto);
+		// guarda todos os produtos ativos cadastrados no sistema na variavel "produtosAtivos", para ser listada na Home Page
+		List<EntidadeDominio> produtosAtivos = produtoDAO.consultarSomenteAtivo(produto);
 		
 		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 		HttpSession sessao = request.getSession();
@@ -157,7 +157,7 @@
         <!-- Listagens dos produtos cadastrados no sistema -->
         <div class="row">
         	<%
-        		for(EntidadeDominio e : produtos) {
+        		for(EntidadeDominio e : produtosAtivos) {
         			
        			// Aplicado o CAST para poder popular o produto,
        			// fazendo o CAST para uma referência mais genérica, no caso para o produto
