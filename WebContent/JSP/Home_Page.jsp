@@ -170,7 +170,7 @@
 	                <h4 class="card-title">
 	                  <a href="http://localhost:8080/Ecommerce_Bebida/itemCarrinho?idProduto=<%=product.getId() %>&operacao=SALVAR"><%=product.getNome() %></a>
 	                </h4>
-	                <h5>$24.99</h5>
+	                <h5>R$ <%=product.getPrecoDeVenda() %></h5>
 	                <p class="card-text"><%=product.getDescricao() %></p>
 	              </div>
 	              <div class="card-footer">
