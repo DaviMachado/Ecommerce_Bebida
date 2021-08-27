@@ -25,20 +25,20 @@ select * from produto;
 insert dos produtos:
 
 insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
-values ('Coca-Cola 350ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'refrigerante', '5,99', '7,99', './Imagens/itens/coca_cola.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao coca');
+values ('Coca-Cola 350ml', 'Coca-Cola é um refrigerante carbonado vendido em lojas, restaurantes, mercados e máquinas de venda automática em todo o mundo.', 'refrigerante', '5,99', '7,99', './Imagens/itens/coca_cola.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao coca');
 
 insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
-values ('Heineken 330ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'cerveja', '5,99', '7,99', './Imagens/itens/heineken.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao heineken');
+values ('Heineken 330ml', 'Heineken é uma cervejaria holandesa, fundada em 1863 por Gerard Adriaan Heineken na cidade de Amsterdã, Heineken possui cerca de 140 cervejarias em mais de 70 países.', 'cerveja', '5,99', '7,99', './Imagens/itens/heineken.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao heineken');
 
 insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
-values ('Vodka Sky 980ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'destilada', '5,99', '7,99', './Imagens/itens/vodka_sky.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao vodka');
+values ('Vodka Sky 980ml', 'A SKYY Vodka foi fundada no início da década de 90, por Maurice Kanbar. O criador era um grande apreciador de vodca e desenvolveu um processo inovador de filtração e destilação.', 'destilada', '5,99', '7,99', './Imagens/itens/vodka_sky.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao vodka');
 
 insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
-values ('Budweiser 330ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'cerveja', '5,99', '7,99', './Imagens/itens/budweiser.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao budweiser');
+values ('Budweiser 330ml', 'Budweiser, também conhecida popularmente como Bud, é uma cerveja do tipo long americana, fabricada pela AB InBev, fundada em 1876.', 'cerveja', '5,99', '7,99', './Imagens/itens/budweiser.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao budweiser');
 
 insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
-values ('Guaraná 350ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'refrigerante', '5,99', '7,99', './Imagens/itens/guarana.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao guarana');
+values ('Guaraná 350ml', 'O guaraná (nome científico: Paullinia cupana), comumente chamado guaranazeiro e uaraná, é um cipó originário da Amazônia. É encontrado no Brasil, Peru, Colômbia e Venezuela.', 'refrigerante', '5,99', '7,99', './Imagens/itens/guarana.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao guarana');
 
 insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)
-values ('Benjamin 750ml', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!', 'vinho', '5,99', '7,99', './Imagens/itens/vinho.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao vinho');
+values ('Benjamin 750ml', 'A Argentina é o quinto maior produtor de vinho do mundo. O vinho argentino, assim como alguns aspectos da culinária argentina, tem suas raízes na Espanha. ', 'vinho', '5,99', '7,99', './Imagens/itens/vinho.png', 'grupo 1', '10', 'ativo', '2021/08/21', 'teste observacao vinho');
 -----------------------------
