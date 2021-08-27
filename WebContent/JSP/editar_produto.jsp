@@ -148,7 +148,7 @@
 			  		</div>
 			  		<!-- Botões CRUD -->
 			  		<div class="form-group col-md-8">
-			  			<div align="right" style="margin-top: 50px">
+			  			<div align="right" style="margin-top: 10px">
 							<button class="btn btn-warning" name="operacao" value="ALTERAR">Alterar</button>
 						</div>
 			  		</div>

@@ -51,12 +51,12 @@
   </nav>
   <!-- Fim Header -->
   
-  	<h2 style="margin-top: 30px; margin-left: 100px">Carrinho</h2>
+  	<h2 style="margin-top: 30px; margin-left: 70px">Carrinho</h2>
 
-	<table border="1" style="margin-top: 30px; margin-left: 100px;">
+	<table border="1" style="margin-top: 30px; margin-left: 70px; margin-right: 70px;">
 		<tr>
 			<th>Nome</th>
-            <th>Descrição</th>
+            <th width="75%">Descrição</th>
         </tr>
 		<%
 			for(Produto produto : produtosEmSessao) {
@@ -97,7 +97,7 @@
 		}
 		%>
 	</table>		
-	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 100px; margin-top: 10px; margin-bottom: 318px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 70px; margin-top: 10px; margin-bottom: 318px;"></a>
 	 
   	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">
