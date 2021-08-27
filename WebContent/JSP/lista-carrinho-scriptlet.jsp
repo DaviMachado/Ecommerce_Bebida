@@ -23,6 +23,19 @@
 	// pega o objeto salvo em Sessão com o nome "itensCarrinho",
 	// e passa para o "produtosEmSessao" (fazendo o CAST para o tipo List<Produto>)
 	produtosEmSessao = (List<Produto>) sessao.getAttribute("itensCarrinho");
+	
+	double total_itens = 0;
+	double total_frete = 0;
+	double total_pedido = 0;
+	
+	// faz a somatória dos itens selecionados no carrinho
+	for(Produto produto : produtosEmSessao) {
+		total_itens += (Double.parseDouble(produto.getQuantidadeSelecionada()) * Double.parseDouble(produto.getPrecoDeVenda()));
+	}
+	
+	// faz o arredondamento da variavel "total_itens" para 2 casas decimais
+	total_itens = Math.round(total_itens * 100);
+	total_itens = total_itens/100;
 %>
 
 <body>
@@ -56,7 +69,8 @@
 	<table border="1" style="margin-top: 30px; margin-left: 70px; margin-right: 70px;">
 		<tr>
 			<th>Nome</th>
-            <th width="75%">Descrição</th>
+            <th width="65%">Descrição</th>
+            <th>Valor de Venda</th>
         </tr>
 		<%
 			for(Produto produto : produtosEmSessao) {
@@ -64,6 +78,7 @@
 			<tr>
 				<td><%=produto.getNome() %></td>
 				<td><%=produto.getDescricao() %></td>
+				<td><%=produto.getPrecoDeVenda() %></td>
 				<td>
 					<!-- form responsavel por adicionar ou retirar 1 item do carrinho selecionado -->
 					<form class="form" action="http://localhost:8080/Ecommerce_Bebida/carrinho">
@@ -96,7 +111,14 @@
 		<%
 		}
 		%>
-	</table>		
+	</table>
+	
+	<hr align="right" width="20%" size="5" color="black" style="margin-right: 70px;"/>
+	
+	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total dos Itens:</b> <%=total_itens %></p>
+	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Frete:</b> <%=total_frete %></p>
+	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Pedido:</b> <%=total_pedido %></p>
+	
 	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 70px; margin-top: 10px; margin-bottom: 318px;"></a>
 	 
   	  <!-- Footer -->

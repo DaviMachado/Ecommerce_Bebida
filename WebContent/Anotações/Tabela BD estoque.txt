@@ -23,19 +23,20 @@ select * from estoque;
 insert dos produtos no estoque:
 
 insert into estoque(id_produto, tipo, quantidade_entrada_saida, valor_custo, fornecedor, dt_entrada, quantidade_final, dt_cadastro)
-values ('1', 'entrada', '10', '5,99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
+values ('1', 'entrada', '10', '5.99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
 
 insert into estoque(id_produto, tipo, quantidade_entrada_saida, valor_custo, fornecedor, dt_entrada, quantidade_final, dt_cadastro)
-values ('2', 'entrada', '10', '5,99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
+values ('2', 'entrada', '10', '5.99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
 
 insert into estoque(id_produto, tipo, quantidade_entrada_saida, valor_custo, fornecedor, dt_entrada, quantidade_final, dt_cadastro)
-values ('3', 'entrada', '10', '5,99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
+values ('3', 'entrada', '10', '5.99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
 
 insert into estoque(id_produto, tipo, quantidade_entrada_saida, valor_custo, fornecedor, dt_entrada, quantidade_final, dt_cadastro)
-values ('4', 'entrada', '10', '5,99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
+values ('4', 'entrada', '10', '5.99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
 
 insert into estoque(id_produto, tipo, quantidade_entrada_saida, valor_custo, fornecedor, dt_entrada, quantidade_final, dt_cadastro)
-values ('5', 'entrada', '10', '5,99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
+values ('5', 'entrada', '10', '5.99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
 
 insert into estoque(id_produto, tipo, quantidade_entrada_saida, valor_custo, fornecedor, dt_entrada, quantidade_final, dt_cadastro)
-values ('6', 'entrada', '10', '5,99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
+values ('6', 'entrada', '10', '5.99', 'Primeira entrada no Estoque', '2021/08/26', '10', '2021/08/21');
+-----------------------------
