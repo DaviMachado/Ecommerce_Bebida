@@ -12,7 +12,7 @@ import com.les.bebida.core.dominio.EntidadeDominio;
  * Classe EnderecoDAO,
  * responsável para salvar o endereço no BD.
  * @author Davi Rodrigues
- * @date 18/08/2021
+ * @date 29/08/2021
  */
 public class EnderecoDAO extends AbstractJdbcDAO {
 	
@@ -171,6 +171,7 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 		}
 	} // Listar
 	
+	
 	/**
 	 * Metodo para Listar o Endereço por ID
 	 * @param entidade
@@ -214,5 +215,50 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 			throw new RuntimeException(e);
 		}
 	} // Listar Endereço por ID
+	
+	
+	/**
+	 * Metodo para Listar todos os Endereços pelo ID do Cliente
+	 * @param entidade
+	 * @return
+	 */
+	public List<Endereco> consultarEnderecoByIdCliente (String idCliente){
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from endereco where id_cliente=?");
+			stmt.setString(1, idCliente);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Endereco> enderecos = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Endereço
+				Endereco enderecoItem = new Endereco();
+				
+				enderecoItem.setId(rs.getString("id"));
+				enderecoItem.setApelido(rs.getString("apelido"));
+				enderecoItem.setCep(rs.getString("cep"));
+				enderecoItem.setEstado(rs.getString("estado"));
+				enderecoItem.setCidade(rs.getString("cidade"));
+				enderecoItem.setNumero(rs.getString("numero"));
+				enderecoItem.setBairro(rs.getString("bairro"));
+				enderecoItem.setLogradouro(rs.getString("logradouro"));
+				enderecoItem.setTipoResidencia(rs.getString("tipo_residencia"));
+				enderecoItem.setPais(rs.getString("pais"));
+				enderecoItem.setTipo_Endereco(rs.getString("tipo_endereco"));
+				enderecoItem.setObservacao(rs.getString("observacao"));
+				
+				enderecoItem.setIdCliente(rs.getString("id_cliente"));
+				
+				// adicionando o objeto à lista
+				enderecos.add(enderecoItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return enderecos;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar todos os Endereços pelo ID do Cliente
 	
 }

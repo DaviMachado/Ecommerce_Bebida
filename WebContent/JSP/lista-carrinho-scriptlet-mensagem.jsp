@@ -16,13 +16,26 @@
 </head>
 
 <%
+	EnderecoDAO enderecoDAO = new EnderecoDAO();
+	CartaoDeCreditoDAO cartaoDAO = new CartaoDeCreditoDAO();
 	List<Produto> produtosEmSessao = new ArrayList<>();
+	List<Endereco> enderecosCliente = new ArrayList<>();
+	List<CartaoDeCredito> cartoesCliente = new ArrayList<>();
+	Usuario usuarioLogado = new Usuario();
 
 	//cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 	HttpSession sessao = request.getSession();
 	// pega o objeto salvo em Sessão com o nome "itensCarrinho",
 	// e passa para o "produtosEmSessao" (fazendo o CAST para o tipo List<Produto>)
 	produtosEmSessao = (List<Produto>) sessao.getAttribute("itensCarrinho");
+	// pega o objeto salvo em Sessão com o nome "usuarioLogado",
+	// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
+	usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+	
+	// consulta todos os endereços cadastrados pelo Cliente
+	enderecosCliente = enderecoDAO.consultarEnderecoByIdCliente(usuarioLogado.getId());
+	// comsulta todos os cartões de credito cadastrados pelo cliente
+	cartoesCliente = cartaoDAO.consultarCartaoDeCreditoByIdCliente(usuarioLogado.getId());
 	
 	// pega a mensagem que estava pendurado na requisição,
 	// que foi enviado pelo arquivo "CarrinhoHelper"
@@ -153,8 +166,15 @@
 		
 		  			<select name="selecioneEndereco" class="form-control" placeholder="Selecione um Endereço" required>
 				      	<option value="" disabled selected>Selecione uma opção...</option>
-				      	<option value="masculino">teste</option>
-				      	<option value="feminino">teste</option>
+				      	<% 
+					      	for(Endereco endereco : enderecosCliente) {
+					      	
+							// lista todos os endereços do cliente indexado com o ID do endereço dentro do "value", de cada TAG "<option>".
+						%>
+						<option value="<%=endereco.getId()%>"><%=endereco.getApelido()%></option>
+				      	<%
+							}
+						%>
 			      	</select>
 		  		</div>
 		  		
@@ -164,8 +184,15 @@
 		
 		  			<select name="selecioneCartao" class="form-control" placeholder="Selecione um Cartão de Crédito" required>
 				      	<option value="" disabled selected>Selecione uma opção...</option>
-				      	<option value="masculino">teste</option>
-				      	<option value="feminino">teste</option>
+				      	<% 
+					      	for(CartaoDeCredito cartao : cartoesCliente) {
+					      	
+							// lista todos os cartões de credito do cliente indexado com o ID do cartao dentro do "value", de cada TAG "<option>".
+						%>
+						<option value="<%=cartao.getId()%>"><%=cartao.getNome()%></option>
+				      	<%
+							}
+						%>
 			      	</select>
 		  		</div>
 		  		

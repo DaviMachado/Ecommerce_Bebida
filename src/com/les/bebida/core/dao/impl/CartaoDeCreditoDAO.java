@@ -148,6 +148,7 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 		}
 	} // Listar
 	
+	
 	/**
 	 * Metodo para Listar o Cartao de Credito por ID
 	 * @param entidade
@@ -185,5 +186,44 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 			throw new RuntimeException(e);
 		}
 	} // Listar Cartao de Credito por ID
+	
+	
+	/**
+	 * Metodo para Listar todos os Cartões de Credito pelo ID do Cliente
+	 * @param entidade
+	 * @return
+	 */
+	public List<CartaoDeCredito> consultarCartaoDeCreditoByIdCliente (String idCliente){
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from cartao_de_credito where id_cliente=?");
+			stmt.setString(1, idCliente);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<CartaoDeCredito> cartoes = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Cartao de Credito
+				CartaoDeCredito cartaoItem = new CartaoDeCredito();
+				
+				cartaoItem.setId(rs.getString("id"));
+				cartaoItem.setNome(rs.getString("nome"));
+				cartaoItem.setNum_cartao(rs.getString("num_cartao"));
+				cartaoItem.setBandeira(rs.getString("bandeira"));
+				cartaoItem.setCod_seguranca(rs.getString("cd_seguranca"));
+				cartaoItem.setDt_validade(rs.getString("dt_validade"));
+				cartaoItem.setFlgPreferencial(rs.getString("preferencial"));
+				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				cartaoItem.setIdCliente(rs.getString("id_cliente"));
+				
+				// adicionando o objeto à lista
+				cartoes.add(cartaoItem);
+			}
+			rs.close();
+			stmt.close();
+			return cartoes;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar todos os Cartões de Credito pelo ID do Cliente
 	
 }
