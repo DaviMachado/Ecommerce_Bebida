@@ -142,7 +142,59 @@
 	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Frete:</b> <%=total_frete %>0</p>
 	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Pedido:</b> <%=total_pedido %></p>
 	
-	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 70px; margin-top: 10px; margin-bottom: 318px;"></a>
+ 	<hr align="right" width="20%" size="5" color="black" style="margin-right: 70px;"/>
+	
+	<fieldset class="form-group fieldset_form" style="margin-top: 30px; margin-bottom: 10px !important;">
+		<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastroPedido">
+			<div class="form-row">
+				<!-- Endereço -->
+		  		<div class="form-group col-md-5">
+		  		<label>Endereço de Entrega</label>
+		
+		  			<select name="selecioneEndereco" class="form-control" placeholder="Selecione um Endereço" required>
+				      	<option value="" disabled selected>Selecione uma opção...</option>
+				      	<option value="masculino">teste</option>
+				      	<option value="feminino">teste</option>
+			      	</select>
+		  		</div>
+		  		
+		  		<!-- Cartão de Crédito -->
+		  		<div class="form-group col-md-5">
+		  		<label>Cartão de Crédito</label>
+		
+		  			<select name="selecioneCartao" class="form-control" placeholder="Selecione um Cartão de Crédito" required>
+				      	<option value="" disabled selected>Selecione uma opção...</option>
+				      	<option value="masculino">teste</option>
+				      	<option value="feminino">teste</option>
+			      	</select>
+		  		</div>
+		  		
+		  		<!-- Cupom -->
+			    <div class="form-group col-md-2">
+			      <label>Cupom</label>
+			      <input type="text" class="form-control" name="cupom" placeholder="Cupom" maxlength="15" required>
+			    </div>
+			</div>
+			
+			<div class="form-row">
+				<div class="form-group col-md-8">
+		  			<!-- adicionado uma coluna com tamanho md-8 em branca para alinhar o botão da pagina -->
+		  		</div>
+			  		
+				<!-- Botões CRUD -->
+		  		<div class="form-group col-md-4">
+		  			<div align="right" style="margin-top: 32px">
+						<button class="btn btn-success" name="operacao" value="SALVAR">Finalizar Pedido</button>
+					</div>
+		  		</div>
+			</div>
+		</form>
+	</fieldset>
+	
+	<!-- Botão Voltar -->
+	<div align="right" style="margin-top: 10px;">
+ 		<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-right: 70px; margin-bottom: 318px;"></a>
+	</div>
 	 
   	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">
