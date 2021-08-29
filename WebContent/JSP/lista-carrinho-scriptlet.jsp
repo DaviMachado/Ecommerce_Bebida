@@ -30,12 +30,23 @@
 	
 	// faz a somatória dos itens selecionados no carrinho
 	for(Produto produto : produtosEmSessao) {
+		// calculo do total dos itens (quantidade do item (*) o valor do item "preço de venda")
 		total_itens += (Double.parseDouble(produto.getQuantidadeSelecionada()) * Double.parseDouble(produto.getPrecoDeVenda()));
+		
+		// calculo do frete (quantidade do item (*) 10 centavos)
+		total_frete += (Double.parseDouble(produto.getQuantidadeSelecionada()) * 0.10);
 	}
 	
 	// faz o arredondamento da variavel "total_itens" para 2 casas decimais
 	total_itens = Math.round(total_itens * 100);
 	total_itens = total_itens/100;
+	
+	// faz o arredondamento da variavel "total_frete" para 2 casas decimais
+	total_frete = Math.round(total_frete * 100);
+	total_frete = total_frete/100;
+	
+	// calculo do total do pedido (total dos itens (+) total do frete)
+	total_pedido = total_itens + total_frete;
 %>
 
 <body>
@@ -116,7 +127,7 @@
 	<hr align="right" width="20%" size="5" color="black" style="margin-right: 70px;"/>
 	
 	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total dos Itens:</b> <%=total_itens %></p>
-	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Frete:</b> <%=total_frete %></p>
+	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Frete:</b> <%=total_frete %>0</p>
 	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Pedido:</b> <%=total_pedido %></p>
 	
 	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 70px; margin-top: 10px; margin-bottom: 318px;"></a>
