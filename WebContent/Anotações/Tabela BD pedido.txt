@@ -1,0 +1,25 @@
+create database ecommerce;
+
+drop table pedido;
+
+create table pedido (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+    total_itens 	VARCHAR(10),
+    total_frete		VARCHAR(10),
+    total_pedido    VARCHAR(10),
+    status		    VARCHAR(30),
+    id_cliente	 	BIGINT,
+    id_endereco 	BIGINT,
+    id_cartao 		BIGINT,
+    cupom	        VARCHAR(30),
+    dt_cadastro 	DATE,
+	primary	key	(id),
+	CONSTRAINT fk_ClientePedido FOREIGN KEY (id_cliente) REFERENCES cliente (id),
+	CONSTRAINT fk_EnderecoPedido FOREIGN KEY (id_endereco) REFERENCES endereco (id),
+	CONSTRAINT fk_CartaoPedido FOREIGN KEY (id_cartao) REFERENCES cartao_de_credito (id)
+);
+
+use ecommerce;
+
+select * from pedido;
+-----------------------------

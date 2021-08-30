@@ -203,6 +203,15 @@
 					</div>
 		  		</div>
 			</div>
+			
+			<!-- ID do Cliente -->
+			<input type="hidden" name="idCliente" id="idCliente" value="<%=usuarioLogado.getId() %>">
+			<!-- Total dos Itens -->
+		    <input type="hidden" name="total_itens" id="total_itens" value="<%=total_itens %>">
+		    <!-- Total do Frete -->
+		    <input type="hidden" name="total_frete" id="total_frete" value="<%=total_frete %>">
+		    <!-- Total do Pedido -->
+		    <input type="hidden" name="total_pedido" id="total_pedido" value="<%=total_pedido %>">
 		</form>
 	</fieldset>
 	
