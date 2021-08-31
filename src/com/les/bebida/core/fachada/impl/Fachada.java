@@ -32,6 +32,7 @@ import com.les.bebida.core.strategy.impl.ValidarBairro;
 import com.les.bebida.core.strategy.impl.ValidarBandeiraCartao;
 import com.les.bebida.core.strategy.impl.ValidarCEP;
 import com.les.bebida.core.strategy.impl.ValidarCPF;
+import com.les.bebida.core.strategy.impl.ValidarCartaoPedido;
 import com.les.bebida.core.strategy.impl.ValidarCategoriaProduto;
 import com.les.bebida.core.strategy.impl.ValidarCidade;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSegurancaCartao;
@@ -41,6 +42,7 @@ import com.les.bebida.core.strategy.impl.ValidarDataEntradaSaidaEstoque;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
 import com.les.bebida.core.strategy.impl.ValidarDataValidadeCartao;
 import com.les.bebida.core.strategy.impl.ValidarDescricaoProduto;
+import com.les.bebida.core.strategy.impl.ValidarEnderecoPedido;
 import com.les.bebida.core.strategy.impl.ValidarEntradaEstoque;
 import com.les.bebida.core.strategy.impl.ValidarEstado;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLogin;
@@ -79,13 +81,14 @@ import com.les.bebida.core.strategy.impl.ValidarTipoEndereco;
 import com.les.bebida.core.strategy.impl.ValidarTipoEstoque;
 import com.les.bebida.core.strategy.impl.ValidarTipoResidencia;
 import com.les.bebida.core.strategy.impl.ValidarTipoUsuario;
+import com.les.bebida.core.strategy.impl.ValidarTotalPedido;
 import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
 
 /**
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 29/08/2021
+ * @date 30/08/2021
  */
 public class Fachada implements IFachada {
 
@@ -145,6 +148,9 @@ public class Fachada implements IFachada {
 	ValidarEntradaEstoque vEntradaEstoque = new ValidarEntradaEstoque();
 	ValidarSaidaEstoque vSaidaEstoque = new ValidarSaidaEstoque();
 	ValidarStatusPedido vStatusPedido = new ValidarStatusPedido();
+	ValidarTotalPedido vTotalPedido = new ValidarTotalPedido();
+	ValidarEnderecoPedido vEnderecoPedido = new ValidarEnderecoPedido();
+	ValidarCartaoPedido vCartaoPedido = new ValidarCartaoPedido();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -339,6 +345,9 @@ public class Fachada implements IFachada {
 		
 		/* ----- Adicionando as Strategy's na lista do Pedido ----- */
 		/* ----- SALVAR ----- */
+		regrasSalvarPedido.add(vTotalPedido);
+		regrasSalvarPedido.add(vEnderecoPedido);
+		regrasSalvarPedido.add(vCartaoPedido);
 		regrasSalvarPedido.add(vStatusPedido);
 		regrasSalvarPedido.add(VDataCadastro);
 		/* ---------------------------------------------------------- */
