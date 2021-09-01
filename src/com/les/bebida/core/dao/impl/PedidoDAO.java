@@ -109,4 +109,43 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				
 	} // Consultar
 	
+	
+	/**
+	 * Metodo para Listar o ultimo Pedido cadastrado no sistema
+	 * @param entidade
+	 * @return
+	 */
+	public List<Pedido> consultarUltimoPedidoCadastrado (EntidadeDominio entidade){
+		openConnection();
+		try {
+			List<Pedido> pedidos = new ArrayList<>();
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pedido WHERE id=(SELECT max(id) FROM pedido)");
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				// criando o objeto Pedido
+				Pedido pedidoItem = new Pedido();
+				
+				pedidoItem.setId(rs.getString("id"));
+				pedidoItem.setTotalItens(rs.getString("total_itens"));
+				pedidoItem.setTotalFrete(rs.getString("total_frete"));
+				pedidoItem.setTotalPedido(rs.getString("total_pedido"));
+				pedidoItem.setStatus(rs.getString("status"));
+				pedidoItem.setIdCliente(rs.getString("id_cliente"));
+				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
+				pedidoItem.setIdCartao(rs.getString("id_cartao"));
+				pedidoItem.setCupom(rs.getString("cupom"));
+				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				pedidos.add(pedidoItem);
+			}
+			rs.close();
+			stmt.close();
+			return pedidos;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar ultimo Pedido cadastrado
+	
 }
