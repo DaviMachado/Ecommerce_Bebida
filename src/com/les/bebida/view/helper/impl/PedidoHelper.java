@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.les.bebida.core.dao.impl.EstoqueDAO;
 import com.les.bebida.core.dao.impl.PedidoDAO;
 import com.les.bebida.core.dao.impl.PedidoItemDAO;
+import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Estoque;
 import com.les.bebida.core.dominio.ItemPedido;
 import com.les.bebida.core.dominio.Pedido;
 import com.les.bebida.core.dominio.Produto;
@@ -109,10 +112,15 @@ public class PedidoHelper implements IViewHelper {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
 				PedidoDAO pedidoDAO = new PedidoDAO();
 				PedidoItemDAO pedidoItemDAO = new PedidoItemDAO();
+				EstoqueDAO estoqueDAO = new EstoqueDAO();
+				ProdutoDAO produtoDAO = new ProdutoDAO();
 				Pedido pedido = new Pedido();
 				ItemPedido item_pedido = new ItemPedido();
+				Estoque estoque = new Estoque();
 				List<Produto> produtosVazio = new ArrayList<>();
 				List<Produto> produtosDaSessao = new ArrayList<>();
+				List<Produto> produtoAtualizado = new ArrayList<>();
+				int quantidadeFinal;
 				
 				// consulta o ultimo Pedido cadastrado para poder pegar o ID do Pedido,
 				// para poder salvar na tabela "pedido_item"
@@ -132,7 +140,43 @@ public class PedidoHelper implements IViewHelper {
 					item_pedido.setIdPedido(ultimoPedido.get(0).getId());
 					item_pedido.setDtCadastro(ultimoPedido.get(0).getDtCadastro());
 					
+					// salva o item do pedido
 					pedidoItemDAO.salvar(item_pedido);
+					
+					// após salvar o item do pedido, o mesmo será dado a baixa no Estoque,
+					// faz a conta de subtração da quantidade selecionada, menos a quantidade que já tinha no produto
+					quantidadeFinal = (Integer.parseInt(produtosDaSessao.get(i).getQuantidade()) - Integer.parseInt(produtosDaSessao.get(i).getQuantidadeSelecionada()));
+					
+					// altera a quantidade do estoque do Produto (tabela produto)
+					estoqueDAO.alterarQuantidadeProduto(Integer.toString(quantidadeFinal), produtosDaSessao.get(i).getId());
+					
+					// faz a consulta pelo ID do produto do indice "i" do laço de repetição, 
+					// para verificar a quantidade do estoque atualizado (após a subtração feita a cima),
+					// se a quantidade for igual a ZERO, o produto será "inativado"
+					produtoAtualizado = produtoDAO.consultarProdutoById(produtosDaSessao.get(i).getId());
+					if(produtoAtualizado.get(0).getQuantidade().equals("0")) {
+						String motivo_inativacao;
+						motivo_inativacao = " - SEM ESTOQUE";
+						
+						// faz a concatenação da obeservação com a mensagem "SEM ESTOQUE"
+						produtoAtualizado.get(0).setObservacao(produtoAtualizado.get(0).getObservacao() + motivo_inativacao);
+						
+						estoqueDAO.inativaProdutoSemEstoque(produtoAtualizado.get(0).getId(), produtoAtualizado.get(0).getObservacao());
+					}
+					
+					// salva os atributos do ultimo Pedido cadastrado no Estoque, 
+					// pra poder dar a saida no Estoque (tabela estoque)
+					estoque.setIdProduto(produtosDaSessao.get(i).getId());
+					estoque.setTipo("saida");
+					estoque.setQuantidadeEntradaSaida(produtosDaSessao.get(i).getQuantidadeSelecionada());
+					estoque.setValorCusto(produtosDaSessao.get(i).getPrecoDeCompra());
+					estoque.setFornecedor("Saida no Estoque pelo Pedido: " + ultimoPedido.get(0).getId());
+					estoque.setDtEntrada(ultimoPedido.get(0).getDtCadastro());
+					estoque.setQuantidadeFinal(produtoAtualizado.get(0).getQuantidade());
+					estoque.setDtCadastro(ultimoPedido.get(0).getDtCadastro());
+					
+					// cria a saida do produto no "Estoque"
+					estoqueDAO.salvar(estoque);
 				}
 				
 				// limpa os produtos selecionados do carrinho da sessão,
