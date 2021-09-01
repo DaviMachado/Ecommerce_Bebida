@@ -1,0 +1,21 @@
+create database ecommerce;
+
+drop table pedido_item;
+
+create table pedido_item (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	id_produto	 	BIGINT,
+    nome		    VARCHAR(30),
+    valor_de_venda  VARCHAR(10),
+    quantidade      VARCHAR(10),
+    id_pedido 		BIGINT,
+    dt_cadastro 	DATE,
+	primary	key	(id),
+	CONSTRAINT fk_ProdutoPedidoItem FOREIGN KEY (id_produto) REFERENCES produto (id),
+	CONSTRAINT fk_PedidoPedidoItem FOREIGN KEY (id_pedido) REFERENCES pedido (id)
+);
+
+use ecommerce;
+
+select * from pedido_item;
+-----------------------------
