@@ -111,6 +111,86 @@ public class PedidoDAO extends AbstractJdbcDAO {
 	
 	
 	/**
+	 * Metodo para consultar o Pedido por ID
+	 */
+	public List<Pedido> consultarPedidoById (String idPedido) {
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from pedido where id=?");
+			stmt.setString(1, idPedido);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Pedido> pedidos = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Pedido
+				Pedido pedidoItem = new Pedido();
+				
+				pedidoItem.setId(rs.getString("id"));
+				pedidoItem.setTotalItens(rs.getString("total_itens"));
+				pedidoItem.setTotalFrete(rs.getString("total_frete"));
+				pedidoItem.setTotalPedido(rs.getString("total_pedido"));
+				pedidoItem.setStatus(rs.getString("status"));
+				pedidoItem.setIdCliente(rs.getString("id_cliente"));
+				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
+				pedidoItem.setIdCartao(rs.getString("id_cartao"));
+				pedidoItem.setCupom(rs.getString("cupom"));
+				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				pedidos.add(pedidoItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return pedidos;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+				
+	} // Consultar o Pedido por ID
+	
+	
+	/**
+	 * Metodo para consultar o Pedido por ID do Cliente
+	 */
+	public List<Pedido> consultarPedidoByIdCliente (String idCliente) {
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from pedido where id_cliente=?");
+			stmt.setString(1, idCliente);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Pedido> pedidos = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Pedido
+				Pedido pedidoItem = new Pedido();
+				
+				pedidoItem.setId(rs.getString("id"));
+				pedidoItem.setTotalItens(rs.getString("total_itens"));
+				pedidoItem.setTotalFrete(rs.getString("total_frete"));
+				pedidoItem.setTotalPedido(rs.getString("total_pedido"));
+				pedidoItem.setStatus(rs.getString("status"));
+				pedidoItem.setIdCliente(rs.getString("id_cliente"));
+				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
+				pedidoItem.setIdCartao(rs.getString("id_cartao"));
+				pedidoItem.setCupom(rs.getString("cupom"));
+				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				pedidos.add(pedidoItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return pedidos;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+				
+	} // Consultar o Pedido por ID do Cliente
+	
+	
+	/**
 	 * Metodo para Listar o ultimo Pedido cadastrado no sistema
 	 * @param entidade
 	 * @return

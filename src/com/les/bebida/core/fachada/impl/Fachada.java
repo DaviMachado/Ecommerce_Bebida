@@ -12,12 +12,14 @@ import com.les.bebida.core.dao.impl.EstoqueDAO;
 import com.les.bebida.core.dao.impl.ItemCarrinhoDAO;
 import com.les.bebida.core.dao.impl.LoginDAO;
 import com.les.bebida.core.dao.impl.PedidoDAO;
+import com.les.bebida.core.dao.impl.PedidoItemDAO;
 import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dao.impl.CarrinhoDAO;
 import com.les.bebida.core.dao.impl.CartaoDeCreditoDAO;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Estoque;
 import com.les.bebida.core.dominio.ItemCarrinho;
+import com.les.bebida.core.dominio.ItemPedido;
 import com.les.bebida.core.dominio.Pedido;
 import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.Carrinho;
@@ -88,7 +90,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 30/08/2021
+ * @date 02/09/2021
  */
 public class Fachada implements IFachada {
 
@@ -171,6 +173,7 @@ public class Fachada implements IFachada {
 	List<IStrategy> regrasConsultarCartaoDeCredito = new ArrayList<>();
 	List<IStrategy> regrasConsultarProduto = new ArrayList<>();
 	List<IStrategy> regrasConsultarEstoque = new ArrayList<>();
+	List<IStrategy> regrasConsultarItemPedido = new ArrayList<>();
 	/* ------------ ALTERAR ------------ */
 	List<IStrategy> regrasAlterarCliente = new ArrayList<>();
 	List<IStrategy> regrasAlterarEndereco = new ArrayList<>();
@@ -197,6 +200,7 @@ public class Fachada implements IFachada {
 	Map<String, List<IStrategy>> regrasItemCarrinho = new HashMap<>();
 	Map<String, List<IStrategy>> regrasCarrinho = new HashMap<>();
 	Map<String, List<IStrategy>> regrasPedido = new HashMap<>();
+	Map<String, List<IStrategy>> regrasItemPedido = new HashMap<>();
 	/* ----------------------------------------------------------------------------------- */
 	
 	/* ------------ Declaração da Regra de Negócio Geral ------------ */
@@ -219,6 +223,7 @@ public class Fachada implements IFachada {
 		daos.put(ItemCarrinho.class.getName(), new ItemCarrinhoDAO());
 		daos.put(Carrinho.class.getName(), new CarrinhoDAO());
 		daos.put(Pedido.class.getName(), new PedidoDAO());
+		daos.put(ItemPedido.class.getName(), new PedidoItemDAO());
 		
 		/* ----- Adicionando as Strategy's na lista do Cliente ----- */
 		/* ----- SALVAR ----- */
@@ -442,6 +447,14 @@ public class Fachada implements IFachada {
 		/* ----- EXCLUIR ----- */
 		/* --------------------------------------- */
 		
+		/* ----- REGRAS DA ENTIDADE ITEM PEDIDO ----- */
+		/* ----- SALVAR ----- */
+		/* ----- CONSULTAR ----- */
+		regrasItemPedido.put("CONSULTAR", regrasConsultarItemPedido);
+		/* ----- ALTERAR ----- */
+		/* ----- EXCLUIR ----- */
+		/* --------------------------------------- */
+		
 		/* ----- REGRAS GERAIS ----- */
 		regrasGeral.put(Cliente.class.getName(), regrasCliente);
 		regrasGeral.put(Endereco.class.getName(), regrasEndereco);
@@ -452,6 +465,7 @@ public class Fachada implements IFachada {
 		regrasGeral.put(ItemCarrinho.class.getName(), regrasItemCarrinho);
 		regrasGeral.put(Carrinho.class.getName(), regrasCarrinho);
 		regrasGeral.put(Pedido.class.getName(), regrasPedido);
+		regrasGeral.put(ItemPedido.class.getName(), regrasItemPedido);
 		/* -------------------------- */
 	}
 

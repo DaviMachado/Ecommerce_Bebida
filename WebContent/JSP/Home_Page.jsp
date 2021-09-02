@@ -114,6 +114,7 @@
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Endereco.jsp" class="list-group-item">Meus Endereços</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cartaoDeCredito.jsp" class="list-group-item">Meus Cartões de créditos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-carrinho-scriptlet.jsp" class="list-group-item">Carrinho</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-pedidos-scriptletCLIENTE.jsp" class="list-group-item">Meus Pedidos</a>
         </div>
         <%
         	}
