@@ -42,7 +42,7 @@ public class PedidoHelper implements IViewHelper {
         String cupom = null;
 		
 		if (("CONSULTAR").equals(operacao)) {
-			pedido = new Pedido();
+			
 		}
 		
 		else if (("SALVAR").equals(operacao)) {
@@ -89,23 +89,7 @@ public class PedidoHelper implements IViewHelper {
 		PrintWriter writer = response.getWriter();
 		
 		if (("CONSULTAR").equals(operacao)) {
-			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				String id_produto = request.getParameter("selecioneProduto");
-				
-				// pendura o "idProduto" na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("idProduto", id_produto);
-				
-				// Redireciona para o arquivo .jsp
-				request.getRequestDispatcher("JSP/lista-estoque-produto-scriptlet.jsp").forward(request, response);
-			} 
-			else {
-				// mostra as mensagens de ERRO se houver
-				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("mensagemStrategy", resultado.getMensagem());
-				
-				// Redireciona para o arquivo .jsp
-				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
-			}
+			
 		}
 		
 		else if (("SALVAR").equals(operacao)) {
