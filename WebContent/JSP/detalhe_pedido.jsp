@@ -25,19 +25,25 @@
 
 	<%
 		PedidoDAO pedidoDAO = new PedidoDAO();
-			ItemPedidoDAO pedidoItemDAO = new ItemPedidoDAO();
-			ItemPedido itemPedido = new ItemPedido();
+		ItemPedidoDAO pedidoItemDAO = new ItemPedidoDAO();
+		EnderecoDAO enderecoDAO = new EnderecoDAO();
+		CartaoDeCreditoDAO cartaoDAO = new CartaoDeCreditoDAO();
+		ItemPedido itemPedido = new ItemPedido();
 			
-			// pega o id do pedido que estava pendurado na requisição,
-			// que foi enviado pelo arquivo "ItemPedidoHelper"
-			String idPedido = (String)request.getAttribute("idPedido");
+		// pega o id do pedido que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "ItemPedidoHelper"
+		String idPedido = (String)request.getAttribute("idPedido");
 			
-			itemPedido.setIdPedido(idPedido);
-			
-			// busca o Pedido pelo ID do Pedido
-			List<Pedido> pedidos = pedidoDAO.consultarPedidoById(idPedido);
-			// busca os Itens do Pedido pelo ID do Pedido
-			List<EntidadeDominio> itens_pedido = pedidoItemDAO.consultar(itemPedido);
+		itemPedido.setIdPedido(idPedido);
+		
+		// busca o Pedido pelo ID do Pedido
+		List<Pedido> pedidos = pedidoDAO.consultarPedidoById(idPedido);
+		// busca os Itens do Pedido pelo ID do Pedido
+		List<EntidadeDominio> itens_pedido = pedidoItemDAO.consultar(itemPedido);
+		// busca o Endereço do Pedido, pelo ID do endereço do Pedido
+		List<Endereco> enderecos = enderecoDAO.consultarEnderecoById(pedidos.get(0).getIdEndereco());
+		// busca o Cartão de Credito do Pedido, pelo ID do cartão do Pedido
+		List<CartaoDeCredito> cartoes = cartaoDAO.consultarCartaoDeCreditoById(pedidos.get(0).getIdCartao());
 	%>
 
 <body>
@@ -67,6 +73,29 @@
   </nav>
 
 	<h2 style="margin-top: 30px; margin-left: 70px">Itens do Pedidos</h2>
+	
+	<table border="1" style="margin-top: 30px; margin-left: 70px; margin-right: 70px;">
+		<tr>
+	        <th>ID Pedido</th>
+	        <th>Total Itens</th>
+	        <th>Total Frete</th>
+	        <th>Total Pedido</th>
+	        <th>Status</th>
+	        <th>Endereço</th>
+	        <th>Cartão de Crédito</th>
+	        <th>Cupom</th>
+       	</tr>
+	    <tr>
+			<td><%=pedidos.get(0).getId() %></td>
+			<td><%=pedidos.get(0).getTotalItens() %></td>
+			<td><%=pedidos.get(0).getTotalFrete() %></td>
+			<td><%=pedidos.get(0).getTotalPedido() %></td>
+			<td><%=pedidos.get(0).getStatus() %></td>
+			<td><%=enderecos.get(0).getLogradouro() %></td>
+			<td><%=cartoes.get(0).getNome() %></td>
+			<td><%=pedidos.get(0).getCupom() %></td>
+		</tr>
+    </table>
 	
 		<table border="1" style="margin-top: 30px; margin-left: 70px; margin-right: 70px;">
 			<tr>
