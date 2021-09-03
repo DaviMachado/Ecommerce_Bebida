@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.les.bebida.core.dao.impl.EstoqueDAO;
 import com.les.bebida.core.dao.impl.PedidoDAO;
-import com.les.bebida.core.dao.impl.PedidoItemDAO;
+import com.les.bebida.core.dao.impl.ItemPedidoDAO;
 import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Estoque;
@@ -95,7 +95,7 @@ public class PedidoHelper implements IViewHelper {
 		else if (("SALVAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
 				PedidoDAO pedidoDAO = new PedidoDAO();
-				PedidoItemDAO pedidoItemDAO = new PedidoItemDAO();
+				ItemPedidoDAO pedidoItemDAO = new ItemPedidoDAO();
 				EstoqueDAO estoqueDAO = new EstoqueDAO();
 				ProdutoDAO produtoDAO = new ProdutoDAO();
 				Pedido pedido = new Pedido();

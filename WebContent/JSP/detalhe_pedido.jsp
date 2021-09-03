@@ -25,19 +25,19 @@
 
 	<%
 		PedidoDAO pedidoDAO = new PedidoDAO();
-		PedidoItemDAO pedidoItemDAO = new PedidoItemDAO();
-		ItemPedido itemPedido = new ItemPedido();
-		
-		// pega o id do pedido que estava pendurado na requisição,
-		// que foi enviado pelo arquivo "ItemPedidoHelper"
-		String idPedido = (String)request.getAttribute("idPedido");
-		
-		itemPedido.setIdPedido(idPedido);
-		
-		// busca o Pedido pelo ID do Pedido
-		List<Pedido> pedidos = pedidoDAO.consultarPedidoById(idPedido);
-		// busca os Itens do Pedido pelo ID do Pedido
-		List<EntidadeDominio> itens_pedido = pedidoItemDAO.consultar(itemPedido);
+			ItemPedidoDAO pedidoItemDAO = new ItemPedidoDAO();
+			ItemPedido itemPedido = new ItemPedido();
+			
+			// pega o id do pedido que estava pendurado na requisição,
+			// que foi enviado pelo arquivo "ItemPedidoHelper"
+			String idPedido = (String)request.getAttribute("idPedido");
+			
+			itemPedido.setIdPedido(idPedido);
+			
+			// busca o Pedido pelo ID do Pedido
+			List<Pedido> pedidos = pedidoDAO.consultarPedidoById(idPedido);
+			// busca os Itens do Pedido pelo ID do Pedido
+			List<EntidadeDominio> itens_pedido = pedidoItemDAO.consultar(itemPedido);
 	%>
 
 <body>

@@ -12,7 +12,7 @@ import com.les.bebida.core.dao.impl.EstoqueDAO;
 import com.les.bebida.core.dao.impl.ItemCarrinhoDAO;
 import com.les.bebida.core.dao.impl.LoginDAO;
 import com.les.bebida.core.dao.impl.PedidoDAO;
-import com.les.bebida.core.dao.impl.PedidoItemDAO;
+import com.les.bebida.core.dao.impl.ItemPedidoDAO;
 import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dao.impl.CarrinhoDAO;
 import com.les.bebida.core.dao.impl.CartaoDeCreditoDAO;
@@ -223,7 +223,7 @@ public class Fachada implements IFachada {
 		daos.put(ItemCarrinho.class.getName(), new ItemCarrinhoDAO());
 		daos.put(Carrinho.class.getName(), new CarrinhoDAO());
 		daos.put(Pedido.class.getName(), new PedidoDAO());
-		daos.put(ItemPedido.class.getName(), new PedidoItemDAO());
+		daos.put(ItemPedido.class.getName(), new ItemPedidoDAO());
 		
 		/* ----- Adicionando as Strategy's na lista do Cliente ----- */
 		/* ----- SALVAR ----- */

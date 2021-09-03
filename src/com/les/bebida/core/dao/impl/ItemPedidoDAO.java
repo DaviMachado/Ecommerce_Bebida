@@ -10,7 +10,7 @@ import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.ItemPedido;
 import com.les.bebida.core.dominio.Produto;
 
-public class PedidoItemDAO extends AbstractJdbcDAO {
+public class ItemPedidoDAO extends AbstractJdbcDAO {
 	
 	/**
 	 * Metodo para salvar os Itens do Pedido
