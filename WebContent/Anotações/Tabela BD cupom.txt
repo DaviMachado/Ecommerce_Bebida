@@ -1,0 +1,19 @@
+create database ecommerce;
+
+drop table cupom;
+
+create table cupom (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	nome		       VARCHAR(50),
+	valor		       VARCHAR(10),
+	tipo	      	   VARCHAR(20),
+	utilizado	       VARCHAR(3),
+	id_cliente         BIGINT,
+    dt_cadastro 	   DATE,
+	primary	key	(id),
+	CONSTRAINT fk_CupomCliente FOREIGN KEY (id_cliente) REFERENCES cliente (id)
+);
+
+use ecommerce;
+
+select * from cupom;
