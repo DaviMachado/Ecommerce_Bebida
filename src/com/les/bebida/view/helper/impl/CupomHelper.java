@@ -72,8 +72,27 @@ public class CupomHelper implements IViewHelper{
         	cupom.setValor(valor);
         	cupom.setTipo(tipo);
         	cupom.setUtilizado(utilizado);
-        	cupom.setIdCliente(idCliente);
         	cupom.setAlteraCupom(AlteraCupom);
+        	
+        	// ajuste do bug de quando o cupom não tiver nenhum Cliente vinculado,
+        	if (idCliente == null) {
+        		// se eu estiver pela tela de listagem de Cupom (lista-todos-cupons-scriptletADMIN.jsp),
+        		// o valor do "idCliente" será NULL, então atribui o valor ao objeto "cupom"
+        		cupom.setIdCliente(idCliente);
+        	}
+        	else if (idCliente.equals("null")) {
+        		// se eu estiver pela tela de edição do Cupom (editar_cupom.jsp),
+        		// o valor do "idCliente" será "null", em formato de String, 
+        		// então não atribui o valor ao objeto "cupom",
+        		// pq se o valor for "null" em formato de String, irá acusar ERRO na alteração do Cupom na DAO.
+        		System.out.println("entrou !!");
+        	}
+        	else {
+        		// caso contrário, se tiver algum Cliente para vincular,
+        		// o valor será atribuido no Cupom
+        		cupom.setIdCliente(idCliente);
+        	}
+        	
         }
         
         else if (("EXCLUIR").equals(operacao)) {

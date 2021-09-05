@@ -52,6 +52,7 @@
 		CupomDAO dao = new CupomDAO();
 		ClienteDAO clienteDAO = new ClienteDAO();
 		Cupom cupom = new Cupom();
+		Cliente cliente = new Cliente();
 		
 		List<EntidadeDominio> cupons = dao.consultar(cupom);
 		
@@ -63,6 +64,12 @@
 		
 		// busca o Cliente do Cupom, pelo ID do cliente no Cupom
 		List<Cliente> clientes = clienteDAO.consultarClienteById(coupon.getIdCliente());
+		
+		// ajuste do bug de quando o cupom não tiver nenhum Cliente vinculado,
+		// então será adicionado um cliente vazio na lista
+		if (clientes.isEmpty()) {
+			clientes.add(0, cliente);
+		}
 		%>
 			<tr>
 				<td><%=coupon.getNome() %></td>

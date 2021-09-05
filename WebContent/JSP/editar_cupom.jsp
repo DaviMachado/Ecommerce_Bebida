@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 04/09/2021 -->
+<!-- @date 05/09/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -34,8 +34,14 @@
 		// busca o Cliente do Cupom, pelo ID do cliente no Cupom
 		List<Cliente> clienteCupom = clienteDAO.consultarClienteById(cupom.get(0).getIdCliente());
 		
+		// ajuste do bug de quando o cupom não tiver nenhum Cliente vinculado,
+		// então será adicionado um cliente vazio na lista
+		if (clienteCupom.isEmpty()) {
+			clienteCupom.add(0, cliente);
+		}
+		
 		// pega todos os clientes cadastrados no sistema
-		List<EntidadeDominio> allClientes = clienteDAO.consultar(cliente);
+		List<EntidadeDominio> allClientes = clienteDAO.consultarClienteByTipoSomenteCliente(cliente);
 	%>
 	
 	<body>
@@ -99,9 +105,10 @@
 			  		<div class="form-group col-md-6">
 			  		<label>Cliente</label>
 
-			  			<select name="idCliente" class="form-control" placeholder="Selecione um Cliente" required>
+			  			<select name="idCliente" class="form-control" placeholder="Selecione um Cliente">
 					      	<option disabled>Selecione uma opção...</option>
 					      	<option value="<%=clienteCupom.get(0).getId()%>"><%=clienteCupom.get(0).getNome()%></option>
+					      	<option value="null">NULL</option>
 					      	<% 
 						      	for(EntidadeDominio e : allClientes) {
 				

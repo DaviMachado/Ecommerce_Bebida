@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 04/09/2021 -->
+<!-- @date 05/09/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -25,7 +25,7 @@
 		Cliente cliente = new Cliente();
 		
 		// pega todos os clientes cadastrados no sistema
-		List<EntidadeDominio> allClientes = clienteDAO.consultar(cliente);
+		List<EntidadeDominio> allClientes = clienteDAO.consultarClienteByTipoSomenteCliente(cliente);
 	%>
 	
 	<body>
@@ -88,7 +88,7 @@
 			  		<div class="form-group col-md-6">
 			  		<label>Cliente</label>
 
-			  			<select name="idCliente" class="form-control" placeholder="Selecione um Cliente" required>
+			  			<select name="idCliente" class="form-control" placeholder="Selecione um Cliente">
 					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<% 
 						      	for(EntidadeDominio e : allClientes) {
