@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 03/09/2021 -->
+<!-- @date 04/09/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -35,7 +35,7 @@
 		List<Cliente> clienteCupom = clienteDAO.consultarClienteById(cupom.get(0).getIdCliente());
 		
 		// pega todos os clientes cadastrados no sistema
-		List<EntidadeDominio> allClientes = clienteDAO.consultarClienteByTipoSomenteCliente(cliente);
+		List<EntidadeDominio> allClientes = clienteDAO.consultar(cliente);
 	%>
 	
 	<body>
