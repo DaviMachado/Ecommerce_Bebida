@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.Resultado;
@@ -100,6 +101,10 @@ public class LoginHelper implements IViewHelper {
 				// salva na sessão o objeto "itensCarrinho", para quando for clicado no botão de "Adicionar ao carrinho",
 				// da tela do detalhes do produto, ele poder adicionar os produtos selecionados para o carrinho
 				sessao.setAttribute("itensCarrinho", itensCarrinho);
+				
+				Cupom cupom = new Cupom();
+				// salva na sessão o objeto "cupom", que será calculado dentro da tela do carrinho
+				sessao.setAttribute("cupom", cupom);
 				
 				// Redireciona para o arquivo .JSP
 				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);

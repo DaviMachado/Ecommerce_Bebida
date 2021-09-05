@@ -216,4 +216,79 @@ public class CupomDAO extends AbstractJdbcDAO {
 		}
 	} // Listar todos os Cupons pelo ID do Cliente
 	
+	
+	/**
+	 * Metodo para Listar todos os Cupons pelo Nome
+	 * @param entidade
+	 * @return
+	 */
+	public List<Cupom> consultarCupomByNome (String nome){
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from cupom where nome=?");
+			stmt.setString(1, nome);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Cupom> cupons = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Cupom
+				Cupom cupomItem = new Cupom();
+				
+				cupomItem.setId(rs.getString("id"));
+				cupomItem.setNome(rs.getString("nome"));
+				cupomItem.setValor(rs.getString("valor"));
+				cupomItem.setTipo(rs.getString("tipo"));
+				cupomItem.setUtilizado(rs.getString("utilizado"));
+				cupomItem.setIdCliente(rs.getString("id_cliente"));
+				cupomItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				cupons.add(cupomItem);
+			}
+			rs.close();
+			stmt.close();
+			return cupons;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar todos os Cupons pelo Nome
+	
+	
+	/**
+	 * Metodo para Listar todos os Cupons pelo Nome e ID do Cliente
+	 * @param entidade
+	 * @return
+	 */
+	public List<Cupom> consultarCupomByNomeAndIdCliente (String nome, String idCliente){
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from cupom where nome=? and id_cliente=?");
+			stmt.setString(1, nome);
+			stmt.setString(2, idCliente);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Cupom> cupons = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Cupom
+				Cupom cupomItem = new Cupom();
+				
+				cupomItem.setId(rs.getString("id"));
+				cupomItem.setNome(rs.getString("nome"));
+				cupomItem.setValor(rs.getString("valor"));
+				cupomItem.setTipo(rs.getString("tipo"));
+				cupomItem.setUtilizado(rs.getString("utilizado"));
+				cupomItem.setIdCliente(rs.getString("id_cliente"));
+				cupomItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				cupons.add(cupomItem);
+			}
+			rs.close();
+			stmt.close();
+			return cupons;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar todos os Cupons pelo Nome e ID do Cliente
+	
 }

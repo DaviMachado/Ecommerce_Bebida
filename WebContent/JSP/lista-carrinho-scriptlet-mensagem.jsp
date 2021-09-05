@@ -22,6 +22,7 @@
 	List<Endereco> enderecosCliente = new ArrayList<>();
 	List<CartaoDeCredito> cartoesCliente = new ArrayList<>();
 	Usuario usuarioLogado = new Usuario();
+	Cupom cupomSessao = new Cupom();
 
 	//cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 	HttpSession sessao = request.getSession();
@@ -31,6 +32,9 @@
 	// pega o objeto salvo em Sessão com o nome "usuarioLogado",
 	// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
 	usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+	// pega o objeto salvo em Sessão com o nome "cupom",
+	// e passa para o novo objeto criado com o nome "cupomSessao", (fazendo o CAST para o tipo Cupom)
+	cupomSessao = (Cupom) sessao.getAttribute("cupom");
 	
 	// consulta todos os endereços cadastrados pelo Cliente
 	enderecosCliente = enderecoDAO.consultarEnderecoByIdCliente(usuarioLogado.getId());
@@ -51,6 +55,13 @@
 	double total_itens = 0;
 	double total_frete = 0;
 	double total_pedido = 0;
+	double desconto_cupom = 0;
+	
+	// ajusta o bug de quando abrir o carrinho pela primeira vez,
+	// o valor do cupom criado na sessão, não seja atribuido com o valor nulo
+	if (cupomSessao.getValor() != null) {
+		desconto_cupom = Double.parseDouble(cupomSessao.getValor());
+	}
 	
 	// faz a somatória dos itens selecionados no carrinho
 	for(Produto produto : produtosEmSessao) {
@@ -71,6 +82,9 @@
 	
 	// calculo do total do pedido (total dos itens (+) total do frete)
 	total_pedido = total_itens + total_frete;
+	
+	// calculo o total do pedido com o desconto do cupom
+	total_pedido = (total_pedido - desconto_cupom);
 %>
 
 <body onload="AtivaModal()">
@@ -153,11 +167,44 @@
 	
 	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total dos Itens:</b> <%=total_itens %></p>
 	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Frete:</b> <%=total_frete %>0</p>
+	<p class="card-text" align="right" style="margin-right: 70px;"><b>Desconto do Cupom:</b> <%=desconto_cupom %></p>
 	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Pedido:</b> <%=total_pedido %></p>
 	
  	<hr align="right" width="20%" size="5" color="black" style="margin-right: 70px;"/>
 	
 	<fieldset class="form-group fieldset_form" style="margin-top: 30px; margin-bottom: 10px !important;">
+		
+		<!-- form para o verificar o cupom -->
+		<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/verificaCupom">
+			<div class="form-row">
+				<div class="form-group col-md-10">
+		  			<!-- adicionado uma coluna com tamanho md-10 em branca para alinhar o campo na pagina -->
+		  		</div>
+		  		
+		  		<!-- Cupom -->
+			    <div class="form-group col-md-2">
+			      <label>Cupom</label>
+			      <input type="text" class="form-control" name="cupom" placeholder="Cupom" maxlength="15" required>
+			    </div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-8">
+		  			<!-- adicionado uma coluna com tamanho md-8 em branca para alinhar o botão da pagina -->
+		  		</div>
+		  		
+		  		<!-- Botões CRUD -->
+		  		<div class="form-group col-md-4">
+		  			<div align="right">
+						<button class="btn btn-warning" name="operacao" value="CONSULTAR">Validar Cupom</button>
+					</div>
+		  		</div>
+			</div>
+			
+			<!-- ID do Cliente -->
+			<input type="hidden" name="idCliente" id="idCliente" value="<%=usuarioLogado.getId() %>">
+		</form>
+		
+		<!-- form para o cadastro do pedido -->
 		<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastroPedido">
 			<div class="form-row">
 				<!-- Endereço -->
@@ -195,12 +242,6 @@
 						%>
 			      	</select>
 		  		</div>
-		  		
-		  		<!-- Cupom -->
-			    <div class="form-group col-md-2">
-			      <label>Cupom</label>
-			      <input type="text" class="form-control" name="cupom" placeholder="Cupom" maxlength="15" required>
-			    </div>
 			</div>
 			
 			<div class="form-row">

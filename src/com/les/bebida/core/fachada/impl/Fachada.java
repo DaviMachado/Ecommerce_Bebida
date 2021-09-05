@@ -15,6 +15,7 @@ import com.les.bebida.core.dao.impl.LoginDAO;
 import com.les.bebida.core.dao.impl.PedidoDAO;
 import com.les.bebida.core.dao.impl.ItemPedidoDAO;
 import com.les.bebida.core.dao.impl.ProdutoDAO;
+import com.les.bebida.core.dao.impl.VerificaCupomDAO;
 import com.les.bebida.core.dao.impl.CarrinhoDAO;
 import com.les.bebida.core.dao.impl.CartaoDeCreditoDAO;
 import com.les.bebida.core.dominio.EntidadeDominio;
@@ -30,6 +31,7 @@ import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.Endereco;
 import com.les.bebida.core.dominio.Resultado;
 import com.les.bebida.core.dominio.Usuario;
+import com.les.bebida.core.dominio.VerificaCupom;
 import com.les.bebida.core.fachada.IFachada;
 import com.les.bebida.core.strategy.IStrategy;
 import com.les.bebida.core.strategy.impl.ValidarBairro;
@@ -41,6 +43,7 @@ import com.les.bebida.core.strategy.impl.ValidarCategoriaProduto;
 import com.les.bebida.core.strategy.impl.ValidarCidade;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSegurancaCartao;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaCliente;
+import com.les.bebida.core.strategy.impl.ValidarCupom;
 import com.les.bebida.core.strategy.impl.ValidarDataCadastro;
 import com.les.bebida.core.strategy.impl.ValidarDataEntradaSaidaEstoque;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
@@ -92,7 +95,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 03/09/2021
+ * @date 05/09/2021
  */
 public class Fachada implements IFachada {
 
@@ -155,6 +158,7 @@ public class Fachada implements IFachada {
 	ValidarTotalPedido vTotalPedido = new ValidarTotalPedido();
 	ValidarEnderecoPedido vEnderecoPedido = new ValidarEnderecoPedido();
 	ValidarCartaoPedido vCartaoPedido = new ValidarCartaoPedido();
+	ValidarCupom vCupom = new ValidarCupom();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -178,6 +182,7 @@ public class Fachada implements IFachada {
 	List<IStrategy> regrasConsultarEstoque = new ArrayList<>();
 	List<IStrategy> regrasConsultarItemPedido = new ArrayList<>();
 	List<IStrategy> regrasConsultarCupom = new ArrayList<>();
+	List<IStrategy> regrasConsultarVerificaCupom = new ArrayList<>();
 	/* ------------ ALTERAR ------------ */
 	List<IStrategy> regrasAlterarCliente = new ArrayList<>();
 	List<IStrategy> regrasAlterarEndereco = new ArrayList<>();
@@ -208,6 +213,7 @@ public class Fachada implements IFachada {
 	Map<String, List<IStrategy>> regrasPedido = new HashMap<>();
 	Map<String, List<IStrategy>> regrasItemPedido = new HashMap<>();
 	Map<String, List<IStrategy>> regrasCupom = new HashMap<>();
+	Map<String, List<IStrategy>> regrasVerificaCupom = new HashMap<>();
 	/* ----------------------------------------------------------------------------------- */
 	
 	/* ------------ Declaração da Regra de Negócio Geral ------------ */
@@ -232,6 +238,7 @@ public class Fachada implements IFachada {
 		daos.put(Pedido.class.getName(), new PedidoDAO());
 		daos.put(ItemPedido.class.getName(), new ItemPedidoDAO());
 		daos.put(Cupom.class.getName(), new CupomDAO());
+		daos.put(VerificaCupom.class.getName(), new VerificaCupomDAO());
 		
 		/* ----- Adicionando as Strategy's na lista do Cliente ----- */
 		/* ----- SALVAR ----- */
@@ -369,6 +376,11 @@ public class Fachada implements IFachada {
 		/* ----- SALVAR ----- */
 		regrasSalvarCupom.add(VDataCadastro);
 		/* ---------------------------------------------------------- */
+		
+		/* ----- Adicionando as Strategy's na lista do Verifica Cupom ----- */
+		/* ----- CONSULTAR ----- */
+		regrasConsultarVerificaCupom.add(vCupom);
+		/* ---------------------------------------------------------- */
 
 		/* ----- REGRAS DA ENTIDADE CLIENTE ----- */
 		/* ----- SALVAR ----- */
@@ -479,6 +491,14 @@ public class Fachada implements IFachada {
 		regrasCupom.put("EXCLUIR", regrasExcluirCupom);
 		/* --------------------------------------- */
 		
+		/* ----- REGRAS DA ENTIDADE VERIFICA CUPOM ----- */
+		/* ----- SALVAR ----- */
+		/* ----- CONSULTAR ----- */
+		regrasVerificaCupom.put("CONSULTAR", regrasConsultarVerificaCupom);
+		/* ----- ALTERAR ----- */
+		/* ----- EXCLUIR ----- */
+		/* --------------------------------------- */
+		
 		/* ----- REGRAS GERAIS ----- */
 		regrasGeral.put(Cliente.class.getName(), regrasCliente);
 		regrasGeral.put(Endereco.class.getName(), regrasEndereco);
@@ -491,6 +511,7 @@ public class Fachada implements IFachada {
 		regrasGeral.put(Pedido.class.getName(), regrasPedido);
 		regrasGeral.put(ItemPedido.class.getName(), regrasItemPedido);
 		regrasGeral.put(Cupom.class.getName(), regrasCupom);
+		regrasGeral.put(VerificaCupom.class.getName(), regrasVerificaCupom);
 		/* -------------------------- */
 	}
 
