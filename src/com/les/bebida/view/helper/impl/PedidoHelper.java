@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.les.bebida.core.dao.impl.CupomDAO;
 import com.les.bebida.core.dao.impl.EstoqueDAO;
 import com.les.bebida.core.dao.impl.PedidoDAO;
 import com.les.bebida.core.dao.impl.ItemPedidoDAO;
 import com.les.bebida.core.dao.impl.ProdutoDAO;
+import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Estoque;
 import com.les.bebida.core.dominio.ItemPedido;
@@ -39,7 +41,7 @@ public class PedidoHelper implements IViewHelper {
         String id_cliente = null;
 		String id_endereco = null;
         String id_cartao = null;
-        String cupom = null;
+        String id_cupom = null;
 		
 		if (("CONSULTAR").equals(operacao)) {
 			
@@ -55,7 +57,7 @@ public class PedidoHelper implements IViewHelper {
 			id_cliente = request.getParameter("idCliente");
 			id_endereco = request.getParameter("selecioneEndereco");
 			id_cartao = request.getParameter("selecioneCartao");
-			cupom = request.getParameter("cupom");
+			id_cupom = request.getParameter("idCupom");
 			
 			// Atribuindo os valores capturados do HTML para o Pedido
 			pedido.setTotalItens(total_itens);
@@ -64,7 +66,21 @@ public class PedidoHelper implements IViewHelper {
 			pedido.setIdCliente(id_cliente);
 			pedido.setIdEndereco(id_endereco);
 			pedido.setIdCartao(id_cartao);
-			pedido.setCupom(cupom);
+			
+			// ajuste do bug de quando o pedido não tiver nenhum Cupom vinculado,
+			if (id_cupom.equals("null")) {
+        		// quando for finalizar o Pedido, e não tiver nenhum Cupom vinculado,
+        		// o valor do "id_cupom" será "null", em formato de String, 
+        		// então não atribui o valor ao objeto "pedido",
+        		// pq se o valor for "null" em formato de String, irá acusar ERRO ao salvar o Pedido na DAO.
+        		System.out.println("entrou !!");
+        	}
+        	else {
+        		// caso contrário, se tiver algum Cupom para vincular,
+        		// o valor será atribuido no Pedido
+        		pedido.setIdCupom(id_cupom);
+        	}
+			
 		}
 		
 		else if (("ALTERAR").equals(operacao)) {
@@ -98,9 +114,12 @@ public class PedidoHelper implements IViewHelper {
 				ItemPedidoDAO pedidoItemDAO = new ItemPedidoDAO();
 				EstoqueDAO estoqueDAO = new EstoqueDAO();
 				ProdutoDAO produtoDAO = new ProdutoDAO();
+				CupomDAO cupomDAO = new CupomDAO();
 				Pedido pedido = new Pedido();
 				ItemPedido item_pedido = new ItemPedido();
 				Estoque estoque = new Estoque();
+				Cupom cupomVazio = new Cupom();
+				Cupom cupomSessao = new Cupom();
 				List<Produto> produtosVazio = new ArrayList<>();
 				List<Produto> produtosDaSessao = new ArrayList<>();
 				List<Produto> produtoAtualizado = new ArrayList<>();
@@ -115,6 +134,14 @@ public class PedidoHelper implements IViewHelper {
 				// pega o objeto salvo em Sessão com o nome "itensCarrinho",
 				// e passa para o "produtosDaSessao" (fazendo o CAST para o tipo List<Produto>)
 				produtosDaSessao = (List<Produto>) sessao.getAttribute("itensCarrinho");
+				// pega o objeto salvo em Sessão com o nome "cupom",
+				// e passa para o "cupomSessao" (fazendo o CAST para o tipo Cupom)
+				cupomSessao = (Cupom) sessao.getAttribute("cupom");
+				
+				// altera o Cupom que foi selecionado no Pedido,
+				// para o status que "já foi utilizado",
+				// altera no banco a tabela "cupom" da coluna "utilizado" para "sim".
+				cupomDAO.alterarUtilizacaoCupom(cupomSessao.getId());
 				
 				// após salvar o pedido, será salvo os itens do pedido,
 				// faz um laço de repetição com os produtos selecionado da Sessão,
@@ -166,6 +193,10 @@ public class PedidoHelper implements IViewHelper {
 				// limpa os produtos selecionados do carrinho da sessão,
 				// atualiza o objeto "itensCarrinho" que esta salvo em sessão, com o novo objeto de produto vazio
 				sessao.setAttribute("itensCarrinho", produtosVazio);
+				
+				// limpa o cupom do carrinho da sessão,
+				// atualiza o objeto "cupom" que esta salvo em sessão, com o novo objeto de cupom vazio
+				sessao.setAttribute("cupom", cupomVazio);
 				
 				// atribui a nova mensagem para poder mostra na pagina .JSP
 				resultado.setMensagem("Cadastro do Pedido salvo com sucesso!");

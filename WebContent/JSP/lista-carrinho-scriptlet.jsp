@@ -247,6 +247,8 @@
 			
 			<!-- ID do Cliente -->
 			<input type="hidden" name="idCliente" id="idCliente" value="<%=usuarioLogado.getId() %>">
+			<!-- ID do Cupom -->
+			<input type="hidden" name="idCupom" id="idCupom" value="<%=cupomSessao.getId() %>">
 			<!-- Total dos Itens -->
 		    <input type="hidden" name="total_itens" id="total_itens" value="<%=total_itens %>">
 		    <!-- Total do Frete -->

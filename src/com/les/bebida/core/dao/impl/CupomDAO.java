@@ -291,4 +291,29 @@ public class CupomDAO extends AbstractJdbcDAO {
 		}
 	} // Listar todos os Cupons pelo Nome e ID do Cliente
 	
+	
+	/**
+	 * Metodo para alterar a utilização do Cupom
+	 * @param entidade
+	 */
+	public void alterarUtilizacaoCupom (String idCupom) {
+		openConnection();
+		
+		String sql = "update cupom set " +
+					 "utilizado='sim' " +
+					 "where id=?";
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, idCupom);
+			
+			stmt.execute();
+			stmt.close();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Alterar a utilização do Cupom
+	
 }

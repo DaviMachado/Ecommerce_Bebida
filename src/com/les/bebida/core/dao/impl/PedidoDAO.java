@@ -19,7 +19,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into pedido "+
-				"(total_itens, total_frete, total_pedido, status, id_cliente, id_endereco, id_cartao, cupom, dt_cadastro)" +
+				"(total_itens, total_frete, total_pedido, status, id_cliente, id_endereco, id_cartao, id_cupom, dt_cadastro)" +
 				"values (?,?,?,?,?,?,?,?,?)";
 		
 		try {
@@ -36,7 +36,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 			stmt.setString(5, pedido.getIdCliente());
 			stmt.setString(6, pedido.getIdEndereco());
 			stmt.setString(7, pedido.getIdCartao());
-			stmt.setString(8, pedido.getCupom());
+			stmt.setString(8, pedido.getIdCupom());
 			stmt.setString(9, pedido.getDtCadastro());
 			
 			// executa
@@ -93,7 +93,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setIdCliente(rs.getString("id_cliente"));
 				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
 				pedidoItem.setIdCartao(rs.getString("id_cartao"));
-				pedidoItem.setCupom(rs.getString("cupom"));
+				pedidoItem.setIdCupom(rs.getString("id_cupom"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
@@ -133,7 +133,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setIdCliente(rs.getString("id_cliente"));
 				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
 				pedidoItem.setIdCartao(rs.getString("id_cartao"));
-				pedidoItem.setCupom(rs.getString("cupom"));
+				pedidoItem.setIdCupom(rs.getString("id_cupom"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
@@ -173,7 +173,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setIdCliente(rs.getString("id_cliente"));
 				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
 				pedidoItem.setIdCartao(rs.getString("id_cartao"));
-				pedidoItem.setCupom(rs.getString("cupom"));
+				pedidoItem.setIdCupom(rs.getString("id_cupom"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
@@ -214,7 +214,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setIdCliente(rs.getString("id_cliente"));
 				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
 				pedidoItem.setIdCartao(rs.getString("id_cartao"));
-				pedidoItem.setCupom(rs.getString("cupom"));
+				pedidoItem.setIdCupom(rs.getString("id_cupom"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista

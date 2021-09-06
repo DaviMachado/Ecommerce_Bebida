@@ -11,12 +11,13 @@ create table pedido (
     id_cliente	 	BIGINT,
     id_endereco 	BIGINT,
     id_cartao 		BIGINT,
-    cupom	        VARCHAR(30),
+	id_cupom	    BIGINT,
     dt_cadastro 	DATE,
 	primary	key	(id),
 	CONSTRAINT fk_ClientePedido FOREIGN KEY (id_cliente) REFERENCES cliente (id),
 	CONSTRAINT fk_EnderecoPedido FOREIGN KEY (id_endereco) REFERENCES endereco (id),
-	CONSTRAINT fk_CartaoPedido FOREIGN KEY (id_cartao) REFERENCES cartao_de_credito (id)
+	CONSTRAINT fk_CartaoPedido FOREIGN KEY (id_cartao) REFERENCES cartao_de_credito (id),
+	CONSTRAINT fk_CupomPedido FOREIGN KEY (id_cupom) REFERENCES cupom (id)
 );
 
 use ecommerce;
