@@ -20,8 +20,8 @@ public class ItemPedidoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into pedido_item "+
-				"(id_produto, nome, valor_de_venda, quantidade, id_pedido, dt_cadastro)" +
-				"values (?,?,?,?,?,?)";
+				"(id_produto, nome, valor_de_venda, quantidade, id_pedido, trocado, dt_cadastro)" +
+				"values (?,?,?,?,?,?,?)";
 		
 		try {
 			ItemPedido item_pedido = (ItemPedido) entidade;
@@ -35,7 +35,8 @@ public class ItemPedidoDAO extends AbstractJdbcDAO {
 			stmt.setString(3, item_pedido.getProduto().getPrecoDeVenda());
 			stmt.setString(4, item_pedido.getProduto().getQuantidadeSelecionada());
 			stmt.setString(5, item_pedido.getIdPedido());
-			stmt.setString(6, item_pedido.getDtCadastro());
+			stmt.setString(6, item_pedido.getTrocado());
+			stmt.setString(7, item_pedido.getDtCadastro());
 			
 			// executa
 			stmt.execute();
@@ -72,7 +73,7 @@ public class ItemPedidoDAO extends AbstractJdbcDAO {
 	 * @param entidade
 	 */
 	@Override
-	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
+	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
 		openConnection();
 		try {
 			ItemPedido item_pedido = (ItemPedido) entidade;
@@ -94,7 +95,8 @@ public class ItemPedidoDAO extends AbstractJdbcDAO {
 				produto.setQuantidadeSelecionada(rs.getString("quantidade"));
 				item_pedidoItem.setProduto(produto);
 				
-				item_pedidoItem.setIdPedido(rs.getString("id_produto"));
+				item_pedidoItem.setIdPedido(rs.getString("id_pedido"));
+				item_pedidoItem.setTrocado(rs.getString("trocado"));
 				item_pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
@@ -109,5 +111,114 @@ public class ItemPedidoDAO extends AbstractJdbcDAO {
 		}
 				
 	} // Consultar
+	
+	
+	/**
+	 * Metodo para consultar o Item do Pedido por ID
+	 */
+	public List<ItemPedido> consultarItemPedidoById (String idItemPedido) {
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from pedido_item where id=?");
+			stmt.setString(1, idItemPedido);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<ItemPedido> itens_pedido = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Pedido
+				ItemPedido item_pedidoItem = new ItemPedido();
+				Produto produto = new Produto();
+				
+				item_pedidoItem.setId(rs.getString("id"));
+				
+				produto.setId(rs.getString("id_produto"));
+				produto.setNome(rs.getString("nome"));
+				produto.setPrecoDeVenda(rs.getString("valor_de_venda"));
+				produto.setQuantidadeSelecionada(rs.getString("quantidade"));
+				item_pedidoItem.setProduto(produto);
+				
+				item_pedidoItem.setIdPedido(rs.getString("id_pedido"));
+				item_pedidoItem.setTrocado(rs.getString("trocado"));
+				item_pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				itens_pedido.add(item_pedidoItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return itens_pedido;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+				
+	} // Consultar o Item do Pedido por ID
+	
+	
+	/**
+	 * Metodo para alterar a trocação do Item do Pedido
+	 * @param entidade
+	 */
+	public void alterarTrocacaoItemPedido (String idItemPedido) {
+		openConnection();
+		
+		String sql = "update pedido_item set " +
+					 "trocado='sim' " +
+					 "where id=?";
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, idItemPedido);
+			
+			stmt.execute();
+			stmt.close();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Alterar trocação do Item do Pedido
+	
+	
+	/**
+	 * Metodo para consultar se exite algum Item do Pedido que esteja com o status de trocado como "nao"
+	 */
+	public List<ItemPedido> consultarItemPedidoByIdPedidoAndTrocadoNao (String idPedido) {
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from pedido_item where id_pedido=? and trocado='nao'");
+			stmt.setString(1, idPedido);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<ItemPedido> itens_pedido = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Pedido
+				ItemPedido item_pedidoItem = new ItemPedido();
+				Produto produto = new Produto();
+				
+				item_pedidoItem.setId(rs.getString("id"));
+				
+				produto.setId(rs.getString("id_produto"));
+				produto.setNome(rs.getString("nome"));
+				produto.setPrecoDeVenda(rs.getString("valor_de_venda"));
+				produto.setQuantidadeSelecionada(rs.getString("quantidade"));
+				item_pedidoItem.setProduto(produto);
+				
+				item_pedidoItem.setIdPedido(rs.getString("id_pedido"));
+				item_pedidoItem.setTrocado(rs.getString("trocado"));
+				item_pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				itens_pedido.add(item_pedidoItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return itens_pedido;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+				
+	} // Consultar se exite algum Item do Pedido que esteja com o status de trocado como "nao"
 	
 }

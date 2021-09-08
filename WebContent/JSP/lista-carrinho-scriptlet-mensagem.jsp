@@ -47,7 +47,7 @@
 	  
 	// IF adicionado para não estourar NullPointerException na variavel
 	// "mensagemStrategy", pois quando ela esta sendo aberta pela primeira vez,
-	// (apos validar o Login), ela fica nula
+	// (apos validar o Carrinho), ela pode ficar nula
 	if(mensagemStrategy == null){
 		mensagemStrategy = "Carrinho aberto!";
 	}
@@ -287,7 +287,7 @@
   	  <script src="./JQUERY/jquery.min.js"></script>
   	  <script src="./JS/bootstrap.bundle.min.js"></script>
   	  
-  	  <!-- Modal -->
+  	<!-- Modal -->
 	<div class="modal fade" id="modal-mensagem">
 	   <div class="modal-dialog">
 	   		<div class="modal-content">

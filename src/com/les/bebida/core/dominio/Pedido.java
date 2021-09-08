@@ -3,7 +3,7 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Pedido
  * @author Davi Rodrigues
- * @date 05/09/2021
+ * @date 07/09/2021
  */
 public class Pedido extends EntidadeDominio{
 	private String total_itens;
@@ -14,6 +14,7 @@ public class Pedido extends EntidadeDominio{
 	private String id_endereco;
 	private String id_cartao;
 	private String id_cupom;
+	private String trocado;
 	
 	
 	public String getTotalItens() {
@@ -63,6 +64,12 @@ public class Pedido extends EntidadeDominio{
 	}
 	public void setIdCupom(String id_cupom) {
 		this.id_cupom = id_cupom;
+	}
+	public String getTrocado() {
+		return trocado;
+	}
+	public void setTrocado(String trocado) {
+		this.trocado = trocado;
 	}
 	
 	// Metodo

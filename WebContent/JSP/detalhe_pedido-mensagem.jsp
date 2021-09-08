@@ -41,6 +41,17 @@
 		// e passa para o "itensPedidoTrocaEmSessao" (fazendo o CAST para o tipo List<PedidoTroca>)
 		itensPedidoTrocaEmSessao = (List<PedidoTroca>) sessao.getAttribute("itensPedidoTroca");
 		
+		// pega a mensagem que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "CarrinhoHelper"
+		String mensagemStrategy = (String)request.getAttribute("mensagemStrategy");
+		  
+		// IF adicionado para não estourar NullPointerException na variavel
+		// "mensagemStrategy", pois quando ela esta sendo aberta pela primeira vez,
+		// (apos validar o Carrinho), ela pode ficar nula
+		if(mensagemStrategy == null){
+			mensagemStrategy = "Detalhe do Pedido aberto!";
+		}
+		
 		// seta o valor do ID do Pedido com o valor que estava pendurado na requisição
 		itemPedido.setIdPedido(idPedido);
 		
@@ -54,7 +65,7 @@
 		List<CartaoDeCredito> cartoes = cartaoDAO.consultarCartaoDeCreditoById(pedidos.get(0).getIdCartao());
 	%>
 
-<body>
+<body onload="AtivaModal()">
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -186,6 +197,41 @@
   <!-- Bootstrap core JavaScript -->
   <script src="./JQUERY/jquery.min.js"></script>
   <script src="./JS/bootstrap.bundle.min.js"></script>
+  
+  <!-- Modal -->
+	<div class="modal fade" id="modal-mensagem">
+	   <div class="modal-dialog">
+	   		<div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+	                <h4 class="modal-title">Mensagem</h4>
+	            </div>
+	            <div class="modal-body">
+	                <p><% out.println(mensagemStrategy); %></p>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+		
+	<!-- Botão para chamar a Modal -->
+	<button style="display: none" id="idModal" class="btn btn-primary" data-toggle="modal" data-target="#modal-mensagem">
+		Exibir mensagem da modal
+	</button>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+    // Função que irá ativar a Modal com a mensagem retornada do BackEnd,
+    // essa função é carregada junto ao carregamento da página com o evento ONLOAD, dentro da tag <body>.
+	    function AtivaModal(){
+    		// metodo para poder ativar o "onClick" sem precisar clicar no botão
+	    	document.getElementById('idModal').click();
+	    }
+    </script>
+   	<!-- Fim Modal -->
 
 </body>
 

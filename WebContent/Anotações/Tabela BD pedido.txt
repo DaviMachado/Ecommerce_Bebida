@@ -12,6 +12,7 @@ create table pedido (
     id_endereco 	BIGINT,
     id_cartao 		BIGINT,
 	id_cupom	    BIGINT,
+	trocado		    VARCHAR(3),
     dt_cadastro 	DATE,
 	primary	key	(id),
 	CONSTRAINT fk_ClientePedido FOREIGN KEY (id_cliente) REFERENCES cliente (id),

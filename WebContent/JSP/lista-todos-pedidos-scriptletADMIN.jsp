@@ -74,7 +74,7 @@
 				<td><%=order.getTotalPedido() %></td>
 				<td><%=order.getStatus() %></td>
 				<td>
-					<form class="form_form" style="width: 500px !important;" action="http://localhost:8080/Ecommerce_Bebida/cadastroPedidoTroca">
+					<form class="form_form" style="width: 500px !important;" action="http://localhost:8080/Ecommerce_Bebida/pedidoTroca">
 						<div class="form-row">
 							<div class="form-group col-md-8">
 								<label>Status</label>
@@ -88,11 +88,11 @@
 							      	<option value="TROCA AUTORIZADA">TROCA AUTORIZADA</option>
 							      	<option value="TROCA REJEITADA">TROCA REJEITADA</option>
 							      	<option value="TROCA ACEITA">TROCA ACEITA</option>
-							      	<option value="TROCA EFETUADA">TROCA EFETUADA</option>
+							      	<option style="color: #008B00;" value="TROCA EFETUADA">TROCA EFETUADA</option>
 							      	<option value="CANCELAMENTO SOLICITADO">CANCELAMENTO SOLICITADO</option>
 							      	<option value="CANCELAMENTO REJEITADA">CANCELAMENTO REJEITADA</option>
 							      	<option value="CANCELAMENTO ACEITO">CANCELAMENTO ACEITO</option>
-							      	<option value="CANCELAMENTO EFETUADO">CANCELAMENTO EFETUADO</option>
+							      	<option style="color: #008B00;" value="CANCELAMENTO EFETUADO">CANCELAMENTO EFETUADO</option>
 							      	<option value="ENTREGA REALIZADA">ENTREGA REALIZADA</option>
 						      	</select>
 							</div>
@@ -107,6 +107,8 @@
 						
 						<!-- ID do Pedido -->
 			    		<input type="hidden" name="idPedido" id="idPedido" value="<%=order.getId() %>">
+			    		<!-- ID do Cliente -->
+			    		<input type="hidden" name="idCliente" id="idCliente" value="<%=clientes.get(0).getId() %>">
 			    		<!-- Total do Pedido -->
 			    		<input type="hidden" name="totalPedido" id="totalPedido" value="<%=order.getTotalPedido() %>">
 					</form>

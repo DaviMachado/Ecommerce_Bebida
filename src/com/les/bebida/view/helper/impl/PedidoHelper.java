@@ -66,6 +66,7 @@ public class PedidoHelper implements IViewHelper {
 			pedido.setIdCliente(id_cliente);
 			pedido.setIdEndereco(id_endereco);
 			pedido.setIdCartao(id_cartao);
+			pedido.setTrocado("nao");
 			
 			// ajuste do bug de quando o pedido não tiver nenhum Cupom vinculado,
 			if (id_cupom.equals("null")) {
@@ -149,6 +150,7 @@ public class PedidoHelper implements IViewHelper {
 				for (int i = 0; i< produtosDaSessao.size(); i++) {
 					item_pedido.setProduto(produtosDaSessao.get(i));
 					item_pedido.setIdPedido(ultimoPedido.get(0).getId());
+					item_pedido.setTrocado("nao");
 					item_pedido.setDtCadastro(ultimoPedido.get(0).getDtCadastro());
 					
 					// salva o item do pedido

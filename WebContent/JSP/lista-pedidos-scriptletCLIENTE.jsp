@@ -69,7 +69,11 @@
 				<td><%=order.getTotalPedido() %></td>
 				<td><%=order.getStatus() %></td>
 				<td><a href="/Ecommerce_Bebida/itemPedido?idPedido=<%= order.getId()%>&operacao=CONSULTAR"><button class="btn btn-warning">Visualizar Itens</button></a></td>
-                <td><a href="/Ecommerce_Bebida/cadastroPedidoTroca?idPedido=<% order.getId();%>&totalPedido=<%= order.getTotalPedido()%>&operacao=SALVAR"><button class="btn btn-danger">Trocar Pedido Inteiro</button></a></td>
+				
+				<% if(order.getStatus().equals("ENTREGA REALIZADA")) { %>
+                	<td><a href="/Ecommerce_Bebida/pedidoTroca?idPedido=<% order.getId();%>&totalPedido=<%= order.getTotalPedido()%>&operacao=SALVAR"><button class="btn btn-danger">Trocar Pedido Inteiro</button></a></td>
+                <% } %>
+                
 			</tr>
 		<%
 		}

@@ -9,6 +9,7 @@ create table pedido_item (
     valor_de_venda  VARCHAR(10),
     quantidade      VARCHAR(10),
     id_pedido 		BIGINT,
+    trocado		    VARCHAR(3),
     dt_cadastro 	DATE,
 	primary	key	(id),
 	CONSTRAINT fk_ProdutoPedidoItem FOREIGN KEY (id_produto) REFERENCES produto (id),

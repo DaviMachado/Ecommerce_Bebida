@@ -19,8 +19,8 @@ public class PedidoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into pedido "+
-				"(total_itens, total_frete, total_pedido, status, id_cliente, id_endereco, id_cartao, id_cupom, dt_cadastro)" +
-				"values (?,?,?,?,?,?,?,?,?)";
+				"(total_itens, total_frete, total_pedido, status, id_cliente, id_endereco, id_cartao, id_cupom, trocado, dt_cadastro)" +
+				"values (?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			Pedido pedido = (Pedido) entidade;
@@ -37,7 +37,8 @@ public class PedidoDAO extends AbstractJdbcDAO {
 			stmt.setString(6, pedido.getIdEndereco());
 			stmt.setString(7, pedido.getIdCartao());
 			stmt.setString(8, pedido.getIdCupom());
-			stmt.setString(9, pedido.getDtCadastro());
+			stmt.setString(9, pedido.getTrocado());
+			stmt.setString(10, pedido.getDtCadastro());
 			
 			// executa
 			stmt.execute();
@@ -94,6 +95,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
 				pedidoItem.setIdCartao(rs.getString("id_cartao"));
 				pedidoItem.setIdCupom(rs.getString("id_cupom"));
+				pedidoItem.setTrocado(rs.getString("trocado"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
@@ -134,6 +136,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
 				pedidoItem.setIdCartao(rs.getString("id_cartao"));
 				pedidoItem.setIdCupom(rs.getString("id_cupom"));
+				pedidoItem.setTrocado(rs.getString("trocado"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
@@ -174,6 +177,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
 				pedidoItem.setIdCartao(rs.getString("id_cartao"));
 				pedidoItem.setIdCupom(rs.getString("id_cupom"));
+				pedidoItem.setTrocado(rs.getString("trocado"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
@@ -215,6 +219,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
 				pedidoItem.setIdCartao(rs.getString("id_cartao"));
 				pedidoItem.setIdCupom(rs.getString("id_cupom"));
+				pedidoItem.setTrocado(rs.getString("trocado"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
@@ -227,5 +232,56 @@ public class PedidoDAO extends AbstractJdbcDAO {
 			throw new RuntimeException(e);
 		}
 	} // Listar ultimo Pedido cadastrado
+	
+	
+	/**
+	 * Metodo para alterar a trocação do Pedido
+	 * @param entidade
+	 */
+	public void alterarTrocacaoPedido (String idPedido) {
+		openConnection();
+		
+		String sql = "update pedido set " +
+					 "trocado='sim' " +
+					 "where id=?";
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, idPedido);
+			
+			stmt.execute();
+			stmt.close();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Alterar trocação do Pedido
+	
+	
+	/**
+	 * Metodo para alterar o status do Pedido
+	 * @param entidade
+	 */
+	public void alterarStatusPedido (String idPedido, String status) {
+		openConnection();
+		
+		String sql = "update pedido set " +
+					 "status=? " +
+					 "where id=?";
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, status);
+			stmt.setString(2, idPedido);
+			
+			stmt.execute();
+			stmt.close();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Alterar o status do Pedido
 	
 }

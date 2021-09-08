@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.PedidoTroca;
 import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.Resultado;
 import com.les.bebida.core.dominio.Usuario;
@@ -105,6 +106,11 @@ public class LoginHelper implements IViewHelper {
 				Cupom cupom = new Cupom();
 				// salva na sessão o objeto "cupom", que será calculado dentro da tela do carrinho
 				sessao.setAttribute("cupom", cupom);
+				
+				List<PedidoTroca> itensPedidoTroca = new ArrayList<>();
+				// salva na sessão o objeto "itensPedidoTroca", para quando for clicado no botão de "Solicitar Troca",
+				// da tela do detalhes do pedido, ele poder adicionar os itens do pedido selecionados para gerar um pedido de troca
+				sessao.setAttribute("itensPedidoTroca", itensPedidoTroca);
 				
 				// Redireciona para o arquivo .JSP
 				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
