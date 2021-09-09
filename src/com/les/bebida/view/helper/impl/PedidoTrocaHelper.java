@@ -274,54 +274,71 @@ public class PedidoTrocaHelper implements IViewHelper {
 				
 				// se for algum desses status, será feito a ReEntrada no Estoque e gerado o Cupom de desconto do mesmo
 				if (novoStatusPedido.equals("TROCA EFETUADA") || novoStatusPedido.equals("CANCELAMENTO EFETUADO")) {
-					// altera o status do Pedido conforme foi selecionado na tela
-					pedidoDAO.alterarStatusPedido(idPedido, novoStatusPedido);
+					// busca o Pedido pelo "idPedido" que foi capturado na tela
+					List<Pedido> pedidoSelecionado = pedidoDAO.consultarPedidoById(idPedido);
 					
-					// seta o valor do ID do Item Pedido com o valor que foi capturado na tela
-					itemPedido.setIdPedido(idPedido);
-					
-					// busca todos os itens desse Pedido para realizar a ReEntrada no Estoque,
-					// busca os Itens do Pedido pelo ID do Pedido
-					List<EntidadeDominio> itens_pedido = itemPedidoDAO.consultar(itemPedido);
-					
-					for(EntidadeDominio e : itens_pedido) {
-		        		
-		        		// Aplicado o CAST para poder popular os itens do pedido,
-						// fazendo o CAST para uma referência mais genérica, no caso para o item do pedido
-						ItemPedido order_items = (ItemPedido) e;
-						
-						// faz a consulta pelo ID do produto que esta no item do pedido, para poder somar a quantidade anterior do produto, 
-						// com a quantidade que dará a entrada, para poder salvar a "Quantidade Final"
-						List<Produto> produtoSelecionado = produtoDAO.consultarProdutoById(order_items.getProduto().getId());
-						
-						// faz a conta de soma da quantidade de entrada, mais a quantidade que já tinha no produto
-						quantidadeFinal = (Integer.parseInt(order_items.getProduto().getQuantidadeSelecionada()) + Integer.parseInt(produtoSelecionado.get(0).getQuantidade()));
-						
-						// realiza a ReEntrada no Estoque,
-						// altera a quantidade do estoque do Produto
-						estoqueDAO.alterarQuantidadeProduto(Integer.toString(quantidadeFinal), order_items.getProduto().getId());
+					// ajusta o bug de não realizar a Reentrada no Estoque mais de uma vez,
+					// verifica se o Pedido selecionado já esta com o status "TROCA EFETUADA"
+					if (pedidoSelecionado.get(0).getStatus().equals("TROCA EFETUADA")) {
+						// atribui a nova mensagem para poder mostra na pagina .JSP
+						resultado.setMensagem("Pedido já esta com o status TROCA EFETUADA !");
 					}
-					
-					// gera o Cupom de Troca ou de Devolução
-					if(novoStatusPedido.equals("TROCA EFETUADA")) {
-						cupom.setNome("TROCA" + idPedido);
-						cupom.setTipo("troca");
+					// verifica se o Pedido selecionado já esta com o status "CANCELAMENTO EFETUADO"
+					else if (pedidoSelecionado.get(0).getStatus().equals("CANCELAMENTO EFETUADO")) {
+						// atribui a nova mensagem para poder mostra na pagina .JSP
+						resultado.setMensagem("Pedido já esta com o status CANCELAMENTO EFETUADO!");
 					}
+					// caso contrário, será realizada a ReEntrada no Estoque e gerado o Cupom
 					else {
-						cupom.setNome("DEVOLUCAO" + idPedido);
-						cupom.setTipo("devolucao");
+						// altera o status do Pedido conforme foi selecionado na tela
+						pedidoDAO.alterarStatusPedido(idPedido, novoStatusPedido);
+						
+						// seta o valor do ID do Item Pedido com o valor que foi capturado na tela
+						itemPedido.setIdPedido(idPedido);
+						
+						// busca todos os itens desse Pedido para realizar a ReEntrada no Estoque,
+						// busca os Itens do Pedido pelo ID do Pedido
+						List<EntidadeDominio> itens_pedido = itemPedidoDAO.consultar(itemPedido);
+						
+						for(EntidadeDominio e : itens_pedido) {
+			        		
+			        		// Aplicado o CAST para poder popular os itens do pedido,
+							// fazendo o CAST para uma referência mais genérica, no caso para o item do pedido
+							ItemPedido order_items = (ItemPedido) e;
+							
+							// faz a consulta pelo ID do produto que esta no item do pedido, para poder somar a quantidade anterior do produto, 
+							// com a quantidade que dará a entrada, para poder salvar a "Quantidade Final"
+							List<Produto> produtoSelecionado = produtoDAO.consultarProdutoById(order_items.getProduto().getId());
+							
+							// faz a conta de soma da quantidade de entrada, mais a quantidade que já tinha no produto
+							quantidadeFinal = (Integer.parseInt(order_items.getProduto().getQuantidadeSelecionada()) + Integer.parseInt(produtoSelecionado.get(0).getQuantidade()));
+							
+							// realiza a ReEntrada no Estoque,
+							// altera a quantidade do estoque do Produto
+							estoqueDAO.alterarQuantidadeProduto(Integer.toString(quantidadeFinal), order_items.getProduto().getId());
+						}
+						
+						// gera o Cupom de Troca ou de Devolução
+						if(novoStatusPedido.equals("TROCA EFETUADA")) {
+							cupom.setNome("TROCA" + idPedido);
+							cupom.setTipo("troca");
+						}
+						else {
+							cupom.setNome("DEVOLUCAO" + idPedido);
+							cupom.setTipo("devolucao");
+						}
+						
+						cupom.setValor(totalPedido);
+						cupom.setUtilizado("nao");
+						cupom.setIdCliente(idCliente);
+						cupom.setDtCadastro(dataAtual);
+						
+						// gera o novo Cupom
+						cupomDAO.salvar(cupom);
+						
+						// atribui a nova mensagem para poder mostra na pagina .JSP
+						resultado.setMensagem("ReEntrada no Estoque e Cupom gerado com sucesso!");
 					}
-					
-					cupom.setValor(totalPedido);
-					cupom.setUtilizado("nao");
-					cupom.setIdCliente(idCliente);
-					cupom.setDtCadastro(dataAtual);
-					
-					// gera o novo Cupom
-					cupomDAO.salvar(cupom);
-					
-					// atribui a nova mensagem para poder mostra na pagina .JSP
-					resultado.setMensagem("ReEntrada no Estoque e Cupom gerado com sucesso!");
 					
 					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
 					request.setAttribute("mensagemStrategy", resultado.getMensagem());
