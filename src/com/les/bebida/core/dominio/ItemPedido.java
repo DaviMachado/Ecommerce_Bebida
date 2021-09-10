@@ -3,13 +3,12 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar os Itens do Pedido
  * @author Davi Rodrigues
- * @date 07/09/2021
+ * @date 09/09/2021
  */
 public class ItemPedido extends EntidadeDominio {
 	private String id_pedido;
 	private Produto produto;
 	private String trocado;
-	private String trocadoSelecionado;
 	
 	public String getIdPedido() {
 		return id_pedido;
@@ -28,11 +27,5 @@ public class ItemPedido extends EntidadeDominio {
 	}
 	public void setTrocado(String trocado) {
 		this.trocado = trocado;
-	}
-	public String getTrocadoSelecionado() {
-		return trocadoSelecionado;
-	}
-	public void setTrocadoSelecionado(String trocadoSelecionado) {
-		this.trocadoSelecionado = trocadoSelecionado;
 	}
 }
