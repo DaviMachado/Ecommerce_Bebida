@@ -25,8 +25,8 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 		
 		String sql = "insert into endereco "+
 				"(apelido, cep, estado, cidade, numero, bairro, logradouro, tipo_residencia, " +
-				"pais, tipo_endereco, observacao, id_cliente)" +
-				"values (?,?,?,?,?,?,?,?,?,?,?,?)";
+				"pais, tipo_endereco, observacao, dt_cadastro, id_cliente)" +
+				"values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			Endereco endereco = (Endereco) entidade;
@@ -46,8 +46,9 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 			stmt.setString(9, endereco.getPais());
 			stmt.setString(10, endereco.getTipo_Endereco());
 			stmt.setString(11, endereco.getObservacao());
+			stmt.setString(12, endereco.getDtCadastro());
 			
-			stmt.setString(12,endereco.getIdCliente());
+			stmt.setString(13,endereco.getIdCliente());
 			
 			// executa
 			stmt.execute();
@@ -157,6 +158,7 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 				enderecoItem.setPais(rs.getString("pais"));
 				enderecoItem.setTipo_Endereco(rs.getString("tipo_endereco"));
 				enderecoItem.setObservacao(rs.getString("observacao"));
+				enderecoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				enderecoItem.setIdCliente(rs.getString("id_cliente"));
 				
@@ -201,6 +203,7 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 				enderecoItem.setPais(rs.getString("pais"));
 				enderecoItem.setTipo_Endereco(rs.getString("tipo_endereco"));
 				enderecoItem.setObservacao(rs.getString("observacao"));
+				enderecoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				enderecoItem.setIdCliente(rs.getString("id_cliente"));
 				
@@ -246,6 +249,7 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 				enderecoItem.setPais(rs.getString("pais"));
 				enderecoItem.setTipo_Endereco(rs.getString("tipo_endereco"));
 				enderecoItem.setObservacao(rs.getString("observacao"));
+				enderecoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				enderecoItem.setIdCliente(rs.getString("id_cliente"));
 				

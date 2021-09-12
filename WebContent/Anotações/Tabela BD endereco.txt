@@ -15,7 +15,8 @@ create table endereco (
     pais		    VARCHAR(10),
     tipo_endereco   VARCHAR(10),
     observacao	    VARCHAR(50),
-    id_cliente BIGINT,
+    dt_cadastro 	DATE,
+    id_cliente 		BIGINT,
 	primary	key	(id),
 	CONSTRAINT fk_EnderecoCliente FOREIGN KEY (id_cliente) REFERENCES cliente (id)
 );

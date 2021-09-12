@@ -97,7 +97,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 07/09/2021
+ * @date 11/09/2021
  */
 public class Fachada implements IFachada {
 
@@ -279,6 +279,7 @@ public class Fachada implements IFachada {
 		regrasSalvarEndereco.add(vTipoEndereco);
 		regrasSalvarEndereco.add(vTipoResidencia);
 		regrasSalvarEndereco.add(vPais);
+		regrasSalvarEndereco.add(VDataCadastro);
 		/* ----- ALTERAR ----- */
 		regrasAlterarEndereco.add(vCEP);
 		regrasAlterarEndereco.add(vEstado);
