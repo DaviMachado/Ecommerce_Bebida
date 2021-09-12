@@ -221,4 +221,46 @@ public class ItemPedidoDAO extends AbstractJdbcDAO {
 				
 	} // Consultar se exite algum Item do Pedido que esteja com o status de trocado como "nao"
 	
+	
+	/**
+	 * Metodo para consultar se exite algum Item do Pedido que esteja com o status de trocado como "sim"
+	 */
+	public List<ItemPedido> consultarItemPedidoByIdPedidoAndTrocadoSim (String idPedido) {
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select * from pedido_item where id_pedido=? and trocado='sim'");
+			stmt.setString(1, idPedido);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<ItemPedido> itens_pedido = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Pedido
+				ItemPedido item_pedidoItem = new ItemPedido();
+				Produto produto = new Produto();
+				
+				item_pedidoItem.setId(rs.getString("id"));
+				
+				produto.setId(rs.getString("id_produto"));
+				produto.setNome(rs.getString("nome"));
+				produto.setPrecoDeVenda(rs.getString("valor_de_venda"));
+				produto.setQuantidadeSelecionada(rs.getString("quantidade"));
+				item_pedidoItem.setProduto(produto);
+				
+				item_pedidoItem.setIdPedido(rs.getString("id_pedido"));
+				item_pedidoItem.setTrocado(rs.getString("trocado"));
+				item_pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				itens_pedido.add(item_pedidoItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return itens_pedido;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+				
+	} // Consultar se exite algum Item do Pedido que esteja com o status de trocado como "sim"
+	
 }

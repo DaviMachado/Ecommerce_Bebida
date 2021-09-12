@@ -51,6 +51,7 @@
         </tr>
 		<%
 		PedidoDAO dao = new PedidoDAO();
+		ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
 		Usuario usuarioLogado = new Usuario();
 		
 		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
@@ -63,6 +64,21 @@
 		List<Pedido> pedidos = dao.consultarPedidoByIdCliente(usuarioLogado.getId());
 		
 		for(Pedido order : pedidos) {
+			
+			boolean itemDoPedidoJaFoiTrocado = false;
+			
+			// verifica se existe algum item desse Pedido, esta com o status "trocado" como "sim",
+			// pois se estiver, o botão de "Trocar Pedido Inteiro" será desabilitado, 
+			// para poder realizar a troca inteira somente para Pedidos com itens não trocados,
+			// caso contrário, o botão ficará habilitado,.
+			List<ItemPedido> pedidoComTodosOsItensJaTrocados = itemPedidoDAO.consultarItemPedidoByIdPedidoAndTrocadoSim(order.getId());
+			
+			if (pedidoComTodosOsItensJaTrocados.isEmpty()) {
+				itemDoPedidoJaFoiTrocado = false;
+			}
+			else {
+				itemDoPedidoJaFoiTrocado = true;
+			}
 		%>
 			<tr>
 				<td><%=order.getId() %></td>
@@ -70,8 +86,8 @@
 				<td><%=order.getStatus() %></td>
 				<td><a href="/Ecommerce_Bebida/itemPedido?idPedido=<%= order.getId()%>&operacao=CONSULTAR"><button class="btn btn-warning">Visualizar Itens</button></a></td>
 				
-				<% if(order.getStatus().equals("ENTREGA REALIZADA")) { %>
-                	<td><a href="/Ecommerce_Bebida/pedidoTroca?idPedido=<% order.getId();%>&totalPedido=<%= order.getTotalPedido()%>&operacao=SALVAR"><button class="btn btn-danger">Trocar Pedido Inteiro</button></a></td>
+				<% if(order.getStatus().equals("ENTREGA REALIZADA") && !itemDoPedidoJaFoiTrocado) { %>
+                	<td><a href="/Ecommerce_Bebida/pedidoTroca?idPedido=<%= order.getId()%>&trocaPedidoInteiro=<%= "1"%>&operacao=SALVAR"><button class="btn btn-danger">Trocar Pedido Inteiro</button></a></td>
                 <% } %>
                 
 			</tr>

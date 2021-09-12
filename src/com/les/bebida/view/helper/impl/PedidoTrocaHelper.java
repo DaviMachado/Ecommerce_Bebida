@@ -145,11 +145,16 @@ public class PedidoTrocaHelper implements IViewHelper {
 		
 		else if (("SALVAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				String trocaPedidoInteiro = request.getParameter("trocaPedidoInteiro");
+				String idPedido = request.getParameter("idPedido");
+				
 				PedidoDAO pedidoDAO = new PedidoDAO();
 				ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
 				Pedido pedido = new Pedido();
 				Pedido novoPedido = new Pedido();
 				ItemPedido novoItemPedido = new ItemPedido();
+				ItemPedido itemPedidoTrocaInteira = new ItemPedido();
+				List<PedidoTroca> itensPedidoParaAdicionarNaSessao = new ArrayList<>();	
 				List<PedidoTroca> todosItensPedidoTrocaSessao = new ArrayList<>();
 				List<PedidoTroca> ItensPedidoTrocaVazio = new ArrayList<>();
 				List<Pedido> pedidoOriginal =  new ArrayList<>();
@@ -163,8 +168,38 @@ public class PedidoTrocaHelper implements IViewHelper {
 				
 				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 				HttpSession sessao = request.getSession();
+				
+				// verifica se foi acionado o botão para realizar a troca inteira do Pedido,
+				// (acionado pela tela "lista-pedidos-scriptletCLIENTE.jsp"),
+				// caso foi acionado, será feito o preenchimento da lista "itensPedidoTroca" que esta salvo em Sessão,
+				// com os itens do Pedido que foi acionado a troca inteira
+				if (trocaPedidoInteiro.equals("1")) {
+					// seta o valor do ID do Pedido com o valor que foi enviado pela tela
+					itemPedidoTrocaInteira.setIdPedido(idPedido);
+					
+					// busca os Itens do Pedido pelo ID do Pedido
+					List<EntidadeDominio> itens_pedido = itemPedidoDAO.consultar(itemPedidoTrocaInteira);
+					
+					for(EntidadeDominio e : itens_pedido) {
+						// Aplicado o CAST para poder popular os itens do pedido,
+						// fazendo o CAST para uma referência mais genérica, no caso para o item do pedido
+						ItemPedido order_items = (ItemPedido) e;
+						
+						// guarda o Item do Pedido no objeto "pedidoTroca"
+						PedidoTroca pedidoTroca = new PedidoTroca();
+						pedidoTroca.setItemPedido(order_items);
+						
+						// passa o item selecionado para a variavel que será responsavel para atualizar a sessão dos itens de troca do Pedido
+						itensPedidoParaAdicionarNaSessao.add(pedidoTroca);
+					}
+					
+					// atualiza o objeto "itensPedidoTroca" que esta salvo em sessão, com os novos itens do Pedido selecionado
+					sessao.setAttribute("itensPedidoTroca", itensPedidoParaAdicionarNaSessao);
+				}
+				
+				
 				// pega o objeto salvo em Sessão com o nome "itensPedidoTroca",
-				// e passa para o "todosItensPedidoTroca" (fazendo o CAST para o tipo List<PedidoTroca>)
+				// e passa para o "todosItensPedidoTrocaSessao" (fazendo o CAST para o tipo List<PedidoTroca>)
 				todosItensPedidoTrocaSessao = (List<PedidoTroca>) sessao.getAttribute("itensPedidoTroca");
 				
 				// buscar as informações do Pedido que esta vinculado no Item do Pedido de Troca da Sessão,

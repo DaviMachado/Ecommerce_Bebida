@@ -170,7 +170,7 @@
 		<!-- se tiver itens na lista "itensPedidoTroca" na Sessão, ele mostra o botão para finalizar a troca -->
 		<% if (itensPedidoTrocaEmSessao.size() > 0) {
 		%>
-			<a href="/Ecommerce_Bebida/pedidoTroca?operacao=SALVAR"><button class="btn btn-success" style="margin-top: 10px; margin-left: 710px;">Finalizar Troca</button></a>
+			<a href="/Ecommerce_Bebida/pedidoTroca?trocaPedidoInteiro=<%= "0"%>&operacao=SALVAR"><button class="btn btn-success" style="margin-top: 10px; margin-left: 710px;">Finalizar Troca</button></a>
 		<%
 		}
 		%>
