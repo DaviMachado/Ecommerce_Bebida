@@ -90,6 +90,10 @@
                 	<td><a href="/Ecommerce_Bebida/pedidoTroca?idPedido=<%= order.getId()%>&trocaPedidoInteiro=<%= "1"%>&operacao=SALVAR"><button class="btn btn-danger">Trocar Pedido Inteiro</button></a></td>
                 <% } %>
                 
+                <% if(order.getStatus().equals("EM PROCESSAMENTO")) { %>
+                	<td><a href="/Ecommerce_Bebida/pedidoTroca?idPedido=<%= order.getId()%>&alterarStatusPedido=<%= "CANCELAMENTO SOLICITADO"%>&operacao=ALTERAR"><button class="btn btn-danger">Cancelar Pedido</button></a></td>
+                <% } %>
+                
 			</tr>
 		<%
 		}
