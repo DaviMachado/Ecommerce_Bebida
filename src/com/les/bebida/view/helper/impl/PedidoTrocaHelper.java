@@ -20,6 +20,7 @@ import com.les.bebida.core.dao.impl.PedidoDAO;
 import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Estoque;
 import com.les.bebida.core.dominio.ItemPedido;
 import com.les.bebida.core.dominio.Pedido;
 import com.les.bebida.core.dominio.PedidoTroca;
@@ -197,7 +198,6 @@ public class PedidoTrocaHelper implements IViewHelper {
 					sessao.setAttribute("itensPedidoTroca", itensPedidoParaAdicionarNaSessao);
 				}
 				
-				
 				// pega o objeto salvo em Sessão com o nome "itensPedidoTroca",
 				// e passa para o "todosItensPedidoTrocaSessao" (fazendo o CAST para o tipo List<PedidoTroca>)
 				todosItensPedidoTrocaSessao = (List<PedidoTroca>) sessao.getAttribute("itensPedidoTroca");
@@ -299,9 +299,10 @@ public class PedidoTrocaHelper implements IViewHelper {
 				CupomDAO cupomDAO = new CupomDAO();
 				ItemPedido itemPedido = new ItemPedido();
 				Cupom cupom = new Cupom();
+				Estoque estoque = new Estoque();
 				int quantidadeFinal;
 				
-				// salva a data atual no Pedido e na sequencia no Item do Pedido
+				// salva a data atual no Cupom e no Estoque
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 				Date date = new Date();
 				String dataAtual;
@@ -336,7 +337,6 @@ public class PedidoTrocaHelper implements IViewHelper {
 						List<EntidadeDominio> itens_pedido = itemPedidoDAO.consultar(itemPedido);
 						
 						for(EntidadeDominio e : itens_pedido) {
-			        		
 			        		// Aplicado o CAST para poder popular os itens do pedido,
 							// fazendo o CAST para uma referência mais genérica, no caso para o item do pedido
 							ItemPedido order_items = (ItemPedido) e;
@@ -351,6 +351,20 @@ public class PedidoTrocaHelper implements IViewHelper {
 							// realiza a ReEntrada no Estoque,
 							// altera a quantidade do estoque do Produto
 							estoqueDAO.alterarQuantidadeProduto(Integer.toString(quantidadeFinal), order_items.getProduto().getId());
+							
+							// salva os atributos do ultimo Pedido cadastrado no Estoque, 
+							// pra poder dar a entrada no Estoque (tabela estoque)
+							estoque.setIdProduto(order_items.getProduto().getId());
+							estoque.setTipo("entrada");
+							estoque.setQuantidadeEntradaSaida(order_items.getProduto().getQuantidadeSelecionada());
+							estoque.setValorCusto(order_items.getProduto().getPrecoDeCompra());
+							estoque.setFornecedor("Entrada no Estoque pelo Pedido: " + order_items.getIdPedido());
+							estoque.setDtEntrada(dataAtual);
+							estoque.setQuantidadeFinal(Integer.toString(quantidadeFinal));
+							estoque.setDtCadastro(dataAtual);
+							
+							// cria a entrada do produto no "Estoque"
+							estoqueDAO.salvar(estoque);
 						}
 						
 						// gera o Cupom de Troca ou de Devolução
