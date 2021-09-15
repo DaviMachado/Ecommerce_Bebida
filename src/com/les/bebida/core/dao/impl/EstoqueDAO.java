@@ -161,4 +161,29 @@ public class EstoqueDAO extends AbstractJdbcDAO {
 		}
 	} // Inativar Produto sem Estoque
 	
+	
+	/**
+	 * Metodo para Ativar o Produto no Estoque
+	 * @param entidade
+	 */
+	public void ativarProdutoEstoque (String idProduto) {
+		openConnection();
+		
+		String sql = "update produto set " +
+					 "status='ativo' " +
+					 "where id=?";
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, idProduto);
+			
+			stmt.execute();
+			stmt.close();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Ativar Produto no Estoque
+	
 }

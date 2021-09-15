@@ -352,12 +352,19 @@ public class PedidoTrocaHelper implements IViewHelper {
 							// altera a quantidade do estoque do Produto
 							estoqueDAO.alterarQuantidadeProduto(Integer.toString(quantidadeFinal), order_items.getProduto().getId());
 							
+							// ajuste do BUG de quando for realizar a ReEntrada de algum Produto,
+							// o mesmo será verificado se esta como "inativo", pois se ele estiver,
+							// ele voltará a ficar "ativo", pois com a ReEntrada ao Estque, terá mais quantidade para utilizar
+							if (produtoSelecionado.get(0).getStatus().equals("inativo")) {
+								estoqueDAO.ativarProdutoEstoque(produtoSelecionado.get(0).getId());
+							}
+							
 							// salva os atributos do ultimo Pedido cadastrado no Estoque, 
 							// pra poder dar a entrada no Estoque (tabela estoque)
 							estoque.setIdProduto(order_items.getProduto().getId());
 							estoque.setTipo("entrada");
 							estoque.setQuantidadeEntradaSaida(order_items.getProduto().getQuantidadeSelecionada());
-							estoque.setValorCusto(order_items.getProduto().getPrecoDeCompra());
+							estoque.setValorCusto(produtoSelecionado.get(0).getPrecoDeCompra());
 							estoque.setFornecedor("Entrada no Estoque pelo Pedido: " + order_items.getIdPedido());
 							estoque.setDtEntrada(dataAtual);
 							estoque.setQuantidadeFinal(Integer.toString(quantidadeFinal));
