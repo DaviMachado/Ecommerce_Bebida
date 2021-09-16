@@ -223,6 +223,7 @@
 							}
 						%>
 			      	</select>
+			      	<a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Endereco.jsp">Novo Endereço</a>
 		  		</div>
 		  		
 		  		<!-- Cartão de Crédito -->
@@ -241,6 +242,7 @@
 							}
 						%>
 			      	</select>
+			      	<a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cartaoDeCredito.jsp">Novo Cartão</a>
 		  		</div>
 			</div>
 			
