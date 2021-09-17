@@ -117,6 +117,7 @@
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-carrinho-scriptlet.jsp" class="list-group-item">Carrinho</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-pedidos-scriptletCLIENTE.jsp" class="list-group-item">Meus Pedidos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-cupons-scriptletCLIENTE.jsp" class="list-group-item">Meus Cupons</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/editar_somente_senha_Cliente.jsp" class="list-group-item">Alterar Senha</a>
         </div>
         <%
         	}
