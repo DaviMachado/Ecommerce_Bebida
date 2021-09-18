@@ -55,7 +55,7 @@
 		  </nav>
 		  <!-- Fim Header -->
 	
-		<fieldset class="form-group fieldset_form" style="margin-top: 70px">
+		<fieldset class="form-group fieldset_form" style="margin-top: 80px">
 		<legend align="center">Formulário para editar somente a Senha do Cliente</legend>
 			<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastro">
 			  	
@@ -74,8 +74,11 @@
 			  	</div>
 			  	
 				<div class="form-row">
+					<div class="form-group col-md-8">
+			  			<!-- adicionado uma coluna com tamanho md-8 em branca para alinhar os botões do CRUD no final da pagina -->
+			  		</div>
 			  		<!-- Botóes CRUD -->
-			  		<div class="form-group col-md-8">
+			  		<div class="form-group col-md-4">
 				  		<div align="right" style="margin-top: 10px;">
 				  			<button class="btn btn-warning" name="operacao" value="ALTERAR">Alterar</button>
 				  		</div>
@@ -83,7 +86,7 @@
 			  	</div>
 				
 				<!-- Botão Voltar -->
-				<div align="right" style="margin-top: 10px;">
+				<div align="right">
 					<!--<input style="margin-left: 600px" type="button" value="Voltar" onclick="history.back()">-->
 					<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-left: 300px;"></a>
 				</div>
