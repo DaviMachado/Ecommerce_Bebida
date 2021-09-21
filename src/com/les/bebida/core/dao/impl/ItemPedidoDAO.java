@@ -263,4 +263,37 @@ public class ItemPedidoDAO extends AbstractJdbcDAO {
 				
 	} // Consultar se exite algum Item do Pedido que esteja com o status de trocado como "sim"
 	
+	
+	/**
+	 * Metodo para consultar os 3 Produtos mais vendidos
+	 */
+	public List<ItemPedido> consultar3ProdutosMaisVendidos () {
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select id_produto, sum(quantidade) as quantidade_vendido from pedido_item group by id_produto order by sum(quantidade) desc LIMIT 3;");
+			ResultSet rs = stmt.executeQuery();
+			
+			List<ItemPedido> itens_pedido = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Pedido
+				ItemPedido item_pedidoItem = new ItemPedido();
+				Produto produto = new Produto();
+				
+				produto.setId(rs.getString("id_produto"));
+				produto.setQuantidadeSelecionada(rs.getString("quantidade_vendido"));
+				item_pedidoItem.setProduto(produto);
+				
+				// adicionando o objeto à lista
+				itens_pedido.add(item_pedidoItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return itens_pedido;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+				
+	} // consultar os 3 Produtos mais vendidos
+	
 }

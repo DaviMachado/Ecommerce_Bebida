@@ -284,4 +284,35 @@ public class PedidoDAO extends AbstractJdbcDAO {
 		}
 	} // Alterar o status do Pedido
 	
+	
+	/**
+	 * Metodo para consultar os 3 clientes com maiores compras
+	 */
+	public List<Pedido> consultar3ClientesMaiorCompra () {
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("select id_cliente, count(id_cliente) as quantidade_comprado from pedido group by id_cliente order by count(id_cliente) desc LIMIT 3;");
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Pedido> pedidos = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Pedido
+				Pedido pedidoItem = new Pedido();
+
+				pedidoItem.setTotalPedido(rs.getString("quantidade_comprado"));
+				pedidoItem.setIdCliente(rs.getString("id_cliente"));
+				
+				// adicionando o objeto à lista
+				pedidos.add(pedidoItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return pedidos;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+				
+	} // Consultar os 3 clientes com maiores compras
+	
 }
