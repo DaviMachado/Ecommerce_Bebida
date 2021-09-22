@@ -262,7 +262,7 @@
 	
 	<!-- Botão Voltar -->
 	<div align="right" style="margin-top: 10px;">
- 		<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-right: 70px; margin-bottom: 318px;"></a>
+ 		<a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-right: 70px; margin-bottom: 10px;"></a>
 	</div>
 	 
   	  <!-- Footer -->
