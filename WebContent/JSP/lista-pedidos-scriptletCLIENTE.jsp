@@ -41,7 +41,7 @@
   </nav>
   <!-- Fim Header -->
   
-  	<h2 style="margin-top: 30px; margin-left: 70px">Pedidos</h2>
+  	<h2 style="margin-top: 30px; margin-left: 70px">Meus Pedidos</h2>
 
 	<table border="1" style="margin-top: 30px; margin-left: 70px; margin-right: 70px;">
 		<tr>
