@@ -40,7 +40,9 @@
   </nav>
   <!-- Fim Header -->
   
-	<table border="1" style="margin-top: 30px; margin-left: 200px;">
+  <h2 style="margin-top: 30px; margin-left: 70px">Meus Cupons</h2>
+  
+	<table border="1" style="margin-top: 30px; margin-left: 70px;">
 		<tr>
             <th>Nome</th>
             <th>Valor</th>
@@ -87,7 +89,7 @@
 		}
 		%>
 	</table>
-	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 200px; margin-bottom: 386px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 70px; margin-bottom: 386px;"></a>
 	 
  	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">
