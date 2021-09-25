@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 16/08/2021 -->
+<!-- @date 25/09/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -46,7 +46,7 @@
 	  </nav>
 	  <!-- Fim Header -->
 	  
-		<fieldset class="form-group fieldset_form" style="margin-top: 30px">
+		<fieldset class="form-group fieldset_form" style="margin-top: 30px;  margin-bottom: 30px !important;">
 		<legend align="center">Formulário para cadastro de Cliente</legend>
 			<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastro">
 			  	
