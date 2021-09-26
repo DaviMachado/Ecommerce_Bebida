@@ -16,7 +16,7 @@ public class ValidarCartaoPedido implements IStrategy {
 		
 		Pedido pedido = (Pedido) entidade;
 		
-		if(pedido.getIdCartao() == null || pedido.getIdCartao().equals("")) {
+		if(pedido.getIdCartao1() == null || pedido.getIdCartao1().equals("")) {
 			return ("Favor selecione algum Cartão de Crédito ou cadastre um novo.");
 		}
 		else {

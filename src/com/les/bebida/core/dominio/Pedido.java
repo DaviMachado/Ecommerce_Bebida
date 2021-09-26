@@ -3,7 +3,7 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Pedido
  * @author Davi Rodrigues
- * @date 07/09/2021
+ * @date 26/09/2021
  */
 public class Pedido extends EntidadeDominio{
 	private String total_itens;
@@ -12,7 +12,11 @@ public class Pedido extends EntidadeDominio{
 	private String status;
 	private String id_cliente;
 	private String id_endereco;
-	private String id_cartao;
+	private String forma_pagamento;
+	private String id_cartao_1;
+	private String valor_cartao_1;
+	private String id_cartao_2;
+	private String valor_cartao_2;
 	private String id_cupom;
 	private String trocado;
 	
@@ -53,11 +57,35 @@ public class Pedido extends EntidadeDominio{
 	public void setIdEndereco(String id_endereco) {
 		this.id_endereco = id_endereco;
 	}
-	public String getIdCartao() {
-		return id_cartao;
+	public String getFormaPagamento() {
+		return forma_pagamento;
 	}
-	public void setIdCartao(String id_cartao) {
-		this.id_cartao = id_cartao;
+	public void setFormaPagamento(String forma_pagamento) {
+		this.forma_pagamento = forma_pagamento;
+	}
+	public String getIdCartao1() {
+		return id_cartao_1;
+	}
+	public void setIdCartao1(String id_cartao_1) {
+		this.id_cartao_1 = id_cartao_1;
+	}
+	public String getValorCartao1() {
+		return valor_cartao_1;
+	}
+	public void setValorCartao1(String valor_cartao_1) {
+		this.valor_cartao_1 = valor_cartao_1;
+	}
+	public String getIdCartao2() {
+		return id_cartao_2;
+	}
+	public void setIdCartao2(String id_cartao_2) {
+		this.id_cartao_2 = id_cartao_2;
+	}
+	public String getValorCartao2() {
+		return valor_cartao_2;
+	}
+	public void setValorCartao2(String valor_cartao_2) {
+		this.valor_cartao_2 = valor_cartao_2;
 	}
 	public String getIdCupom() {
 		return id_cupom;

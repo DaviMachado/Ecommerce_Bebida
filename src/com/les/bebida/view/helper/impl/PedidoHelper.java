@@ -40,7 +40,11 @@ public class PedidoHelper implements IViewHelper {
         String status = null;
         String id_cliente = null;
 		String id_endereco = null;
-        String id_cartao = null;
+		String forma_pagamento = null;
+        String id_cartao_1 = null;
+        String valor_cartao_1 = null;
+        String id_cartao_2 = null;
+        String valor_cartao_2 = null;
         String id_cupom = null;
 		
 		if (("CONSULTAR").equals(operacao)) {
@@ -56,7 +60,12 @@ public class PedidoHelper implements IViewHelper {
 			total_pedido = request.getParameter("total_pedido");
 			id_cliente = request.getParameter("idCliente");
 			id_endereco = request.getParameter("selecioneEndereco");
-			id_cartao = request.getParameter("selecioneCartao");
+			forma_pagamento = request.getParameter("selecioneFormadePagamento");
+			id_cartao_1 = request.getParameter("selecioneCartao1");
+			valor_cartao_1 = request.getParameter("valorCartao1");
+			id_cartao_2 = request.getParameter("selecioneCartao2");
+			valor_cartao_2 = request.getParameter("valorCartao2");
+			
 			id_cupom = request.getParameter("idCupom");
 			
 			// Atribuindo os valores capturados do HTML para o Pedido
@@ -65,7 +74,11 @@ public class PedidoHelper implements IViewHelper {
 			pedido.setTotalPedido(total_pedido);
 			pedido.setIdCliente(id_cliente);
 			pedido.setIdEndereco(id_endereco);
-			pedido.setIdCartao(id_cartao);
+			pedido.setFormaPagamento(forma_pagamento);
+			pedido.setIdCartao1(id_cartao_1);
+			pedido.setValorCartao1(valor_cartao_1);
+			pedido.setIdCartao2(id_cartao_2);
+			pedido.setValorCartao2(valor_cartao_2);
 			pedido.setTrocado("nao");
 			
 			// ajuste do bug de quando o pedido não tiver nenhum Cupom vinculado,

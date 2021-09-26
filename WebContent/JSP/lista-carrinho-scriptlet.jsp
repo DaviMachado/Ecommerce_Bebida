@@ -196,7 +196,7 @@
 		<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastroPedido">
 			<div class="form-row">
 				<!-- Endereço -->
-		  		<div class="form-group col-md-5">
+		  		<div class="form-group col-md-4">
 		  		<label>Endereço de Entrega</label>
 		
 		  			<select name="selecioneEndereco" class="form-control" placeholder="Selecione um Endereço" required>
@@ -214,11 +214,50 @@
 			      	<a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Endereco.jsp">Novo Endereço</a>
 		  		</div>
 		  		
-		  		<!-- Cartão de Crédito -->
-		  		<div class="form-group col-md-5">
-		  		<label>Cartão de Crédito</label>
+				<!-- Forma de Pagamento -->
+		  		<div class="form-group col-md-4">
+		  		<label>Forma de Pagamento</label>
+	
+		  			<select name="selecioneFormadePagamento" id="selecioneFormadePagamento" class="form-control" placeholder="Selecione uma Forma de Pagamento" onclick="escondeCampos()" required>
+				      	<option value="" disabled selected>Selecione uma opção...</option>
+				      	<option value="boleto">Boleto</option>
+				      	<option value="cartao">Cartão de Crédito</option>
+			      	</select>
+		  		</div>
+			</div>
+			
+			<div id="linhaCartao1" class="form-row" style="visibility: hidden">
+		  		<!-- Cartão de Crédito 1 -->
+		  		<div class="form-group col-md-4">
+		  		<label>Cartão de Crédito 1</label>
 		
-		  			<select name="selecioneCartao" class="form-control" placeholder="Selecione um Cartão de Crédito" required>
+		  			<select name="selecioneCartao1" class="form-control" placeholder="Selecione um Cartão de Crédito">
+				      	<option value="" disabled selected>Selecione uma opção...</option>
+				      	<% 
+					      	for(CartaoDeCredito cartao : cartoesCliente) {
+					      	
+							// lista todos os cartões de credito do cliente indexado com o ID do cartão dentro do "value", de cada TAG "<option>".
+						%>
+						<option value="<%=cartao.getId()%>"><%=cartao.getNome()%></option>
+				      	<%
+							}
+						%>
+			      	</select>
+		  		</div>
+		  		
+		  		<!-- Valor Cartão de Crédito 1 -->
+			    <div class="form-group col-md-4">
+			      <label>Valor 1</label>
+			      <input type="text" class="form-control" name="valorCartao1" placeholder="Valor" maxlength="10">
+			    </div>
+	  		</div>
+	  		
+	  		<div id="linhaCartao2" class="form-row" style="visibility: hidden">
+		  		<!-- Cartão de Crédito 2 -->
+		  		<div class="form-group col-md-4">
+		  		<label>Cartão de Crédito 2</label>
+		
+		  			<select name="selecioneCartao2" class="form-control" placeholder="Selecione um Cartão de Crédito">
 				      	<option value="" disabled selected>Selecione uma opção...</option>
 				      	<% 
 					      	for(CartaoDeCredito cartao : cartoesCliente) {
@@ -232,7 +271,13 @@
 			      	</select>
 			      	<a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cartaoDeCredito.jsp">Novo Cartão</a>
 		  		</div>
-			</div>
+		  		
+		  		<!-- Valor Cartão de Crédito 2 -->
+			    <div class="form-group col-md-4">
+			      <label>Valor 2</label>
+			      <input type="text" class="form-control" name="valorCartao2" placeholder="Valor" maxlength="10">
+			    </div>
+	  		</div>
 			
 			<div class="form-row">
 				<div class="form-group col-md-8">
@@ -241,7 +286,7 @@
 			  		
 				<!-- Botões CRUD -->
 		  		<div class="form-group col-md-4">
-		  			<div align="right" style="margin-top: 32px">
+		  			<div align="right" style="margin-top: 10px">
 						<button class="btn btn-success" name="operacao" value="SALVAR">Finalizar Pedido</button>
 					</div>
 		  		</div>
@@ -272,5 +317,8 @@
 	    </div>
 	  </footer>
   	  <!-- Fim Footer -->
+  	  
+  	  <!-- Função JavaScript para esconder os campos -->
+  	  <script src="../JS/formaDePagamento.js"></script>
 </body>
 </html>

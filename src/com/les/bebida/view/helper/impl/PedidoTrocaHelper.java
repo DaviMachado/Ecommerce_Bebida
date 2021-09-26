@@ -217,7 +217,11 @@ public class PedidoTrocaHelper implements IViewHelper {
 				novoPedido.setStatus("TROCA SOLICITADA");
 				novoPedido.setIdCliente(pedidoOriginal.get(0).getIdCliente());
 				novoPedido.setIdEndereco(pedidoOriginal.get(0).getIdEndereco());
-				novoPedido.setIdCartao(pedidoOriginal.get(0).getIdCartao());
+				novoPedido.setFormaPagamento(pedidoOriginal.get(0).getFormaPagamento());
+				novoPedido.setIdCartao1(pedidoOriginal.get(0).getIdCartao1());
+				novoPedido.setValorCartao1(pedidoOriginal.get(0).getValorCartao1());
+				novoPedido.setIdCartao2(pedidoOriginal.get(0).getIdCartao2());
+				novoPedido.setValorCartao2(pedidoOriginal.get(0).getValorCartao2());
 				novoPedido.setTrocado("sim");
 				novoPedido.setDtCadastro(dataAtual);
 				
