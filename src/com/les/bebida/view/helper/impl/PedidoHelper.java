@@ -228,7 +228,7 @@ public class PedidoHelper implements IViewHelper {
 				request.setAttribute("mensagemStrategy", resultado.getMensagem());
 				
 				// Redireciona para o arquivo .jsp
-				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
+				request.getRequestDispatcher("JSP/lista-carrinho-scriptlet-mensagem.jsp").forward(request, response);
 			}
 		}
 		
