@@ -14,6 +14,25 @@
 	<link href="./CSS/form-default.css" rel="stylesheet" type="text/css">
 </head>
 
+<%
+	EstoqueDAO dao = new EstoqueDAO();
+	ProdutoDAO produtoDAO = new ProdutoDAO();
+	Estoque estoque = new Estoque();
+	
+	// pega o "id" do produto que estava pendurado na requisição,
+	// que foi enviado pelo arquivo "EstoqueHelper"
+	String idProduto = (String)request.getAttribute("idProduto");
+	
+	// pesquisa o produto que esta sendo passado pela requisição,
+	// para poder pegar o nome e adicionar o nome na listagem da tabela
+	List<Produto> produto = produtoDAO.consultarProdutoById(idProduto);
+	
+	// seta o atributo "id_produto" do objeto "estoque", com o valor que estava pendurado na requisição (idProduto)
+	estoque.setIdProduto(idProduto);
+	// consulta somente o estoque do produto que esta sendo mandado na requisição
+	List<EntidadeDominio> estoques = dao.consultar(estoque);
+%>
+
 <body>
   <!-- Header -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -39,6 +58,8 @@
     </div>
   </nav>
   <!-- Fim Header -->
+  
+  	<h2 style="margin-top: 30px; margin-left: 200px">Listagem do Estoque: <%=produto.get(0).getNome() %></h2>
 
 	<table border="1" style="margin-top: 30px; margin-left: 200px;">
 		<tr>
@@ -51,23 +72,6 @@
             <th>Quantidade Final</th>
         </tr>
 		<%
-		EstoqueDAO dao = new EstoqueDAO();
-		ProdutoDAO produtoDAO = new ProdutoDAO();
-		Estoque estoque = new Estoque();
-		
-		// pega o "id" do produto que estava pendurado na requisição,
-		// que foi enviado pelo arquivo "EstoqueHelper"
-		String idProduto = (String)request.getAttribute("idProduto");
-		
-		// pesquisa o produto que esta sendo passado pela requisição,
-		// para poder pegar o nome e adicionar o nome na listagem da tabela
-		List<Produto> produto = produtoDAO.consultarProdutoById(idProduto);
-		
-		// seta o atributo "id_produto" do objeto "estoque", com o valor que estava pendurado na requisição (idProduto)
-		estoque.setIdProduto(idProduto);
-		// consulta somente o estoque do produto que esta sendo mandado na requisição
-		List<EntidadeDominio> estoques = dao.consultar(estoque);
-		
 		for(EntidadeDominio e : estoques) {
 		
 		// Aplicado o CAST para poder popular o estoque,
