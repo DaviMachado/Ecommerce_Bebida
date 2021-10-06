@@ -3,6 +3,7 @@
 <%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 
 <html>
 <head>
@@ -50,7 +51,9 @@
         </tr>
 		<%
 		CartaoDeCreditoDAO dao = new CartaoDeCreditoDAO();
+		BandeiraDAO bandeiraDAO = new BandeiraDAO();
 		CartaoDeCredito cartao = new CartaoDeCredito();
+		List<Bandeira> nome_bandeira = new ArrayList<>();
 		
 		// pega o "id" do usuario logado que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "CartaoDeCreditoHelper"
@@ -64,11 +67,14 @@
 		// Aplicado o CAST para poder popular o cartão de credito,
 		// fazendo o CAST para uma referência mais genérica, no caso para o cartão de credito
 		CartaoDeCredito creditCard = (CartaoDeCredito) e;
+		
+		// busca o nome da bandeira pelo ID da Bandeira que esta vinculado no cartão
+		nome_bandeira = bandeiraDAO.consultarBandeiraById(creditCard.getIdBandeira());
 		%>
 			<tr>
 				<td><%=creditCard.getNome() %></td>
 				<td><%=creditCard.getNum_cartao() %></td>
-				<td><%=creditCard.getIdBandeira() %></td>
+				<td><%=nome_bandeira.get(0).getNome() %></td>
 				<td><%=creditCard.getDt_validade() %></td>
 				<td><%=creditCard.getFlgPreferencial() %></td>
 				<td><a href="/Ecommerce_Bebida/cadastroCartaoCredito?idCartaoDeCredito=<%= creditCard.getId()%>&alteraCartao=<%= "0"%>&operacao=ALTERAR"><button class="btn btn-warning">Alterar</button></a></td>
