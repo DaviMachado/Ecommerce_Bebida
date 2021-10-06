@@ -3,15 +3,15 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Cartão de Credito
  * @author Davi Rodrigues
- * @date 13/08/2021
+ * @date 05/10/2021
  */
 public class CartaoDeCredito extends EntidadeDominio {
 	private String num_cartao;
 	private String nome;
-	private String bandeira;
 	private String cod_seguranca;
 	private String flgPreferencial;
 	private String id_cliente;
+	private String id_bandeira;
 	private String dt_validade;
 	private String AlteraCartao;
 	
@@ -28,11 +28,11 @@ public class CartaoDeCredito extends EntidadeDominio {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getBandeira() {
-		return bandeira;
+	public String getIdBandeira() {
+		return id_bandeira;
 	}
-	public void setBandeira(String bandeira) {
-		this.bandeira = bandeira;
+	public void setIdBandeira(String id_bandeira) {
+		this.id_bandeira = id_bandeira;
 	}
 	public String getCod_seguranca() {
 		return cod_seguranca;

@@ -6,14 +6,15 @@ create table cartao_de_credito (
 	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
 	nome		       VARCHAR(50),
 	num_cartao	       VARCHAR(50),
-	bandeira      	   VARCHAR(20),
 	cd_seguranca       VARCHAR(10),
 	dt_validade 	   VARCHAR(7),
     preferencial       VARCHAR(3),
-    dt_cadastro 	   DATE,
     id_cliente         BIGINT,
+    id_bandeira		   BIGINT,
+    dt_cadastro 	   DATE,
 	primary	key	(id),
-	CONSTRAINT fk_CartaoCliente FOREIGN KEY (id_cliente) REFERENCES cliente (id)
+	CONSTRAINT fk_CartaoCliente FOREIGN KEY (id_cliente) REFERENCES cliente (id),
+	CONSTRAINT fk_CartaoBandeira FOREIGN KEY (id_bandeira) REFERENCES bandeira (id)
 );
 
 use ecommerce;

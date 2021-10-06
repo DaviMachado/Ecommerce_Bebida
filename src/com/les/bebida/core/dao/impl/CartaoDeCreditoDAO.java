@@ -18,7 +18,7 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into cartao_de_credito "+ 
-				"(nome, num_cartao, bandeira, cd_seguranca, dt_validade, preferencial, dt_cadastro, id_cliente)" +
+				"(nome, num_cartao, cd_seguranca, dt_validade, preferencial, id_cliente, id_bandeira, dt_cadastro)" +
 				"values (?,?,?,?,?,?,?,?)";
 		
 		try {
@@ -30,12 +30,12 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 			// seta os valores
 			stmt.setString(1,cartao.getNome());
 			stmt.setString(2,cartao.getNum_cartao());
-			stmt.setString(3,cartao.getBandeira());
-			stmt.setString(4,cartao.getCod_seguranca());
-			stmt.setString(5, cartao.getDt_validade());
-			stmt.setString(6, cartao.getFlgPreferencial());
-			stmt.setString(7, cartao.getDtCadastro());
-			stmt.setString(8, cartao.getIdCliente());
+			stmt.setString(3,cartao.getCod_seguranca());
+			stmt.setString(4, cartao.getDt_validade());
+			stmt.setString(5, cartao.getFlgPreferencial());
+			stmt.setString(6, cartao.getIdCliente());
+			stmt.setString(7,cartao.getIdBandeira());
+			stmt.setString(8, cartao.getDtCadastro());
 			
 			// executa
 			stmt.execute();
@@ -54,7 +54,7 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "update cartao_de_credito set " +
-					 "nome=?, num_cartao=?, bandeira=?, cd_seguranca=?, dt_validade=?, preferencial=? where id=?";
+					 "nome=?, num_cartao=?, cd_seguranca=?, dt_validade=?, preferencial=?, id_bandeira=? where id=?";
 		
 		try {
 			CartaoDeCredito cartao = (CartaoDeCredito) entidade;
@@ -65,10 +65,10 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 				
 				stmt.setString(1, cartao.getNome());
 				stmt.setString(2, cartao.getNum_cartao());
-				stmt.setString(3, cartao.getBandeira());
-				stmt.setString(4, cartao.getCod_seguranca());
-				stmt.setString(5, cartao.getDt_validade());
-				stmt.setString(6, cartao.getFlgPreferencial());
+				stmt.setString(3, cartao.getCod_seguranca());
+				stmt.setString(4, cartao.getDt_validade());
+				stmt.setString(5, cartao.getFlgPreferencial());
+				stmt.setString(6, cartao.getIdBandeira());
 				stmt.setString(7, cartao.getId());
 				
 				stmt.execute();
@@ -130,12 +130,12 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 				cartaoItem.setId(rs.getString("id"));
 				cartaoItem.setNome(rs.getString("nome"));
 				cartaoItem.setNum_cartao(rs.getString("num_cartao"));
-				cartaoItem.setBandeira(rs.getString("bandeira"));
 				cartaoItem.setCod_seguranca(rs.getString("cd_seguranca"));
 				cartaoItem.setDt_validade(rs.getString("dt_validade"));
 				cartaoItem.setFlgPreferencial(rs.getString("preferencial"));
-				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				cartaoItem.setIdCliente(rs.getString("id_cliente"));
+				cartaoItem.setIdBandeira(rs.getString("id_bandeira"));
+				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
 				cartoes.add(cartaoItem);
@@ -169,12 +169,12 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 				cartaoItem.setId(rs.getString("id"));
 				cartaoItem.setNome(rs.getString("nome"));
 				cartaoItem.setNum_cartao(rs.getString("num_cartao"));
-				cartaoItem.setBandeira(rs.getString("bandeira"));
 				cartaoItem.setCod_seguranca(rs.getString("cd_seguranca"));
 				cartaoItem.setDt_validade(rs.getString("dt_validade"));
 				cartaoItem.setFlgPreferencial(rs.getString("preferencial"));
-				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				cartaoItem.setIdCliente(rs.getString("id_cliente"));
+				cartaoItem.setIdBandeira(rs.getString("id_bandeira"));
+				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
 				cartoes.add(cartaoItem);
@@ -208,12 +208,12 @@ public class CartaoDeCreditoDAO extends AbstractJdbcDAO {
 				cartaoItem.setId(rs.getString("id"));
 				cartaoItem.setNome(rs.getString("nome"));
 				cartaoItem.setNum_cartao(rs.getString("num_cartao"));
-				cartaoItem.setBandeira(rs.getString("bandeira"));
 				cartaoItem.setCod_seguranca(rs.getString("cd_seguranca"));
 				cartaoItem.setDt_validade(rs.getString("dt_validade"));
 				cartaoItem.setFlgPreferencial(rs.getString("preferencial"));
-				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				cartaoItem.setIdCliente(rs.getString("id_cliente"));
+				cartaoItem.setIdBandeira(rs.getString("id_bandeira"));
+				cartaoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
 				// adicionando o objeto à lista
 				cartoes.add(cartaoItem);

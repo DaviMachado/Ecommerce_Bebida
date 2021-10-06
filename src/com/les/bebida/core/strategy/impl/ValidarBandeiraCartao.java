@@ -7,7 +7,7 @@ import com.les.bebida.core.strategy.IStrategy;
 /**
  * Classe para validar o campo bandeira do Cartão de Credito
  * @author Davi Rodrigues
- * @date 19/08/2021
+ * @date 05/10/2021
  */
 public class ValidarBandeiraCartao implements IStrategy {
 
@@ -17,7 +17,7 @@ public class ValidarBandeiraCartao implements IStrategy {
 		
 		// se o "alteraCartao" for igual a 1, executa essa regra
 		if(cartao.getAlteraCartao().contentEquals("1")) {
-			if(cartao.getBandeira() == null || cartao.getBandeira().equals("")) {
+			if(cartao.getIdBandeira() == null || cartao.getIdBandeira().equals("")) {
 				return "Favor insira uma bandeira no Cartão de Crédito.";
 			}
 			else {

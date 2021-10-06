@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 19/08/2021 -->
+<!-- @date 05/10/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
 <%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 
 <html>
 <head>
@@ -23,12 +24,22 @@
 
 <%
 	CartaoDeCreditoDAO dao = new CartaoDeCreditoDAO();
+	BandeiraDAO bandeiraDAO = new BandeiraDAO();
+	List<Bandeira> bandeiras = new ArrayList<>();
+	List<Bandeira> nome_bandeira = new ArrayList<>();
 	
 	// pega o id do cartao de credito que estava pendurado na requisição,
 	// que foi enviado pelo arquivo "CartaoDeCreditoHelper"
 	String idCartaoDeCredito = (String)request.getAttribute("idCartaoDeCredito");
-
+	
+	// busca todas as bandeiras cadastrados no banco
+	bandeiras = bandeiraDAO.consultar();
+	
+	// busca o cartão pelo ID do cartão que estava pendurado na requisição
 	List<CartaoDeCredito> cartao = dao.consultarCartaoDeCreditoById(idCartaoDeCredito);
+	
+	// busca o nome da bandeira pelo ID da Bandeira que esta vinculado no cartão
+	nome_bandeira = bandeiraDAO.consultarBandeiraById(cartao.get(0).getIdBandeira());
 	
 	// teve que ser atribuidos os valores do objeto "cartao" em variaveis separadas, 
 	// pois estava dando erro se colocasse o objeto direto na tela,
@@ -38,7 +49,8 @@
 	String numero = cartao.get(0).getNum_cartao();
 	String validade = cartao.get(0).getDt_validade();
 	String cdSeguranca = cartao.get(0).getCod_seguranca();
-	String bandeira = cartao.get(0).getBandeira();
+	String idBandeira = cartao.get(0).getIdBandeira();
+	String nomeBandeira = nome_bandeira.get(0).getNome();
 	String preferencial = cartao.get(0).getFlgPreferencial();
 %>
 
@@ -201,14 +213,18 @@
 		  		<div class="form-group">
 		  		<label>Bandeira</label>
 
-		  			<select name="bandeira" class="form-control" placeholder="Selecione uma Bandeira" required>
+		  			<select name="idBandeira" class="form-control" placeholder="Selecione uma Bandeira" required>
 				      	<option disabled>Selecione uma opção...</option>
-				      	<option value="<%=bandeira %>"><%=bandeira %></option>
-				      	<option value="Mastercard">Mastercard</option>
-				      	<option value="Visa">Visa</option>
-				      	<option value="American Express">American Express</option>
-				      	<option value="Hipercard">Hipercard</option>
-				      	<option value="Elo">Elo</option>
+				      	<option value="<%=idBandeira %>"><%=nomeBandeira %></option>
+				      	<% 
+					      	for(Bandeira flag : bandeiras) {
+					      	
+							// lista todas as bandeiras indexado com o ID da bandeira dentro do "value", de cada TAG "<option>".
+						%>
+						<option value="<%=flag.getId()%>"><%=flag.getNome()%></option>
+				      	<%
+							}
+						%>
 			      	</select>
 		  		</div>
 			</div>

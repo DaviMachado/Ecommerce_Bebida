@@ -68,7 +68,7 @@
 			<tr>
 				<td><%=creditCard.getNome() %></td>
 				<td><%=creditCard.getNum_cartao() %></td>
-				<td><%=creditCard.getBandeira() %></td>
+				<td><%=creditCard.getIdBandeira() %></td>
 				<td><%=creditCard.getDt_validade() %></td>
 				<td><%=creditCard.getFlgPreferencial() %></td>
 				<td><a href="/Ecommerce_Bebida/cadastroCartaoCredito?idCartaoDeCredito=<%= creditCard.getId()%>&alteraCartao=<%= "0"%>&operacao=ALTERAR"><button class="btn btn-warning">Alterar</button></a></td>

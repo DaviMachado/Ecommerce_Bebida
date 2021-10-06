@@ -1,0 +1,33 @@
+create database ecommerce;
+
+drop table bandeira;
+
+create table bandeira (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	nome		       VARCHAR(50),
+    dt_cadastro 	   DATE,
+	primary	key	(id)
+);
+
+use ecommerce;
+
+select * from bandeira;
+-----------------------------
+insert das bandeiras:
+
+insert into bandeira (nome, dt_cadastro)
+values ('Mastercard', '2021/10/05');
+
+insert into bandeira (nome, dt_cadastro)
+values ('Visa', '2021/10/05');
+
+insert into bandeira (nome, dt_cadastro)
+values ('American Express', '2021/10/05');
+
+insert into bandeira (nome, dt_cadastro)
+values ('Hipercard', '2021/10/05');
+
+insert into bandeira (nome, dt_cadastro)
+values ('Elo', '2021/10/05');
+
+-----------------------------

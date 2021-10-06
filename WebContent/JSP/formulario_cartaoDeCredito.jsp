@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 19/08/2021 -->
+<!-- @date 05/10/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
 <%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 
 <html>
 <head>
@@ -23,13 +24,18 @@
 
 <%
 	ClienteDAO dao = new ClienteDAO();
+	BandeiraDAO bandeiraDAO = new BandeiraDAO();
 	Usuario usuarioLogado = new Usuario();
+	List<Bandeira> bandeiras = new ArrayList<>();
 	
 	// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 	HttpSession sessao = request.getSession();
 	// pega o objeto salvo em Sessão com o nome "usuarioLogado",
 	// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
 	usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+	
+	// busca todas as bandeiras cadastrados no banco
+	bandeiras = bandeiraDAO.consultar();
 	
 	// faz um consulta no banco para pegar todos os dados do cliente logado
 	List<Cliente> cliente = dao.consultarClienteById(usuarioLogado.getId());
@@ -194,13 +200,17 @@
 		  		<div class="form-group">
 		  		<label>Bandeira</label>
 
-		  			<select name="bandeira" class="form-control" placeholder="Selecione uma Bandeira" required>
+		  			<select name="idBandeira" class="form-control" placeholder="Selecione uma Bandeira" required>
 				      	<option value="" disabled selected>Selecione uma opção...</option>
-				      	<option value="Mastercard">Mastercard</option>
-				      	<option value="Visa">Visa</option>
-				      	<option value="American Express">American Express</option>
-				      	<option value="Hipercard">Hipercard</option>
-				      	<option value="Elo">Elo</option>
+				      	<% 
+					      	for(Bandeira flag : bandeiras) {
+					      	
+							// lista todas as bandeiras indexado com o ID da bandeira dentro do "value", de cada TAG "<option>".
+						%>
+						<option value="<%=flag.getId()%>"><%=flag.getNome()%></option>
+				      	<%
+							}
+						%>
 			      	</select>
 		  		</div>
 			</div>

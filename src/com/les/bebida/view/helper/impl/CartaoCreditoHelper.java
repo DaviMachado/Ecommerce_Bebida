@@ -27,10 +27,10 @@ public class CartaoCreditoHelper implements IViewHelper{
         String nome = null;
         String num_cartao = null;
         String dt_validade = null;
-        String bandeira = null;
         String cod_seguranca = null;
         String flg_preferencial = null;
         String idCliente = null;
+        String idBandeira = null;
         String alteraCartao = null;
         
         if (("CONSULTAR").equals(operacao)) {
@@ -48,7 +48,7 @@ public class CartaoCreditoHelper implements IViewHelper{
         	nome = request.getParameter("nome");
         	num_cartao = request.getParameter("num_cartao");
         	dt_validade = request.getParameter("dt_validade");
-        	bandeira = request.getParameter("bandeira");
+        	idBandeira = request.getParameter("idBandeira");
         	cod_seguranca = request.getParameter("cod_seguranca");
         	flg_preferencial = request.getParameter("flg_preferencial");
         	idCliente = request.getParameter("idCliente");
@@ -58,7 +58,7 @@ public class CartaoCreditoHelper implements IViewHelper{
         	cartaoDeCredito.setNome(nome);
         	cartaoDeCredito.setNum_cartao(num_cartao);
         	cartaoDeCredito.setDt_validade(dt_validade);
-        	cartaoDeCredito.setBandeira(bandeira);
+        	cartaoDeCredito.setIdBandeira(idBandeira);
         	cartaoDeCredito.setCod_seguranca(cod_seguranca);
         	cartaoDeCredito.setFlgPreferencial(flg_preferencial);
         	cartaoDeCredito.setIdCliente(idCliente);
@@ -73,7 +73,7 @@ public class CartaoCreditoHelper implements IViewHelper{
         	nome = request.getParameter("nome");
         	num_cartao = request.getParameter("num_cartao");
         	dt_validade = request.getParameter("dt_validade");
-        	bandeira = request.getParameter("bandeira");
+        	idBandeira = request.getParameter("idBandeira");
         	cod_seguranca = request.getParameter("cod_seguranca");
         	flg_preferencial = request.getParameter("flg_preferencial");
         	alteraCartao = request.getParameter("alteraCartao");
@@ -83,7 +83,7 @@ public class CartaoCreditoHelper implements IViewHelper{
         	cartaoDeCredito.setNome(nome);
         	cartaoDeCredito.setNum_cartao(num_cartao);
         	cartaoDeCredito.setDt_validade(dt_validade);
-        	cartaoDeCredito.setBandeira(bandeira);
+        	cartaoDeCredito.setIdBandeira(idBandeira);
         	cartaoDeCredito.setCod_seguranca(cod_seguranca);
         	cartaoDeCredito.setFlgPreferencial(flg_preferencial);
         	cartaoDeCredito.setAlteraCartao(alteraCartao);
