@@ -9,7 +9,7 @@ import com.les.bebida.core.strategy.IStrategy;
  * Classe para validar se as senhas do Cliente são iguais,
  * e validar se a quantidade de senhas digitas são no minimo 8 caracteres
  * @author Davi Rodrigues
- * @date 17/08/2021
+ * @date 06/10/2021
  */
 public class ValidarSenhaIgualCliente implements IStrategy {
 
@@ -31,6 +31,20 @@ public class ValidarSenhaIgualCliente implements IStrategy {
 			}
 			else if (cliente.getUsuario().getConfirmarSenha().length() < 8) {
 				return ("Favor insira uma confirmar senha no cliente com no minimo 8 caracteres.");
+			}
+			else if (!cliente.getUsuario().getSenha().matches(".*[A-Z].*")) {
+				return ("Favor insira pelo menos uma letra MAIÚSCULA no campo senha.");
+			}
+			else if (!cliente.getUsuario().getSenha().matches(".*[a-z].*")) {
+				return ("Favor insira pelo menos uma letra MINÚSCULA na senha.");
+			}
+			else if (!cliente.getUsuario().getSenha().matches(".*\\d.*")) {
+				return ("Favor insira pelo menos um NÚMERO na senha.");
+			}
+			// ".*[@#$%^&+=].*" (<- funcionou)
+			// []{}/-\ (<- deu erro se colocasse algum desses caracteres)
+			 if (!cliente.getUsuario().getSenha().matches(".*[~´`_!@#$%^&*()+|=.,;:\"\'<>?].*")) {
+				return ("Favor insira pelo menos um CARACTERE ESPECIAL na senha.");
 			}
 			else if (!cliente.getUsuario().getSenha().equals(cliente.getUsuario().getConfirmarSenha())) {
 				return ("As senhas digitadas no cliente não se correspondem.");
