@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 20/09/2021 -->
+<!-- @date 08/10/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
 <%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 
 <html>
 	<head>
@@ -25,19 +26,146 @@
 		PedidoDAO pedidoDAO = new PedidoDAO();
 		ClienteDAO clienteDAO = new ClienteDAO();
 		
+		List<Produto> produto1 = new ArrayList<>();
+		List<Produto> produto2 = new ArrayList<>();
+		List<Produto> produto3 = new ArrayList<>();
+		
+		List<Cliente> cliente1 = new ArrayList<>();
+		List<Cliente> cliente2 = new ArrayList<>();
+		List<Cliente> cliente3 = new ArrayList<>();
+		
+		// *******
 		// consulta os 3 Produtos mais vendidos
+		// *******
 		List<ItemPedido> itemPedido = itemPedidoDAO.consultar3ProdutosMaisVendidos();
 		
-		List<Produto> produto1 = produtoDAO.consultarProdutoById(itemPedido.get(0).getProduto().getId());
-		List<Produto> produto2 = produtoDAO.consultarProdutoById(itemPedido.get(1).getProduto().getId());
-		List<Produto> produto3 = produtoDAO.consultarProdutoById(itemPedido.get(2).getProduto().getId());
+		// ajuste do BUG de quando tiver nenhum pedido feito,
+		// (se tiver nenhum pedido, a lista será retornada zerada),
+		// solução: verificação da quantidade da lista "itemPedido" retornada do banco
+		if (itemPedido.size() == 0){
+			Produto produto = new Produto();
+			ItemPedido item = new ItemPedido();
+			
+			produto.setNome("VAZIO");
+			produto.setQuantidadeSelecionada("0");
+			
+			item.setProduto(produto);
+			
+			// adição do produto VAZIO nas variaveis que serão usados no Gráfico
+			produto1.add(produto);
+			produto2.add(produto);
+			produto3.add(produto);
+			
+			// adição do produto VAZIO na lista que retornou zerada do banco
+			itemPedido.add(item);
+			itemPedido.add(item);
+			itemPedido.add(item);
+		}
+		else if (itemPedido.size() == 1){
+			Produto produto = new Produto();
+			ItemPedido item = new ItemPedido();
+			
+			produto.setNome("VAZIO");
+			produto.setQuantidadeSelecionada("0");
+			
+			item.setProduto(produto);
+			
+			// adiciona somente 2 produtos VAZIO nas variaveis que serão usados no Gráfico
+			produto1 = produtoDAO.consultarProdutoById(itemPedido.get(0).getProduto().getId());
+			produto2.add(produto);
+			produto3.add(produto);
+			
+			// adiciona somente 2 produtos VAZIO na lista que retornou do banco
+			itemPedido.add(item);
+			itemPedido.add(item);
+		}
+		else if (itemPedido.size() == 2){
+			Produto produto = new Produto();
+			ItemPedido item = new ItemPedido();
+			
+			produto.setNome("VAZIO");
+			produto.setQuantidadeSelecionada("0");
+			
+			item.setProduto(produto);
+			
+			// adiciona somente 1 produto VAZIO nas variaveis que serão usados no Gráfico
+			produto1 = produtoDAO.consultarProdutoById(itemPedido.get(0).getProduto().getId());
+			produto2 = produtoDAO.consultarProdutoById(itemPedido.get(1).getProduto().getId());
+			produto3.add(produto);
+			
+			// adiciona somente 1 produto VAZIO na lista que retornou do banco
+			itemPedido.add(item);
+		}
+		// se o banco retornar 3 produtos
+		else {
+			produto1 = produtoDAO.consultarProdutoById(itemPedido.get(0).getProduto().getId());
+			produto2 = produtoDAO.consultarProdutoById(itemPedido.get(1).getProduto().getId());
+			produto3 = produtoDAO.consultarProdutoById(itemPedido.get(2).getProduto().getId());
+		}
+		////////////////////////////////////////////////////////////////
 		
+		// *******
 		// consulta os 3 Clientes com maior compra
+		// *******
 		List<Pedido> pedido = pedidoDAO.consultar3ClientesMaiorCompra();
 		
-		List<Cliente> cliente1 = clienteDAO.consultarClienteById(pedido.get(0).getIdCliente());
-		List<Cliente> cliente2 = clienteDAO.consultarClienteById(pedido.get(1).getIdCliente());
-		List<Cliente> cliente3 = clienteDAO.consultarClienteById(pedido.get(2).getIdCliente());
+		// ajuste do BUG de quando tiver nenhum pedido feito,
+		// (se tiver nenhum pedido, a lista será retornada zerada),
+		// solução: verificação da quantidade da lista "pedido" retornada do banco
+		if (pedido.size() == 0){
+			Cliente cliente = new Cliente();
+			Pedido order = new Pedido();
+			
+			cliente.setNome("VAZIO");
+			order.setTotalPedido("0");
+			
+			// adição do cliente VAZIO nas variaveis que serão usados no Gráfico
+			cliente1.add(cliente);
+			cliente2.add(cliente);
+			cliente3.add(cliente);
+			
+			// adição do pedido VAZIO na lista que retornou zerada do banco
+			pedido.add(order);
+			pedido.add(order);
+			pedido.add(order);
+		}
+		else if (pedido.size() == 1){
+			Cliente cliente = new Cliente();
+			Pedido order = new Pedido();
+			
+			cliente.setNome("VAZIO");
+			order.setTotalPedido("0");
+			
+			// adiciona somente 2 clientes VAZIO nas variaveis que serão usados no Gráfico
+			cliente1 = clienteDAO.consultarClienteById(pedido.get(0).getIdCliente());
+			cliente2.add(cliente);
+			cliente3.add(cliente);
+			
+			// adiciona somente 2 pedidos VAZIO na lista que retornou do banco
+			pedido.add(order);
+			pedido.add(order);
+		}
+		else if (pedido.size() == 2){
+			Cliente cliente = new Cliente();
+			Pedido order = new Pedido();
+			
+			cliente.setNome("VAZIO");
+			order.setTotalPedido("0");
+			
+			// adiciona somente 1 cliente VAZIO nas variaveis que serão usados no Gráfico
+			cliente1 = clienteDAO.consultarClienteById(pedido.get(0).getIdCliente());
+			cliente2 = clienteDAO.consultarClienteById(pedido.get(1).getIdCliente());
+			cliente3.add(cliente);
+			
+			// adiciona somente 1 pedido VAZIO na lista que retornou do banco
+			pedido.add(order);
+		}
+		// se o banco retornar 3 clientes
+		else {
+			cliente1 = clienteDAO.consultarClienteById(pedido.get(0).getIdCliente());
+			cliente2 = clienteDAO.consultarClienteById(pedido.get(1).getIdCliente());
+			cliente3 = clienteDAO.consultarClienteById(pedido.get(2).getIdCliente());
+		}
 	%>
 	
 	<body>
