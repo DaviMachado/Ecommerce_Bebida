@@ -194,7 +194,7 @@
 		</nav>
 		<!-- Fim Header -->
 		
-		<fieldset class="form-group fieldset_form" style="margin-top: 48px">
+		<fieldset class="form-group fieldset_form" style="margin-top: 52px">
 		<legend align="center">Gerenciamento de Gráficos</legend>
 			<div class="form-row">
 				<div class="form-group col-md-4">
