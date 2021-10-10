@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 08/10/2021 -->
+<!-- @date 10/10/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -233,7 +233,7 @@
 		</fieldset>
 		
 		<!-- Grafico gerado pelo Chart.js -->
-		<div style="width: 50%; height: 50%;">
+		<div style="width: 50%; height: 50%; margin-left: 350px;">
 			<canvas id="myChart"></canvas>
 		</div>
 		<!-- Fim Grafico gerado pelo Chart.js -->
