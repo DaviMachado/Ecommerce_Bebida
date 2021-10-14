@@ -33,6 +33,7 @@ public class ProdutoHelper implements IViewHelper{
         String preco_de_compra = null;
         String preco_de_venda = null;
         String foto = null;
+        String foto_detalhe = null;
         String grupo_de_precificacao = null;
         String quantidade = null;
         String status = null;
@@ -53,6 +54,7 @@ public class ProdutoHelper implements IViewHelper{
         	preco_de_compra = request.getParameter("preco_de_compra");
         	preco_de_venda = request.getParameter("preco_de_venda");
         	foto = request.getParameter("foto");
+        	foto_detalhe = request.getParameter("foto_detalhe");
         	grupo_de_precificacao = request.getParameter("grupo_de_precificacao");
         	quantidade = request.getParameter("quantidade");
         	status = request.getParameter("status");
@@ -66,6 +68,7 @@ public class ProdutoHelper implements IViewHelper{
         	produto.setPrecoDeCompra(preco_de_compra);
         	produto.setPrecoDeVenda(preco_de_venda);
         	produto.setFoto(foto);
+        	produto.setFotoDetalhe(foto_detalhe);
         	produto.setGrupoDePrecificacao(grupo_de_precificacao);
         	produto.setQuantidade(quantidade);
         	produto.setStatus(status);
@@ -84,6 +87,7 @@ public class ProdutoHelper implements IViewHelper{
         	preco_de_compra = request.getParameter("preco_de_compra");
         	preco_de_venda = request.getParameter("preco_de_venda");
         	foto = request.getParameter("foto");
+        	foto_detalhe = request.getParameter("foto_detalhe");
         	grupo_de_precificacao = request.getParameter("grupo_de_precificacao");
         	quantidade = request.getParameter("quantidade");
         	status = request.getParameter("status");
@@ -98,6 +102,7 @@ public class ProdutoHelper implements IViewHelper{
         	produto.setPrecoDeCompra(preco_de_compra);
         	produto.setPrecoDeVenda(preco_de_venda);
         	produto.setFoto(foto);
+        	produto.setFotoDetalhe(foto_detalhe);
         	produto.setGrupoDePrecificacao(grupo_de_precificacao);
         	produto.setQuantidade(quantidade);
         	produto.setStatus(status);

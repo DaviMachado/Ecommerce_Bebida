@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 25/08/2021 -->
+<!-- @date 13/10/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -116,9 +116,15 @@
 			  	
 				<div class="form-row">
 				    <!-- Foto -->
-				    <div class="form-group col-md-10">
+				    <div class="form-group col-md-5">
 				      <label>Foto</label>
 				      <input type="text" class="form-control" name="foto" placeholder="Digite o caminho da pasta que esta localizada a Foto ..." value="<%=produto.get(0).getFoto()%>" required>
+				    </div>
+				    
+				    <!-- Foto Detalhe -->
+				    <div class="form-group col-md-5">
+				      <label>Foto Detalhe</label>
+				      <input type="text" class="form-control" name="foto_detalhe" placeholder="Digite o caminho da pasta que esta localizada o Detalhe da Foto ..." value="<%=produto.get(0).getFotoDetalhe()%>" required>
 				    </div>
 				    
 				    <!-- Status -->

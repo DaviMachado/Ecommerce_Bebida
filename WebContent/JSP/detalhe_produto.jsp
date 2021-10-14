@@ -120,7 +120,7 @@
       <div class="col-lg-9">
 
         <div class="card mt-4" style="margin-bottom: 20px;">
-          <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+          <img class="card-img-top img-fluid" src="<%=produto.get(0).getFotoDetalhe() %>" alt="">
           <div class="card-body">
             <h3 class="card-title"><%=produto.get(0).getNome() %></h3>
             <h4>R$ <%=produto.get(0).getPrecoDeVenda() %></h4>

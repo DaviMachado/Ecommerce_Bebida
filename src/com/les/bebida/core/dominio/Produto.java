@@ -3,7 +3,7 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Produto
  * @author Davi Rodrigues
- * @date 24/08/2021
+ * @date 13/10/2021
  */
 public class Produto extends EntidadeDominio {
 	private String nome;
@@ -12,6 +12,7 @@ public class Produto extends EntidadeDominio {
 	private String preco_de_compra;
 	private String preco_de_venda;
 	private String foto;
+	private String foto_detalhe;
 	private String grupo_de_precificacao;
 	private String quantidade;
 	private String status;
@@ -55,6 +56,12 @@ public class Produto extends EntidadeDominio {
 	}
 	public void setFoto(String foto) {
 		this.foto = foto;
+	}
+	public String getFotoDetalhe() {
+		return foto_detalhe;
+	}
+	public void setFotoDetalhe(String foto_detalhe) {
+		this.foto_detalhe = foto_detalhe;
 	}
 	public String getGrupoDePrecificacao() {
 		return grupo_de_precificacao;
