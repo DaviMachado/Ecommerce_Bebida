@@ -58,6 +58,7 @@ import com.les.bebida.core.strategy.impl.ValidarExistenciaLogin;
 import com.les.bebida.core.strategy.impl.ValidarExistenciaLoginAndSenha;
 import com.les.bebida.core.strategy.impl.ValidarFormaDePagamento;
 import com.les.bebida.core.strategy.impl.ValidarFornecedorEstoque;
+import com.les.bebida.core.strategy.impl.ValidarFotoDetalheProduto;
 import com.les.bebida.core.strategy.impl.ValidarFotoProduto;
 import com.les.bebida.core.strategy.impl.ValidarGrupoPrecificacaoProduto;
 import com.les.bebida.core.strategy.impl.ValidarStatusUsuario;
@@ -98,7 +99,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 27/09/2021
+ * @date 15/10/2021
  */
 public class Fachada implements IFachada {
 
@@ -148,6 +149,7 @@ public class Fachada implements IFachada {
 	ValidarQuantidadeProduto vQuantidadeProduto = new ValidarQuantidadeProduto();
 	ValidarGrupoPrecificacaoProduto vGrupoPrecificacaoProduto = new ValidarGrupoPrecificacaoProduto();
 	ValidarFotoProduto vFotoProduto = new ValidarFotoProduto();
+	ValidarFotoDetalheProduto vFotoDetalheProduto = new ValidarFotoDetalheProduto();
 	ValidarStatusProduto vStatusProduto = new ValidarStatusProduto();
 	ValidarProdutoEstoque vProdutoEstoque = new ValidarProdutoEstoque();
 	ValidarTipoEstoque vTipoEstoque = new ValidarTipoEstoque();
@@ -337,6 +339,7 @@ public class Fachada implements IFachada {
 		regrasSalvarProduto.add(vQuantidadeProduto);
 		regrasSalvarProduto.add(vGrupoPrecificacaoProduto);
 		regrasSalvarProduto.add(vFotoProduto);
+		regrasSalvarProduto.add(vFotoDetalheProduto);
 		regrasSalvarProduto.add(vStatusProduto);
 		regrasSalvarProduto.add(VDataCadastro);
 		/* ----- ALTERAR ----- */
@@ -348,6 +351,7 @@ public class Fachada implements IFachada {
 		regrasAlterarProduto.add(vQuantidadeProduto);
 		regrasAlterarProduto.add(vGrupoPrecificacaoProduto);
 		regrasAlterarProduto.add(vFotoProduto);
+		regrasAlterarProduto.add(vFotoDetalheProduto);
 		regrasAlterarProduto.add(vStatusProduto);
 		/* ---------------------------------------------------------- */
 		
