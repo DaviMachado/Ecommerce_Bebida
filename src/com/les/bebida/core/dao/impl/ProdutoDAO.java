@@ -107,8 +107,13 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 		try {
 			Produto produto = (Produto) entidade;
 			
+			// Exclui o estoque relacionado com o produto
+			PreparedStatement stmt = connection.prepareStatement("delete from estoque where id_produto=?");
+			stmt.setString(1, produto.getId());
+			stmt.executeUpdate();
+			
 			// Exclui o produto
-			PreparedStatement stmt = connection.prepareStatement("delete from produto where id=?");
+			stmt = connection.prepareStatement("delete from produto where id=?");
 			stmt.setString(1, produto.getId());
 			stmt.executeUpdate();
 			
