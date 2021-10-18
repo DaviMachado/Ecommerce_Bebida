@@ -2,6 +2,7 @@ package com.les.bebida.view.helper.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -73,10 +74,15 @@ public class VerificaCupomHelper implements IViewHelper {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
 				String nomeCupom = request.getParameter("cupom");
 				String idCliente = request.getParameter("idCliente");
+				boolean adicionaNovoCupomNaSessao = true;
 				CupomDAO dao = new CupomDAO();
+				List<Cupom> cupomParaAdicionarNaSessao = new ArrayList<>();
 				
 				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 				HttpSession sessao = request.getSession();
+				// pega o objeto salvo em Sessão com o nome "cupons",
+				// e passa para o "cupomParaAdicionarNaSessao" (fazendo o CAST para o tipo List<Cupom>)
+				cupomParaAdicionarNaSessao = (List<Cupom>) sessao.getAttribute("cupons");
 				
 				// busca todos os Cupons no sistema com o mesmo nome que foi digitado na tela
 				List<Cupom> cupons = dao.consultarCupomByNome(nomeCupom);
@@ -84,27 +90,51 @@ public class VerificaCupomHelper implements IViewHelper {
 				// faz um laço com todos os Cupons
 				for (Cupom coupon : cupons) {
 					// 1º se o primeiro Cupom encontrado for do tipo "promocional",
-					// o mesmo será salvo na Sessão
 					if (coupon.getTipo().equals("promocional")) {
-						// salva na Sessão o Cupom,
-						sessao.setAttribute("cupom", coupon);
-						break;
+						// verifica se na lista de cupons da sessão, já existe um cupom do tipo promocional,
+						// pois poderá ter somente um Cupom do tipo promocional vinculado no pedido
+						for(Cupom cupomDaSessao : cupomParaAdicionarNaSessao) {
+							if (cupomDaSessao.getTipo().equals("promocional")) {
+								// atribui a nova mensagem para poder mostra na pagina .JSP
+								resultado.setMensagem("Já existe um Cupom do tipo Promocional vinculado ao Pedido!");
+								
+								adicionaNovoCupomNaSessao = false;
+								break;
+							}
+							else {
+								// não encontrou nenhum cupom do tipo "promocional" na Sessão,
+								// então seta a variavel "adicionaNovoCupomNaSessao" como TRUE
+								adicionaNovoCupomNaSessao = true;
+							}	
+						}
+						
+						// verifica se é para adicionar um novo Cupom na Sessão
+						if (adicionaNovoCupomNaSessao) {
+							// passa o cupom selecionado para a variavel que será responsavel para atualizar a sessão dos cupons
+							cupomParaAdicionarNaSessao.add(coupon);
+							
+							// atribui a nova mensagem para poder mostra na pagina .JSP
+							resultado.setMensagem("Cupom aplicado com sucesso!");
+						}
 					}
 					// 2º caso contrário, verifica se o Cupom é do mesmo cliente logado,
 					// e se o Cupom ja foi utilizado, se ainda não foi utilizado, o mesmo será salvo na Sessão
 					else {
 						if (coupon.getIdCliente().equals(idCliente)) {
 							if ( coupon.getUtilizado().equals("nao")) {
-								// salva na Sessão o Cupom,
-								sessao.setAttribute("cupom", coupon);
-								break;
+								// passa o cupom selecionado para a variavel que será responsavel para atualizar a sessão dos cupons
+								cupomParaAdicionarNaSessao.add(coupon);
+								
+								// atribui a nova mensagem para poder mostra na pagina .JSP
+								resultado.setMensagem("Cupom aplicado com sucesso!");
 							}
 						}
 					}
 				}
 				
-				// atribui a nova mensagem para poder mostra na pagina .JSP
-				resultado.setMensagem("Cupom aplicado com sucesso!");
+				// adiciona o cupom selecionado na sessão
+				// atualiza o objeto "cupons" que esta salvo em sessão, com o novo cupom selecionado
+				sessao.setAttribute("cupons", cupomParaAdicionarNaSessao);
 				
 				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
 				request.setAttribute("mensagemStrategy", resultado.getMensagem());

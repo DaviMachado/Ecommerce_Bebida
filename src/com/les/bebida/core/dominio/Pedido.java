@@ -3,7 +3,7 @@ package com.les.bebida.core.dominio;
 /**
  * Classe para representar o Pedido
  * @author Davi Rodrigues
- * @date 26/09/2021
+ * @date 17/10/2021
  */
 public class Pedido extends EntidadeDominio{
 	private String total_itens;
@@ -17,7 +17,7 @@ public class Pedido extends EntidadeDominio{
 	private String valor_cartao_1;
 	private String id_cartao_2;
 	private String valor_cartao_2;
-	private String id_cupom;
+	private String total_cupons;
 	private String trocado;
 	
 	
@@ -87,11 +87,11 @@ public class Pedido extends EntidadeDominio{
 	public void setValorCartao2(String valor_cartao_2) {
 		this.valor_cartao_2 = valor_cartao_2;
 	}
-	public String getIdCupom() {
-		return id_cupom;
+	public String getTotalCupons() {
+		return total_cupons;
 	}
-	public void setIdCupom(String id_cupom) {
-		this.id_cupom = id_cupom;
+	public void setTotalCupons(String total_cupons) {
+		this.total_cupons = total_cupons;
 	}
 	public String getTrocado() {
 		return trocado;

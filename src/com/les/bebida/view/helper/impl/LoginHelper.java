@@ -103,9 +103,9 @@ public class LoginHelper implements IViewHelper {
 				// da tela do detalhes do produto, ele poder adicionar os produtos selecionados para o carrinho
 				sessao.setAttribute("itensCarrinho", itensCarrinho);
 				
-				Cupom cupom = new Cupom();
-				// salva na sessão o objeto "cupom", que será calculado dentro da tela do carrinho
-				sessao.setAttribute("cupom", cupom);
+				List<Cupom> cupons = new ArrayList<>();
+				// salva na sessão o objeto "cupons", que será calculado dentro da tela do carrinho
+				sessao.setAttribute("cupons", cupons);
 				
 				List<PedidoTroca> itensPedidoTroca = new ArrayList<>();
 				// salva na sessão o objeto "itensPedidoTroca", para quando for clicado no botão de "Solicitar Troca",

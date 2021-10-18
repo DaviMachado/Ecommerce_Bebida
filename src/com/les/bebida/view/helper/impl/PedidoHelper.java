@@ -45,7 +45,7 @@ public class PedidoHelper implements IViewHelper {
         String valor_cartao_1 = null;
         String id_cartao_2 = null;
         String valor_cartao_2 = null;
-        String id_cupom = null;
+        String total_cupons = null;
 		
 		if (("CONSULTAR").equals(operacao)) {
 			
@@ -66,7 +66,7 @@ public class PedidoHelper implements IViewHelper {
 			id_cartao_2 = request.getParameter("selecioneCartao2");
 			valor_cartao_2 = request.getParameter("valorCartao2");
 			
-			id_cupom = request.getParameter("idCupom");
+			total_cupons = request.getParameter("total_cupons");
 			
 			// Atribuindo os valores capturados do HTML para o Pedido
 			pedido.setTotalItens(total_itens);
@@ -80,20 +80,21 @@ public class PedidoHelper implements IViewHelper {
 			pedido.setIdCartao2(id_cartao_2);
 			pedido.setValorCartao2(valor_cartao_2);
 			pedido.setTrocado("nao");
+			pedido.setTotalCupons(total_cupons);
 			
-			// ajuste do bug de quando o pedido não tiver nenhum Cupom vinculado,
-			if (id_cupom.equals("null")) {
-        		// quando for finalizar o Pedido, e não tiver nenhum Cupom vinculado,
-        		// o valor do "id_cupom" será "null", em formato de String, 
-        		// então não atribui o valor ao objeto "pedido",
-        		// pq se o valor for "null" em formato de String, irá acusar ERRO ao salvar o Pedido na DAO.
-        		System.out.println("entrou !!");
-        	}
-        	else {
-        		// caso contrário, se tiver algum Cupom para vincular,
-        		// o valor será atribuido no Pedido
-        		pedido.setIdCupom(id_cupom);
-        	}
+			//// ajuste do bug de quando o pedido não tiver nenhum Cupom vinculado,
+			//if (id_cupom.equals("null")) {
+        	//	// quando for finalizar o Pedido, e não tiver nenhum Cupom vinculado,
+        	//	// o valor do "id_cupom" será "null", em formato de String, 
+        	//	// então não atribui o valor ao objeto "pedido",
+        	//	// pq se o valor for "null" em formato de String, irá acusar ERRO ao salvar o Pedido na DAO.
+        	//	System.out.println("entrou !!");
+        	//}
+        	//else {
+        	//	// caso contrário, se tiver algum Cupom para vincular,
+        	//	// o valor será atribuido no Pedido
+        	//	pedido.setIdCupom(id_cupom);
+        	//}
 			
 		}
 		
@@ -132,8 +133,8 @@ public class PedidoHelper implements IViewHelper {
 				Pedido pedido = new Pedido();
 				ItemPedido item_pedido = new ItemPedido();
 				Estoque estoque = new Estoque();
-				Cupom cupomVazio = new Cupom();
-				Cupom cupomSessao = new Cupom();
+				List<Cupom> cuponsVazio = new ArrayList<>();
+				List<Cupom> cuponsDaSessao = new ArrayList<>();
 				List<Produto> produtosVazio = new ArrayList<>();
 				List<Produto> produtosDaSessao = new ArrayList<>();
 				List<Produto> produtoAtualizado = new ArrayList<>();
@@ -148,14 +149,16 @@ public class PedidoHelper implements IViewHelper {
 				// pega o objeto salvo em Sessão com o nome "itensCarrinho",
 				// e passa para o "produtosDaSessao" (fazendo o CAST para o tipo List<Produto>)
 				produtosDaSessao = (List<Produto>) sessao.getAttribute("itensCarrinho");
-				// pega o objeto salvo em Sessão com o nome "cupom",
-				// e passa para o "cupomSessao" (fazendo o CAST para o tipo Cupom)
-				cupomSessao = (Cupom) sessao.getAttribute("cupom");
+				// pega o objeto salvo em Sessão com o nome "cupons",
+				// e passa para o "cuponsDaSessao" (fazendo o CAST para o tipo List<Cupom>)
+				cuponsDaSessao = (List<Cupom>) sessao.getAttribute("cupons");
 				
-				// altera o Cupom que foi selecionado no Pedido,
-				// para o status que "já foi utilizado",
-				// altera no banco a tabela "cupom" da coluna "utilizado" para "sim".
-				cupomDAO.alterarUtilizacaoCupom(cupomSessao.getId());
+				for(Cupom cupom : cuponsDaSessao) {
+					// altera o Cupom que foi selecionado no Pedido,
+					// para o status que "já foi utilizado",
+					// altera no banco a tabela "cupom" da coluna "utilizado" para "sim".
+					cupomDAO.alterarUtilizacaoCupom(cupom.getId());
+				}
 				
 				// após salvar o pedido, será salvo os itens do pedido,
 				// faz um laço de repetição com os produtos selecionado da Sessão,
@@ -209,9 +212,9 @@ public class PedidoHelper implements IViewHelper {
 				// atualiza o objeto "itensCarrinho" que esta salvo em sessão, com o novo objeto de produto vazio
 				sessao.setAttribute("itensCarrinho", produtosVazio);
 				
-				// limpa o cupom do carrinho da sessão,
-				// atualiza o objeto "cupom" que esta salvo em sessão, com o novo objeto de cupom vazio
-				sessao.setAttribute("cupom", cupomVazio);
+				// limpa os cupons selecionados do carrinho da sessão,
+				// atualiza o objeto "cupons" que esta salvo em sessão, com o novo objeto de cupom vazio
+				sessao.setAttribute("cupons", cuponsVazio);
 				
 				// atribui a nova mensagem para poder mostra na pagina .JSP
 				resultado.setMensagem("Cadastro do Pedido salvo com sucesso!");

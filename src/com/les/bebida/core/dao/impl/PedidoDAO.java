@@ -19,7 +19,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into pedido "+
-				"(total_itens, total_frete, total_pedido, status, id_cliente, id_endereco, forma_pagamento, id_cartao_1, valor_cartao_1, id_cartao_2, valor_cartao_2, id_cupom, trocado, dt_cadastro)" +
+				"(total_itens, total_frete, total_pedido, status, id_cliente, id_endereco, forma_pagamento, id_cartao_1, valor_cartao_1, id_cartao_2, valor_cartao_2, total_cupons, trocado, dt_cadastro)" +
 				"values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
@@ -40,7 +40,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 			stmt.setString(9, pedido.getValorCartao1());
 			stmt.setString(10, pedido.getIdCartao2());
 			stmt.setString(11, pedido.getValorCartao2());
-			stmt.setString(12, pedido.getIdCupom());
+			stmt.setString(12, pedido.getTotalCupons());
 			stmt.setString(13, pedido.getTrocado());
 			stmt.setString(14, pedido.getDtCadastro());
 			
@@ -102,7 +102,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setValorCartao1(rs.getString("valor_cartao_1"));
 				pedidoItem.setIdCartao2(rs.getString("id_cartao_2"));
 				pedidoItem.setValorCartao2(rs.getString("valor_cartao_2"));
-				pedidoItem.setIdCupom(rs.getString("id_cupom"));
+				pedidoItem.setTotalCupons(rs.getString("total_cupons"));
 				pedidoItem.setTrocado(rs.getString("trocado"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
@@ -147,7 +147,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setValorCartao1(rs.getString("valor_cartao_1"));
 				pedidoItem.setIdCartao2(rs.getString("id_cartao_2"));
 				pedidoItem.setValorCartao2(rs.getString("valor_cartao_2"));
-				pedidoItem.setIdCupom(rs.getString("id_cupom"));
+				pedidoItem.setTotalCupons(rs.getString("total_cupons"));
 				pedidoItem.setTrocado(rs.getString("trocado"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
@@ -192,7 +192,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setValorCartao1(rs.getString("valor_cartao_1"));
 				pedidoItem.setIdCartao2(rs.getString("id_cartao_2"));
 				pedidoItem.setValorCartao2(rs.getString("valor_cartao_2"));
-				pedidoItem.setIdCupom(rs.getString("id_cupom"));
+				pedidoItem.setTotalCupons(rs.getString("total_cupons"));
 				pedidoItem.setTrocado(rs.getString("trocado"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				
@@ -238,7 +238,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				pedidoItem.setValorCartao1(rs.getString("valor_cartao_1"));
 				pedidoItem.setIdCartao2(rs.getString("id_cartao_2"));
 				pedidoItem.setValorCartao2(rs.getString("valor_cartao_2"));
-				pedidoItem.setIdCupom(rs.getString("id_cupom"));
+				pedidoItem.setTotalCupons(rs.getString("total_cupons"));
 				pedidoItem.setTrocado(rs.getString("trocado"));
 				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				

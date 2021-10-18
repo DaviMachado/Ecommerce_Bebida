@@ -7,7 +7,7 @@ import com.les.bebida.core.strategy.IStrategy;
 /**
  * Classe para validar o campo cartão de crédito do Pedido
  * @author Davi Rodrigues
- * @date 27/09/2021
+ * @date 17/10/2021
  */
 public class ValidarCartaoPedido implements IStrategy {
 
@@ -27,7 +27,7 @@ public class ValidarCartaoPedido implements IStrategy {
 				return ("Favor selecione algum Cartão de Crédito ou cadastre um novo.");
 			}
 			// se tiver cupom sendo utilizado, o valor minimo no cartão é até R$ 5,00
-			else if (pedido.getIdCupom() != null) {
+			else if (!pedido.getTotalCupons().equals("0.0")) {
 				// se foi selecionado 2 cartões de créditos
 				if ((pedido.getIdCartao1() != null) && (pedido.getIdCartao2() != null )) {
 					if (pedido.getIdCartao1().equals(pedido.getIdCartao2())) {
@@ -78,7 +78,7 @@ public class ValidarCartaoPedido implements IStrategy {
 				}
 			}
 			// se NÂO tiver cupom sendo utilizado, o valor minimo no cartão é até R$ 10,00
-			else if (pedido.getIdCupom() == null || pedido.getIdCupom().equals("")) {
+			else if (pedido.getTotalCupons().equals("0.0")) {
 				// se foi selecionado 2 cartões de créditos
 				if ((pedido.getIdCartao1() != null) && (pedido.getIdCartao2() != null)) {
 					if (pedido.getIdCartao1().equals(pedido.getIdCartao2())) {

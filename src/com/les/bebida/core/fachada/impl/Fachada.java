@@ -46,6 +46,7 @@ import com.les.bebida.core.strategy.impl.ValidarCidade;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSegurancaCartao;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaCliente;
 import com.les.bebida.core.strategy.impl.ValidarCupom;
+import com.les.bebida.core.strategy.impl.ValidarCupomBonificacaoPedido;
 import com.les.bebida.core.strategy.impl.ValidarDataCadastro;
 import com.les.bebida.core.strategy.impl.ValidarDataEntradaSaidaEstoque;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
@@ -99,7 +100,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 15/10/2021
+ * @date 17/10/2021
  */
 public class Fachada implements IFachada {
 
@@ -165,6 +166,7 @@ public class Fachada implements IFachada {
 	ValidarCartaoPedido vCartaoPedido = new ValidarCartaoPedido();
 	ValidarCupom vCupom = new ValidarCupom();
 	ValidarFormaDePagamento vFormaDePagamentoPedido = new ValidarFormaDePagamento();
+	ValidarCupomBonificacaoPedido vCupomBonificacaoPedido = new ValidarCupomBonificacaoPedido();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -383,6 +385,7 @@ public class Fachada implements IFachada {
 		regrasSalvarPedido.add(vEnderecoPedido);
 		regrasSalvarPedido.add(vFormaDePagamentoPedido);
 		regrasSalvarPedido.add(vCartaoPedido);
+		regrasSalvarPedido.add(vCupomBonificacaoPedido);
 		regrasSalvarPedido.add(vStatusPedido);
 		regrasSalvarPedido.add(VDataCadastro);
 		/* ---------------------------------------------------------- */

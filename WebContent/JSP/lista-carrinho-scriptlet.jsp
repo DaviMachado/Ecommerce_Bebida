@@ -21,8 +21,8 @@
 	List<Produto> produtosEmSessao = new ArrayList<>();
 	List<Endereco> enderecosCliente = new ArrayList<>();
 	List<CartaoDeCredito> cartoesCliente = new ArrayList<>();
+	List<Cupom> cuponsSessao = new ArrayList<>();
 	Usuario usuarioLogado = new Usuario();
-	Cupom cupomSessao = new Cupom();
 
 	//cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 	HttpSession sessao = request.getSession();
@@ -32,9 +32,9 @@
 	// pega o objeto salvo em Sessão com o nome "usuarioLogado",
 	// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
 	usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
-	// pega o objeto salvo em Sessão com o nome "cupom",
-	// e passa para o novo objeto criado com o nome "cupomSessao", (fazendo o CAST para o tipo Cupom)
-	cupomSessao = (Cupom) sessao.getAttribute("cupom");
+	// pega o objeto salvo em Sessão com o nome "cupons",
+	// e passa para o "cuponsSessao" (fazendo o CAST para o tipo List<Cupom>)
+	cuponsSessao = (List<Cupom>) sessao.getAttribute("cupons");
 	
 	// consulta todos os endereços cadastrados pelo Cliente
 	enderecosCliente = enderecoDAO.consultarEnderecoByIdCliente(usuarioLogado.getId());
@@ -44,12 +44,15 @@
 	double total_itens = 0;
 	double total_frete = 0;
 	double total_pedido = 0;
-	double desconto_cupom = 0;
+	double desconto_cupons = 0;
 	
 	// ajusta o bug de quando abrir o carrinho pela primeira vez,
 	// o valor do cupom criado na sessão, não seja atribuido com o valor nulo
-	if (cupomSessao.getValor() != null) {
-		desconto_cupom = Double.parseDouble(cupomSessao.getValor());
+	if (!cuponsSessao.isEmpty()) {
+		// calculo do desconto (todos os cupons vinculado na Sessão)
+		for(Cupom cupomDaSessao : cuponsSessao) {
+			desconto_cupons += Double.parseDouble(cupomDaSessao.getValor());
+		}
 	}
 	
 	// faz a somatória dos itens selecionados no carrinho
@@ -72,8 +75,16 @@
 	// calculo do total do pedido (total dos itens (+) total do frete)
 	total_pedido = total_itens + total_frete;
 	
-	// calculo o total do pedido com o desconto do cupom
-	total_pedido = (total_pedido - desconto_cupom);
+	// calculo o total do pedido com o desconto dos cupons
+	total_pedido = (total_pedido - desconto_cupons);
+	
+	// faz o arredondamento da variavel "total_pedido" para 2 casas decimais
+	total_pedido = Math.round(total_pedido * 100);
+	total_pedido = total_pedido/100;
+	
+	// faz o arredondamento da variavel "desconto_cupons" para 2 casas decimais
+	desconto_cupons = Math.round(desconto_cupons * 100);
+	desconto_cupons = desconto_cupons/100;
 %>
 
 <body>
@@ -155,12 +166,29 @@
 	
 	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total dos Itens:</b> <%=total_itens %></p>
 	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Frete:</b> <%=total_frete %>0</p>
-	<p class="card-text" align="right" style="margin-right: 70px;"><b>Desconto do Cupom:</b> <%=desconto_cupom %></p>
+	<p class="card-text" align="right" style="margin-right: 70px;"><b>Desconto do Cupom:</b> <%=desconto_cupons %></p>
 	<p class="card-text" align="right" style="margin-right: 70px;"><b>Total do Pedido:</b> <%=total_pedido %></p>
 	
 	<hr align="right" width="20%" size="5" color="black" style="margin-right: 70px;"/>
 	
 	<fieldset class="form-group fieldset_form" style="margin-top: 30px; margin-bottom: 10px !important;">
+		
+		<table border="1" style="margin-top: 30px; margin-left: 70px; margin-right: 70px;">
+			<tr>
+				<th>Nome</th>
+	            <th>Valor do Cupom</th>
+	        </tr>
+			<%
+				for(Cupom cupomDaSessao : cuponsSessao) {
+			%>
+			<tr>
+				<td><%=cupomDaSessao.getNome() %></td>
+				<td><%=cupomDaSessao.getValor() %></td>
+			</tr>
+			<%
+				}
+			%>
+		</table>
 		
 		<!-- form para o verificar o cupom -->
 		<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/verificaCupom">
@@ -295,7 +323,7 @@
 			<!-- ID do Cliente -->
 			<input type="hidden" name="idCliente" id="idCliente" value="<%=usuarioLogado.getId() %>">
 			<!-- ID do Cupom -->
-			<input type="hidden" name="idCupom" id="idCupom" value="<%=cupomSessao.getId() %>">
+			<input type="hidden" name="total_cupons" id="total_cupons" value="<%=desconto_cupons %>">
 			<!-- Total dos Itens -->
 		    <input type="hidden" name="total_itens" id="total_itens" value="<%=total_itens %>">
 		    <!-- Total do Frete -->

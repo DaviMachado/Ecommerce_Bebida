@@ -15,15 +15,14 @@ create table pedido (
     valor_cartao_1	VARCHAR(10),
     id_cartao_2 	BIGINT,
     valor_cartao_2	VARCHAR(10),
-	id_cupom	    BIGINT,
+	total_cupons	VARCHAR(10),
 	trocado		    VARCHAR(3),
     dt_cadastro 	DATE,
 	primary	key	(id),
 	CONSTRAINT fk_ClientePedido FOREIGN KEY (id_cliente) REFERENCES cliente (id),
 	CONSTRAINT fk_EnderecoPedido FOREIGN KEY (id_endereco) REFERENCES endereco (id),
 	CONSTRAINT fk_CartaoPedido_1 FOREIGN KEY (id_cartao_1) REFERENCES cartao_de_credito (id),
-	CONSTRAINT fk_CartaoPedido_2 FOREIGN KEY (id_cartao_2) REFERENCES cartao_de_credito (id),
-	CONSTRAINT fk_CupomPedido FOREIGN KEY (id_cupom) REFERENCES cupom (id)
+	CONSTRAINT fk_CartaoPedido_2 FOREIGN KEY (id_cartao_2) REFERENCES cartao_de_credito (id)
 );
 
 use ecommerce;
