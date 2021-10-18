@@ -61,8 +61,6 @@
 		List<EntidadeDominio> itens_pedido = pedidoItemDAO.consultar(itemPedido);
 		// busca o Endereço do Pedido, pelo ID do endereço do Pedido
 		List<Endereco> enderecos = enderecoDAO.consultarEnderecoById(pedidos.get(0).getIdEndereco());
-		// busca o Cartão de Credito do Pedido, pelo ID do cartão do Pedido
-		List<CartaoDeCredito> cartoes = cartaoDAO.consultarCartaoDeCreditoById(pedidos.get(0).getIdCartao());
 	%>
 
 <body onload="AtivaModal()">
@@ -101,8 +99,8 @@
 	        <th>Total Pedido</th>
 	        <th>Status</th>
 	        <th>Endereço</th>
-	        <th>Cartão de Crédito</th>
-	        <th>Cupom</th>
+	        <th>Forma de Pagamento</th>
+	        <th>Total Cupons</th>
 	        <th>Trocado</th>
        	</tr>
 	    <tr>
@@ -112,8 +110,8 @@
 			<td><%=pedidos.get(0).getTotalPedido() %></td>
 			<td><%=pedidos.get(0).getStatus() %></td>
 			<td><%=enderecos.get(0).getLogradouro() %></td>
-			<td><%=cartoes.get(0).getNome() %></td>
-			<td><%=pedidos.get(0).getIdCupom() %></td>
+			<td><%=pedidos.get(0).getFormaPagamento() %></td>
+			<td><%=pedidos.get(0).getTotalCupons() %></td>
 			<td><%=pedidos.get(0).getTrocado() %></td>
 		</tr>
     </table>

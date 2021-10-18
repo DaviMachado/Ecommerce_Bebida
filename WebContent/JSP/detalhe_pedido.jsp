@@ -88,7 +88,7 @@
 	        <th>Status</th>
 	        <th>Endereço</th>
 	        <th>Forma de Pagamento</th>
-	        <th>Cupom</th>
+	        <th>Total Cupons</th>
 	        <th>Trocado</th>
        	</tr>
 	    <tr>
@@ -99,7 +99,7 @@
 			<td><%=pedidos.get(0).getStatus() %></td>
 			<td><%=enderecos.get(0).getLogradouro() %></td>
 			<td><%=pedidos.get(0).getFormaPagamento() %></td>
-			<td><%=pedidos.get(0).getIdCupom() %></td>
+			<td><%=pedidos.get(0).getTotalCupons() %></td>
 			<td><%=pedidos.get(0).getTrocado() %></td>
 		</tr>
     </table>
