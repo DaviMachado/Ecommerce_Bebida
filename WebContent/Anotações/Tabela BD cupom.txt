@@ -17,3 +17,9 @@ create table cupom (
 use ecommerce;
 
 select * from cupom;
+-----------------------------
+insert do cupom:
+
+insert into cupom(id, nome, valor, tipo, utilizado, id_cliente, dt_cadastro)
+values ('1', 'PROMOCIONAL10', '10', 'promocional', 'nao', null, '2021/10/18');
+-----------------------------
