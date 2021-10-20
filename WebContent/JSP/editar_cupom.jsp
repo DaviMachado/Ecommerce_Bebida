@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 05/09/2021 -->
+<!-- @date 20/10/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -134,6 +134,7 @@
 					      	<option value="promocional">Promocional</option>
 					      	<option value="troca">Troca</option>
 					      	<option value="devolucao">Devolução</option>
+					      	<option value="bonificacao">Bonificação</option>
 				      	</select>
 			  		</div>
 			  	</div>
