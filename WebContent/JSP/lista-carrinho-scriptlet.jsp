@@ -18,11 +18,13 @@
 <%
 	EnderecoDAO enderecoDAO = new EnderecoDAO();
 	CartaoDeCreditoDAO cartaoDAO = new CartaoDeCreditoDAO();
+	CupomDAO cupomDAO = new CupomDAO();
 	List<Produto> produtosEmSessao = new ArrayList<>();
 	List<Endereco> enderecosCliente = new ArrayList<>();
 	List<CartaoDeCredito> cartoesCliente = new ArrayList<>();
 	List<Cupom> cuponsSessao = new ArrayList<>();
 	Usuario usuarioLogado = new Usuario();
+	String concatenacaoCuponsCliente = "";
 
 	//cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 	HttpSession sessao = request.getSession();
@@ -40,6 +42,13 @@
 	enderecosCliente = enderecoDAO.consultarEnderecoByIdCliente(usuarioLogado.getId());
 	// comsulta todos os cartões de credito cadastrados pelo cliente
 	cartoesCliente = cartaoDAO.consultarCartaoDeCreditoByIdCliente(usuarioLogado.getId());
+	// consulta todos os cupons disponiveis do Cliente
+	List<Cupom> cuponsCliente = cupomDAO.consultarCupomByIdCliente(usuarioLogado.getId());
+	
+	// faz a concatenação de todos os cupons disponiveis do cliente para poder mostrar na tela
+	for(Cupom coupon : cuponsCliente) {
+		concatenacaoCuponsCliente += (coupon.getNome() + "; ");
+	}
 	
 	double total_itens = 0;
 	double total_frete = 0;
@@ -173,7 +182,9 @@
 	
 	<fieldset class="form-group fieldset_form" style="margin-top: 30px; margin-bottom: 10px !important;">
 		
-		<table border="1" style="margin-top: 30px; margin-left: 70px; margin-right: 70px;">
+		<h5 style="margin-left: 10px"><u><b>Cupons aplicados no Pedido</b></u></h5>
+		
+		<table border="1" style="margin-left: 10px; margin-bottom: 10px">
 			<tr>
 				<th>Nome</th>
 	            <th>Valor do Cupom</th>
@@ -193,13 +204,15 @@
 		<!-- form para o verificar o cupom -->
 		<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/verificaCupom">
 			<div class="form-row">
+				<!-- Cupons Disponíveis do Cliente -->
 				<div class="form-group col-md-10">
-		  			<!-- adicionado uma coluna com tamanho md-10 em branca para alinhar o campo na pagina -->
+		  			<label>Cupons disponíveis</label>
+				    <textarea class="form-control" name="cuponsDisponiveis" placeholder="Cupons disponíveis" rows="2"><%=concatenacaoCuponsCliente %></textarea>
 		  		</div>
 		  		
 		  		<!-- Cupom -->
 			    <div class="form-group col-md-2">
-			      <label>Cupom</label>
+			      <label>Aplicar Cupom</label>
 			      <input type="text" class="form-control" name="cupom" placeholder="Cupom" maxlength="15" required>
 			    </div>
 			</div>
