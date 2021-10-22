@@ -213,6 +213,8 @@ public class PedidoTrocaHelper implements IViewHelper {
 					total_itens += (Double.parseDouble(todosItensPedidoTrocaSessao.get(i).getItemPedido().getProduto().getQuantidadeSelecionada()) * Double.parseDouble(todosItensPedidoTrocaSessao.get(i).getItemPedido().getProduto().getPrecoDeVenda()));
 				}
 				
+				novoPedido.setTotalItens("0");
+				novoPedido.setTotalFrete("0");
 				novoPedido.setTotalPedido(Double.toString(total_itens));
 				novoPedido.setStatus("TROCA SOLICITADA");
 				novoPedido.setIdCliente(pedidoOriginal.get(0).getIdCliente());
@@ -222,6 +224,7 @@ public class PedidoTrocaHelper implements IViewHelper {
 				novoPedido.setValorCartao1(pedidoOriginal.get(0).getValorCartao1());
 				novoPedido.setIdCartao2(pedidoOriginal.get(0).getIdCartao2());
 				novoPedido.setValorCartao2(pedidoOriginal.get(0).getValorCartao2());
+				novoPedido.setTotalCupons("0");
 				novoPedido.setTrocado("sim");
 				novoPedido.setDtCadastro(dataAtual);
 				
