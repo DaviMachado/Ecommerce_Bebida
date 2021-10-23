@@ -45,9 +45,16 @@
 	// consulta todos os cupons disponiveis do Cliente
 	List<Cupom> cuponsCliente = cupomDAO.consultarCupomByIdCliente(usuarioLogado.getId());
 	
-	// faz a concatenação de todos os cupons disponiveis do cliente para poder mostrar na tela
-	for(Cupom coupon : cuponsCliente) {
-		concatenacaoCuponsCliente += (coupon.getNome() + "; ");
+	// verifica se não tem nenhum Cupom disponivel para o Cliente,
+	// para poder setar uma mensagem na tela e não deixar vazia.
+	if (cuponsCliente.isEmpty()){
+		concatenacaoCuponsCliente = "Nenhum Cupom pessoal disponível !";
+	}
+	else {
+		// faz a concatenação de todos os cupons disponiveis do cliente para poder mostrar na tela
+		for(Cupom coupon : cuponsCliente) {
+			concatenacaoCuponsCliente += (coupon.getNome() + "; ");
+		}	
 	}
 	
 	// pega a mensagem que estava pendurado na requisição,
