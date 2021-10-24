@@ -51,7 +51,7 @@
 		  </nav>
 		  <!-- Fim Header -->
 	
-		<fieldset class="form-group fieldset_form" style="margin-top: 30px">
+		<fieldset class="form-group fieldset_form" style="margin-top: 30px; margin-bottom: 30px !important;">
 		<legend align="center">Formulário para edição do Endereço</legend>
 			<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastroEndereco">
 				
