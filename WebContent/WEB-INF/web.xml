@@ -79,6 +79,11 @@
     <servlet-name>ControllerServlet</servlet-name>
     <url-pattern>/pedidoTroca</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ControllerServlet</servlet-name>
+    <url-pattern>/graficoAnalise</url-pattern>
+  </servlet-mapping>
  
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

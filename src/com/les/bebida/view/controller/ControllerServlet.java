@@ -24,6 +24,7 @@ import com.les.bebida.view.helper.impl.ClienteHelper;
 import com.les.bebida.view.helper.impl.CupomHelper;
 import com.les.bebida.view.helper.impl.EnderecoHelper;
 import com.les.bebida.view.helper.impl.EstoqueHelper;
+import com.les.bebida.view.helper.impl.GraficoAnaliseHelper;
 import com.les.bebida.view.helper.impl.ItemCarrinhoHelper;
 import com.les.bebida.view.helper.impl.ItemPedidoHelper;
 import com.les.bebida.view.helper.impl.LoginHelper;
@@ -37,7 +38,7 @@ import com.les.bebida.view.helper.impl.VerificaCupomHelper;
  * configurado conforme o arquivo web.xml
  * 
  * @author Davi Rodrigues
- * @date 07/09/2021
+ * @date 27/10/2021
  */
 public class ControllerServlet extends HttpServlet {
 	
@@ -72,6 +73,7 @@ public class ControllerServlet extends HttpServlet {
 		viewHelper.put("/Ecommerce_Bebida/cupom", new CupomHelper());
 		viewHelper.put("/Ecommerce_Bebida/verificaCupom", new VerificaCupomHelper());
 		viewHelper.put("/Ecommerce_Bebida/pedidoTroca", new PedidoTrocaHelper());
+		viewHelper.put("/Ecommerce_Bebida/graficoAnalise", new GraficoAnaliseHelper());
 	}
 	
 	// Servlet Principal do sistema
