@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 27/10/2021 -->
+<!-- @date 29/10/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -152,7 +152,7 @@
 			  	</div>
 			  	
 			  	<!-- Botão Voltar -->
-				<div align="right" style="margin-top: 10px;">
+				<div align="right">
 					<input style="margin-left: 600px" type="button" value="Voltar" onclick="history.back()">
 				</div>
 				
