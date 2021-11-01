@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 26/10/2021 -->
+<!-- @date 01/11/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -12,7 +12,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Cadastro de Produto</title>
+		<title>Edição de Produto</title>
 		
 		<!-- importações para funcionar o Header e o Footer -->
 		<link href="./CSS/bootstrap.min.css" rel="stylesheet">
@@ -57,7 +57,7 @@
 	  <!-- Fim Header -->
 	  
 		<fieldset class="form-group fieldset_form" style="margin-top: 30px; margin-bottom: 30px !important;">
-		<legend align="center">Formulário para cadastro de Produto</legend>
+		<legend align="center">Formulário para edição de Produto</legend>
 			<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/cadastroProduto">
 			  	
 				<div class="form-row">
