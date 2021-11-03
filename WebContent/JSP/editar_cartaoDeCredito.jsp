@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 05/10/2021 -->
+<!-- @date 03/11/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -11,7 +11,7 @@
 
 <html>
 <head>
-	<title>Cartao De Credito</title>
+	<title>Edição de Cartão de Crédito</title>
 	<link href="./CSS/CartaoDeCredito.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="./JS/CartaoDeCredito.js"></script>
     <script src="https://unpkg.com/imask"></script>
@@ -81,7 +81,7 @@
 	  <!-- Fim Header -->
 
 	<div class="payment-title" style="margin-top: 85px;">
-        <h2>Cadastro de Cartão de Crédito</h2>
+        <h2>Edição de Cartão de Crédito</h2>
     </div>
     
     <!-- Cartão fisico da tela -->
