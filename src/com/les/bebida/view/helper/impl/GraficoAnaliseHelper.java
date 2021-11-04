@@ -73,10 +73,54 @@ public class GraficoAnaliseHelper implements IViewHelper {
 				List<Produto> produto2 = new ArrayList<>();
 				List<Produto> produto3 = new ArrayList<>();
 				
-				// busca os nomes dos produtos conforme a consulta acima (3 produtos mais vendidos)
-				produto1 = produtoDAO.consultarProdutoById(graficos.get(0).getProduto().getId());
-				produto2 = produtoDAO.consultarProdutoById(graficos.get(1).getProduto().getId());
-				produto3 = produtoDAO.consultarProdutoById(graficos.get(2).getProduto().getId());
+				Produto produtoVazio = new Produto();
+				GraficoAnalise graficoVazio = new GraficoAnalise();
+				
+				produtoVazio.setNome("VAZIO");
+				produtoVazio.setQuantidadeSelecionada("0");
+				
+				graficoVazio.setProduto(produtoVazio);
+				
+				// ajuste do BUG de quando tiver nenhum pedido feito,
+				// (se tiver nenhum pedido, a lista será retornada zerada),
+				// solução: verificação da quantidade da lista "graficos" retornada do banco
+				if (graficos.size() == 0) {
+					// adição do produto VAZIO nas variaveis que serão usados no Gráfico
+					produto1.add(produtoVazio);
+					produto2.add(produtoVazio);
+					produto3.add(produtoVazio);
+					
+					// adição do produto VAZIO na lista que retornou zerada do banco
+					graficos.add(graficoVazio);
+					graficos.add(graficoVazio);
+					graficos.add(graficoVazio);
+				}
+				else if (graficos.size() == 1) {
+					// adiciona somente 2 produtos VAZIO nas variaveis que serão usados no Gráfico
+					produto1 = produtoDAO.consultarProdutoById(graficos.get(0).getProduto().getId());
+					produto2.add(produtoVazio);
+					produto3.add(produtoVazio);
+					
+					// adiciona somente 2 produtos VAZIO na lista que retornou do banco
+					graficos.add(graficoVazio);
+					graficos.add(graficoVazio);
+				}
+				else if (graficos.size() == 2) {
+					// adiciona somente 1 produto VAZIO nas variaveis que serão usados no Gráfico
+					produto1 = produtoDAO.consultarProdutoById(graficos.get(0).getProduto().getId());
+					produto2 = produtoDAO.consultarProdutoById(graficos.get(1).getProduto().getId());
+					produto3.add(produtoVazio);
+					
+					// adiciona somente 1 produto VAZIO na lista que retornou do banco
+					graficos.add(graficoVazio);
+				}
+				// se o banco retornar 3 produtos
+				else {
+					// busca os nomes dos produtos, conforme a consulta realizada acima (3 produtos mais vendidos)
+					produto1 = produtoDAO.consultarProdutoById(graficos.get(0).getProduto().getId());
+					produto2 = produtoDAO.consultarProdutoById(graficos.get(1).getProduto().getId());
+					produto3 = produtoDAO.consultarProdutoById(graficos.get(2).getProduto().getId());
+				}
 				
 				// pendura o "produto1" e o "valorProduto1", para poder mandar para o arquivo .JSP
 				request.setAttribute("produto1", produto1.get(0).getNome());
