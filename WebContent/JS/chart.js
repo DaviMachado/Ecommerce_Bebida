@@ -16,12 +16,26 @@ function graficoChart(){
 	        labels: [label1, label2, label3],
 	        
 	        
-	        datasets: [{
-	            label: 'Grafico',
-	            backgroundColor: ['green', 'blue', 'yellow'],
-	            borderColor: 'rgb(255, 99, 132)',
-	            data: [valor1, valor2, valor3]
-	        }]
+	        datasets: [
+	        	{
+		            label: label1,
+		            backgroundColor: ['green'],
+		            borderColor: 'rgb(0,128,0)',
+		            data: [valor1, 0, 0]
+	        	},
+	        	{
+		            label: label2,
+		            backgroundColor: ['blue'],
+		            borderColor: 'rgb(0,0,255)',
+		            data: [0, valor2, 0]
+	        	},
+	        	{
+		            label: label3,
+		            backgroundColor: ['yellow'],
+		            borderColor: 'rgb(255,255,0)',
+		            data: [0, 0, valor3]
+	        	}
+	        ]
 	    },
 	
 	    options: {
