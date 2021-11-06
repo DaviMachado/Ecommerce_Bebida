@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 27/10/2021 -->
+<!-- @date 06/11/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -22,20 +22,38 @@
 	</head>
 	
 	<%
-		// pega o nome e o valor do primeiro produto que estava pendurado na requisição,
+		List<String> totalColunasChart = new ArrayList<>();
+		List<String> totalProduto1Chart = new ArrayList<>();
+		List<String> totalProduto2Chart = new ArrayList<>();
+		List<String> totalProduto3Chart = new ArrayList<>();
+	
+		// pega o nome do primeiro produto que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "GraficoAnaliseHelper"
-		String produto1 = (String)request.getAttribute("produto1");
-		String valorProduto1 = (String)request.getAttribute("valorProduto1");
+		String nomeProduto1 = (String)request.getAttribute("nomeProduto1");
 		
-		// pega o nome e o valor do segundo produto que estava pendurado na requisição,
+		// pega o nome do segundo produto que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "GraficoAnaliseHelper"
-		String produto2 = (String)request.getAttribute("produto2");
-		String valorProduto2 = (String)request.getAttribute("valorProduto2");
+		String nomeProduto2 = (String)request.getAttribute("nomeProduto2");
 		
-		// pega o nome e o valor do terceiro produto que estava pendurado na requisição,
+		// pega o nome do terceiro produto que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "GraficoAnaliseHelper"
-		String produto3 = (String)request.getAttribute("produto3");
-		String valorProduto3 = (String)request.getAttribute("valorProduto3");
+		String nomeProduto3 = (String)request.getAttribute("nomeProduto3");
+		
+		// pega o total de colunas que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "GraficoAnaliseHelper"
+		totalColunasChart = (List<String>)request.getAttribute("totalColunas");
+		
+		// pega o total de valores do produto1 que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "GraficoAnaliseHelper"
+		totalProduto1Chart = (List<String>)request.getAttribute("totalValorProduto1");
+		
+		// pega o total de valores do produto2 que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "GraficoAnaliseHelper"
+		totalProduto2Chart = (List<String>)request.getAttribute("totalValorProduto2");
+				
+		// pega o total de valores do produto3 que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "GraficoAnaliseHelper"
+		totalProduto3Chart = (List<String>)request.getAttribute("totalValorProduto3");
 	%>
 	
 	<body onload="AtivaGrafico()">
@@ -88,14 +106,62 @@
 		  		</div>
 	  		</form>
 	  		
-	  		<!-- Produtos -->
-            <input type="hidden" name="produto1" id="produto1" value="<%=produto1 %>">
-            <input type="hidden" name="produto2" id="produto2" value="<%=produto2 %>">
-            <input type="hidden" name="produto3" id="produto3" value="<%=produto3%>">
-            <!-- Valores Produtos -->
-            <input type="hidden" name="valorProduto1" id="valorProduto1" value="<%=valorProduto1 %>">
-            <input type="hidden" name="valorProduto2" id="valorProduto2" value="<%=valorProduto2 %>">
-            <input type="hidden" name="valorProduto3" id="valorProduto3" value="<%=valorProduto3 %>">
+	  		<!-- Total de colunas (eixo X) no Chart.js -->
+	  		<select style="display: none" id="ColunasChart">
+				<% 
+					for(String coluna : totalColunasChart) {
+					      	
+					// lista todas as colunas dentro do "value", de cada TAG "<option>".
+				%>
+				<option value="<%=coluna%>"><%=coluna%></option>
+				<%
+					}
+				%>
+			</select>
+			
+			<!-- Total de valores do Produto1 no Chart.js -->
+	  		<select style="display: none" id="Produto1Chart">
+				<% 
+					for(String valor : totalProduto1Chart) {
+					      	
+						// lista todos os valores de Produto1 dentro do "value", de cada TAG "<option>".
+				%>
+				<option value="<%=valor%>"><%=valor%></option>
+				<%
+					}
+				%>
+			</select>
+			
+			<!-- Total de valores do Produto2 no Chart.js -->
+	  		<select style="display: none" id="Produto2Chart">
+				<% 
+					for(String valor : totalProduto2Chart) {
+					      	
+						// lista todos os valores de Produto2 dentro do "value", de cada TAG "<option>".
+				%>
+				<option value="<%=valor%>"><%=valor%></option>
+				<%
+					}
+				%>
+			</select>
+			
+			<!-- Total de valores do Produto3 no Chart.js -->
+	  		<select style="display: none" id="Produto3Chart">
+				<% 
+					for(String valor : totalProduto3Chart) {
+					      	
+						// lista todos os valores de Produto3 dentro do "value", de cada TAG "<option>".
+				%>
+				<option value="<%=valor%>"><%=valor%></option>
+				<%
+					}
+				%>
+			</select>
+	  		
+	  		<!-- Nomes dos Produtos -->
+            <input type="hidden" name="nomeProduto1" id="nomeProduto1" value="<%=nomeProduto1 %>">
+            <input type="hidden" name="nomeProduto2" id="nomeProduto2" value="<%=nomeProduto2 %>">
+            <input type="hidden" name="nomeProduto3" id="nomeProduto3" value="<%=nomeProduto3%>">
 		</fieldset>
 		
 		<!-- Grafico gerado pelo Chart.js -->

@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.GraficoAnalise;
-import com.les.bebida.core.dominio.ItemPedido;
 import com.les.bebida.core.dominio.Produto;
 
 public class GraficoAnaliseDAO extends AbstractJdbcDAO {
@@ -90,5 +89,41 @@ public class GraficoAnaliseDAO extends AbstractJdbcDAO {
 		}
 				
 	} // consultar os 3 Produtos mais vendidos com filtros de datas
+	
+	
+	/**
+	 * Metodo para consultar a quantidade de Produtos vendidos por ID Produto, Mes e Ano
+	 */
+	public List<GraficoAnalise> consultarQtdeProdutosVendidosByIdProdutoMesAno (String idProduto, String mes, String ano) {
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("SELECT id_produto, sum(quantidade) as quantidade_vendido  FROM pedido_item WHERE id_produto = ? AND MONTH(dt_cadastro) = ? AND YEAR(dt_cadastro) = ? group by id_produto;");
+			stmt.setString(1, idProduto);
+			stmt.setString(2, mes);
+			stmt.setString(3, ano);
+			ResultSet rs = stmt.executeQuery();
+			
+			List<GraficoAnalise> itens_grafico = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Grafico Analise
+				GraficoAnalise item_grafico = new GraficoAnalise();
+				Produto produto = new Produto();
+				
+				produto.setId(rs.getString("id_produto"));
+				produto.setQuantidadeSelecionada(rs.getString("quantidade_vendido"));
+				item_grafico.setProduto(produto);
+				
+				// adicionando o objeto à lista
+				itens_grafico.add(item_grafico);
+			}
+				
+			rs.close();
+			stmt.close();
+			return itens_grafico;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+				
+	} // consultar a quantidade de Produtos vendidos por ID Produto, Mes e Ano
 	
 }
