@@ -276,6 +276,12 @@ public class GraficoAnaliseHelper implements IViewHelper {
 				// fim do preenchimento dos valores de cada produto (conforme a coluna criada a cima)
 				//
 				
+				// pendura o "dtInicio" na requisição, para poder mandar para o arquivo .JSP
+				request.setAttribute("dtInicio", dtInicio);
+				
+				// pendura o "dtFim" na requisição, para poder mandar para o arquivo .JSP
+				request.setAttribute("dtFim", dtFim);
+				
 				// pendura o "nomeProduto1" na requisição, para poder mandar para o arquivo .JSP
 				request.setAttribute("nomeProduto1", nomeProduto1.get(0).getNome());
 				
