@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 27/10/2021 -->
+<!-- @date 08/11/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -48,7 +48,7 @@
 		<!-- Fim Header -->
 		
 		<fieldset class="form-group fieldset_form" style="margin-top: 52px">
-		<legend align="center">Gerenciamento de Gráficos</legend>
+		<legend align="center">Gerenciamento de Gráficos - 3 Produtos mais vendidos</legend>
 			<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/graficoAnalise">
 				<div class="form-row">
 					<div class="form-group col-md-4">
