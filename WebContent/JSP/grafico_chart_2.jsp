@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 09/11/2021 -->
+<!-- @date 10/11/2021 -->
 
 <%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
@@ -34,6 +34,11 @@
 		// pega a data fim que foi digitado na tela, que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "GraficoAnaliseHelper"
 		String dtFim = (String)request.getAttribute("dtFim");
+		
+		// separa o dia-mês-ano que foi selecionado na tela,
+		// para poder exibir as datas no formato correto na tela
+		String[] resultInicio  = dtInicio.split("-");
+		String[] resultFim  = dtFim.split("-");
 				
 		// pega o nome do primeiro produto que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "GraficoAnaliseHelper"
@@ -172,7 +177,7 @@
             <input type="hidden" name="nomeProduto3" id="nomeProduto3" value="<%=nomeProduto3%>">
 		</fieldset>
 		
-		<h4 style="margin-left: 430px;">Período consultado: <%=dtInicio %> até <%=dtFim %></h4>
+		<h4 style="margin-left: 430px;">Período consultado: <%=resultInicio[2] %>/<%=resultInicio[1] %>/<%=resultInicio[0] %> até <%=resultFim[2] %>/<%=resultFim[1] %>/<%=resultFim[0] %></h4>
 		
 		<!-- Grafico gerado pelo Chart.js -->
 		<div style="width: 50%; height: 50%; margin-left: 350px;">
