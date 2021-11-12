@@ -260,4 +260,49 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		}
 	} // Listar Cliente do tipo CLIENTE
 	
+	
+	/**
+	 * Metodo para Listar o ultimo codigo do Cliente cadastrado no sistema
+	 * @param entidade
+	 * @return
+	 */
+	public List<Cliente> consultarUltimoCodigoSistemaCadastrado (){
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM cliente WHERE cd_sistema=(SELECT max(cd_sistema) FROM cliente)");
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Cliente> clientes = new ArrayList<>();
+			while (rs.next()) {
+				Cliente cliente = new Cliente();
+				Usuario usuario = new Usuario();
+				
+				cliente.setId(rs.getString("id"));
+				
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				cliente.setUsuario(usuario);
+				
+				cliente.setNome(rs.getString("nome"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setDt_nasc(rs.getString("dt_Nasc"));
+				cliente.setSexo(rs.getString("sexo"));
+				cliente.setTelefone(rs.getString("telefone"));
+				cliente.setCdSistema(rs.getString("cd_sistema"));
+				cliente.setStatus(rs.getString("status"));
+				cliente.setDtCadastro(rs.getString("dt_cadastro"));
+				cliente.setTipo(rs.getString("tipo"));
+				
+				// adicionando o objeto à lista
+				clientes.add(cliente);
+			}
+				
+			rs.close();
+			stmt.close();
+			return clientes;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar o ultimo codigo do Cliente cadastrado no sistema
+	
 }
