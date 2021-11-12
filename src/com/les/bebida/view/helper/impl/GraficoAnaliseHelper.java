@@ -28,10 +28,19 @@ public class GraficoAnaliseHelper implements IViewHelper {
 		// Verifica qual operação do botão foi acionada
 		String operacao = request.getParameter("operacao");
 		
-		grafico = new GraficoAnalise();
+		String dtInicio = null;
+		String dtFim = null;
 		
 		if (("CONSULTAR").equals(operacao)) {
-
+			grafico = new GraficoAnalise();
+			
+			// capturando os valores do HTML e passando para o Gráfico
+			dtInicio = request.getParameter("dtInicio");
+			dtFim = request.getParameter("dtFim");
+			
+			// Atribuindo os valores capturados do HTML para o Gráfico
+			grafico.setDtInicio(dtInicio);
+			grafico.setDtFim(dtFim);
 		}
 		
 		else if (("SALVAR").equals(operacao)) {

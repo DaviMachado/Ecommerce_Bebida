@@ -53,6 +53,7 @@ import com.les.bebida.core.strategy.impl.ValidarDataCadastro;
 import com.les.bebida.core.strategy.impl.ValidarDataEntradaSaidaEstoque;
 import com.les.bebida.core.strategy.impl.ValidarDataNascimento;
 import com.les.bebida.core.strategy.impl.ValidarDataValidadeCartao;
+import com.les.bebida.core.strategy.impl.ValidarDatasGraficoAnalise;
 import com.les.bebida.core.strategy.impl.ValidarDescricaoProduto;
 import com.les.bebida.core.strategy.impl.ValidarEnderecoPedido;
 import com.les.bebida.core.strategy.impl.ValidarEntradaEstoque;
@@ -102,7 +103,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 27/10/2021
+ * @date 11/11/2021
  */
 public class Fachada implements IFachada {
 
@@ -169,6 +170,7 @@ public class Fachada implements IFachada {
 	ValidarCupom vCupom = new ValidarCupom();
 	ValidarFormaDePagamento vFormaDePagamentoPedido = new ValidarFormaDePagamento();
 	ValidarCupomBonificacaoPedido vCupomBonificacaoPedido = new ValidarCupomBonificacaoPedido();
+	ValidarDatasGraficoAnalise vDatasGraficoAnalise = new ValidarDatasGraficoAnalise();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -407,7 +409,7 @@ public class Fachada implements IFachada {
 		
 		/* ----- Adicionando as Strategy's na lista do Grafico Analise ----- */
 		/* ----- CONSULTAR ----- */
-		//regrasConsultarGraficoAnalise.add(VDataCadastro);
+		regrasConsultarGraficoAnalise.add(vDatasGraficoAnalise);
 		/* ---------------------------------------------------------- */
 
 		/* ----- REGRAS DA ENTIDADE CLIENTE ----- */
