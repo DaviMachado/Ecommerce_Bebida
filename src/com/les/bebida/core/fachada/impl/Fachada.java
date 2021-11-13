@@ -47,6 +47,7 @@ import com.les.bebida.core.strategy.impl.ValidarCategoriaProduto;
 import com.les.bebida.core.strategy.impl.ValidarCidade;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSegurancaCartao;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaCliente;
+import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaLogin;
 import com.les.bebida.core.strategy.impl.ValidarCupom;
 import com.les.bebida.core.strategy.impl.ValidarCupomBonificacaoPedido;
 import com.les.bebida.core.strategy.impl.ValidarDataCadastro;
@@ -103,7 +104,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 12/11/2021
+ * @date 13/11/2021
  */
 public class Fachada implements IFachada {
 
@@ -127,6 +128,7 @@ public class Fachada implements IFachada {
 	ValidarSenhaIgualCliente vSenhaIgualCliente = new ValidarSenhaIgualCliente();
 	ValidarDataCadastro VDataCadastro = new ValidarDataCadastro();
 	ValidarCodigoSistemaCliente vCodigoClienteSys = new ValidarCodigoSistemaCliente();
+	ValidarCodigoSistemaLogin vCodigoLoginSys = new ValidarCodigoSistemaLogin();
 	ValidarExistenciaLogin vExistenciaLogin = new ValidarExistenciaLogin();
 	ValidarExistenciaLoginAndSenha vExistenciaLoginAndSenha = new ValidarExistenciaLoginAndSenha();
 	ValidarCEP vCEP = new ValidarCEP();
@@ -312,6 +314,7 @@ public class Fachada implements IFachada {
 		regrasSalvarLogin.add(vLogin);
 		regrasSalvarLogin.add(vSenhaIgual);
 		regrasSalvarLogin.add(vExistenciaLogin);
+		regrasSalvarLogin.add(vCodigoLoginSys);
 		regrasSalvarLogin.add(vStatusUsuario);
 		regrasSalvarLogin.add(VDataCadastro);
 		regrasSalvarLogin.add(vTipoUsuario);

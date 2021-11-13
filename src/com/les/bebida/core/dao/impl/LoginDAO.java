@@ -21,8 +21,8 @@ public class LoginDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into cliente "+
-				"(login, senha, nome, telefone, status, dt_cadastro, tipo)" +
-				"values (?,?,?,?,?,?,?)";
+				"(login, senha, nome, telefone, cd_sistema, status, dt_cadastro, tipo)" +
+				"values (?,?,?,?,?,?,?,?)";
 		
 		try {
 			Usuario usuario = (Usuario) entidade;
@@ -35,9 +35,10 @@ public class LoginDAO extends AbstractJdbcDAO {
 			stmt.setString(2,usuario.getSenha());
 			stmt.setString(3,usuario.getNome());
 			stmt.setString(4, usuario.getTelefone());
-			stmt.setString(5, usuario.getStatus());
-			stmt.setString(6, usuario.getDtCadastro());
-			stmt.setString(7, usuario.getTipo());
+			stmt.setString(5, usuario.getCdSistema());
+			stmt.setString(6, usuario.getStatus());
+			stmt.setString(7, usuario.getDtCadastro());
+			stmt.setString(8, usuario.getTipo());
 			
 			// executa
 			stmt.execute();
@@ -70,6 +71,7 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setSenha(rs.getString("senha"));
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
+				usuarioItem.setCdSistema(rs.getString("cd_sistema"));
 				usuarioItem.setStatus(rs.getString("status"));
 				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
 				usuarioItem.setTipo(rs.getString("tipo"));
@@ -110,6 +112,7 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setSenha(rs.getString("senha"));
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
+				usuarioItem.setCdSistema(rs.getString("cd_sistema"));
 				usuarioItem.setStatus(rs.getString("status"));
 				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
 				usuarioItem.setTipo(rs.getString("tipo"));
@@ -154,6 +157,7 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setSenha(rs.getString("senha"));
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
+				usuarioItem.setCdSistema(rs.getString("cd_sistema"));
 				usuarioItem.setStatus(rs.getString("status"));
 				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
 				usuarioItem.setTipo(rs.getString("tipo"));
@@ -192,5 +196,44 @@ public class LoginDAO extends AbstractJdbcDAO {
 		// TODO Auto-generated method stub
 		
 	} // Excluir
+	
+	
+	/**
+	 * Metodo para Listar o ultimo codigo do Cliente cadastrado no sistema
+	 * @param entidade
+	 * @return
+	 */
+	public List<Usuario> consultarUltimoCodigoSistemaCadastrado (){
+		openConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM cliente WHERE cd_sistema=(SELECT max(cd_sistema) FROM cliente)");
+			ResultSet rs = stmt.executeQuery();
+			
+			List<Usuario> usuarios = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Usuario
+				Usuario usuarioItem = new Usuario();
+				
+				usuarioItem.setId(rs.getString("id"));
+				usuarioItem.setLogin(rs.getString("login"));
+				usuarioItem.setSenha(rs.getString("senha"));
+				usuarioItem.setNome(rs.getString("nome"));
+				usuarioItem.setTelefone(rs.getString("telefone"));
+				usuarioItem.setCdSistema(rs.getString("cd_sistema"));
+				usuarioItem.setStatus(rs.getString("status"));
+				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
+				usuarioItem.setTipo(rs.getString("tipo"));
+				
+				// adicionando o objeto à lista
+				usuarios.add(usuarioItem);
+			}
+				
+			rs.close();
+			stmt.close();
+			return usuarios;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar o ultimo codigo do Cliente cadastrado no sistema 
 	
 }
