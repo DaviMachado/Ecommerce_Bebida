@@ -296,4 +296,30 @@ public class ItemPedidoDAO extends AbstractJdbcDAO {
 				
 	} // consultar os 3 Produtos mais vendidos
 	
+	
+	/**
+	 * Metodo para alterar a nova quantidade do Item do Pedido
+	 * @param entidade
+	 */
+	public void alterarQuantidadeItemPedido (String qtdeItemPedido, String idItemPedido) {
+		openConnection();
+		
+		String sql = "update pedido_item set " +
+					 "quantidade=? " +
+					 "where id=?";
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, qtdeItemPedido);
+			stmt.setString(2, idItemPedido);
+			
+			stmt.execute();
+			stmt.close();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Alterar a nova quantidade do Item do Pedido
+	
 }

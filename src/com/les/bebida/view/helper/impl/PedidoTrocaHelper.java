@@ -77,6 +77,9 @@ public class PedidoTrocaHelper implements IViewHelper {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
 				String idPedido = request.getParameter("idPedido");
 				String idItemPedido = request.getParameter("idItemPedido");
+				String qtdeItemParaTroca = request.getParameter("qtdeItemParaTroca");
+				
+				boolean adicionaNovoItemParaTroca = true;
 				
 				ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
 				PedidoTroca pedidoTroca = new PedidoTroca();
@@ -85,9 +88,6 @@ public class PedidoTrocaHelper implements IViewHelper {
 				
 				// busca o Item do Pedido selecionado na tela
 				itemPedidoSelecionado = itemPedidoDAO.consultarItemPedidoById(idItemPedido);
-				
-				// guarda o Item do Pedido no objeto "pedidoTroca"
-				pedidoTroca.setItemPedido(itemPedidoSelecionado.get(0));
 				
 				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 				HttpSession sessao = request.getSession();
@@ -100,15 +100,93 @@ public class PedidoTrocaHelper implements IViewHelper {
 				// se o item do Pedido que esta sendo selecionado é do mesmo Pedido do primeiro item da Sessão,
 				// se for do mesmo Pedido, ele será adicionado na lista da Sessão "itensPedidoTroca"
 				if (itensParaAdicionarAoPedidoTroca.isEmpty() || itensParaAdicionarAoPedidoTroca.get(0).getItemPedido().getIdPedido().equals(itemPedidoSelecionado.get(0).getIdPedido())) {
-					// passa o item selecionado para a variavel que será responsavel para atualizar a sessão dos itens de troca do Pedido
-					itensParaAdicionarAoPedidoTroca.add(pedidoTroca);
 					
+					// a lista da Sessão ja tem algum Item?
+					if (itensParaAdicionarAoPedidoTroca.size() > 0) {
+						// faz um laço de repetição para somar a QUANTIDADE do item para troca,
+						// com a quantidade do item que esta salvo na Sessão,
+						// caso seja MAIOR do que disponivel para troca, será mostrado uma mensagem de erro,
+						// caso contrario, será somado com a quantidade que esta na Sessão
+						for (int i = 0; i< itensParaAdicionarAoPedidoTroca.size(); i++) {
+							// o ID Item Pedido que esta na requisição, é igual ao ID Item Pedido que esta na Sessão?
+							if (itemPedidoSelecionado.get(0).getId().equals(itensParaAdicionarAoPedidoTroca.get(i).getItemPedido().getId())) {
+								// soma a quantidade que foi selecionado na tela, com a quantidade que esta na Sessão
+								int somatoriaDasQuantidades = (Integer.parseInt(qtdeItemParaTroca) + Integer.parseInt(itensParaAdicionarAoPedidoTroca.get(i).getItemPedido().getProduto().getQuantidadeSelecionada()));
+								
+								if (somatoriaDasQuantidades > Integer.parseInt(itemPedidoSelecionado.get(0).getProduto().getQuantidadeSelecionada())) {
+									// atribui a nova mensagem para poder mostra na pagina .JSP
+									resultado.setMensagem("Quantidade selecionada para Troca, é MAIOR do que disponivel no Item!");
+									
+									adicionaNovoItemParaTroca = false;
+									break;
+								}
+								else {
+									// feito o CAST de INT para String, para poder atualizar a quantidade selecionada com a somatoria
+									itemPedidoSelecionado.get(0).getProduto().setQuantidadeSelecionada(Integer.toString(somatoriaDasQuantidades));
+									
+									// atualiza o Item do Pedido no objeto "pedidoTroca"
+									pedidoTroca.setItemPedido(itemPedidoSelecionado.get(0));
+									
+									// ".set" do ArrayList faz o seguinte:
+									// set(int index, Object element):
+									// Substitui o i-ésimo elemento da lista pelo elemento especificado.
+									itensParaAdicionarAoPedidoTroca.set(i, pedidoTroca);
+									
+									// atribui a nova mensagem para poder mostra na pagina .JSP
+									resultado.setMensagem("Quantidade selecionada para Troca, atualizado com sucesso!");
+									
+									adicionaNovoItemParaTroca = false;
+									break;
+								}
+							}
+							else {
+								// não encontrou nenhum item igual da Sessão,
+								// então seta a variavel "adicionaNovoItemParaTroca" como TRUE
+								adicionaNovoItemParaTroca = true;
+							}
+						}
+						
+						// verifica se é para adicionar um novo item na Sessão para Troca
+						if (adicionaNovoItemParaTroca) {
+							// salva na Sessão a QUANTIDADE do Item do Pedido para Troca, conforme digitado na tela
+							itemPedidoSelecionado.get(0).getProduto().setQuantidadeSelecionada(qtdeItemParaTroca);
+							
+							// guarda o Item do Pedido no objeto "pedidoTroca"
+							pedidoTroca.setItemPedido(itemPedidoSelecionado.get(0));
+							
+							// passa o item selecionado para a variavel que será responsavel para atualizar a sessão dos itens de troca do Pedido
+							itensParaAdicionarAoPedidoTroca.add(pedidoTroca);
+							
+							// atribui a nova mensagem para poder mostra na pagina .JSP
+							resultado.setMensagem("Item adicionado para a Troca com sucesso!");
+						}
+					}
+					// SE a lista da Sessão esta VAZIA
+					else {
+						// a QUANTIDADE do item para Troca é MAIOR que a quantidade do item que esta na tela?
+						if (Integer.parseInt(qtdeItemParaTroca) > Integer.parseInt(itemPedidoSelecionado.get(0).getProduto().getQuantidadeSelecionada())) {
+							// atribui a nova mensagem para poder mostra na pagina .JSP
+							resultado.setMensagem("Quantidade selecionada para Troca, é MAIOR do que disponivel no Item!");
+						}
+						// adiciona o novo item para troca na Sessão
+						else {
+							// salva na Sessão a QUANTIDADE do Item do Pedido para Troca, conforme digitado na tela
+							itemPedidoSelecionado.get(0).getProduto().setQuantidadeSelecionada(qtdeItemParaTroca);
+							
+							// guarda o Item do Pedido no objeto "pedidoTroca"
+							pedidoTroca.setItemPedido(itemPedidoSelecionado.get(0));
+							
+							// passa o item selecionado para a variavel que será responsavel para atualizar a sessão dos itens de troca do Pedido
+							itensParaAdicionarAoPedidoTroca.add(pedidoTroca);
+							
+							// atribui a nova mensagem para poder mostra na pagina .JSP
+							resultado.setMensagem("Item adicionado para a Troca com sucesso!");
+						}
+					}
+						
 					// adiciona na lista de itens de troca do Pedido selecionado da sessão
 					// atualiza o objeto "itensPedidoTroca" que esta salvo em sessão, com o novo item selecionado
 					sessao.setAttribute("itensPedidoTroca", itensParaAdicionarAoPedidoTroca);
-					
-					// atribui a nova mensagem para poder mostra na pagina .JSP
-					resultado.setMensagem("Item adicionado para a Troca com sucesso!");
 					
 					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
 					request.setAttribute("mensagemStrategy", resultado.getMensagem());
@@ -155,6 +233,7 @@ public class PedidoTrocaHelper implements IViewHelper {
 				Pedido novoPedido = new Pedido();
 				ItemPedido novoItemPedido = new ItemPedido();
 				ItemPedido itemPedidoTrocaInteira = new ItemPedido();
+				List<ItemPedido> alteraQtdeAndStatusItemPedido = new ArrayList<>();	
 				List<PedidoTroca> itensPedidoParaAdicionarNaSessao = new ArrayList<>();	
 				List<PedidoTroca> todosItensPedidoTrocaSessao = new ArrayList<>();
 				List<PedidoTroca> ItensPedidoTrocaVazio = new ArrayList<>();
@@ -248,11 +327,27 @@ public class PedidoTrocaHelper implements IViewHelper {
 					itemPedidoDAO.salvar(novoItemPedido);
 				}
 				
-				// altera o Item do Pedido que foi selecionado no Pedido,
-				// para o status que "já foi trocado",
-				// altera no banco a tabela "pedido_item" da coluna "trocado" para "sim".
+				// altera a Quantidade e o Status do Item do Pedido que foi selecionado no Pedido,
+				// altera para o status que "já foi trocado", caso a quantidade do item do pedido seja igual a ZERO,
 				for (int i = 0; i< todosItensPedidoTrocaSessao.size(); i++) {
-					itemPedidoDAO.alterarTrocacaoItemPedido(todosItensPedidoTrocaSessao.get(i).getItemPedido().getId());
+					int novaQuantidadeDoItemPedido = 0;
+					
+					// busca o item do pedido para fazer a somatoria
+					alteraQtdeAndStatusItemPedido = itemPedidoDAO.consultarItemPedidoById(todosItensPedidoTrocaSessao.get(i).getItemPedido().getId());
+					
+					// faz o calculo do novo valor da quantidade do item do pedido
+					// calculo da nova quantidade (quantidade do item que esta salvo no banco (-) o valor da quantidade selecionada na Sessão)
+					novaQuantidadeDoItemPedido = (Integer.parseInt(alteraQtdeAndStatusItemPedido.get(0).getProduto().getQuantidadeSelecionada()) - Integer.parseInt(todosItensPedidoTrocaSessao.get(i).getItemPedido().getProduto().getQuantidadeSelecionada()));
+					
+					// faz a alteração da nova quantidade do item do pedido no banco
+					itemPedidoDAO.alterarQuantidadeItemPedido(Integer.toString(novaQuantidadeDoItemPedido), todosItensPedidoTrocaSessao.get(i).getItemPedido().getId());
+					
+					// se a quantidade do item do pedido ficar igual a ZERO,
+					// será trocado o status do item para "já foi trocado",
+					// altera no banco a tabela "pedido_item" da coluna "trocado" para "sim".
+					if (novaQuantidadeDoItemPedido == 0) {
+						itemPedidoDAO.alterarTrocacaoItemPedido(todosItensPedidoTrocaSessao.get(i).getItemPedido().getId());
+					}
 				}
 				
 				// verifica se existe algum item desse Pedido selecionado, esta com o status "trocado" como "nao",

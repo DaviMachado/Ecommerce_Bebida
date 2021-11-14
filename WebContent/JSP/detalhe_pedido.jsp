@@ -120,19 +120,26 @@
 					
 					boolean itemJaFoiTrocado = false;
 					
+					//
+					// esse trecho foi criado para quando adicionar um item na lista para troca,
+					// o mesmo será verificado aqui na tela, para não deixar adicionar o mesmo item para a lista de troca,
+					// porem foi mudado a forma de solicitar a troca do item do pedido,
+					// então esse trecho não é mais necessario,
+					// podendo selecionar a quantidade mais de um item para troca
+					//
 					// verifica na lista da Sessão se algum item da lista do Pedido atual, se ja foi marcado como "trocadoSelecionado",
 					// se ja foi trocado, o item será apresentado com um risco vermelho listagem
-					for (PedidoTroca exchange : itensPedidoTrocaEmSessao){
+					//for (PedidoTroca exchange : itensPedidoTrocaEmSessao){
 						// o ID do item que esta salvo na Sessão, é IGUAL ao ID do item da lista atual
-						if (exchange.getItemPedido().getId().equals(order_items.getId())){
-							itemJaFoiTrocado = true;
-						}
-					}
+						//if (exchange.getItemPedido().getId().equals(order_items.getId())){
+							//itemJaFoiTrocado = true;
+						//}
+					//}
 					
 					// o pedido ja foi trocado? OU o Item do Pedido ja foi trocado?
 					// OU esse Item do Pedido ja esta na lista da Sessão? ("itensPedidoTroca")
 					// então mostra o item com um risco vermelho na listagem
-					if (pedidos.get(0).getTrocado().equals("sim") || order_items.getTrocado().equals("sim") || itemJaFoiTrocado) {
+					if (pedidos.get(0).getTrocado().equals("sim") || order_items.getTrocado().equals("sim")) { // || itemJaFoiTrocado
     		%>
 		    	<tr>
 					<td><strike style="text-decoration-color: red;"><%=order_items.getProduto().getNome() %></strike></td>
@@ -152,7 +159,19 @@
 					<td><%=order_items.getTrocado() %></td>
 					
 					<% if(pedidos.get(0).getStatus().equals("ENTREGA REALIZADA")) { %>
-						<td><a href="/Ecommerce_Bebida/pedidoTroca?idPedido=<%= pedidos.get(0).getId()%>&idItemPedido=<%= order_items.getId()%>&operacao=CONSULTAR"><button class="btn btn-danger">Solicitar Troca</button></a></td>
+						<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/pedidoTroca">
+							<td>
+								<!-- Quantidade do Item para ser Trocado -->
+								<input style="width: 50px; height: 30px;" type="text" class="form-control" name="qtdeItemParaTroca" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" required>
+							</td>
+							
+							<td><button class="btn btn-danger" name="operacao" value="CONSULTAR">Solicitar Troca</button></td>
+					
+							<!-- ID do Pedido -->
+		  					<input type="hidden" name="idPedido" value="<%=pedidos.get(0).getId() %>">
+		  					<!-- ID do Item do Pedido -->
+		  					<input type="hidden" name="idItemPedido" value="<%=order_items.getId() %>">
+						</form>
 					<% } %>
 					
 				</tr>
