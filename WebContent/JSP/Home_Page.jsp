@@ -101,6 +101,7 @@
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-todos-pedidos-scriptletADMIN.jsp" class="list-group-item">Gerenciamento de Pedidos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cupom.jsp" class="list-group-item">Gerenciamento de Cupons</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/grafico_chart_1.jsp" class="list-group-item">Gerenciamento de Gráficos</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-ranking-clientes.jsp" class="list-group-item">Ranking dos Clientes</a>
         </div>
         <%
         	}
