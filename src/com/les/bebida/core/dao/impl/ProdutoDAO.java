@@ -18,8 +18,8 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 		openConnection();
 		
 		String sql = "insert into produto "+ 
-				"(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, foto_detalhe, grupo_de_precificacao, quantidade, status, dt_cadastro, observacao)" +
-				"values (?,?,?,?,?,?,?,?,?,?,?,?)";
+				"(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, foto_detalhe, grupo_de_precificacao, quantidade, cd_sistema, status, dt_cadastro, observacao)" +
+				"values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			Produto produto = (Produto) entidade;
@@ -37,9 +37,10 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 			stmt.setString(7, produto.getFotoDetalhe());
 			stmt.setString(8, produto.getGrupoDePrecificacao());
 			stmt.setString(9, produto.getQuantidade());
-			stmt.setString(10, produto.getStatus());
-			stmt.setString(11, produto.getDtCadastro());
-			stmt.setString(12, produto.getObservacao());
+			stmt.setString(10, produto.getCdSistema());
+			stmt.setString(11, produto.getStatus());
+			stmt.setString(12, produto.getDtCadastro());
+			stmt.setString(13, produto.getObservacao());
 			
 			// executa
 			stmt.execute();
@@ -151,6 +152,7 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 				produtoItem.setGrupoDePrecificacao(rs.getString("grupo_de_precificacao"));
 				produtoItem.setFoto(rs.getString("foto"));
 				produtoItem.setQuantidade(rs.getString("quantidade"));
+				produtoItem.setCdSistema(rs.getString("cd_sistema"));
 				produtoItem.setStatus(rs.getString("status"));
 				produtoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				produtoItem.setObservacao(rs.getString("observacao"));
@@ -195,6 +197,7 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 				produtoItem.setGrupoDePrecificacao(rs.getString("grupo_de_precificacao"));
 				produtoItem.setFoto(rs.getString("foto"));
 				produtoItem.setQuantidade(rs.getString("quantidade"));
+				produtoItem.setCdSistema(rs.getString("cd_sistema"));
 				produtoItem.setStatus(rs.getString("status"));
 				produtoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				produtoItem.setObservacao(rs.getString("observacao"));
@@ -238,6 +241,7 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 				produtoItem.setGrupoDePrecificacao(rs.getString("grupo_de_precificacao"));
 				produtoItem.setFoto(rs.getString("foto"));
 				produtoItem.setQuantidade(rs.getString("quantidade"));
+				produtoItem.setCdSistema(rs.getString("cd_sistema"));
 				produtoItem.setStatus(rs.getString("status"));
 				produtoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				produtoItem.setObservacao(rs.getString("observacao"));
@@ -281,6 +285,7 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 				produtoItem.setGrupoDePrecificacao(rs.getString("grupo_de_precificacao"));
 				produtoItem.setFoto(rs.getString("foto"));
 				produtoItem.setQuantidade(rs.getString("quantidade"));
+				produtoItem.setCdSistema(rs.getString("cd_sistema"));
 				produtoItem.setStatus(rs.getString("status"));
 				produtoItem.setDtCadastro(rs.getString("dt_cadastro"));
 				produtoItem.setObservacao(rs.getString("observacao"));
