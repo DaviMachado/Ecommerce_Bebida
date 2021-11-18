@@ -301,4 +301,48 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 		}
 	} // Listar ultimo Produto cadastrado
 	
+	
+	/**
+	 * Metodo para Listar o ultimo codigo do Produto cadastrado no sistema
+	 * @param entidade
+	 * @return
+	 */
+	public List<Produto> consultarUltimoCodigoSistemaCadastrado (){
+		openConnection();
+		try {
+			List<Produto> produtos = new ArrayList<>();
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM produto WHERE cd_sistema=(SELECT max(cd_sistema) FROM produto)");
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				// criando o objeto Produto
+				Produto produtoItem = new Produto();
+				
+				produtoItem.setId(rs.getString("id"));
+				produtoItem.setNome(rs.getString("nome"));
+				produtoItem.setDescricao(rs.getString("descricao"));
+				produtoItem.setCategoria(rs.getString("categoria"));
+				produtoItem.setPrecoDeCompra(rs.getString("preco_de_compra"));
+				produtoItem.setPrecoDeVenda(rs.getString("preco_de_venda"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setFotoDetalhe(rs.getString("foto_detalhe"));
+				produtoItem.setGrupoDePrecificacao(rs.getString("grupo_de_precificacao"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setQuantidade(rs.getString("quantidade"));
+				produtoItem.setCdSistema(rs.getString("cd_sistema"));
+				produtoItem.setStatus(rs.getString("status"));
+				produtoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				produtoItem.setObservacao(rs.getString("observacao"));
+				
+				// adicionando o objeto à lista
+				produtos.add(produtoItem);
+			}
+			rs.close();
+			stmt.close();
+			return produtos;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar o ultimo codigo do Produto cadastrado no sistema
+	
 }
