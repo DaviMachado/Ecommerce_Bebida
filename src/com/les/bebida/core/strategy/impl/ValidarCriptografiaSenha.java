@@ -3,29 +3,23 @@ package com.les.bebida.core.strategy.impl;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
-
 import org.apache.commons.codec.binary.Base64;
 
-import com.les.bebida.core.dao.impl.LoginDAO;
-import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Usuario;
+import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.strategy.IStrategy;
 
 /**
- * Classe para validar a existencia do Usuario pelo Login e Senha,
- * e validar se o mesmo esta ativo ou inativo
+ * Classe para validar a criptografia da senha do Usuario
  * @author Davi Rodrigues
  * @date 19/11/2021
  */
-//link de exemplo: https://www.devmedia.com.br/como-funciona-a-criptografia-hash-em-java/31139
-public class ValidarExistenciaLoginAndSenha implements IStrategy {
+// link de exemplo: https://www.devmedia.com.br/como-funciona-a-criptografia-hash-em-java/31139
+public class ValidarCriptografiaSenha implements IStrategy {
 
 	@Override
 	public String validar(EntidadeDominio entidade) {
-		
 		Usuario usuario = (Usuario) entidade;
-		LoginDAO dao = new LoginDAO();
 		
 		String senhaCriptografada = usuario.getSenha();
 		
@@ -50,23 +44,10 @@ public class ValidarExistenciaLoginAndSenha implements IStrategy {
 //		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
-//			return ("Erro de Exception na verificação da criptografia da senha do Usuário!");
+//			return ("Erro de Exception na criação da criptografia da senha do Usuário!");
 //		}
-		
-		// consulta se o Login e a Senha do Usuário estão corretos para acessar o sistema
-		List<Usuario> usuarios = dao.consultarUsuarioByLoginAndSenha(usuario.getLogin(), usuario.getSenha());
-		
-		if(usuarios.isEmpty()) {
-			return ("Email e/ou senha inválidos. Por favor, tente novamente.");
-		}
-		else {
-			if(usuarios.get(0).getStatus().equals("inativo")) {
-				return ("Usuário provisoriamente Inativo!. Por favor, entre em contato com o Administrador!");
-			}
-			else {
-				return null;
-			}
-		}
+
+		return null;
 	}
-	
+
 }

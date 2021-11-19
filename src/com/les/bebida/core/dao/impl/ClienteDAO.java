@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
+
 import com.les.bebida.core.dominio.Cliente;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Usuario;
@@ -148,6 +150,18 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				
 				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
+				
+				// descriptografando a senha que vem do banco,
+				// para não acusar erro na Strategy "ValidarSenhaIgualCliente",
+				// para poder validar se a senha esta com letra minuscula e maiscula
+				String senhaCriptografada = usuario.getSenha();
+			    // Decodifica uma string anteriormente codificada usando o método decodeBase64 e
+			    // passando o byte[] da string codificada
+			    byte[] decoded = Base64.decodeBase64(senhaCriptografada.getBytes());
+			    // Converte o byte[] decodificado de volta para a string original
+			    String decodedString = new String(decoded);
+			    usuario.setSenha(decodedString);
+				
 				cliente.setUsuario(usuario);
 				
 				cliente.setNome(rs.getString("nome"));
@@ -192,6 +206,18 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				
 				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
+				
+				// descriptografando a senha que vem do banco,
+				// para não acusar erro na Strategy "ValidarSenhaIgualCliente",
+				// para poder validar se a senha esta com letra minuscula e maiscula
+				String senhaCriptografada = usuario.getSenha();
+			    // Decodifica uma string anteriormente codificada usando o método decodeBase64 e
+			    // passando o byte[] da string codificada
+			    byte[] decoded = Base64.decodeBase64(senhaCriptografada.getBytes());
+			    // Converte o byte[] decodificado de volta para a string original
+			    String decodedString = new String(decoded);
+			    usuario.setSenha(decodedString);
+			    
 				cliente.setUsuario(usuario);
 				
 				cliente.setNome(rs.getString("nome"));
@@ -237,6 +263,18 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				
 				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
+				
+				// descriptografando a senha que vem do banco,
+				// para não acusar erro na Strategy "ValidarSenhaIgualCliente",
+				// para poder validar se a senha esta com letra minuscula e maiscula
+				String senhaCriptografada = usuario.getSenha();
+			    // Decodifica uma string anteriormente codificada usando o método decodeBase64 e
+			    // passando o byte[] da string codificada
+			    byte[] decoded = Base64.decodeBase64(senhaCriptografada.getBytes());
+			    // Converte o byte[] decodificado de volta para a string original
+			    String decodedString = new String(decoded);
+			    usuario.setSenha(decodedString);
+			    
 				cliente.setUsuario(usuario);
 				
 				cliente.setNome(rs.getString("nome"));
@@ -281,6 +319,18 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				
 				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
+				
+				// descriptografando a senha que vem do banco,
+				// para não acusar erro na Strategy "ValidarSenhaIgualCliente",
+				// para poder validar se a senha esta com letra minuscula e maiscula
+				String senhaCriptografada = usuario.getSenha();
+			    // Decodifica uma string anteriormente codificada usando o método decodeBase64 e
+			    // passando o byte[] da string codificada
+			    byte[] decoded = Base64.decodeBase64(senhaCriptografada.getBytes());
+			    // Converte o byte[] decodificado de volta para a string original
+			    String decodedString = new String(decoded);
+			    usuario.setSenha(decodedString);
+			    
 				cliente.setUsuario(usuario);
 				
 				cliente.setNome(rs.getString("nome"));

@@ -5,7 +5,7 @@ drop table cliente;
 create table cliente (
 	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
 	login		VARCHAR(50),
-	senha		VARCHAR(50),
+	senha		VARCHAR(150),
 	nome		VARCHAR(50),
 	cpf		    VARCHAR(14),
 	dt_nasc 	DATE,

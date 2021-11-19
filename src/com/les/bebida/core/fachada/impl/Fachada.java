@@ -49,6 +49,8 @@ import com.les.bebida.core.strategy.impl.ValidarCodigoSegurancaCartao;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaCliente;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaLogin;
 import com.les.bebida.core.strategy.impl.ValidarCodigoSistemaProduto;
+import com.les.bebida.core.strategy.impl.ValidarCriptografiaSenha;
+import com.les.bebida.core.strategy.impl.ValidarCriptografiaSenhaCliente;
 import com.les.bebida.core.strategy.impl.ValidarCupom;
 import com.les.bebida.core.strategy.impl.ValidarCupomBonificacaoPedido;
 import com.les.bebida.core.strategy.impl.ValidarDataCadastro;
@@ -105,7 +107,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 18/11/2021
+ * @date 19/11/2021
  */
 public class Fachada implements IFachada {
 
@@ -175,6 +177,8 @@ public class Fachada implements IFachada {
 	ValidarFormaDePagamento vFormaDePagamentoPedido = new ValidarFormaDePagamento();
 	ValidarCupomBonificacaoPedido vCupomBonificacaoPedido = new ValidarCupomBonificacaoPedido();
 	ValidarDatasGraficoAnalise vDatasGraficoAnalise = new ValidarDatasGraficoAnalise();
+	ValidarCriptografiaSenha vCriptografiaSenha = new ValidarCriptografiaSenha();
+	ValidarCriptografiaSenhaCliente vCriptografiaSenhaCliente = new ValidarCriptografiaSenhaCliente();
 	/* ------------------------------------------------------------ */
 	
 	/* ------------ Declaração das Listas de Strategy's dos Dominios ------------ */
@@ -273,6 +277,7 @@ public class Fachada implements IFachada {
 		regrasSalvarCliente.add(vStatusCliente);
 		regrasSalvarCliente.add(vLoginCliente);
 		regrasSalvarCliente.add(vSenhaIgualCliente);
+		regrasSalvarCliente.add(vCriptografiaSenhaCliente);
 		regrasSalvarCliente.add(vCodigoClienteSys);
 		regrasSalvarCliente.add(VDataCadastro);
 		regrasSalvarCliente.add(vTipoCliente);
@@ -284,6 +289,7 @@ public class Fachada implements IFachada {
 		regrasAlterarCliente.add(vStatusCliente);
 		regrasAlterarCliente.add(vLoginCliente);
 		regrasAlterarCliente.add(vSenhaIgualCliente);
+		regrasAlterarCliente.add(vCriptografiaSenhaCliente);
 		/* ---------------------------------------------------------- */
 		
 		/* ----- Adicionando as Strategy's na lista do Endereço ----- */
@@ -316,6 +322,7 @@ public class Fachada implements IFachada {
 		regrasSalvarLogin.add(vLogin);
 		regrasSalvarLogin.add(vSenhaIgual);
 		regrasSalvarLogin.add(vExistenciaLogin);
+		regrasSalvarLogin.add(vCriptografiaSenha);
 		regrasSalvarLogin.add(vCodigoLoginSys);
 		regrasSalvarLogin.add(vStatusUsuario);
 		regrasSalvarLogin.add(VDataCadastro);
