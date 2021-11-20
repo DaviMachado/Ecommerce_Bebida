@@ -186,6 +186,19 @@
 						</form>
 					<% } %>
 					
+					<!-- verifica se esse item do pedido foi acionado para troca, 
+					caso esse item esteja na lista de troca, será mostrado a quantidade dele na tela,
+					para poder saber a quantidade do item que esta sendo trocado -->
+					<% for (PedidoTroca exchange : itensPedidoTrocaEmSessao){
+						// o ID do item que esta salvo na Sessão, é IGUAL ao ID do item da lista atual
+						if (exchange.getItemPedido().getId().equals(order_items.getId())){ %>
+							<td>
+								<!-- Mostra a quantidade do Item que esta sendo Trocado -->
+								<input style="width: 50px; height: 30px;" type="text" class="form-control" name="qtdeItemParaTroca" value="<%=exchange.getItemPedido().getProduto().getQuantidadeSelecionada()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" required>
+							</td>
+					<%
+						}
+					 } %>
 				</tr>
 			<%
 					}

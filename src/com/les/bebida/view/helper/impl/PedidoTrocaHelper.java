@@ -148,17 +148,24 @@ public class PedidoTrocaHelper implements IViewHelper {
 						
 						// verifica se é para adicionar um novo item na Sessão para Troca
 						if (adicionaNovoItemParaTroca) {
-							// salva na Sessão a QUANTIDADE do Item do Pedido para Troca, conforme digitado na tela
-							itemPedidoSelecionado.get(0).getProduto().setQuantidadeSelecionada(qtdeItemParaTroca);
-							
-							// guarda o Item do Pedido no objeto "pedidoTroca"
-							pedidoTroca.setItemPedido(itemPedidoSelecionado.get(0));
-							
-							// passa o item selecionado para a variavel que será responsavel para atualizar a sessão dos itens de troca do Pedido
-							itensParaAdicionarAoPedidoTroca.add(pedidoTroca);
-							
-							// atribui a nova mensagem para poder mostra na pagina .JSP
-							resultado.setMensagem("Item adicionado para a Troca com sucesso!");
+							// a QUANTIDADE do item para Troca é MAIOR que a quantidade do item que esta na tela?
+							if (Integer.parseInt(qtdeItemParaTroca) > Integer.parseInt(itemPedidoSelecionado.get(0).getProduto().getQuantidadeSelecionada())) {
+								// atribui a nova mensagem para poder mostra na pagina .JSP
+								resultado.setMensagem("Quantidade selecionada para Troca, é MAIOR do que disponivel no Item!");
+							}
+							else {
+								// salva na Sessão a QUANTIDADE do Item do Pedido para Troca, conforme digitado na tela
+								itemPedidoSelecionado.get(0).getProduto().setQuantidadeSelecionada(qtdeItemParaTroca);
+								
+								// guarda o Item do Pedido no objeto "pedidoTroca"
+								pedidoTroca.setItemPedido(itemPedidoSelecionado.get(0));
+								
+								// passa o item selecionado para a variavel que será responsavel para atualizar a sessão dos itens de troca do Pedido
+								itensParaAdicionarAoPedidoTroca.add(pedidoTroca);
+								
+								// atribui a nova mensagem para poder mostra na pagina .JSP
+								resultado.setMensagem("Item adicionado para a Troca com sucesso!");
+							}
 						}
 					}
 					// SE a lista da Sessão esta VAZIA
