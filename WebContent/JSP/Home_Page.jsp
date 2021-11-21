@@ -161,6 +161,22 @@
           </a>
         </div>
         
+        <!-- Campo Pesquisa-->
+        <form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/pesquisaByFiltro">
+	        <div class="form-row">
+	        	<div class="form-group col-md-8">
+				    <input type="text" class="form-control" name="nomeProduto" placeholder="Buscar Produto..." required>
+				</div>
+				
+				<div class="form-group col-md-2">
+					<button class="btn btn-success" name="operacao" value="CONSULTAR">Pesquisar</button>
+				</div>
+	        </div>
+	        
+	        <!-- Nome da tabela que será consultado -->
+            <input type="hidden" name="NomeTabela" value="Produto">
+		</form>
+        
         <!-- Listagens dos produtos cadastrados no sistema -->
         <div class="row">
         	<%

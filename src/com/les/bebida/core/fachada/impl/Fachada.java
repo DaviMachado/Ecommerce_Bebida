@@ -15,6 +15,7 @@ import com.les.bebida.core.dao.impl.ItemCarrinhoDAO;
 import com.les.bebida.core.dao.impl.LoginDAO;
 import com.les.bebida.core.dao.impl.PedidoDAO;
 import com.les.bebida.core.dao.impl.PedidoTrocaDAO;
+import com.les.bebida.core.dao.impl.PesquisaByFiltroDAO;
 import com.les.bebida.core.dao.impl.ItemPedidoDAO;
 import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dao.impl.VerificaCupomDAO;
@@ -27,6 +28,7 @@ import com.les.bebida.core.dominio.ItemCarrinho;
 import com.les.bebida.core.dominio.ItemPedido;
 import com.les.bebida.core.dominio.Pedido;
 import com.les.bebida.core.dominio.PedidoTroca;
+import com.les.bebida.core.dominio.PesquisaByFiltro;
 import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.Carrinho;
 import com.les.bebida.core.dominio.CartaoDeCredito;
@@ -107,7 +109,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 19/11/2021
+ * @date 20/11/2021
  */
 public class Fachada implements IFachada {
 
@@ -206,6 +208,7 @@ public class Fachada implements IFachada {
 	List<IStrategy> regrasConsultarVerificaCupom = new ArrayList<>();
 	List<IStrategy> regrasConsultarPedidoTroca = new ArrayList<>();
 	List<IStrategy> regrasConsultarGraficoAnalise = new ArrayList<>();
+	List<IStrategy> regrasConsultarPesquisaByFiltro = new ArrayList<>();
 	/* ------------ ALTERAR ------------ */
 	List<IStrategy> regrasAlterarCliente = new ArrayList<>();
 	List<IStrategy> regrasAlterarEndereco = new ArrayList<>();
@@ -240,6 +243,7 @@ public class Fachada implements IFachada {
 	Map<String, List<IStrategy>> regrasVerificaCupom = new HashMap<>();
 	Map<String, List<IStrategy>> regrasPedidoTroca = new HashMap<>();
 	Map<String, List<IStrategy>> regrasGraficoAnalise = new HashMap<>();
+	Map<String, List<IStrategy>> regrasPesquisaByFiltro = new HashMap<>();
 	/* ----------------------------------------------------------------------------------- */
 	
 	/* ------------ Declaração da Regra de Negócio Geral ------------ */
@@ -267,6 +271,7 @@ public class Fachada implements IFachada {
 		daos.put(VerificaCupom.class.getName(), new VerificaCupomDAO());
 		daos.put(PedidoTroca.class.getName(), new PedidoTrocaDAO());
 		daos.put(GraficoAnalise.class.getName(), new GraficoAnaliseDAO());
+		daos.put(PesquisaByFiltro.class.getName(), new PesquisaByFiltroDAO());
 		
 		/* ----- Adicionando as Strategy's na lista do Cliente ----- */
 		/* ----- SALVAR ----- */
@@ -561,6 +566,14 @@ public class Fachada implements IFachada {
 		/* ----- EXCLUIR ----- */
 		/* --------------------------------------- */
 		
+		/* ----- REGRAS DA ENTIDADE VERIFICA PESQUISA BY FILTRO ----- */
+		/* ----- SALVAR ----- */
+		/* ----- CONSULTAR ----- */
+		regrasPesquisaByFiltro.put("CONSULTAR", regrasConsultarPesquisaByFiltro);
+		/* ----- ALTERAR ----- */
+		/* ----- EXCLUIR ----- */
+		/* --------------------------------------- */
+		
 		/* ----- REGRAS GERAIS ----- */
 		regrasGeral.put(Cliente.class.getName(), regrasCliente);
 		regrasGeral.put(Endereco.class.getName(), regrasEndereco);
@@ -576,6 +589,7 @@ public class Fachada implements IFachada {
 		regrasGeral.put(VerificaCupom.class.getName(), regrasVerificaCupom);
 		regrasGeral.put(PedidoTroca.class.getName(), regrasPedidoTroca);
 		regrasGeral.put(GraficoAnalise.class.getName(), regrasGraficoAnalise);
+		regrasGeral.put(PesquisaByFiltro.class.getName(), regrasPesquisaByFiltro);
 		/* -------------------------- */
 	}
 

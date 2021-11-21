@@ -345,4 +345,49 @@ public class ProdutoDAO extends AbstractJdbcDAO {
 		}
 	} // Listar o ultimo codigo do Produto cadastrado no sistema
 	
+	
+	/**
+	 * Metodo para Listar os Produtos pela Pesquisa por Filtro
+	 * @param entidade
+	 * @return
+	 */
+	public List<EntidadeDominio> consultarProdutoPesquisaByFiltro (EntidadeDominio entidade, String Parametro){
+		openConnection();
+		try {
+			List<EntidadeDominio> produtos = new ArrayList<>();
+			PreparedStatement stmt = connection.prepareStatement("select * from produto where nome LIKE ?");
+			stmt.setString(1, "%" + Parametro + "%");
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				// criando o objeto Produto
+				Produto produtoItem = new Produto();
+				
+				produtoItem.setId(rs.getString("id"));
+				produtoItem.setNome(rs.getString("nome"));
+				produtoItem.setDescricao(rs.getString("descricao"));
+				produtoItem.setCategoria(rs.getString("categoria"));
+				produtoItem.setPrecoDeCompra(rs.getString("preco_de_compra"));
+				produtoItem.setPrecoDeVenda(rs.getString("preco_de_venda"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setFotoDetalhe(rs.getString("foto_detalhe"));
+				produtoItem.setGrupoDePrecificacao(rs.getString("grupo_de_precificacao"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setQuantidade(rs.getString("quantidade"));
+				produtoItem.setCdSistema(rs.getString("cd_sistema"));
+				produtoItem.setStatus(rs.getString("status"));
+				produtoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				produtoItem.setObservacao(rs.getString("observacao"));
+				
+				// adicionando o objeto à lista
+				produtos.add(produtoItem);
+			}
+			rs.close();
+			stmt.close();
+			return produtos;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar os Produtos pela Pesquisa por Filtro
+	
 }

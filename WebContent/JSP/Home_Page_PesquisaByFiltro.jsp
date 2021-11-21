@@ -16,10 +16,10 @@
   <title>Drink Fast</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="../CSS/bootstrap.min.css" rel="stylesheet">
+  <link href="./CSS/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="../CSS/shop-homepage.css" rel="stylesheet">
+  <link href="./CSS/shop-homepage.css" rel="stylesheet">
 
 </head>
 
@@ -29,8 +29,13 @@
 		Usuario userLogado = new Usuario();
 		Produto produto = new Produto();
 		
-		// guarda todos os produtos ativos cadastrados no sistema na variavel "produtosAtivos", para ser listada na Home Page
-		List<EntidadeDominio> produtosAtivos = produtoDAO.consultarSomenteAtivo(produto);
+		// pega a mensagem que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
+		String nomeProduto = (String)request.getAttribute("nomeProduto");
+		
+		// busca os produtos conforme o filtro digitado na tela,
+		// e guarda na variavel "produtosPesquisaByFiltro", para ser listada na Home Page
+		List<EntidadeDominio> produtosPesquisaByFiltro = produtoDAO.consultarProdutoPesquisaByFiltro(produto, nomeProduto);
 		
 		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 		HttpSession sessao = request.getSession();
@@ -42,7 +47,7 @@
 		List<Cliente> clienteLogado = dao.consultarClienteById(userLogado.getId());
 		
 		// pega a mensagem que estava pendurado na requisição,
-		// que foi enviado pelo arquivo "ClienteHelper"
+		// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
 		String mensagemStrategy = (String)request.getAttribute("mensagemStrategy");
 		  
 		// IF adicionado para não estourar NullPointerException na variavel
@@ -101,7 +106,7 @@
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-todos-pedidos-scriptletADMIN.jsp" class="list-group-item">Gerenciamento de Pedidos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cupom.jsp" class="list-group-item">Gerenciamento de Cupons</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/grafico_chart_1.jsp" class="list-group-item">Gerenciamento de Gráficos</a>
-                    <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-ranking-clientes.jsp" class="list-group-item">Ranking dos Clientes</a>
+          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-ranking-clientes.jsp" class="list-group-item">Ranking dos Clientes</a>
         </div>
         <%
         	}
@@ -139,16 +144,16 @@
           </ol>
           <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-              <img class="d-block img-fluid" src="../Imagens/carousel/DRINK_FAST.png" alt="First slide">
+              <img class="d-block img-fluid" src="./Imagens/carousel/DRINK_FAST.png" alt="First slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block img-fluid" src="../Imagens/carousel/tequilas.png" alt="Second slide">
+              <img class="d-block img-fluid" src="./Imagens/carousel/tequilas.png" alt="Second slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block img-fluid" src="../Imagens/carousel/refrigerantes.png" alt="Third slide">
+              <img class="d-block img-fluid" src="./Imagens/carousel/refrigerantes.png" alt="Third slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block img-fluid" src="../Imagens/carousel/cervejas.png" alt="Fourth slide">
+              <img class="d-block img-fluid" src="./Imagens/carousel/cervejas.png" alt="Fourth slide">
             </div>
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -180,7 +185,7 @@
         <!-- Listagens dos produtos cadastrados no sistema -->
         <div class="row">
         	<%
-        		for(EntidadeDominio e : produtosAtivos) {
+        		for(EntidadeDominio e : produtosPesquisaByFiltro) {
         			
        			// Aplicado o CAST para poder popular o produto,
        			// fazendo o CAST para uma referência mais genérica, no caso para o produto
@@ -188,7 +193,7 @@
         	%>
 	          <div class="col-lg-4 col-md-6 mb-4">
 	            <div class="card h-100">
-	              <a href="http://localhost:8080/Ecommerce_Bebida/itemCarrinho?idProduto=<%=product.getId() %>&operacao=SALVAR"><img class="card-img-top" src=".<%=product.getFoto() %>" alt=""></a>
+	              <a href="http://localhost:8080/Ecommerce_Bebida/itemCarrinho?idProduto=<%=product.getId() %>&operacao=SALVAR"><img class="card-img-top" src="<%=product.getFoto() %>" alt=""></a>
 	              <div class="card-body">
 	                <h4 class="card-title">
 	                  <a href="http://localhost:8080/Ecommerce_Bebida/itemCarrinho?idProduto=<%=product.getId() %>&operacao=SALVAR"><%=product.getNome() %></a>
@@ -225,8 +230,8 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="../JQUERY/jquery.min.js"></script>
-  <script src="../JS/bootstrap.bundle.min.js"></script>
+  <script src="./JQUERY/jquery.min.js"></script>
+  <script src="./JS/bootstrap.bundle.min.js"></script>
   
   	<!-- Modal -->
 	<div class="modal fade" id="modal-mensagem">
