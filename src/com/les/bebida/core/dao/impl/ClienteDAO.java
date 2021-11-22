@@ -355,4 +355,62 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		}
 	} // Listar o ultimo codigo do Cliente cadastrado no sistema
 	
+	
+	/**
+	 * Metodo para Listar os Clientes pela Pesquisa por Filtro
+	 * @param entidade
+	 * @return
+	 */
+	public List<EntidadeDominio> consultarClientePesquisaByFiltro (EntidadeDominio entidade, String Parametro){
+		openConnection();
+		try {
+			List<EntidadeDominio> clientes = new ArrayList<>();
+			PreparedStatement stmt = connection.prepareStatement("select * from cliente where nome LIKE ?");
+			stmt.setString(1, "%" + Parametro + "%");
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				// criando o objeto Cliente
+				Cliente cliente = new Cliente();
+				Usuario usuario = new Usuario();
+				
+				cliente.setId(rs.getString("id"));
+				
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				
+				// descriptografando a senha que vem do banco,
+				// para não acusar erro na Strategy "ValidarSenhaIgualCliente",
+				// para poder validar se a senha esta com letra minuscula e maiscula
+				String senhaCriptografada = usuario.getSenha();
+			    // Decodifica uma string anteriormente codificada usando o método decodeBase64 e
+			    // passando o byte[] da string codificada
+			    byte[] decoded = Base64.decodeBase64(senhaCriptografada.getBytes());
+			    // Converte o byte[] decodificado de volta para a string original
+			    String decodedString = new String(decoded);
+			    usuario.setSenha(decodedString);
+			    
+				cliente.setUsuario(usuario);
+				
+				cliente.setNome(rs.getString("nome"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setDt_nasc(rs.getString("dt_Nasc"));
+				cliente.setSexo(rs.getString("sexo"));
+				cliente.setTelefone(rs.getString("telefone"));
+				cliente.setCdSistema(rs.getString("cd_sistema"));
+				cliente.setStatus(rs.getString("status"));
+				cliente.setDtCadastro(rs.getString("dt_cadastro"));
+				cliente.setTipo(rs.getString("tipo"));
+				
+				// adicionando o objeto à lista
+				clientes.add(cliente);
+			}
+			rs.close();
+			stmt.close();
+			return clientes;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	} // Listar os Clientes pela Pesquisa por Filtro
+	
 }
