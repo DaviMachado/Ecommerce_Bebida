@@ -64,6 +64,7 @@ public class PesquisaByFiltroHelper implements IViewHelper {
 				String NomeTabela = request.getParameter("NomeTabela");
 				String nomeProduto = request.getParameter("nomeProduto");
 				String nomeCliente = request.getParameter("nomeCliente");
+				String statusPedido = request.getParameter("statusPedido");
 				
 				if (NomeTabela.equals("Produto")) {
 					// atribui a nova mensagem para poder mostra na pagina .JSP
@@ -90,6 +91,22 @@ public class PesquisaByFiltroHelper implements IViewHelper {
 					
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/lista-clientes-scriptletADMIN_PesquisaByFiltro.jsp").forward(request, response);
+				}
+				else if (NomeTabela.equals("PedidoAdmin")) {
+					// atribui a nova mensagem para poder mostra na pagina .JSP
+					resultado.setMensagem("Pesquisa por Filtro acionada com sucesso!");
+					
+					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("mensagemStrategy", resultado.getMensagem());
+					
+					// pendura o "nomeCliente", que foi digitado pelo Usuário na requisição, para poder mandar para o arquivo .JSP
+					request.setAttribute("nomeCliente", nomeCliente);
+					
+					// pendura o "statusPedido", que foi digitado pelo Usuário na requisição, para poder mandar para o arquivo .JSP
+					request.setAttribute("statusPedido", statusPedido);
+					
+					// Redireciona para o arquivo .jsp
+					request.getRequestDispatcher("JSP/lista-todos-pedidos-scriptletADMIN_PesquisaByFiltro.jsp").forward(request, response);
 				}
 			}
 			else {

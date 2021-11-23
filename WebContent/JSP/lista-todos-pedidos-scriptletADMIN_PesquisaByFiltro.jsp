@@ -10,21 +10,52 @@
 	<title>Listagem dos Pedidos</title>
 	
 	<!-- importações para funcionar o Header e o Footer -->
-	<link href="../CSS/bootstrap.min.css" rel="stylesheet">
-	<link href="../CSS/shop-homepage.css" rel="stylesheet">
-	<link href="../CSS/form-default.css" rel="stylesheet" type="text/css">
+	<link href="./CSS/bootstrap.min.css" rel="stylesheet">
+	<link href="./CSS/shop-homepage.css" rel="stylesheet">
+	<link href="./CSS/form-default.css" rel="stylesheet" type="text/css">
 </head>
 
 <%
 	PedidoDAO dao = new PedidoDAO();
 	ClienteDAO clienteDAO = new ClienteDAO();
 	Pedido pedido = new Pedido();
+	Cliente cliente = new Cliente();
+	Cliente clienteFiltro = new Cliente();
 	List<Cliente> clientes = new ArrayList<>();
+	List<EntidadeDominio> pedidosPesquisaByFiltro = new ArrayList<>();
 	
-	List<EntidadeDominio> pedidos = dao.consultar(pedido);
+	// pega o "nomeCliente" que estava pendurado na requisição,
+	// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
+	String nomeCliente = (String)request.getAttribute("nomeCliente");
+	
+	// pega o "statusPedido" que estava pendurado na requisição,
+	// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
+	String statusPedido = (String)request.getAttribute("statusPedido");
+	
+	// busca o primeiro cliente conforme o filtro digitado na tela,
+	List<EntidadeDominio> clientesPesquisaByFiltro = clienteDAO.consultarClientePesquisaByFiltro(cliente, nomeCliente);
+	
+	// busca os pedidos conforme o filtro digitado na tela (nomeCliente e statusPedido),
+	if (clientesPesquisaByFiltro.size() > 0 && statusPedido != null) {
+		clienteFiltro = (Cliente) clientesPesquisaByFiltro.get(0);
+		
+		// e guarda na variavel "pedidosPesquisaByFiltro", para ser listada na tela de listagem dos pedidos do ADMIN
+		pedidosPesquisaByFiltro = dao.consultarPedidoPesquisaByFiltro(pedido, clienteFiltro.getId(), statusPedido);
+	}
+	// busca os pedidos conforme o filtro digitado na tela (nomeCliente),
+	else if (clientesPesquisaByFiltro.size() > 0) {
+		clienteFiltro = (Cliente) clientesPesquisaByFiltro.get(0);
+		
+		// e guarda na variavel "pedidosPesquisaByFiltro", para ser listada na tela de listagem dos pedidos do ADMIN
+		pedidosPesquisaByFiltro = dao.consultarPedidoByIdClienteEntidadeDominio(clienteFiltro.getId());
+	}
+		
+	// pega a mensagem que estava pendurado na requisição,
+	// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
+	String mensagemStrategy = (String)request.getAttribute("mensagemStrategy");
 %>
 
-<body>
+<body onload="AtivaModal()">
   <!-- Header -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -96,7 +127,7 @@
             <th width="35%"></th>
         </tr>
 		<%		
-		for(EntidadeDominio e : pedidos) {
+		for(EntidadeDominio e : pedidosPesquisaByFiltro) {
 		
 		// Aplicado o CAST para poder popular o pedido,
 		// fazendo o CAST para uma referência mais genérica, no caso para o pedido
@@ -164,5 +195,45 @@
 	    </div>
 	  </footer>
   	  <!-- Fim Footer -->
+  	  
+  	  <!-- Bootstrap core JavaScript -->
+	  <script src="./JQUERY/jquery.min.js"></script>
+	  <script src="./JS/bootstrap.bundle.min.js"></script>
+  	  
+      <!-- Modal -->
+	  <div class="modal fade" id="modal-mensagem">
+	  	<div class="modal-dialog">
+			<div class="modal-content">
+		    	<div class="modal-header">
+		        	<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+		            <h4 class="modal-title">Mensagem</h4>
+		        </div>
+		        <div class="modal-body">
+		        	<p><% out.println(mensagemStrategy); %></p>
+		        </div>
+		        <div class="modal-footer">
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+		        </div>
+		    </div>
+		</div>
+	  </div>
+		
+	  <!-- Botão para chamar a Modal -->
+	  <button style="display: none" id="idModal" class="btn btn-primary" data-toggle="modal" data-target="#modal-mensagem">
+	  	  Exibir mensagem da modal
+	  </button>
+	
+	  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <script>
+	  // Função que irá ativar a Modal com a mensagem retornada do BackEnd,
+	  // essa função é carregada junto ao carregamento da página com o evento ONLOAD, dentro da tag <body>.
+		  function AtivaModal(){
+	    	  // metodo para poder ativar o "onClick" sem precisar clicar no botão
+		  	  document.getElementById('idModal').click();
+		  }
+	  </script>
+	  <!-- Fim Modal -->
+  	  
 </body>
 </html>

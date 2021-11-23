@@ -365,7 +365,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		openConnection();
 		try {
 			List<EntidadeDominio> clientes = new ArrayList<>();
-			PreparedStatement stmt = connection.prepareStatement("select * from cliente where nome LIKE ?");
+			PreparedStatement stmt = connection.prepareStatement("select * from cliente where nome LIKE ? and tipo='cliente'");
 			stmt.setString(1, "%" + Parametro + "%");
 			ResultSet rs = stmt.executeQuery();
 			
