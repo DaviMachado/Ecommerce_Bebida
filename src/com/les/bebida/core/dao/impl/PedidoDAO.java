@@ -384,7 +384,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 	
 	
 	/**
-	 * Metodo para Listar os Clientes pela Pesquisa por Filtro
+	 * Metodo para Listar os Pedidos pela Pesquisa por Filtro
 	 * @param entidade
 	 * @return
 	 */
@@ -428,6 +428,6 @@ public class PedidoDAO extends AbstractJdbcDAO {
 			throw new RuntimeException(e);
 		}
 				
-	} // Listar os Clientes pela Pesquisa por Filtro
+	} // Listar os Pedidos pela Pesquisa por Filtro
 	
 }
