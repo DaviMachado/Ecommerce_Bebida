@@ -21,10 +21,17 @@ public class ValidarCriptografiaSenha implements IStrategy {
 	public String validar(EntidadeDominio entidade) {
 		Usuario usuario = (Usuario) entidade;
 		
-		String senhaCriptografada = usuario.getSenha();
-		
-		// criptografando a senha
-        usuario.setSenha(Base64.encodeBase64String(senhaCriptografada.getBytes()));
+		if (usuario.getSenha() == null || usuario.getSenha().equals("")) {
+			return ("Error ao Criptografar Senha Usuário.");
+		}
+		else {
+			String senhaCriptografada = usuario.getSenha();
+			
+			// criptografando a senha
+	        usuario.setSenha(Base64.encodeBase64String(senhaCriptografada.getBytes()));
+	        
+			return null;
+		}
 		
 		// OUTRA FORMA DE CRIPTOGRAFAR A SENHA
 //		try {
@@ -47,7 +54,6 @@ public class ValidarCriptografiaSenha implements IStrategy {
 //			return ("Erro de Exception na criação da criptografia da senha do Usuário!");
 //		}
 
-		return null;
 	}
 
 }

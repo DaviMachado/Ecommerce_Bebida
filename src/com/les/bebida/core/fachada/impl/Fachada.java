@@ -717,7 +717,7 @@ public class Fachada implements IFachada {
 		for (IStrategy regra : regrasDaOperacao) {
 			String resultado = regra.validar(entidade);
 			if (resultado != null) {
-				msg += "- " + resultado + "\n";
+				msg += "- " + resultado + "<br>";
 			}
 		}
 

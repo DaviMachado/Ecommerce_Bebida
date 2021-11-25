@@ -24,12 +24,17 @@ public class ValidarCriptografiaSenhaCliente implements IStrategy {
 		
 		// se o "alteraCliente" for igual a 1, executa essa regra
 		if(cliente.getAlteraCliente().contentEquals("1")) {
-			String senhaCriptografada = cliente.getUsuario().getSenha();
-			
-			// criptografando a senha
-			cliente.getUsuario().setSenha(Base64.encodeBase64String(senhaCriptografada.getBytes()));
-			
-			return null;
+			if (cliente.getUsuario().getSenha() == null || cliente.getUsuario().getSenha().equals("")) {
+				return ("Error ao Criptografar Senha Cliente.");
+			}
+			else {
+				String senhaCriptografada = cliente.getUsuario().getSenha();
+				
+				// criptografando a senha
+				cliente.getUsuario().setSenha(Base64.encodeBase64String(senhaCriptografada.getBytes()));
+				
+				return null;
+			}
 		}
 		
 		// OUTRA FORMA DE CRIPTOGRAFAR A SENHA
