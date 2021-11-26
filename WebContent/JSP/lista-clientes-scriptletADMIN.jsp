@@ -51,12 +51,12 @@
   	
   	<!-- Campo Pesquisa-->
     <form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/pesquisaByFiltro">
-    	<div class="form-row">
-        	<div class="form-group col-md-8">
+    	<div class="row justify-content-md-center">
+        	<div style="margin-top: 10px;" class="form-group col-md-8">
 				<input type="text" class="form-control" name="nomeCliente" placeholder="Buscar Cliente..." required>
 			</div>
 			
-			<div class="form-group col-md-2">
+			<div style="margin-top: 10px;" class="form-group col-md-2">
 				<button class="btn btn-success" name="operacao" value="CONSULTAR">Pesquisar</button>
 			</div>
         </div>
@@ -65,7 +65,7 @@
         <input type="hidden" name="NomeTabela" value="Cliente">
 	</form>
   
-	<table border="1" style="margin-top: 30px; margin-left: 100px;">
+	<table border="1" style="margin-top: 30px;" class="table table-striped">
 		<tr>
             <th>E-mail</th>
             <!--<th>Senha</th>-->
@@ -103,7 +103,7 @@
 		}
 		%>
 	</table>
-	 <a href="/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 100px; margin-bottom: 386px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-bottom: 386px;"></a>
 	 
  	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">
