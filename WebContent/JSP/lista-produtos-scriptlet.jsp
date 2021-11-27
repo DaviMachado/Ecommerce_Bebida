@@ -42,7 +42,7 @@
   
   	<h2 style="margin-top: 30px; margin-left: 10px">Listagem de Todos os Produtos</h2>
 
-	<table border="1" style="margin-top: 30px; margin-left: 10px;">
+	<table border="1" style="margin-top: 30px;" class="table table-striped">
 		<tr>
             <th>Nome</th>
             <th>Descrição</th>

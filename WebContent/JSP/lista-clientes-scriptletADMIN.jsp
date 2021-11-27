@@ -47,7 +47,7 @@
   </nav>
   <!-- Fim Header -->
   
-  	<h2 style="margin-top: 30px; margin-left: 100px">Listagem de Todos os Clientes</h2>
+  	<h2 style="margin-top: 30px; margin-left: 100px;">Listagem de Todos os Clientes</h2>
   	
   	<!-- Campo Pesquisa-->
     <form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/pesquisaByFiltro">
@@ -103,7 +103,7 @@
 		}
 		%>
 	</table>
-	 <a href="/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-bottom: 386px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 10px; margin-bottom: 386px;"></a>
 	 
  	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">

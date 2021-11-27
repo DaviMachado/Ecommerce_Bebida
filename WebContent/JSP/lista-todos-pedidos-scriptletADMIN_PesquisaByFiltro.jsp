@@ -85,12 +85,12 @@
   	
   	<!-- Campo Pesquisa-->
     <form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/pesquisaByFiltro">
-    	<div class="form-row">
-        	<div class="form-group col-md-5">
+    	<div class="row justify-content-md-center">
+        	<div style="margin-top: 10px;" class="form-group col-md-5">
 			    <input type="text" class="form-control" name="nomeCliente" placeholder="Buscar Cliente..." required>
 			</div>
 			
-			<div class="form-group col-md-5">
+			<div style="margin-top: 10px;" class="form-group col-md-5">
 	  			<select name="statusPedido" class="form-control" placeholder="Selecione um Status">
 			      	<option value="" disabled selected>Selecione uma opção...</option>
 			      	<option value="EM PROCESSAMENTO">EM PROCESSAMENTO</option>
@@ -109,7 +109,7 @@
 		      	</select>
 			</div>
 			
-			<div class="form-group col-md-2">
+			<div style="margin-top: 10px;" class="form-group col-md-2">
 				<button class="btn btn-success" name="operacao" value="CONSULTAR">Pesquisar</button>
 			</div>
         </div>
@@ -118,7 +118,7 @@
         <input type="hidden" name="NomeTabela" value="PedidoAdmin">
 	</form>
 
-	<table border="1" style="margin-top: 30px; margin-left: 70px; margin-right: 70px;">
+	<table border="1" style="margin-top: 30px;" class="table table-striped">
 		<tr>
             <th>ID Pedido</th>
             <th>Cliente</th>
@@ -186,7 +186,7 @@
 		}
 		%>
 	</table>		
-	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 70px; margin-bottom: 386px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 10px; margin-bottom: 386px;"></a>
 	 
   	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">

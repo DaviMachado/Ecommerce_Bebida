@@ -59,9 +59,9 @@
   </nav>
   <!-- Fim Header -->
   
-  	<h2 style="margin-top: 30px; margin-left: 200px">Listagem do Estoque: <%=produto.get(0).getNome() %></h2>
+  	<h2 style="margin-top: 30px; margin-left: 10px">Listagem do Estoque: <%=produto.get(0).getNome() %></h2>
 
-	<table border="1" style="margin-top: 30px; margin-left: 200px;">
+	<table border="1" style="margin-top: 30px;" class="table table-striped">
 		<tr>
             <th>Nome do Produto</th>
             <th>Tipo</th>
@@ -91,7 +91,7 @@
 		}
 		%>
 	</table>		
-	 <a href="/Ecommerce_Bebida/JSP/formulario_estoque.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 200px; margin-bottom: 386px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/formulario_estoque.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 10px; margin-bottom: 386px;"></a>
 	 
   	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">

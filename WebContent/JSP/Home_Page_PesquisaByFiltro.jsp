@@ -168,7 +168,7 @@
         
         <!-- Campo Pesquisa-->
         <form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/pesquisaByFiltro">
-	        <div class="form-row">
+	        <div class="row justify-content-md-center">
 	        	<div class="form-group col-md-8">
 				    <input type="text" class="form-control" name="nomeProduto" placeholder="Buscar Produto..." required>
 				</div>

@@ -51,9 +51,9 @@
   </nav>
   <!-- Fim Header -->
   
-  	<h2 style="margin-top: 30px; margin-left: 100px">Ranking dos Clientes com maiores Compras</h2>
+  	<h2 style="margin-top: 30px; margin-left: 10px">Ranking dos Clientes com maiores Compras</h2>
   
-	<table border="1" style="margin-top: 30px; margin-left: 100px;">
+	<table border="1" style="margin-top: 30px;" class="table table-striped">
 		<tr>
 			<th>Colocação</th>
             <th>Nome</th>
@@ -77,7 +77,7 @@
 		}
 		%>
 	</table>
-	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 100px; margin-bottom: 386px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/Home_Page_Back.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 10px; margin-bottom: 386px;"></a>
 	 
  	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">
