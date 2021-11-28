@@ -40,9 +40,9 @@
   </nav>
   <!-- Fim Header -->
   
-  	<h2 style="margin-top: 30px; margin-left: 100px">Meus Endereços</h2>
+  	<h2 style="margin-top: 30px; margin-left: 10px;">Meus Endereços</h2>
 
-	<table border="1" style="margin-top: 30px; margin-left: 100px;">
+	<table border="1" style="margin-top: 30px;" class="table table-striped">
 		<tr>
 			<th>Apelido</th>
             <th>CEP</th>
@@ -90,7 +90,7 @@
 		}
 		%>
 	</table>		
-	 <a href="/Ecommerce_Bebida/JSP/formulario_Endereco.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 100px; margin-bottom: 386px;"></a>
+	 <a href="/Ecommerce_Bebida/JSP/formulario_Endereco.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 10px; margin-bottom: 386px;"></a>
 	 
   	  <!-- Footer -->
 	  <footer class="py-5 bg-dark">

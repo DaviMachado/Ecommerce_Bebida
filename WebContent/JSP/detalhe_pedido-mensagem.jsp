@@ -89,9 +89,9 @@
     </div>
   </nav>
 
-	<h2 style="margin-top: 30px; margin-left: 70px">Itens do Pedidos</h2>
+	<h2 style="margin-top: 30px; margin-left: 10px">Itens do Pedidos</h2>
 	
-	<table border="1" style="margin-top: 30px; margin-left: 70px; margin-right: 70px;">
+	<table border="1" style="margin-top: 30px;" class="table table-striped">
 		<tr>
 	        <th>ID Pedido</th>
 	        <th>Total Itens</th>
@@ -116,12 +116,17 @@
 		</tr>
     </table>
 	
-		<table border="1" style="margin-top: 30px; margin-left: 70px; margin-right: 70px;">
+		<table border="1" style="margin-top: 30px;" class="table table-striped">
 			<tr>
 	            <th>Nome do Produto</th>
 	            <th>Valor de Venda</th>
 	            <th>Quantidade</th>
 	            <th>Trocado</th>
+	            <% if(pedidos.get(0).getStatus().equals("ENTREGA REALIZADA")) { %>
+		            <th>Qtde p/ Troca</th>
+		            <th></th>
+		            <th>Total p/ Troca</th>
+	            <%} %>
 	        </tr>
 	        <%
 	        	for(EntidadeDominio e : itens_pedido) {
@@ -206,12 +211,12 @@
 			%>
 		</table>
 		
-		<a href="/Ecommerce_Bebida/JSP/lista-pedidos-scriptletCLIENTE.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 70px; margin-bottom: 386px;"></a>
+		<a href="/Ecommerce_Bebida/JSP/lista-pedidos-scriptletCLIENTE.jsp"><input type="button" value="Voltar" style="margin-top: 10px; margin-left: 10px; margin-bottom: 386px;"></a>
 		
 		<!-- se tiver itens na lista "itensPedidoTroca" na Sessão, ele mostra o botão para finalizar a troca -->
 		<% if (itensPedidoTrocaEmSessao.size() > 0) {
 		%>
-			<a href="/Ecommerce_Bebida/pedidoTroca?trocaPedidoInteiro=<%= "0"%>&operacao=SALVAR"><button class="btn btn-success" style="margin-top: 10px; margin-left: 710px;">Finalizar Troca</button></a>
+			<a href="/Ecommerce_Bebida/pedidoTroca?trocaPedidoInteiro=<%= "0"%>&operacao=SALVAR"><button class="btn btn-success" style="margin-top: 10px; float: right">Finalizar Troca</button></a>
 		<%
 		}
 		%>
