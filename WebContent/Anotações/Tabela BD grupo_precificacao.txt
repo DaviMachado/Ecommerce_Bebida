@@ -1,0 +1,20 @@
+create database ecommerce;
+
+drop table grupo_precificacao;
+
+create table grupo_precificacao (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	nome		       VARCHAR(50),
+    dt_cadastro 	   DATE,
+	primary	key	(id)
+);
+
+use ecommerce;
+
+select * from grupo_precificacao;
+-----------------------------
+insert das grupo_precificacao:
+
+
+
+-----------------------------

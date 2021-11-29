@@ -44,3 +44,18 @@ values ('Guaraná 350ml', 'O guaraná (nome científico: Paullinia cupana), comumen
 insert into produto(nome, descricao, categoria, preco_de_compra, preco_de_venda, foto, foto_detalhe, grupo_de_precificacao, quantidade, cd_sistema, status, dt_cadastro, observacao)
 values ('Benjamin 750ml', 'A Argentina é o quinto maior produtor de vinho do mundo. O vinho argentino, assim como alguns aspectos da culinária argentina, tem suas raízes na Espanha. ', 'vinho', '5.99', '7.99', './Imagens/itens/vinho.png', './Imagens/detalhe item produto (900x400)/Benjamin.jpeg', 'grupo 1', '10', '6', 'ativo', '2021/08/21', 'teste observacao vinho');
 -----------------------------
+-----------------------------
+update para adicionar a nova coluna com a referencia para a categoria:
+
+ALTER TABLE produto ADD COLUMN id_categoria BIGINT;
+ALTER TABLE produto ADD CONSTRAINT fk_CategoriaProduto FOREIGN KEY(id_categoria) REFERENCES categoria (id);
+-----------------------------
+update para adicionar a nova coluna com a referencia para o grupo_precificacao:
+
+ALTER TABLE produto ADD COLUMN id_grupo_precificacao BIGINT;
+ALTER TABLE produto ADD CONSTRAINT fk_GrupoPrecificacaoProduto FOREIGN KEY(id_grupo_precificacao) REFERENCES grupo_precificacao (id);
+-----------------------------
+exemplo para excluir uma CONSTRAINT e uma COLUNA ja existentes:
+
+ALTER TABLE produto DROP FOREIGN KEY fk_CidadeEndereco;
+ALTER TABLE produto DROP COLUMN id_cidade;

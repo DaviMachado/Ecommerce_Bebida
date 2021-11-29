@@ -1,0 +1,20 @@
+create database ecommerce;
+
+drop table forma_pagamento;
+
+create table forma_pagamento (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	nome		       VARCHAR(50),
+    dt_cadastro 	   DATE,
+	primary	key	(id)
+);
+
+use ecommerce;
+
+select * from forma_pagamento;
+-----------------------------
+insert das forma_pagamento:
+
+
+
+-----------------------------

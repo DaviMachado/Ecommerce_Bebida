@@ -30,3 +30,8 @@ Teste:
 create database ecommerce;
 
 ALTER TABLE `endereco` ADD CONSTRAINT `fk_cliente` FOREIGN KEY ( `id` ) REFERENCES `cliente` ( ` id ` ) ;
+-----------------------------
+update para adicionar a nova coluna com a referencia para a cidade:
+
+ALTER TABLE endereco ADD COLUMN id_cidade BIGINT;
+ALTER TABLE endereco ADD CONSTRAINT fk_CidadeEndereco FOREIGN KEY(id_cidade) REFERENCES cidade (id);

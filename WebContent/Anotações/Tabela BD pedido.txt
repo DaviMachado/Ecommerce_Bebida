@@ -29,3 +29,8 @@ use ecommerce;
 
 select * from pedido;
 -----------------------------
+-----------------------------
+update para adicionar a nova coluna com a referencia para a forma_pagamento:
+
+ALTER TABLE pedido ADD COLUMN id_forma_pagamento BIGINT;
+ALTER TABLE pedido ADD CONSTRAINT fk_FormaPagamentoPedido FOREIGN KEY(id_forma_pagamento) REFERENCES forma_pagamento (id);

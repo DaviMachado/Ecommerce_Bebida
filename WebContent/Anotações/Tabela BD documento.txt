@@ -1,0 +1,22 @@
+create database ecommerce;
+
+drop table documento;
+
+create table documento (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	nome		       VARCHAR(50),
+	id_tipo_documento  BIGINT,
+    dt_cadastro 	   DATE,
+	primary	key	(id),
+	CONSTRAINT fk_TipoDocDocumento FOREIGN KEY (id_tipo_documento) REFERENCES tipo_documento (id)
+);
+
+use ecommerce;
+
+select * from documento;
+-----------------------------
+insert das documento:
+
+
+
+-----------------------------

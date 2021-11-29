@@ -1,0 +1,20 @@
+create database ecommerce;
+
+drop table categoria;
+
+create table categoria (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	nome		       VARCHAR(50),
+    dt_cadastro 	   DATE,
+	primary	key	(id)
+);
+
+use ecommerce;
+
+select * from categoria;
+-----------------------------
+insert das categorias:
+
+
+
+-----------------------------

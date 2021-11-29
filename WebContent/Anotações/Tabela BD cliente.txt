@@ -41,3 +41,13 @@ create table cliente (
 	fl_ativo NUMERIC(1) NOT NULL,
 	primary	key	(id)
 );
+-----------------------------
+update para adicionar a nova coluna com a referencia para o documento:
+
+ALTER TABLE cliente ADD COLUMN id_documento BIGINT;
+ALTER TABLE cliente ADD CONSTRAINT fk_DocumentoCliente FOREIGN KEY(id_documento) REFERENCES documento (id);
+-----------------------------
+update para adicionar a nova coluna com a referencia para o tipo_cliente:
+
+ALTER TABLE cliente ADD COLUMN id_tipo_cliente BIGINT;
+ALTER TABLE cliente ADD CONSTRAINT fk_TipoCliCliente FOREIGN KEY(id_tipo_cliente) REFERENCES tipo_cliente (id);

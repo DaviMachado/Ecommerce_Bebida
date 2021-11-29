@@ -1,0 +1,20 @@
+create database ecommerce;
+
+drop table tipo_cliente;
+
+create table tipo_cliente (
+	id	BIGINT	NOT	NULL	AUTO_INCREMENT,
+	nome		       VARCHAR(50),
+    dt_cadastro 	   DATE,
+	primary	key	(id)
+);
+
+use ecommerce;
+
+select * from tipo_cliente;
+-----------------------------
+insert das tipo_cliente:
+
+
+
+-----------------------------
