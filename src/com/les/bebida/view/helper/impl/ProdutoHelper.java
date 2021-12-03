@@ -133,6 +133,12 @@ public class ProdutoHelper implements IViewHelper{
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o Login consultado
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				
+				// pendura o "entidadesProdutos" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("entidadesProdutos", entidades);
+				
 				// Redireciona para o arquivo .jsp
 				request.getRequestDispatcher("JSP/lista-produtos-scriptlet.jsp").forward(request, response);
 			} 

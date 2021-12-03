@@ -3,6 +3,7 @@
 <%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 
 <html>
 <head>
@@ -52,10 +53,11 @@
             <th>Status</th>
         </tr>
 		<%
-		ProdutoDAO dao = new ProdutoDAO();
-		Produto produto = new Produto();
+		List<EntidadeDominio> produtos = new ArrayList<>();
 		
-		List<EntidadeDominio> produtos = dao.consultar(produto);
+		// pega a lista de produtos que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "ProdutoHelper"
+		produtos = (List<EntidadeDominio>)request.getAttribute("entidadesProdutos");
 		
 		for(EntidadeDominio e : produtos) {
 		
