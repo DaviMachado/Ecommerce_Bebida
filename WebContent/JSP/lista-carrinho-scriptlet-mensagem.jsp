@@ -16,15 +16,13 @@
 </head>
 
 <%
-	EnderecoDAO enderecoDAO = new EnderecoDAO();
-	CartaoDeCreditoDAO cartaoDAO = new CartaoDeCreditoDAO();
-	CupomDAO cupomDAO = new CupomDAO();
 	List<Produto> produtosEmSessao = new ArrayList<>();
 	List<Endereco> enderecosCliente = new ArrayList<>();
 	List<CartaoDeCredito> cartoesCliente = new ArrayList<>();
 	List<Cupom> cuponsSessao = new ArrayList<>();
 	Usuario usuarioLogado = new Usuario();
 	String concatenacaoCuponsCliente = "";
+	List<EntidadeDominio> entidade = new ArrayList<>();
 
 	//cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 	HttpSession sessao = request.getSession();
@@ -38,21 +36,23 @@
 	// e passa para o "cuponsSessao" (fazendo o CAST para o tipo List<Cupom>)
 	cuponsSessao = (List<Cupom>) sessao.getAttribute("cupons");
 	
-	// consulta todos os endereços cadastrados pelo Cliente
-	enderecosCliente = enderecoDAO.consultarEnderecoByIdCliente(usuarioLogado.getId());
-	// comsulta todos os cartões de credito cadastrados pelo cliente
-	cartoesCliente = cartaoDAO.consultarCartaoDeCreditoByIdCliente(usuarioLogado.getId());
-	// consulta todos os cupons disponiveis do Cliente
-	List<Cupom> cuponsCliente = cupomDAO.consultarCupomByIdCliente(usuarioLogado.getId());
+	// pega a lista de Endereços, Cartões e Cupons do Cliente que foi salvo na Sessão pelo arquivo "CarrinhoHelper",
+	// pega o objeto salvo em Sessão com o nome "entidadesEnderecoCartaoCupom",
+	// e passa para o "entidade" (fazendo o CAST para o tipo List<EntidadeDominio>)
+	entidade = (List<EntidadeDominio>)sessao.getAttribute("entidadesEnderecoCartaoCupom");
+		
+	// pega o primeiro indice do array, pois dentro da DAO do Carrinho, ja foi pesquisado
+	// todos os Endereços, Cartões e Cupons pelo Id do Cliente
+	Carrinho TodosEnderecosCartoesCuponsCliente = (Carrinho) entidade.get(0);
 	
 	// verifica se não tem nenhum Cupom disponivel para o Cliente,
 	// para poder setar uma mensagem na tela e não deixar vazia.
-	if (cuponsCliente.isEmpty()){
+	if (TodosEnderecosCartoesCuponsCliente.getCupons().isEmpty()){
 		concatenacaoCuponsCliente = "Nenhum Cupom pessoal disponível !";
 	}
 	else {
 		// faz a concatenação de todos os cupons disponiveis do cliente para poder mostrar na tela
-		for(Cupom coupon : cuponsCliente) {
+		for(Cupom coupon : TodosEnderecosCartoesCuponsCliente.getCupons()) {
 			concatenacaoCuponsCliente += (coupon.getNome() + "; ");
 		}	
 	}
@@ -174,6 +174,8 @@
 			    		<input type="hidden" name="operacao" id="operacao" value="ALTERAR">
 			    		<!-- ID do Produto -->
 						<input type="hidden" name="idProduto" id="idProduto" value="<%=produto.getId() %>">
+						<!-- ID do Cliente -->
+						<input type="hidden" name="idCliente" id="idCliente" value="<%=usuarioLogado.getId() %>">
 					</form>
 					
 					<!-- form responsavel por excluir o item inteiro do carrinho selecionado -->
@@ -262,7 +264,7 @@
 		  			<select name="selecioneEndereco" class="form-control" placeholder="Selecione um Endereço" required>
 				      	<option value="" disabled selected>Selecione uma opção...</option>
 				      	<% 
-					      	for(Endereco endereco : enderecosCliente) {
+					      	for(Endereco endereco : TodosEnderecosCartoesCuponsCliente.getEnderecos()) {
 					      	
 							// lista todos os endereços do cliente indexado com o ID do endereço dentro do "value", de cada TAG "<option>".
 						%>
@@ -294,7 +296,7 @@
 		  			<select name="selecioneCartao1" class="form-control" placeholder="Selecione um Cartão de Crédito">
 				      	<option value="" disabled selected>Selecione uma opção...</option>
 				      	<% 
-					      	for(CartaoDeCredito cartao : cartoesCliente) {
+					      	for(CartaoDeCredito cartao : TodosEnderecosCartoesCuponsCliente.getCartoes()) {
 					      	
 							// lista todos os cartões de credito do cliente indexado com o ID do cartão dentro do "value", de cada TAG "<option>".
 						%>
@@ -320,7 +322,7 @@
 		  			<select name="selecioneCartao2" class="form-control" placeholder="Selecione um Cartão de Crédito">
 				      	<option value="" disabled selected>Selecione uma opção...</option>
 				      	<% 
-					      	for(CartaoDeCredito cartao : cartoesCliente) {
+					      	for(CartaoDeCredito cartao : TodosEnderecosCartoesCuponsCliente.getCartoes()) {
 					      	
 							// lista todos os cartões de credito do cliente indexado com o ID do cartão dentro do "value", de cada TAG "<option>".
 						%>

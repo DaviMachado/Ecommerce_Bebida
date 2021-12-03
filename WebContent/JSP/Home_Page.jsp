@@ -97,7 +97,7 @@
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp" class="list-group-item">Gerenciamento de Clientes</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_produto.jsp" class="list-group-item">Gerenciamento de Produtos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_estoque.jsp" class="list-group-item">Gerenciamento de Estoque</a>
-          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-carrinho-scriptlet.jsp" class="list-group-item">Carrinho</a>
+          <a href="/Ecommerce_Bebida/carrinho?idCliente=<%= userLogado.getId()%>&operacao=CONSULTAR"class="list-group-item">Carrinho</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-todos-pedidos-scriptletADMIN.jsp" class="list-group-item">Gerenciamento de Pedidos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cupom.jsp" class="list-group-item">Gerenciamento de Cupons</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/grafico_chart_1.jsp" class="list-group-item">Gerenciamento de Gráficos</a>
@@ -116,7 +116,7 @@
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Cliente.jsp" class="list-group-item">Meus Dados</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Endereco.jsp" class="list-group-item">Meus Endereços</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cartaoDeCredito.jsp" class="list-group-item">Meus Cartões de créditos</a>
-          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-carrinho-scriptlet.jsp" class="list-group-item">Carrinho</a>
+          <a href="/Ecommerce_Bebida/carrinho?idCliente=<%= userLogado.getId()%>&operacao=CONSULTAR"class="list-group-item">Carrinho</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-pedidos-scriptletCLIENTE.jsp" class="list-group-item">Meus Pedidos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-cupons-scriptletCLIENTE.jsp" class="list-group-item">Meus Cupons</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/editar_somente_senha_Cliente.jsp" class="list-group-item">Alterar Senha</a>

@@ -35,9 +35,15 @@ public class CarrinhoHelper implements IViewHelper {
 		String id = null;
 		String quantidadeSelecionada = null;
 		String tipoDeOperacao = null;
+		String idCliente = null;
 		
 		if (("CONSULTAR").equals(operacao)) {
-
+			carrinho = new Carrinho();
+			
+			// capturando os valores do HTML
+			idCliente = request.getParameter("idCliente");
+			
+			carrinho.setIdCliente(idCliente);
 		}
 		
 		else if (("SALVAR").equals(operacao)) {
@@ -71,6 +77,7 @@ public class CarrinhoHelper implements IViewHelper {
 			id = request.getParameter("idProduto");
 			quantidadeSelecionada = request.getParameter("quantidadeSelecionada");
 			tipoDeOperacao = request.getParameter("tipoDeOperacao");
+			idCliente = request.getParameter("idCliente");
 			
 			// verifica o tipo de operação que esta sendo realizado no carrinho,
 			// se é uma "adição", para adicionar mais "1" de quantidade do item selecionado ao carrinho,
@@ -101,6 +108,7 @@ public class CarrinhoHelper implements IViewHelper {
 			produto.setQuantidadeSelecionada(quantidadeSelecionada);
 			itemCarrinho.setProduto(produto);
 			carrinho.setItemCarrinho(itemCarrinho);
+			carrinho.setIdCliente(idCliente);
 		}
 		
 		else if (("EXCLUIR").equals(operacao)) {
@@ -121,7 +129,25 @@ public class CarrinhoHelper implements IViewHelper {
 		PrintWriter writer = response.getWriter();
 		
 		if (("CONSULTAR").equals(operacao)) {
-
+			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o Login consultado
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				
+				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+				HttpSession sessao = request.getSession();
+				
+				// salva na sessão os dados do Cliente (Endereço, Cartões e Cupons), pra poder usar na tela do Carrinho
+				sessao.setAttribute("entidadesEnderecoCartaoCupom", entidades);
+				
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/lista-carrinho-scriptlet.jsp").forward(request, response);
+			} 
+			else {
+				// mostra as mensagens de ERRO se houver
+				writer.println(resultado.getMensagem());
+				System.out.println("ERRO PARA CONSULTAR!");
+				writer.println("<input type=\"button\" value=\"Voltar\" onclick=\"history.back()\">");
+			}
 		}
 		
 		else if (("SALVAR").equals(operacao)) {
