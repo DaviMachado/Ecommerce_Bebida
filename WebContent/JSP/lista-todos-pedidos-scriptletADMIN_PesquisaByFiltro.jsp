@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -16,39 +14,22 @@
 </head>
 
 <%
-	PedidoDAO dao = new PedidoDAO();
-	ClienteDAO clienteDAO = new ClienteDAO();
 	Pedido pedido = new Pedido();
 	Cliente cliente = new Cliente();
 	Cliente clienteFiltro = new Cliente();
 	List<Cliente> clientes = new ArrayList<>();
-	List<EntidadeDominio> pedidosPesquisaByFiltro = new ArrayList<>();
+	List<Cliente> clientesPesquisaByFiltro = new ArrayList<>();
+	List<Pedido> pedidosPesquisaByFiltro = new ArrayList<>();
 	
-	// pega o "nomeCliente" que estava pendurado na requisição,
-	// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
-	String nomeCliente = (String)request.getAttribute("nomeCliente");
+	// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+	HttpSession sessao = request.getSession();
+	// pega o objeto salvo em Sessão com o nome "filtroByNomeClientes",
+	// e passa para o novo objeto criado com o nome "clientesPesquisaByFiltro" (fazendo o CAST para o tipo List<Cliente>)
+	clientesPesquisaByFiltro = (List<Cliente>) sessao.getAttribute("filtroByNomeClientes");
 	
-	// pega o "statusPedido" que estava pendurado na requisição,
-	// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
-	String statusPedido = (String)request.getAttribute("statusPedido");
-	
-	// busca o primeiro cliente conforme o filtro digitado na tela,
-	List<EntidadeDominio> clientesPesquisaByFiltro = clienteDAO.consultarClientePesquisaByFiltro(cliente, nomeCliente);
-	
-	// busca os pedidos conforme o filtro digitado na tela (nomeCliente e statusPedido),
-	if (clientesPesquisaByFiltro.size() > 0 && statusPedido != null) {
-		clienteFiltro = (Cliente) clientesPesquisaByFiltro.get(0);
-		
-		// e guarda na variavel "pedidosPesquisaByFiltro", para ser listada na tela de listagem dos pedidos do ADMIN
-		pedidosPesquisaByFiltro = dao.consultarPedidoPesquisaByFiltro(pedido, clienteFiltro.getId(), statusPedido);
-	}
-	// busca os pedidos conforme o filtro digitado na tela (nomeCliente),
-	else if (clientesPesquisaByFiltro.size() > 0) {
-		clienteFiltro = (Cliente) clientesPesquisaByFiltro.get(0);
-		
-		// e guarda na variavel "pedidosPesquisaByFiltro", para ser listada na tela de listagem dos pedidos do ADMIN
-		pedidosPesquisaByFiltro = dao.consultarPedidoByIdClienteEntidadeDominio(clienteFiltro.getId());
-	}
+	// pega o objeto salvo em Sessão com o nome "filtroByPedidos",
+	// e passa para o novo objeto criado com o nome "pedidosPesquisaByFiltro" (fazendo o CAST para o tipo List<Pedido>)
+	pedidosPesquisaByFiltro = (List<Pedido>) sessao.getAttribute("filtroByPedidos");
 		
 	// pega a mensagem que estava pendurado na requisição,
 	// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
@@ -127,18 +108,16 @@
             <th width="35%"></th>
         </tr>
 		<%		
-		for(EntidadeDominio e : pedidosPesquisaByFiltro) {
+		for(Pedido order : pedidosPesquisaByFiltro) {
 		
 		// Aplicado o CAST para poder popular o pedido,
 		// fazendo o CAST para uma referência mais genérica, no caso para o pedido
-		Pedido order = (Pedido) e;
+		//Pedido order = (Pedido) e;
 		
-		// busca o nome do cliente, conforme o ID do cliente no pedido
-		clientes = clienteDAO.consultarClienteById(order.getIdCliente());
 		%>
 			<tr>
 				<td><%=order.getId() %></td>
-				<td><%=clientes.get(0).getNome() %></td>
+				<td><%=clientesPesquisaByFiltro.get(0).getNome() %></td>
 				<td><%=order.getTotalPedido() %></td>
 				<td><%=order.getStatus() %></td>
 				<td>
@@ -176,7 +155,7 @@
 						<!-- ID do Pedido -->
 			    		<input type="hidden" name="idPedido" id="idPedido" value="<%=order.getId() %>">
 			    		<!-- ID do Cliente -->
-			    		<input type="hidden" name="idCliente" id="idCliente" value="<%=clientes.get(0).getId() %>">
+			    		<input type="hidden" name="idCliente" id="idCliente" value="<%=order.getIdCliente() %>">
 			    		<!-- Total do Pedido -->
 			    		<input type="hidden" name="totalPedido" id="totalPedido" value="<%=order.getTotalPedido() %>">
 					</form>

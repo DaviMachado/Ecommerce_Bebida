@@ -1,8 +1,7 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 
 <html>
 <head>
@@ -15,18 +14,13 @@
 </head>
 
 <%
-	ClienteDAO dao = new ClienteDAO();
-	Cliente cliente = new Cliente();
+	List<Cliente> clientesPesquisaByFiltro = new ArrayList<>();
 	
-	List<EntidadeDominio> clientes = dao.consultarClienteByTipoSomenteCliente(cliente);
-	
-	// pega o "nomeCliente" que estava pendurado na requisição,
-	// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
-	String nomeCliente = (String)request.getAttribute("nomeCliente");
-	
-	// busca os clientes conforme o filtro digitado na tela,
-	// e guarda na variavel "clientesPesquisaByFiltro", para ser listada na tela de listagem dos clientes do ADMIN
-	List<EntidadeDominio> clientesPesquisaByFiltro = dao.consultarClientePesquisaByFiltro(cliente, nomeCliente);
+	// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+	HttpSession sessao = request.getSession();
+	// pega o objeto salvo em Sessão com o nome "filtroByNomeClientes",
+	// e passa para o novo objeto criado com o nome "clientesPesquisaByFiltro" (fazendo o CAST para o tipo List<Cliente>)
+	clientesPesquisaByFiltro = (List<Cliente>) sessao.getAttribute("filtroByNomeClientes");
 	
 	// pega a mensagem que estava pendurado na requisição,
 	// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
@@ -90,11 +84,11 @@
             <th>Status</th>
         </tr>
 		<%
-		for(EntidadeDominio e : clientesPesquisaByFiltro) {
+		for(Cliente c : clientesPesquisaByFiltro) {
 
 		// Aplicado o CAST para poder popular o cliente,
 		// fazendo o CAST para uma referência mais genérica, no caso para o cliente
-		Cliente c = (Cliente) e;
+		//Cliente c = (Cliente) e;
 		// pega o usuario que esta dentro do cliente
 		Usuario u = c.getUsuario();
 		%>

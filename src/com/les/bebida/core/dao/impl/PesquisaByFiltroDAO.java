@@ -10,6 +10,7 @@ import org.apache.commons.codec.binary.Base64;
 
 import com.les.bebida.core.dominio.Cliente;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.ItemPedido;
 import com.les.bebida.core.dominio.Pedido;
 import com.les.bebida.core.dominio.PesquisaByFiltro;
 import com.les.bebida.core.dominio.Produto;
@@ -60,6 +61,7 @@ public class PesquisaByFiltroDAO extends AbstractJdbcDAO {
 		try {
 			PesquisaByFiltro pesquisaByFiltro = (PesquisaByFiltro) entidade;
 			List<EntidadeDominio> listPesquisaByFiltro = new ArrayList<>();
+			ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
 			
 			PreparedStatement stmt = connection.prepareStatement("select * from produto where nome LIKE ?");
 			stmt.setString(1, "%" + pesquisaByFiltro.getNomeProduto() + "%");
@@ -192,6 +194,21 @@ public class PesquisaByFiltroDAO extends AbstractJdbcDAO {
 					
 					// adicionando o objeto à lista
 					pedidos.add(pedidoItem);
+				}
+			}
+			
+			// se achou algum pedido, também pesquisa se todos os itens desse pedido foi trocado,
+			// para poder verificar na tela de "lista-pedidos-scriptletCLIENTE_PesquisaByFiltro.jsp".
+			if (pedidos.size() > 0) {
+				for(Pedido order: pedidos) {
+					List<ItemPedido> pedidoComTodosOsItensJaTrocados = itemPedidoDAO.consultarItemPedidoByIdPedidoAndTrocadoSim(order.getId());
+					
+					if (pedidoComTodosOsItensJaTrocados.isEmpty()) {
+						order.setTodosItensTrocado("nao");
+					}
+					else {
+						order.setTodosItensTrocado("sim");
+					}
 				}
 			}
 			

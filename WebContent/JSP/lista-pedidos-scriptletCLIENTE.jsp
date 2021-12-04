@@ -87,6 +87,8 @@
         
         <!-- Nome da tabela que será consultado -->
         <input type="hidden" name="NomeTabela" value="PedidoCliente">
+        <!-- Nome do Cliente logado no sistema -->
+        <input type="hidden" name="nomeCliente" value="<%=usuarioLogado.getNome() %>">
 	</form>
 
 	<table border="1" style="margin-top: 30px;" class="table table-striped">
