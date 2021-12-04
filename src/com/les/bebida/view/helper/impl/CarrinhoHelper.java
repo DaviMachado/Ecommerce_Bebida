@@ -10,14 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dominio.Carrinho;
-import com.les.bebida.core.dominio.Endereco;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.ItemCarrinho;
 import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.Resultado;
-import com.les.bebida.core.dominio.Usuario;
 import com.les.bebida.view.helper.IViewHelper;
 
 public class CarrinhoHelper implements IViewHelper {
@@ -112,7 +109,17 @@ public class CarrinhoHelper implements IViewHelper {
 		}
 		
 		else if (("EXCLUIR").equals(operacao)) {
+			carrinho = new Carrinho();
+			itemCarrinho = new ItemCarrinho();
+			produto = new Produto();
 			
+			// capturando os valores do HTML e passando para o Produto, logo em sequencia passando para o Item Carrinho
+			id = request.getParameter("idProduto");
+			
+			// Atribuindo os valores capturados do HTML para o Item Carrinho, logo em sequencia passando para o Carrinho
+			produto.setId(id);
+			itemCarrinho.setProduto(produto);
+			carrinho.setItemCarrinho(itemCarrinho);
 		}
 		
 		return carrinho;
@@ -153,7 +160,6 @@ public class CarrinhoHelper implements IViewHelper {
 		else if (("SALVAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
 				// capturando os valores do HTML
-				String id = request.getParameter("idProduto");
 				String quantidadeSelecionada = request.getParameter("quantidadeSelecionada");
 				boolean adicionaNovoItemAoCarrinho = true;
 				
@@ -163,16 +169,18 @@ public class CarrinhoHelper implements IViewHelper {
 					quantidadeSelecionada = "0";
 				}
 				
-				ProdutoDAO dao = new ProdutoDAO();
-				// pesquisa no banco o produto selecionado
-				List<Produto> produtoSelecionado = dao.consultarProdutoById(id);
+				// pega o Carrinho que esta no resultado da requisição, que foi alterado como REFERENCIA no CarrinhoDAO
+				Carrinho resultadoCarrinho = (Carrinho) resultado.getEntidades().get(0);
+				// pega o Produto preenchido que esta dentro do Carrinho do resultado da requisição
+				Produto produtoSelecionado = resultadoCarrinho.getItemCarrinho().getProduto();
+				
 				List<Produto> produtoParaAdicionarAoCarrinho = new ArrayList<>();
 				
 				// se a quantidade selecionada é maior que ZERO, então adiciona o item selecionado na lista da Sessão
 				if (Integer.parseInt(quantidadeSelecionada) > 0) {
 					// guarda no produto, o valor da quantidade selecionada da tela, 
 					// para poder listar a quantidade selecionada no arquivo "lista-carrinho-scriptlet.jsp"
-					produtoSelecionado.get(0).setQuantidadeSelecionada(quantidadeSelecionada);
+					produtoSelecionado.setQuantidadeSelecionada(quantidadeSelecionada);
 					
 					// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 					HttpSession sessao = request.getSession();
@@ -186,11 +194,11 @@ public class CarrinhoHelper implements IViewHelper {
 					for (int i = 0; i< produtoParaAdicionarAoCarrinho.size(); i++) {
 						// se o ID do carrinho for igual ao ID do "produto selecionado", 
 						// o atributo "quantidadeSelecionada" será atualizada
-						if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.get(0).getId())) {
-							int somatoriaDasQuantidades = (Integer.parseInt(produtoParaAdicionarAoCarrinho.get(i).getQuantidadeSelecionada()) + Integer.parseInt(produtoSelecionado.get(0).getQuantidadeSelecionada()));
+						if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.getId())) {
+							int somatoriaDasQuantidades = (Integer.parseInt(produtoParaAdicionarAoCarrinho.get(i).getQuantidadeSelecionada()) + Integer.parseInt(produtoSelecionado.getQuantidadeSelecionada()));
 							
 							// verifica se a somatoria das quantidades selecionadas é maior que a quantidade do estoque disponivel
-							if (somatoriaDasQuantidades > Integer.parseInt(produtoSelecionado.get(0).getQuantidade())) {
+							if (somatoriaDasQuantidades > Integer.parseInt(produtoSelecionado.getQuantidade())) {
 								// atribui a nova mensagem para poder mostra na pagina .JSP
 								resultado.setMensagem("Quantidade selecionada é maior que disponivel no estoque!");
 								
@@ -199,12 +207,12 @@ public class CarrinhoHelper implements IViewHelper {
 							}
 							else {
 								// feito o CAST de INT para String, para poder atualizar a quantidade selecionada com a somatoria
-								produtoSelecionado.get(0).setQuantidadeSelecionada(Integer.toString(somatoriaDasQuantidades));
+								produtoSelecionado.setQuantidadeSelecionada(Integer.toString(somatoriaDasQuantidades));
 								
 								// ".set" do ArrayList faz o seguinte:
 								// set(int index, Object element):
 								// Substitui o i-ésimo elemento da lista pelo elemento especificado.
-								produtoParaAdicionarAoCarrinho.set(i, produtoSelecionado.get(0));
+								produtoParaAdicionarAoCarrinho.set(i, produtoSelecionado);
 								
 								// atribui a nova mensagem para poder mostra na pagina .JSP
 								resultado.setMensagem("Item do Carrinho atualizado com sucesso!");
@@ -223,7 +231,7 @@ public class CarrinhoHelper implements IViewHelper {
 					// verifica se é para adicionar um novo item ao Carrinho
 					if (adicionaNovoItemAoCarrinho) {
 						// passa o produto selecionado para a variavel que será responsavel para atualizar a sessão dos itens do carrinho
-						produtoParaAdicionarAoCarrinho.add(produtoSelecionado.get(0));
+						produtoParaAdicionarAoCarrinho.add(produtoSelecionado);
 						
 						// atribui a nova mensagem para poder mostra na pagina .JSP
 						resultado.setMensagem("Item adicionado ao Carrinho com sucesso!");
@@ -265,13 +273,14 @@ public class CarrinhoHelper implements IViewHelper {
 		else if (("ALTERAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
 				// capturando os valores do HTML
-				String id = request.getParameter("idProduto");
 				String quantidadeSelecionada = request.getParameter("quantidadeSelecionada");
 				String tipoDeOperacao = request.getParameter("tipoDeOperacao");
 				
-				ProdutoDAO dao = new ProdutoDAO();
-				// pesquisa no banco o produto selecionado
-				List<Produto> produtoSelecionado = dao.consultarProdutoById(id);
+				// pega o Carrinho que esta no resultado da requisição, que foi alterado como REFERENCIA no CarrinhoDAO
+				Carrinho resultadoCarrinho = (Carrinho) resultado.getEntidades().get(0);
+				// pega o Produto preenchido que esta dentro do Carrinho do resultado da requisição
+				Produto produtoSelecionado = resultadoCarrinho.getItemCarrinho().getProduto();
+				
 				List<Produto> produtoParaAdicionarAoCarrinho = new ArrayList<>();
 				
 				// verifica o tipo de operação que esta sendo realizado no carrinho,
@@ -303,7 +312,7 @@ public class CarrinhoHelper implements IViewHelper {
 					// guarda no produto, o valor da quantidade selecionada da tela,
 					// ja com o valor atualizado com o tipo de operação, 
 					// para poder listar a quantidade selecionada no arquivo "lista-carrinho-scriptlet.jsp"
-					produtoSelecionado.get(0).setQuantidadeSelecionada(quantidadeSelecionada);
+					produtoSelecionado.setQuantidadeSelecionada(quantidadeSelecionada);
 					
 					// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 					HttpSession sessao = request.getSession();
@@ -314,11 +323,11 @@ public class CarrinhoHelper implements IViewHelper {
 					// faz um laço de repetição para encontrar o produto que será atualizado na Sessão
 					for (int i = 0; i< produtoParaAdicionarAoCarrinho.size(); i++) {
 						// se o ID do carrinho for igual ao ID do "produto atualizado", ele será adicionado ao carrinho
-						if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.get(0).getId())) {
+						if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.getId())) {
 							// ".set" do ArrayList faz o seguinte:
 							// set(int index, Object element):
 							// Substitui o i-ésimo elemento da lista pelo elemento especificado.
-							produtoParaAdicionarAoCarrinho.set(i, produtoSelecionado.get(0));
+							produtoParaAdicionarAoCarrinho.set(i, produtoSelecionado);
 							
 							// outra forma de "atualizar" a lista dos produtos:
 							//produtoParaAdicionarAoCarrinho.remove(i);
@@ -350,7 +359,7 @@ public class CarrinhoHelper implements IViewHelper {
 					// faz um laço de repetição para encontrar o produto selecionado e retirar da lista da Sessão
 					for (int i = 0; i< produtoParaAdicionarAoCarrinho.size(); i++) {
 						// se o ID do carrinho for igual ao ID do "produto selecionado", ele será retirado do carrinho
-						if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.get(0).getId())) {
+						if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.getId())) {
 							// remove o item inteiro da Sessão
 							produtoParaAdicionarAoCarrinho.remove(i);
 						}
@@ -381,12 +390,11 @@ public class CarrinhoHelper implements IViewHelper {
 		
 		else if (("EXCLUIR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				// capturando os valores do HTML
-				String id = request.getParameter("idProduto");
-
-				ProdutoDAO dao = new ProdutoDAO();
-				// pesquisa no banco o produto selecionado
-				List<Produto> produtoSelecionado = dao.consultarProdutoById(id);
+				// pega o Carrinho que esta no resultado da requisição, que foi alterado como REFERENCIA no CarrinhoDAO
+				Carrinho resultadoCarrinho = (Carrinho) resultado.getEntidades().get(0);
+				// pega o Produto preenchido que esta dentro do Carrinho do resultado da requisição
+				Produto produtoSelecionado = resultadoCarrinho.getItemCarrinho().getProduto();
+				
 				List<Produto> produtoParaAdicionarAoCarrinho = new ArrayList<>();
 				
 				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
@@ -398,7 +406,7 @@ public class CarrinhoHelper implements IViewHelper {
 				// faz um laço de repetição para encontrar o produto selecionado e retirar da lista da Sessão
 				for (int i = 0; i< produtoParaAdicionarAoCarrinho.size(); i++) {
 					// se o ID do carrinho for igual ao ID do "produto selecionado", ele será retirado do carrinho
-					if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.get(0).getId())) {
+					if ((produtoParaAdicionarAoCarrinho.get(i).getId()).equals(produtoSelecionado.getId())) {
 						// remove o item inteiro da Sessão
 						produtoParaAdicionarAoCarrinho.remove(i);
 					}

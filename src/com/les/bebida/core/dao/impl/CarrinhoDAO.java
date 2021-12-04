@@ -11,6 +11,7 @@ import com.les.bebida.core.dominio.CartaoDeCredito;
 import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.Endereco;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Produto;
 
 public class CarrinhoDAO extends AbstractJdbcDAO {
 	
@@ -20,7 +21,19 @@ public class CarrinhoDAO extends AbstractJdbcDAO {
 	 */
 	@Override
 	public void salvar(EntidadeDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
+		Carrinho carrinho = (Carrinho) entidade;
+		
+		ProdutoDAO dao = new ProdutoDAO();
+		
+		// pesquisa no banco o produto selecionado,
+		// conforme o ID do produto que foi pega na tela
+		List<Produto> produtoSelecionado = dao.consultarProdutoById(carrinho.getItemCarrinho().getProduto().getId());
+		
+		// adiciona o produto pesquisado no banco,
+		// para o produto que esta selecionado na tela, para poder pegar todos os dados do produto,
+		// o Carrinho (entidade) que veio como parametro, esse objeto esta sendo alterado como REFERENCIA,
+		// logo consigo buscar esse objeto no resultado no SetView do ViewHelper do CarrinhoHelper
+		carrinho.getItemCarrinho().setProduto(produtoSelecionado.get(0));
 		
 	} // Salvar
 	
@@ -31,7 +44,19 @@ public class CarrinhoDAO extends AbstractJdbcDAO {
 	 */
 	@Override
 	public void alterar(EntidadeDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
+		Carrinho carrinho = (Carrinho) entidade;
+		
+		ProdutoDAO dao = new ProdutoDAO();
+		
+		// pesquisa no banco o produto selecionado,
+		// conforme o ID do produto que foi pega na tela
+		List<Produto> produtoSelecionado = dao.consultarProdutoById(carrinho.getItemCarrinho().getProduto().getId());
+		
+		// adiciona o produto pesquisado no banco,
+		// para o produto que esta selecionado na tela, para poder pegar todos os dados do produto,
+		// o Carrinho (entidade) que veio como parametro, esse objeto esta sendo alterado como REFERENCIA,
+		// logo consigo buscar esse objeto no resultado no SetView do ViewHelper do CarrinhoHelper
+		carrinho.getItemCarrinho().setProduto(produtoSelecionado.get(0));
 		
 	} // Alterar
 	
@@ -42,7 +67,19 @@ public class CarrinhoDAO extends AbstractJdbcDAO {
 	 */
 	@Override
 	public void excluir(EntidadeDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
+		Carrinho carrinho = (Carrinho) entidade;
+		
+		ProdutoDAO dao = new ProdutoDAO();
+		
+		// pesquisa no banco o produto selecionado,
+		// conforme o ID do produto que foi pega na tela
+		List<Produto> produtoSelecionado = dao.consultarProdutoById(carrinho.getItemCarrinho().getProduto().getId());
+		
+		// adiciona o produto pesquisado no banco,
+		// para o produto que esta selecionado na tela, para poder pegar todos os dados do produto,
+		// o Carrinho (entidade) que veio como parametro, esse objeto esta sendo alterado como REFERENCIA,
+		// logo consigo buscar esse objeto no resultado no SetView do ViewHelper do CarrinhoHelper
+		carrinho.getItemCarrinho().setProduto(produtoSelecionado.get(0));
 		
 	} // Excluir
 	
