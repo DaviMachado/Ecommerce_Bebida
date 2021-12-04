@@ -1,5 +1,7 @@
 package com.les.bebida.core.dominio;
 
+import java.util.List;
+
 /**
  * Classe para representar o Usuario
  * @author Davi Rodrigues
@@ -14,6 +16,7 @@ public class Usuario extends EntidadeDominio {
 	private String status;
 	private String tipo;
 	private String cd_sistema;
+	private List<Produto> produtos;
 	
 	
 	public String getLogin() {
@@ -77,4 +80,11 @@ public class Usuario extends EntidadeDominio {
 	public void setCdSistema(String cd_sistema) {
 		this.cd_sistema = cd_sistema;
 	}
+	
+	public List<Produto> getProdutos() {
+        return produtos;
+    }
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
 }

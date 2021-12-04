@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.les.bebida.core.dominio.Cliente;
+import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.Endereco;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.Usuario;
 
 public class LoginDAO extends AbstractJdbcDAO {
@@ -165,6 +167,39 @@ public class LoginDAO extends AbstractJdbcDAO {
 				// adicionando o objeto à lista
 				usuarios.add(usuarioItem);
 			}
+			
+			stmt = connection.prepareStatement("select * from produto where status='ativo'");
+			rs = stmt.executeQuery();
+			
+			List<Produto> produtos = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Produto
+				Produto produtoItem = new Produto();
+				
+				produtoItem.setId(rs.getString("id"));
+				produtoItem.setNome(rs.getString("nome"));
+				produtoItem.setDescricao(rs.getString("descricao"));
+				produtoItem.setCategoria(rs.getString("categoria"));
+				produtoItem.setPrecoDeCompra(rs.getString("preco_de_compra"));
+				produtoItem.setPrecoDeVenda(rs.getString("preco_de_venda"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setFotoDetalhe(rs.getString("foto_detalhe"));
+				produtoItem.setGrupoDePrecificacao(rs.getString("grupo_de_precificacao"));
+				produtoItem.setFoto(rs.getString("foto"));
+				produtoItem.setQuantidade(rs.getString("quantidade"));
+				produtoItem.setCdSistema(rs.getString("cd_sistema"));
+				produtoItem.setStatus(rs.getString("status"));
+				produtoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				produtoItem.setObservacao(rs.getString("observacao"));
+				
+				// adicionando o objeto à lista
+				produtos.add(produtoItem);
+			}
+			
+			// crio um novo Usuario, recebendo a REFERENCIA da lista de usuario criado a cima,
+			Usuario novoUsuario = (Usuario) usuarios.get(0);
+			// com a REFERENCIA da lista de usuario, atribui a lista de Produtos somente ativos
+			novoUsuario.setProdutos(produtos);
 				
 			rs.close();
 			stmt.close();

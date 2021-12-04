@@ -98,6 +98,9 @@ public class LoginHelper implements IViewHelper {
 				// salva na sessão o objeto "usuarioLogado", recebendo o valor de "usuario"
 				sessao.setAttribute("usuarioLogado", usuario);
 				
+				// salva na sessão o objeto "produtosAtivos", recebendo somente os produtos ativos do sistema
+				sessao.setAttribute("produtosAtivos", usuario.getProdutos());
+				
 				List<Produto> itensCarrinho = new ArrayList<>();
 				// salva na sessão o objeto "itensCarrinho", para quando for clicado no botão de "Adicionar ao carrinho",
 				// da tela do detalhes do produto, ele poder adicionar os produtos selecionados para o carrinho

@@ -15,6 +15,7 @@ import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.PesquisaByFiltro;
 import com.les.bebida.core.dominio.Resultado;
+import com.les.bebida.core.dominio.Usuario;
 import com.les.bebida.core.dominio.VerificaCupom;
 import com.les.bebida.view.helper.IViewHelper;
 
@@ -31,7 +32,15 @@ public class PesquisaByFiltroHelper implements IViewHelper {
 		pesquisaByFiltro = new PesquisaByFiltro();
 		
 		if (("CONSULTAR").equals(operacao)) {
-
+			String nomeTabela = request.getParameter("NomeTabela");
+			String nomeProduto = request.getParameter("nomeProduto");
+			String nomeCliente = request.getParameter("nomeCliente");
+			String statusPedido = request.getParameter("statusPedido");
+			
+			pesquisaByFiltro.setNomeTabela(nomeTabela);
+			pesquisaByFiltro.setNomeProduto(nomeProduto);
+			pesquisaByFiltro.setNomeCliente(nomeCliente);
+			pesquisaByFiltro.setStatusPedido(statusPedido);
 		}
 		
 		else if (("SALVAR").equals(operacao)) {
@@ -61,10 +70,24 @@ public class PesquisaByFiltroHelper implements IViewHelper {
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar os Filtros consultados
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o PesquisaByFiltro (pegando o primeiro indice de Entidade)
+				PesquisaByFiltro filtros = (PesquisaByFiltro) entidades.get(0);
+				
 				String NomeTabela = request.getParameter("NomeTabela");
-				String nomeProduto = request.getParameter("nomeProduto");
-				String nomeCliente = request.getParameter("nomeCliente");
-				String statusPedido = request.getParameter("statusPedido");
+				
+				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+				HttpSession sessao = request.getSession();
+				
+				// salva na sessão o objeto "filtroByNomeProdutos", recebendo o valor do filtro de Produtos
+				sessao.setAttribute("filtroByNomeProdutos", filtros.getProdutos());
+				
+				// salva na sessão o objeto "filtroByNomeClientes", recebendo o valor do filtro de Clientes
+				sessao.setAttribute("filtroByNomeClientes", filtros.getClientes());
+				
+				// salva na sessão o objeto "filtroByPedidos", recebendo o valor do filtro de Pedidos
+				sessao.setAttribute("filtroByPedidos", filtros.getPedidos());
 				
 				if (NomeTabela.equals("Produto")) {
 					// atribui a nova mensagem para poder mostra na pagina .JSP
@@ -72,9 +95,6 @@ public class PesquisaByFiltroHelper implements IViewHelper {
 					
 					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
 					request.setAttribute("mensagemStrategy", resultado.getMensagem());
-					
-					// pendura o "nomeProduto", que foi digitado pelo Usuário na requisição, para poder mandar para o arquivo .JSP
-					request.setAttribute("nomeProduto", nomeProduto);
 					
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/Home_Page_PesquisaByFiltro.jsp").forward(request, response);
@@ -86,9 +106,6 @@ public class PesquisaByFiltroHelper implements IViewHelper {
 					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
 					request.setAttribute("mensagemStrategy", resultado.getMensagem());
 					
-					// pendura o "nomeCliente", que foi digitado pelo Usuário na requisição, para poder mandar para o arquivo .JSP
-					request.setAttribute("nomeCliente", nomeCliente);
-					
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/lista-clientes-scriptletADMIN_PesquisaByFiltro.jsp").forward(request, response);
 				}
@@ -99,12 +116,6 @@ public class PesquisaByFiltroHelper implements IViewHelper {
 					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
 					request.setAttribute("mensagemStrategy", resultado.getMensagem());
 					
-					// pendura o "nomeCliente", que foi digitado pelo Usuário na requisição, para poder mandar para o arquivo .JSP
-					request.setAttribute("nomeCliente", nomeCliente);
-					
-					// pendura o "statusPedido", que foi digitado pelo Usuário na requisição, para poder mandar para o arquivo .JSP
-					request.setAttribute("statusPedido", statusPedido);
-					
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/lista-todos-pedidos-scriptletADMIN_PesquisaByFiltro.jsp").forward(request, response);
 				}
@@ -114,9 +125,6 @@ public class PesquisaByFiltroHelper implements IViewHelper {
 					
 					// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
 					request.setAttribute("mensagemStrategy", resultado.getMensagem());
-					
-					// pendura o "statusPedido", que foi digitado pelo Usuário na requisição, para poder mandar para o arquivo .JSP
-					request.setAttribute("statusPedido", statusPedido);
 					
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/lista-pedidos-scriptletCLIENTE_PesquisaByFiltro.jsp").forward(request, response);

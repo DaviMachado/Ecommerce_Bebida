@@ -1,8 +1,8 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
 <%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 
 <html lang="en">
 
@@ -24,27 +24,18 @@
 </head>
 
 	<%
-		ClienteDAO dao = new ClienteDAO();
-		ProdutoDAO produtoDAO = new ProdutoDAO();
 		Usuario userLogado = new Usuario();
-		Produto produto = new Produto();
-		
-		// pega a mensagem que estava pendurado na requisição,
-		// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
-		String nomeProduto = (String)request.getAttribute("nomeProduto");
-		
-		// busca os produtos conforme o filtro digitado na tela,
-		// e guarda na variavel "produtosPesquisaByFiltro", para ser listada na Home Page
-		List<EntidadeDominio> produtosPesquisaByFiltro = produtoDAO.consultarProdutoPesquisaByFiltro(produto, nomeProduto);
+		List<Produto> produtosPesquisaByFiltro = new ArrayList<>();
 		
 		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 		HttpSession sessao = request.getSession();
+		// pega o objeto salvo em Sessão com o nome "filtroByNomeProdutos",
+		// e passa para o novo objeto criado com o nome "produtosPesquisaByFiltro" (fazendo o CAST para o tipo List<Produto>)
+		produtosPesquisaByFiltro = (List<Produto>) sessao.getAttribute("filtroByNomeProdutos");
+		
 		// pega o objeto salvo em Sessão com o nome "usuarioLogado",
 		// e passa para o novo objeto criado com o nome "userLogado", (fazendo o CAST para o tipo Usuario)
 		userLogado = (Usuario) sessao.getAttribute("usuarioLogado");
-		
-		// faz um consulta no banco para pegar todos os dados do cliente logado
-		List<Cliente> clienteLogado = dao.consultarClienteById(userLogado.getId());
 		
 		// pega a mensagem que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "PesquisaByFiltroHelper"
@@ -96,13 +87,13 @@
         <%
         // verifica se o cliente logado é do tipo ADMIN,
         // para mostrar somente as telas do administrador
-        	if(clienteLogado.get(0).getTipo().equals("admin")) {
+        	if(userLogado.getTipo().equals("admin")) {
         %>
        	<div class="list-group">
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp" class="list-group-item">Gerenciamento de Clientes</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_produto.jsp" class="list-group-item">Gerenciamento de Produtos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_estoque.jsp" class="list-group-item">Gerenciamento de Estoque</a>
-          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-carrinho-scriptlet.jsp" class="list-group-item">Carrinho</a>
+          <a href="/Ecommerce_Bebida/carrinho?idCliente=<%= userLogado.getId()%>&operacao=CONSULTAR"class="list-group-item">Carrinho</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-todos-pedidos-scriptletADMIN.jsp" class="list-group-item">Gerenciamento de Pedidos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cupom.jsp" class="list-group-item">Gerenciamento de Cupons</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/grafico_chart_1.jsp" class="list-group-item">Gerenciamento de Gráficos</a>
@@ -115,13 +106,13 @@
         <%
         // verifica se o cliente logado é do tipo CLIENTE,
         // para mostrar somente as telas do cliente
-        	if(clienteLogado.get(0).getTipo().equals("cliente")) {
+        	if(userLogado.getTipo().equals("cliente")) {
         %>
         <div class="list-group">
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Cliente.jsp" class="list-group-item">Meus Dados</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Endereco.jsp" class="list-group-item">Meus Endereços</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_cartaoDeCredito.jsp" class="list-group-item">Meus Cartões de créditos</a>
-          <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-carrinho-scriptlet.jsp" class="list-group-item">Carrinho</a>
+          <a href="/Ecommerce_Bebida/carrinho?idCliente=<%= userLogado.getId()%>&operacao=CONSULTAR"class="list-group-item">Carrinho</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-pedidos-scriptletCLIENTE.jsp" class="list-group-item">Meus Pedidos</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/lista-cupons-scriptletCLIENTE.jsp" class="list-group-item">Meus Cupons</a>
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/editar_somente_senha_Cliente.jsp" class="list-group-item">Alterar Senha</a>
@@ -185,11 +176,11 @@
         <!-- Listagens dos produtos cadastrados no sistema -->
         <div class="row">
         	<%
-        		for(EntidadeDominio e : produtosPesquisaByFiltro) {
+        		for(Produto product : produtosPesquisaByFiltro) {
         			
        			// Aplicado o CAST para poder popular o produto,
        			// fazendo o CAST para uma referência mais genérica, no caso para o produto
-       			Produto product = (Produto) e;
+       			//Produto product = (Produto) e;
         	%>
 	          <div class="col-lg-4 col-md-6 mb-4">
 	            <div class="card h-100">

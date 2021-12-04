@@ -1,8 +1,8 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
 <%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 
 <html lang="en">
 
@@ -24,13 +24,8 @@
 </head>
 
 	<%
-		ClienteDAO dao = new ClienteDAO();
-		ProdutoDAO produtoDAO = new ProdutoDAO();
 		Usuario userLogado = new Usuario();
-		Produto produto = new Produto();
-		
-		// guarda todos os produtos ativos cadastrados no sistema na variavel "produtosAtivos", para ser listada na Home Page
-		List<EntidadeDominio> produtosAtivos = produtoDAO.consultarSomenteAtivo(produto);
+		List<Produto> produtosAtivos = new ArrayList<>();
 		
 		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 		HttpSession sessao = request.getSession();
@@ -38,8 +33,9 @@
 		// e passa para o novo objeto criado com o nome "userLogado", (fazendo o CAST para o tipo Usuario)
 		userLogado = (Usuario) sessao.getAttribute("usuarioLogado");
 		
-		// faz um consulta no banco para pegar todos os dados do cliente logado
-		List<Cliente> clienteLogado = dao.consultarClienteById(userLogado.getId());
+		// pega o objeto salvo em Sessão com o nome "produtosAtivos",
+		// e passa para o novo objeto criado com o nome "produtosAtivos" (fazendo o CAST para o tipo List<Produto>)
+		produtosAtivos = (List<Produto>) sessao.getAttribute("produtosAtivos");
 		
 		// pega a mensagem que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "ClienteHelper"
@@ -91,7 +87,7 @@
         <%
         // verifica se o cliente logado é do tipo ADMIN,
         // para mostrar somente as telas do administrador
-        	if(clienteLogado.get(0).getTipo().equals("admin")) {
+        	if(userLogado.getTipo().equals("admin")) {
         %>
        	<div class="list-group">
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp" class="list-group-item">Gerenciamento de Clientes</a>
@@ -110,7 +106,7 @@
         <%
         // verifica se o cliente logado é do tipo CLIENTE,
         // para mostrar somente as telas do cliente
-        	if(clienteLogado.get(0).getTipo().equals("cliente")) {
+        	if(userLogado.getTipo().equals("cliente")) {
         %>
         <div class="list-group">
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Cliente.jsp" class="list-group-item">Meus Dados</a>
@@ -180,11 +176,11 @@
         <!-- Listagens dos produtos cadastrados no sistema -->
         <div class="row">
         	<%
-        		for(EntidadeDominio e : produtosAtivos) {
+        		for(Produto product : produtosAtivos) {
         			
        			// Aplicado o CAST para poder popular o produto,
        			// fazendo o CAST para uma referência mais genérica, no caso para o produto
-       			Produto product = (Produto) e;
+       			// Produto product = (Produto) e;
         	%>
 	          <div class="col-lg-4 col-md-6 mb-4">
 	            <div class="card h-100">
