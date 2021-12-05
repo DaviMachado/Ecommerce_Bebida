@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -25,30 +23,24 @@
 </head>
 
 	<%
-		PedidoDAO pedidoDAO = new PedidoDAO();
-		ItemPedidoDAO pedidoItemDAO = new ItemPedidoDAO();
-		EnderecoDAO enderecoDAO = new EnderecoDAO();
 		ItemPedido itemPedido = new ItemPedido();
 		List<PedidoTroca> itensPedidoTrocaEmSessao = new ArrayList<>();
 			
-		// pega o id do pedido que estava pendurado na requisição,
+		// pega o Pedido inteiro que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "ItemPedidoHelper"
-		String idPedido = (String)request.getAttribute("idPedido");
+		Pedido pedidoInteiro = (Pedido)request.getAttribute("pedidoInteiro");
+		// pega o Endereço do Pedido que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "ItemPedidoHelper"
+		Endereco enderecoPedido = (Endereco)request.getAttribute("enderecoPedido");
+		// pega os Itens do Pedido que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "ItemPedidoHelper"
+		List<ItemPedido> itensPedido = (List<ItemPedido>)request.getAttribute("itensPedido");
+		
 		//cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 		HttpSession sessao = request.getSession();
 		// pega o objeto salvo em Sessão com o nome "itensPedidoTroca",
 		// e passa para o "itensPedidoTrocaEmSessao" (fazendo o CAST para o tipo List<PedidoTroca>)
 		itensPedidoTrocaEmSessao = (List<PedidoTroca>) sessao.getAttribute("itensPedidoTroca");
-		
-		// seta o valor do ID do Pedido com o valor que estava pendurado na requisição
-		itemPedido.setIdPedido(idPedido);
-		
-		// busca o Pedido pelo ID do Pedido
-		List<Pedido> pedidos = pedidoDAO.consultarPedidoById(idPedido);
-		// busca os Itens do Pedido pelo ID do Pedido
-		List<EntidadeDominio> itens_pedido = pedidoItemDAO.consultar(itemPedido);
-		// busca o Endereço do Pedido, pelo ID do endereço do Pedido
-		List<Endereco> enderecos = enderecoDAO.consultarEnderecoById(pedidos.get(0).getIdEndereco());
 	%>
 
 <body>
@@ -92,15 +84,15 @@
 	        <th>Trocado</th>
        	</tr>
 	    <tr>
-			<td><%=pedidos.get(0).getId() %></td>
-			<td><%=pedidos.get(0).getTotalItens() %></td>
-			<td><%=pedidos.get(0).getTotalFrete() %></td>
-			<td><%=pedidos.get(0).getTotalPedido() %></td>
-			<td><%=pedidos.get(0).getStatus() %></td>
-			<td><%=enderecos.get(0).getLogradouro() %></td>
-			<td><%=pedidos.get(0).getFormaPagamento() %></td>
-			<td><%=pedidos.get(0).getTotalCupons() %></td>
-			<td><%=pedidos.get(0).getTrocado() %></td>
+			<td><%=pedidoInteiro.getId() %></td>
+			<td><%=pedidoInteiro.getTotalItens() %></td>
+			<td><%=pedidoInteiro.getTotalFrete() %></td>
+			<td><%=pedidoInteiro.getTotalPedido() %></td>
+			<td><%=pedidoInteiro.getStatus() %></td>
+			<td><%=enderecoPedido.getLogradouro() %></td>
+			<td><%=pedidoInteiro.getFormaPagamento() %></td>
+			<td><%=pedidoInteiro.getTotalCupons() %></td>
+			<td><%=pedidoInteiro.getTrocado() %></td>
 		</tr>
     </table>
 	
@@ -110,18 +102,18 @@
 	            <th>Valor de Venda</th>
 	            <th>Quantidade</th>
 	            <th>Trocado</th>
-	            <% if(pedidos.get(0).getStatus().equals("ENTREGA REALIZADA")) { %>
+	            <% if(pedidoInteiro.getStatus().equals("ENTREGA REALIZADA")) { %>
 		            <th>Qtde p/ Troca</th>
 		            <th></th>
 		            <th>Total p/ Troca</th>
 	            <%} %>
 	        </tr>
 	        <%
-	        	for(EntidadeDominio e : itens_pedido) {
+	        	for(ItemPedido order_items : itensPedido) {
 	        		
 	        		// Aplicado o CAST para poder popular os itens do pedido,
 					// fazendo o CAST para uma referência mais genérica, no caso para o item do pedido
-					ItemPedido order_items = (ItemPedido) e;
+					//ItemPedido order_items = (ItemPedido) e;
 					
 					boolean itemJaFoiTrocado = false;
 					
@@ -144,7 +136,7 @@
 					// o pedido ja foi trocado? OU o Item do Pedido ja foi trocado?
 					// OU esse Item do Pedido ja esta na lista da Sessão? ("itensPedidoTroca")
 					// então mostra o item com um risco vermelho na listagem
-					if (pedidos.get(0).getTrocado().equals("sim") || order_items.getTrocado().equals("sim")) { // || itemJaFoiTrocado
+					if (pedidoInteiro.getTrocado().equals("sim") || order_items.getTrocado().equals("sim")) { // || itemJaFoiTrocado
     		%>
 		    	<tr>
 					<td><strike style="text-decoration-color: red;"><%=order_items.getProduto().getNome() %></strike></td>
@@ -163,7 +155,7 @@
 					<td><%=order_items.getProduto().getQuantidadeSelecionada() %></td>
 					<td><%=order_items.getTrocado() %></td>
 					
-					<% if(pedidos.get(0).getStatus().equals("ENTREGA REALIZADA")) { %>
+					<% if(pedidoInteiro.getStatus().equals("ENTREGA REALIZADA")) { %>
 						<form class="form_form" action="http://localhost:8080/Ecommerce_Bebida/pedidoTroca">
 							<td>
 								<!-- Quantidade do Item para ser Trocado -->
@@ -173,7 +165,7 @@
 							<td><button class="btn btn-danger" name="operacao" value="CONSULTAR">Solicitar Troca</button></td>
 					
 							<!-- ID do Pedido -->
-		  					<input type="hidden" name="idPedido" value="<%=pedidos.get(0).getId() %>">
+		  					<input type="hidden" name="idPedido" value="<%=pedidoInteiro.getId() %>">
 		  					<!-- ID do Item do Pedido -->
 		  					<input type="hidden" name="idItemPedido" value="<%=order_items.getId() %>">
 						</form>

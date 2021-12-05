@@ -53,8 +53,10 @@ public class PedidoDAO extends AbstractJdbcDAO {
 			stmt.execute();
 			stmt.close();
 			
-			// salva os itens do Pedido e da baixa no Estoque
-			salvarItensPedidoAndBaixaEstoque(pedido.getProdutos(), pedido.getCupons());
+			if (pedido.getDarBaixaEstoque() == null) {
+				// salva os itens do Pedido e da baixa no Estoque
+				salvarItensPedidoAndBaixaEstoque(pedido.getProdutos(), pedido.getCupons());
+			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

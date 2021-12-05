@@ -1,14 +1,19 @@
 package com.les.bebida.core.dominio;
 
+import java.util.List;
+
 /**
  * Classe para representar os Itens do Pedido
  * @author Davi Rodrigues
- * @date 09/09/2021
+ * @date 05/12/2021
  */
 public class ItemPedido extends EntidadeDominio {
 	private String id_pedido;
 	private Produto produto;
 	private String trocado;
+	private List<Pedido> pedidos;
+	private List<ItemPedido> itensPedido;
+	private List<Endereco> enderecoPedido;
 	
 	public String getIdPedido() {
 		return id_pedido;
@@ -28,4 +33,25 @@ public class ItemPedido extends EntidadeDominio {
 	public void setTrocado(String trocado) {
 		this.trocado = trocado;
 	}
+	
+	public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+    
+    public List<ItemPedido> getItensPedido() {
+        return itensPedido;
+    }
+    public void setItensPedido(List<ItemPedido> itensPedido) {
+        this.itensPedido = itensPedido;
+    }
+    
+    public List<Endereco> getEnderecoPedido() {
+        return enderecoPedido;
+    }
+    public void setEnderecoPedido(List<Endereco> enderecoPedido) {
+        this.enderecoPedido = enderecoPedido;
+    }
 }

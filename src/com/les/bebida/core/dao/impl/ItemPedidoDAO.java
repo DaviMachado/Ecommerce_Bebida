@@ -6,8 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.les.bebida.core.dominio.Endereco;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.ItemPedido;
+import com.les.bebida.core.dominio.Pedido;
 import com.les.bebida.core.dominio.Produto;
 
 public class ItemPedidoDAO extends AbstractJdbcDAO {
@@ -76,12 +78,15 @@ public class ItemPedidoDAO extends AbstractJdbcDAO {
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
 		openConnection();
 		try {
-			ItemPedido item_pedido = (ItemPedido) entidade;
+			ItemPedido item_pedido_entidade = (ItemPedido) entidade;
+			ItemPedido novoItemPedido = new ItemPedido();
+			List<EntidadeDominio> listItemPedido = new ArrayList<>();
+			
 			PreparedStatement stmt = connection.prepareStatement("select * from pedido_item where id_pedido=?");
-			stmt.setString(1, item_pedido.getIdPedido());
+			stmt.setString(1, item_pedido_entidade.getIdPedido());
 			ResultSet rs = stmt.executeQuery();
 			
-			List<EntidadeDominio> itens_pedido = new ArrayList<>();
+			List<ItemPedido> itens_pedido = new ArrayList<>();
 			while (rs.next()) {
 				// criando o objeto Pedido
 				ItemPedido item_pedidoItem = new ItemPedido();
@@ -102,10 +107,74 @@ public class ItemPedidoDAO extends AbstractJdbcDAO {
 				// adicionando o objeto à lista
 				itens_pedido.add(item_pedidoItem);
 			}
+			
+			stmt = connection.prepareStatement("select * from pedido where id=?");
+			stmt.setString(1, item_pedido_entidade.getIdPedido());
+			rs = stmt.executeQuery();
+			
+			List<Pedido> pedidos = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Pedido
+				Pedido pedidoItem = new Pedido();
+				
+				pedidoItem.setId(rs.getString("id"));
+				pedidoItem.setTotalItens(rs.getString("total_itens"));
+				pedidoItem.setTotalFrete(rs.getString("total_frete"));
+				pedidoItem.setTotalPedido(rs.getString("total_pedido"));
+				pedidoItem.setStatus(rs.getString("status"));
+				pedidoItem.setIdCliente(rs.getString("id_cliente"));
+				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
+				pedidoItem.setFormaPagamento(rs.getString("forma_pagamento"));
+				pedidoItem.setIdCartao1(rs.getString("id_cartao_1"));
+				pedidoItem.setValorCartao1(rs.getString("valor_cartao_1"));
+				pedidoItem.setIdCartao2(rs.getString("id_cartao_2"));
+				pedidoItem.setValorCartao2(rs.getString("valor_cartao_2"));
+				pedidoItem.setTotalCupons(rs.getString("total_cupons"));
+				pedidoItem.setTrocado(rs.getString("trocado"));
+				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				pedidos.add(pedidoItem);
+			}
+			
+			stmt = connection.prepareStatement("select * from endereco where id=?");
+			stmt.setString(1, pedidos.get(0).getIdEndereco());
+			rs = stmt.executeQuery();
+			
+			List<Endereco> enderecos = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Endereço
+				Endereco enderecoItem = new Endereco();
+				
+				enderecoItem.setId(rs.getString("id"));
+				enderecoItem.setApelido(rs.getString("apelido"));
+				enderecoItem.setCep(rs.getString("cep"));
+				enderecoItem.setEstado(rs.getString("estado"));
+				enderecoItem.setCidade(rs.getString("cidade"));
+				enderecoItem.setNumero(rs.getString("numero"));
+				enderecoItem.setBairro(rs.getString("bairro"));
+				enderecoItem.setLogradouro(rs.getString("logradouro"));
+				enderecoItem.setTipoResidencia(rs.getString("tipo_residencia"));
+				enderecoItem.setPais(rs.getString("pais"));
+				enderecoItem.setTipo_Endereco(rs.getString("tipo_endereco"));
+				enderecoItem.setObservacao(rs.getString("observacao"));
+				enderecoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				enderecoItem.setIdCliente(rs.getString("id_cliente"));
+				
+				// adicionando o objeto à lista
+				enderecos.add(enderecoItem);
+			}
+			
+			novoItemPedido.setItensPedido(itens_pedido);
+			novoItemPedido.setPedidos(pedidos);
+			novoItemPedido.setEnderecoPedido(enderecos);
+			
+			listItemPedido.add(novoItemPedido);
 				
 			rs.close();
 			stmt.close();
-			return itens_pedido;
+			return listItemPedido;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

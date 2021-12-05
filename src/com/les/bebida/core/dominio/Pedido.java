@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Classe para representar o Pedido
  * @author Davi Rodrigues
- * @date 04/12/2021
+ * @date 05/12/2021
  */
 public class Pedido extends EntidadeDominio{
 	private String total_itens;
@@ -27,6 +27,7 @@ public class Pedido extends EntidadeDominio{
 	private String id_cliente_consulta;
 	private List<Pedido> pedidosCliente;
 	private String nome_cliente;
+	private String dar_baixa_estoque;
 	
 	
 	public String getTotalItens() {
@@ -147,6 +148,13 @@ public class Pedido extends EntidadeDominio{
 	}
 	public void setNomeCliente(String nome_cliente) {
 		this.nome_cliente = nome_cliente;
+	}
+	
+	public String getDarBaixaEstoque() {
+		return dar_baixa_estoque;
+	}
+	public void setDarBaixaEstoque(String dar_baixa_estoque) {
+		this.dar_baixa_estoque = dar_baixa_estoque;
 	}
 	
 	// Metodo
