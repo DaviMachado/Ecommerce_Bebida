@@ -1,5 +1,7 @@
 package com.les.bebida.core.dominio;
 
+import java.util.List;
+
 /**
  * Classe para representar o Endereço
  * @author Davi Rodrigues
@@ -22,6 +24,8 @@ public class Endereco extends EntidadeDominio {
 	private String tipo_endereco;
 	private String tipo_residencia;
 	private String pais;
+	private List<Endereco> enderecosCliente;
+	private Endereco enderecoPesquisado;
 	
 	public String getLogradouro() {
 		return logradouro;
@@ -118,5 +122,19 @@ public class Endereco extends EntidadeDominio {
 	}
 	public void setPais(String pais) {
 		this.pais = pais;
+	}
+	
+	public List<Endereco> getEnderecosCliente() {
+        return enderecosCliente;
+    }
+    public void setEnderecosCliente(List<Endereco> enderecosCliente) {
+        this.enderecosCliente = enderecosCliente;
+    }
+    
+	public Endereco getEnderecoPesquisado() {
+		return enderecoPesquisado;
+	}
+	public void setEnderecoPesquisado(Endereco enderecoPesquisado) {
+		this.enderecoPesquisado = enderecoPesquisado;
 	}
 }

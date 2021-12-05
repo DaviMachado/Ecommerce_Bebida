@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 19/09/2021 -->
+<!-- @date 05/12/2021 -->
 
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -21,7 +19,6 @@
 	</head>
 	
 	<%
-		ClienteDAO dao = new ClienteDAO();
 		Usuario usuarioLogado = new Usuario();
 		
 		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
@@ -29,9 +26,6 @@
 		// pega o objeto salvo em Sessão com o nome "usuarioLogado",
 		// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
 		usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
-		
-		// faz um consulta no banco para pegar todos os dados do cliente logado
-		List<Cliente> cliente = dao.consultarClienteById(usuarioLogado.getId());
 	%>
 	
 	<body>
@@ -199,7 +193,7 @@
 			    </div>
 				
 				<!-- ID do Cliente -->
-				<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
+				<input type="hidden" name="idCliente" id="idCliente" value="<%=usuarioLogado.getId() %>">
 				<!-- Parametro que é verificado se pode alterar um Endereço ou não -->
 			    <input type="hidden" name="alteraEndereco" id="alteraEndereco" value="1">
 			</form>
@@ -218,7 +212,7 @@
 				</div>
 				
 				<!-- ID do Cliente -->
-				<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
+				<input type="hidden" name="idCliente" id="idCliente" value="<%=usuarioLogado.getId() %>">
 			</form>
 		</fieldset>
 		  <!-- Footer -->

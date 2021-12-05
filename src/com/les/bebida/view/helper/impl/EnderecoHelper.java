@@ -2,6 +2,7 @@ package com.les.bebida.view.helper.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -130,8 +131,10 @@ public class EnderecoHelper implements IViewHelper {
 			endereco = new Endereco();
 			
 			id = request.getParameter("idEndereco");
+			idCliente = request.getParameter("idCliente");
 			
 			endereco.setId(id);
+			endereco.setIdCliente(idCliente);
 		}
 		
 		return endereco;
@@ -149,16 +152,13 @@ public class EnderecoHelper implements IViewHelper {
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				Usuario usuarioLogado = new Usuario();
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Endereco (pegando o primeiro indice de Entidade)
+				Endereco enderecoEntidade = (Endereco) entidades.get(0);
 				
-				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
-				HttpSession sessao = request.getSession();
-				// pega o objeto salvo em Sessão com o nome "usuarioLogado",
-				// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
-				usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
-				
-				// pendura o "id" do usuario logado na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("idCliente", usuarioLogado.getId());
+				// pendura todos os endereços do Cliente na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("enderecosCliente", enderecoEntidade.getEnderecosCliente());
 				
 				// Redireciona para o arquivo .jsp
 				request.getRequestDispatcher("JSP/lista-enderecos-scriptlet.jsp").forward(request, response);
@@ -194,14 +194,18 @@ public class EnderecoHelper implements IViewHelper {
 		
 		else if (("ALTERAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Endereco (pegando o primeiro indice de Entidade)
+				Endereco enderecoEntidade = (Endereco) entidades.get(0);
+				
 				String alteraEndereco = request.getParameter("alteraEndereco");
-				String idEndereco = request.getParameter("idEndereco");
 
 				// Se eu estiver pela tela de listagem de endereços (lista-enderecos-scriplet.jsp),
 				// não vou mandar o parametro "alteraEndereco" igual a zero, para poder chama o arquivo .JSP para edição do endereço
 				if (alteraEndereco.equals("0")) {					
-					// pendura o "idEndereco" na requisição para poder mandar para o arquivo .JSP
-					request.setAttribute("idEndereco", idEndereco);
+					// pendura o "idCartaoDeCredito" na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("enderecoPesquisado", enderecoEntidade.getEnderecoPesquisado());
 					
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/editar_endereco.jsp").forward(request, response);
@@ -232,10 +236,13 @@ public class EnderecoHelper implements IViewHelper {
 		
 		else if (("EXCLUIR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				String idCliente = request.getParameter("idCliente");
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Endereco (pegando o primeiro indice de Entidade)
+				Endereco enderecoEntidade = (Endereco) entidades.get(0);
 				
-				// pendura o "idCliente" na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("idCliente", idCliente);
+				// pendura todos os endereços do Cliente na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("enderecosCliente", enderecoEntidade.getEnderecosCliente());
 				
 				// Redireciona para o arquivo .jsp, para poder listar os endereços atualizados novamente
 				request.getRequestDispatcher("JSP/lista-enderecos-scriptlet.jsp").forward(request, response);

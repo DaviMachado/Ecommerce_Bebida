@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -56,21 +54,15 @@
             <th>País</th>
         </tr>
 		<%
-		EnderecoDAO dao = new EnderecoDAO();
-		Endereco endereco = new Endereco();
-		
-		// pega o "id" do usuario logado que estava pendurado na requisição,
+		// pega todos os endereços do Cliente que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "EnderecoHelper"
-		String idCliente = (String)request.getAttribute("idCliente");
-		endereco.setIdCliente(idCliente);
+		List<Endereco> enderecos = (List<Endereco>)request.getAttribute("enderecosCliente");
 		
-		List<EntidadeDominio> enderecos = dao.consultar(endereco);
-		
-		for(EntidadeDominio e : enderecos) {
+		for(Endereco address : enderecos) {
 		
 		// Aplicado o CAST para poder popular o endereço,
 		// fazendo o CAST para uma referência mais genérica, no caso para o endereço
-		Endereco address = (Endereco) e;
+		//Endereco address = (Endereco) e;
 		%>
 			<tr>
 				<td><%=address.getApelido() %></td>

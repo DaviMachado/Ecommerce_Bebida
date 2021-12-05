@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -15,15 +13,9 @@
   		<link href="./CSS/form-default.css" rel="stylesheet" type="text/css">
 	</head>
 	<%
-		EnderecoDAO dao = new EnderecoDAO();
-		
-		// pega o id do endereço que estava pendurado na requisição,
+		// pega o endereço que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "EnderecoHelper"
-		String idEndereco = (String)request.getAttribute("idEndereco");
-		
-		List<Endereco> endereco = dao.consultarEnderecoById(idEndereco);
-		
-		String idCliente = endereco.get(0).getIdCliente();
+		Endereco endereco = (Endereco)request.getAttribute("enderecoPesquisado");
 	%>
 	<body>
 		  <!-- Header -->
@@ -59,13 +51,13 @@
 					<!-- Apelido -->
 				    <div class="form-group col-md-4">
 				      <label>Apelido</label>
-				      <input type="text" class="form-control" name="apelido" placeholder="Apelido" value="<%=endereco.get(0).getApelido() %>">
+				      <input type="text" class="form-control" name="apelido" placeholder="Apelido" value="<%=endereco.getApelido() %>">
 				    </div>
 				    
 					<!-- CEP -->
 				    <div class="form-group col-md-2">
 				      <label>CEP</label>
-				      <input type="text" class="form-control" name="cep" placeholder="CEP" value="<%=endereco.get(0).getCep() %>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" minlength="8" maxlength="8" required>
+				      <input type="text" class="form-control" name="cep" placeholder="CEP" value="<%=endereco.getCep() %>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" minlength="8" maxlength="8" required>
 				    </div>
 				    
 				    <!-- Estado -->
@@ -73,7 +65,7 @@
 				    	<label>Estado</label>
 			        	<select name="selecioneEstado" class="form-control" placeholder="Selecione um Estado" required>
 					      	<option disabled>Selecione uma opção...</option>
-					      	<option><%=endereco.get(0).getEstado() %></option> <!-- Acre -->
+					      	<option><%=endereco.getEstado() %></option> <!-- Acre -->
 					      	<option value="AC">AC</option> <!-- Acre -->
 					      	<option value="AL">AL</option> <!-- Alagoas -->
 					      	<option value="AP">AP</option> <!-- AmapÃ¡ -->
@@ -107,7 +99,7 @@
 				  	<!-- Cidade -->
 				    <div class="form-group col-md-4">
 				      <label>Cidade</label>
-				      <input type="text" class="form-control" name="cidade" placeholder="Cidade" value="<%=endereco.get(0).getCidade() %>" required>
+				      <input type="text" class="form-control" name="cidade" placeholder="Cidade" value="<%=endereco.getCidade() %>" required>
 				    </div>
 			    </div>
 			  	
@@ -115,19 +107,19 @@
 				  	<!-- Logradouro -->
 				    <div class="form-group col-md-6">
 				      <label>Logradouro</label>
-				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)" value="<%=endereco.get(0).getLogradouro() %>" required>
+				      <input type="text" class="form-control" name="logradouro" placeholder="Logradouro (Apenas nome da rua)" value="<%=endereco.getLogradouro() %>" required>
 				    </div>
 				  	
 				  	<!-- Numero -->
 				    <div class="form-group col-md-2">
 				      <label>Numero</label>
-				      <input type="text" class="form-control" name="numero" placeholder="Numero" value="<%=endereco.get(0).getNumero() %>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6" required>
+				      <input type="text" class="form-control" name="numero" placeholder="Numero" value="<%=endereco.getNumero() %>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6" required>
 				    </div>
 				  	
 					<!-- Bairro -->
 				    <div class="form-group col-md-4">
 				      <label>Bairro</label>
-				      <input type="text" class="form-control" name="bairro" placeholder="Bairro" value="<%=endereco.get(0).getBairro() %>" required>
+				      <input type="text" class="form-control" name="bairro" placeholder="Bairro" value="<%=endereco.getBairro() %>" required>
 				    </div>
 			    </div>
 			    
@@ -138,7 +130,7 @@
 
 			  			<select name="tipoEndereco" class="form-control" placeholder="Selecione um Tipo de Endereço" required>
 					      	<option disabled>Selecione uma opção...</option>
-					      	<option><%=endereco.get(0).getTipo_Endereco() %></option>
+					      	<option><%=endereco.getTipo_Endereco() %></option>
 					      	<option value="entrega">Entrega</option>
 					      	<option value="cobranca">Cobrança</option>
 				      	</select>
@@ -150,7 +142,7 @@
 
 			  			<select name="tipoResidencia" class="form-control" placeholder="Selecione um Tipo de Residência" required>
 					      	<option disabled>Selecione uma opção...</option>
-					      	<option><%=endereco.get(0).getTipoResidencia() %></option>
+					      	<option><%=endereco.getTipoResidencia() %></option>
 					      	<option value="casa">Casa</option>
 					      	<option value="apartamento">Apartamento</option>
 					      	<option value="sobrado">Sobrado</option>
@@ -166,7 +158,7 @@
 
 			  			<select name="pais" class="form-control" placeholder="Selecione um País" required>
 					      	<option disabled>Selecione uma opção...</option>
-					      	<option><%=endereco.get(0).getPais() %></option>
+					      	<option><%=endereco.getPais() %></option>
 					      	<option value="brasil">Brasil</option>
 				      	</select>
 			  		</div>
@@ -176,7 +168,7 @@
 			  		<!-- Observação -->
 				    <div class="form-group col-md-12">
 				      <label>Observação</label>
-				      <textarea  class="form-control" name="observacao" placeholder="Observação" rows="3"><%=endereco.get(0).getObservacao() %></textarea>
+				      <textarea  class="form-control" name="observacao" placeholder="Observação" rows="3"><%=endereco.getObservacao() %></textarea>
 				    </div>
 			    </div>
 			  	
@@ -199,9 +191,9 @@
 				</div>
 				
 				<!-- ID do Cliente -->
-			    <input type="hidden" name="idCliente" id="idCliente" value="<%=idCliente %>">
+			    <input type="hidden" name="idCliente" id="idCliente" value="<%=endereco.getIdCliente() %>">
 			    <!-- ID do Endereco -->
-			    <input type="hidden" name="idEndereco" id="idEndereco" value="<%=idEndereco %>">
+			    <input type="hidden" name="idEndereco" id="idEndereco" value="<%=endereco.getId() %>">
 			    <!-- Parametro que é verificado se pode alterar um Endereço ou não -->
 			    <input type="hidden" name="alteraEndereco" id="alteraEndereco" value="1">
 			</form>
