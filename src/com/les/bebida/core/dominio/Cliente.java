@@ -1,9 +1,11 @@
 package com.les.bebida.core.dominio;
 
+import java.util.List;
+
 /**
  * Classe para representar o Cliente
  * @author Davi Rodrigues
- * @date 15/08/2021
+ * @date 05/12/2021
  */
 public class Cliente extends Pessoa {
 	private String status;
@@ -13,6 +15,9 @@ public class Cliente extends Pessoa {
 	private String tipo;
 	private Endereco endereco;
 	private String alteraCliente;
+	private List<Cliente> clienteByTipoSomenteCliente;
+	private List<Cliente> todosClientes;
+	private Cliente clientePesquisado;
 	
 	public String getStatus() {
 		return status;
@@ -55,5 +60,26 @@ public class Cliente extends Pessoa {
 	}
 	public void setAlteraCliente(String alteraCliente) {
 		this.alteraCliente = alteraCliente;
+	}
+	
+	public List<Cliente> getClienteByTipoSomenteCliente() {
+        return clienteByTipoSomenteCliente;
+    }
+    public void setClienteByTipoSomenteCliente(List<Cliente> clienteByTipoSomenteCliente) {
+        this.clienteByTipoSomenteCliente = clienteByTipoSomenteCliente;
+    }
+    
+    public List<Cliente> getTodosClientes() {
+        return todosClientes;
+    }
+    public void setTodosClientes(List<Cliente> todosClientes) {
+        this.todosClientes = todosClientes;
+    }
+    
+    public Cliente getClientePesquisado() {
+		return clientePesquisado;
+	}
+	public void setClientePesquisado(Cliente clientePesquisado) {
+		this.clientePesquisado = clientePesquisado;
 	}
 }

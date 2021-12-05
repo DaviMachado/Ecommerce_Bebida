@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 25/09/2021 -->
+<!-- @date 05/12/2021 -->
 
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 

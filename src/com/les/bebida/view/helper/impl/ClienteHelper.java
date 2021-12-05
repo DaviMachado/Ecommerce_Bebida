@@ -2,6 +2,7 @@ package com.les.bebida.view.helper.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -135,6 +136,14 @@ public class ClienteHelper implements IViewHelper {
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Cliente (pegando o primeiro indice de Entidade)
+				Cliente clientes = (Cliente) entidades.get(0);
+				
+				// pendura todos os Clientes na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("todosClientes", clientes.getClienteByTipoSomenteCliente());
+				
 				// Redireciona para o arquivo .jsp
 				request.getRequestDispatcher("JSP/lista-clientes-scriptletADMIN.jsp").forward(request, response);
 			} 
@@ -171,14 +180,18 @@ public class ClienteHelper implements IViewHelper {
 		
 		else if (("ALTERAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Cliente (pegando o primeiro indice de Entidade)
+				Cliente clientes = (Cliente) entidades.get(0);
+				
 				String alteraCliente = request.getParameter("alteraCliente");
-				String idCliente = request.getParameter("id");
 				
 				// Se eu estiver pela tela de listagem de Clientes (lista-clientes-scripletADMIN.jsp),
 				// vou mandar o parametro "alteraCliente" igual a zero, para poder chamar o arquivo .JSP para edição do Cliente
 				if (alteraCliente.equals("0")) {
 					// pendura o "idCliente" para poder mandar para o arquivo .JSP
-					request.setAttribute("idCliente", idCliente);
+					request.setAttribute("clientePesquisado", clientes.getClientePesquisado());
 					
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/editar_clienteADMIN.jsp").forward(request, response);
@@ -208,7 +221,15 @@ public class ClienteHelper implements IViewHelper {
 		}
 		
 		else if (("EXCLUIR").equals(operacao)) {
-			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {				
+			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Cliente (pegando o primeiro indice de Entidade)
+				Cliente clientes = (Cliente) entidades.get(0);
+				
+				// pendura todos os cartões do Cliente na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("todosClientes", clientes.getClienteByTipoSomenteCliente());
+				
 				// Redireciona para o arquivo .jsp, para poder listar os clientes atualizados novamente
 				request.getRequestDispatcher("JSP/lista-clientes-scriptletADMIN.jsp").forward(request, response);
 			} 

@@ -2,9 +2,7 @@
 <!-- @author Davi Rodrigues-->
 <!-- @date 17/09/2021 -->
 
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -20,13 +18,10 @@
   		<link href="../CSS/form-default.css" rel="stylesheet" type="text/css">
 	</head>
 	<%
-		ClienteDAO dao = new ClienteDAO();
 		Usuario usuarioLogado = new Usuario();
 		
 		HttpSession sessao = request.getSession();
 		usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
-		
-		List<Cliente> cliente = dao.consultarClienteById(usuarioLogado.getId());
 	%>
 	
 	<body>
@@ -92,26 +87,26 @@
 				</div>
 				
 				<!-- ID do Cliente -->
-			    <input type="hidden" name="id" id="id" value="<%=cliente.get(0).getId() %>">
+			    <input type="hidden" name="id" id="id" value="<%=usuarioLogado.getId() %>">
 			    <!-- Parametro que é verificado se pode alterar um Cliente ou não -->
 			    <input type="hidden" name="alteraCliente" id="alteraCliente" value="1">
 			    
 			    <!-- os atributos a baixo foram preenchidos, porem ficaram com o tipo "hidden", -->
 			    <!-- para não mandar NULL quando estiver alterando um cliente, e consequentemente salvar NULL no banco de dados -->
 			    <!-- Nome -->
-		  		<input type="hidden" name="nome" value="<%=cliente.get(0).getNome() %>">
+		  		<input type="hidden" name="nome" value="<%=usuarioLogado.getNome() %>">
 		  		<!-- CPF -->
-		  		<input type="hidden" name="cpf" value="<%=cliente.get(0).getCpf() %>">
+		  		<input type="hidden" name="cpf" value="<%=usuarioLogado.getCpf() %>">
 		  		<!-- Data Nascimento -->
-		  		<input type="hidden" name="dtNasc" value="<%=cliente.get(0).getDt_nasc() %>">
+		  		<input type="hidden" name="dtNasc" value="<%=usuarioLogado.getDt_nasc() %>">
 		  		<!-- Telefone -->
-		  		<input type="hidden" name="telefone" value="<%=cliente.get(0).getTelefone() %>">
+		  		<input type="hidden" name="telefone" value="<%=usuarioLogado.getTelefone() %>">
 		  		<!-- Sexo -->
-		  		<input type="hidden" name="selecioneSexo" value="<%=cliente.get(0).getSexo() %>">
+		  		<input type="hidden" name="selecioneSexo" value="<%=usuarioLogado.getSexo() %>">
 		  		<!-- Status -->
-		  		<input type="hidden" name="status" value="<%=cliente.get(0).getStatus() %>">
+		  		<input type="hidden" name="status" value="<%=usuarioLogado.getStatus() %>">
 		  		<!-- E-mail -->
-               	<input type="hidden" name="email" value="<%=cliente.get(0).getUsuario().getLogin() %>">
+               	<input type="hidden" name="email" value="<%=usuarioLogado.getLogin() %>">
 
 			</form>
 		</fieldset>

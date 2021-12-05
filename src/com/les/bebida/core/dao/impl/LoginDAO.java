@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
+
 import com.les.bebida.core.dominio.Bandeira;
 import com.les.bebida.core.dominio.Cliente;
 import com.les.bebida.core.dominio.Cupom;
@@ -72,6 +74,18 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setId(rs.getString("id"));
 				usuarioItem.setLogin(rs.getString("login"));
 				usuarioItem.setSenha(rs.getString("senha"));
+				
+				// descriptografando a senha que vem do banco,
+				// para não acusar erro na Strategy "ValidarSenhaIgualCliente",
+				// para poder validar se a senha esta com letra minuscula e maiscula
+				String senhaCriptografada = usuarioItem.getSenha();
+			    // Decodifica uma string anteriormente codificada usando o método decodeBase64 e
+			    // passando o byte[] da string codificada
+			    byte[] decoded = Base64.decodeBase64(senhaCriptografada.getBytes());
+			    // Converte o byte[] decodificado de volta para a string original
+			    String decodedString = new String(decoded);
+			    usuarioItem.setSenha(decodedString);
+				
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
 				usuarioItem.setCdSistema(rs.getString("cd_sistema"));
@@ -113,6 +127,18 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setId(rs.getString("id"));
 				usuarioItem.setLogin(rs.getString("login"));
 				usuarioItem.setSenha(rs.getString("senha"));
+				
+				// descriptografando a senha que vem do banco,
+				// para não acusar erro na Strategy "ValidarSenhaIgualCliente",
+				// para poder validar se a senha esta com letra minuscula e maiscula
+				String senhaCriptografada = usuarioItem.getSenha();
+			    // Decodifica uma string anteriormente codificada usando o método decodeBase64 e
+			    // passando o byte[] da string codificada
+			    byte[] decoded = Base64.decodeBase64(senhaCriptografada.getBytes());
+			    // Converte o byte[] decodificado de volta para a string original
+			    String decodedString = new String(decoded);
+			    usuarioItem.setSenha(decodedString);
+				
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
 				usuarioItem.setCdSistema(rs.getString("cd_sistema"));
@@ -158,12 +184,27 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setId(rs.getString("id"));
 				usuarioItem.setLogin(rs.getString("login"));
 				usuarioItem.setSenha(rs.getString("senha"));
+				
+				// descriptografando a senha que vem do banco,
+				// para não acusar erro na Strategy "ValidarSenhaIgualCliente",
+				// para poder validar se a senha esta com letra minuscula e maiscula
+				String senhaCriptografada = usuarioItem.getSenha();
+			    // Decodifica uma string anteriormente codificada usando o método decodeBase64 e
+			    // passando o byte[] da string codificada
+			    byte[] decoded = Base64.decodeBase64(senhaCriptografada.getBytes());
+			    // Converte o byte[] decodificado de volta para a string original
+			    String decodedString = new String(decoded);
+			    usuarioItem.setSenha(decodedString);
+				
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
 				usuarioItem.setCdSistema(rs.getString("cd_sistema"));
 				usuarioItem.setStatus(rs.getString("status"));
 				usuarioItem.setDtCadastro(rs.getString("dt_cadastro"));
 				usuarioItem.setTipo(rs.getString("tipo"));
+				usuarioItem.setCpf(rs.getString("cpf"));
+				usuarioItem.setDt_nasc(rs.getString("dt_nasc"));
+				usuarioItem.setSexo(rs.getString("sexo"));
 				
 				// adicionando o objeto à lista
 				usuarios.add(usuarioItem);
@@ -270,6 +311,18 @@ public class LoginDAO extends AbstractJdbcDAO {
 				usuarioItem.setId(rs.getString("id"));
 				usuarioItem.setLogin(rs.getString("login"));
 				usuarioItem.setSenha(rs.getString("senha"));
+				
+				// descriptografando a senha que vem do banco,
+				// para não acusar erro na Strategy "ValidarSenhaIgualCliente",
+				// para poder validar se a senha esta com letra minuscula e maiscula
+				String senhaCriptografada = usuarioItem.getSenha();
+			    // Decodifica uma string anteriormente codificada usando o método decodeBase64 e
+			    // passando o byte[] da string codificada
+			    byte[] decoded = Base64.decodeBase64(senhaCriptografada.getBytes());
+			    // Converte o byte[] decodificado de volta para a string original
+			    String decodedString = new String(decoded);
+			    usuarioItem.setSenha(decodedString);
+				
 				usuarioItem.setNome(rs.getString("nome"));
 				usuarioItem.setTelefone(rs.getString("telefone"));
 				usuarioItem.setCdSistema(rs.getString("cd_sistema"));

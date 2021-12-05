@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -15,10 +13,9 @@
 </head>
 
 <%
-	ClienteDAO dao = new ClienteDAO();
-	Cliente cliente = new Cliente();
-	
-	List<EntidadeDominio> clientes = dao.consultarClienteByTipoSomenteCliente(cliente);
+	//pega todos clientes (somente clientes) que estava pendurado na requisição,
+	// que foi enviado pelo arquivo "ClienteHelper"
+	List<Cliente> clientes = (List<Cliente>)request.getAttribute("todosClientes");
 %>
 
 <body>
@@ -78,11 +75,11 @@
             <th>Status</th>
         </tr>
 		<%
-		for(EntidadeDominio e : clientes) {
+		for(Cliente c : clientes) {
 		
 		// Aplicado o CAST para poder popular o cliente,
 		// fazendo o CAST para uma referência mais genérica, no caso para o cliente
-		Cliente c = (Cliente) e;
+		//Cliente c = (Cliente) e;
 		// pega o usuario que esta dentro do cliente
 		Usuario u = c.getUsuario();
 		%>

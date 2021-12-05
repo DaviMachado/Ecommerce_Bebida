@@ -18,6 +18,9 @@ public class Usuario extends EntidadeDominio {
 	private String cd_sistema;
 	private List<Produto> produtos;
 	private List<Bandeira> bandeiras;
+	private String cpf;
+	private String dt_nasc;
+	private String sexo;
 	
 	
 	public String getLogin() {
@@ -95,4 +98,25 @@ public class Usuario extends EntidadeDominio {
     public void setBandeiras(List<Bandeira> bandeiras) {
         this.bandeiras = bandeiras;
     }
+    
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	
+	public String getDt_nasc() {
+		return dt_nasc;
+	}
+	public void setDt_nasc(String dt_nasc) {
+		this.dt_nasc = dt_nasc;
+	}
+	
+	public String getSexo() {
+		return sexo;
+	}
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 }
