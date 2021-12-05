@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -10,18 +8,24 @@
 	<title>Listagem dos Pedidos</title>
 	
 	<!-- importações para funcionar o Header e o Footer -->
-	<link href="../CSS/bootstrap.min.css" rel="stylesheet">
-	<link href="../CSS/shop-homepage.css" rel="stylesheet">
-	<link href="../CSS/form-default.css" rel="stylesheet" type="text/css">
+	<link href="./CSS/bootstrap.min.css" rel="stylesheet">
+	<link href="./CSS/shop-homepage.css" rel="stylesheet">
+	<link href="./CSS/form-default.css" rel="stylesheet" type="text/css">
 </head>
 
 <%
-	PedidoDAO dao = new PedidoDAO();
-	ClienteDAO clienteDAO = new ClienteDAO();
-	Pedido pedido = new Pedido();
-	List<Cliente> clientes = new ArrayList<>();
+	Usuario userLogado = new Usuario();
+	List<EntidadeDominio> todosPedidos = new ArrayList<>();
 	
-	List<EntidadeDominio> pedidos = dao.consultar(pedido);
+	// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+	HttpSession sessao = request.getSession();
+	// pega o objeto salvo em Sessão com o nome "usuarioLogado",
+	// e passa para o novo objeto criado com o nome "userLogado", (fazendo o CAST para o tipo Usuario)
+	userLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+	
+	// pega o objeto salvo em Sessão com o nome "produtosAtivos",
+	// e passa para o novo objeto criado com o nome "produtosAtivos" (fazendo o CAST para o tipo List<EntidadeDominio>)
+	todosPedidos = (List<EntidadeDominio>) sessao.getAttribute("todosPedidosADMIN");
 %>
 
 <body>
@@ -96,18 +100,18 @@
             <th width="35%"></th>
         </tr>
 		<%		
-		for(EntidadeDominio e : pedidos) {
+		for(EntidadeDominio e : todosPedidos) {
 		
 		// Aplicado o CAST para poder popular o pedido,
 		// fazendo o CAST para uma referência mais genérica, no caso para o pedido
 		Pedido order = (Pedido) e;
 		
 		// busca o nome do cliente, conforme o ID do cliente no pedido
-		clientes = clienteDAO.consultarClienteById(order.getIdCliente());
+		//clientes = clienteDAO.consultarClienteById(order.getIdCliente());
 		%>
 			<tr>
 				<td><%=order.getId() %></td>
-				<td><%=clientes.get(0).getNome() %></td>
+				<td><%=order.getNomeCliente() %></td>
 				<td><%=order.getTotalPedido() %></td>
 				<td><%=order.getStatus() %></td>
 				<td>
@@ -145,7 +149,7 @@
 						<!-- ID do Pedido -->
 			    		<input type="hidden" name="idPedido" id="idPedido" value="<%=order.getId() %>">
 			    		<!-- ID do Cliente -->
-			    		<input type="hidden" name="idCliente" id="idCliente" value="<%=clientes.get(0).getId() %>">
+			    		<input type="hidden" name="idCliente" id="idCliente" value="<%=order.getIdCliente() %>">
 			    		<!-- Total do Pedido -->
 			    		<input type="hidden" name="totalPedido" id="totalPedido" value="<%=order.getTotalPedido() %>">
 					</form>

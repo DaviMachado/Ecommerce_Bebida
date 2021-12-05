@@ -109,7 +109,7 @@ import com.les.bebida.core.strategy.impl.ValidarValorCustoEstoque;
  * Classe Fachada
  * 
  * @author Davi Rodrigues
- * @date 03/12/2021
+ * @date 04/12/2021
  */
 public class Fachada implements IFachada {
 
@@ -205,6 +205,7 @@ public class Fachada implements IFachada {
 	List<IStrategy> regrasConsultarEstoque = new ArrayList<>();
 	List<IStrategy> regrasConsultarItemPedido = new ArrayList<>();
 	List<IStrategy> regrasConsultarCarrinho = new ArrayList<>();
+	List<IStrategy> regrasConsultarPedido = new ArrayList<>();
 	List<IStrategy> regrasConsultarCupom = new ArrayList<>();
 	List<IStrategy> regrasConsultarVerificaCupom = new ArrayList<>();
 	List<IStrategy> regrasConsultarPedidoTroca = new ArrayList<>();
@@ -519,6 +520,7 @@ public class Fachada implements IFachada {
 		/* ----- SALVAR ----- */
 		regrasPedido.put("SALVAR", regrasSalvarPedido);
 		/* ----- CONSULTAR ----- */
+		regrasPedido.put("CONSULTAR", regrasConsultarPedido);
 		/* ----- ALTERAR ----- */
 		/* ----- EXCLUIR ----- */
 		/* --------------------------------------- */

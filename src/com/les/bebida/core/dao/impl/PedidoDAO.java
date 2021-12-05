@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.les.bebida.core.dominio.Cliente;
 import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Estoque;
@@ -89,10 +90,15 @@ public class PedidoDAO extends AbstractJdbcDAO {
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
 		openConnection();
 		try {
+			Pedido pedidoEntidade = (Pedido) entidade;
+			ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
+			ClienteDAO clienteDAO = new ClienteDAO();
+			List<Pedido> pedidos = new ArrayList<>();
+			List<EntidadeDominio> Listpedidos = new ArrayList<>();
+			
 			PreparedStatement stmt = connection.prepareStatement("select * from pedido");
 			ResultSet rs = stmt.executeQuery();
 			
-			List<EntidadeDominio> pedidos = new ArrayList<>();
 			while (rs.next()) {
 				// criando o objeto Pedido
 				Pedido pedidoItem = new Pedido();
@@ -116,10 +122,72 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				// adicionando o objeto à lista
 				pedidos.add(pedidoItem);
 			}
+			
+			List<Pedido> pedidosCliente = new ArrayList<>();
+			stmt = connection.prepareStatement("select * from pedido where id_cliente=?");
+			stmt.setString(1, pedidoEntidade.getIdClienteConsulta());
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				// criando o objeto Pedido
+				Pedido pedidoItem = new Pedido();
 				
+				pedidoItem.setId(rs.getString("id"));
+				pedidoItem.setTotalItens(rs.getString("total_itens"));
+				pedidoItem.setTotalFrete(rs.getString("total_frete"));
+				pedidoItem.setTotalPedido(rs.getString("total_pedido"));
+				pedidoItem.setStatus(rs.getString("status"));
+				pedidoItem.setIdCliente(rs.getString("id_cliente"));
+				pedidoItem.setIdEndereco(rs.getString("id_endereco"));
+				pedidoItem.setFormaPagamento(rs.getString("forma_pagamento"));
+				pedidoItem.setIdCartao1(rs.getString("id_cartao_1"));
+				pedidoItem.setValorCartao1(rs.getString("valor_cartao_1"));
+				pedidoItem.setIdCartao2(rs.getString("id_cartao_2"));
+				pedidoItem.setValorCartao2(rs.getString("valor_cartao_2"));
+				pedidoItem.setTotalCupons(rs.getString("total_cupons"));
+				pedidoItem.setTrocado(rs.getString("trocado"));
+				pedidoItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				pedidosCliente.add(pedidoItem);
+			}
+			
+			// se achou algum pedido do Cliente, também pesquisa se todos os itens desse pedido foi trocado,
+			// para poder verificar na tela de "lista-pedidos-scriptletCLIENTE.jsp".
+			if (pedidosCliente.size() > 0) {
+				for(Pedido order: pedidosCliente) {
+					List<ItemPedido> pedidoComTodosOsItensJaTrocados = itemPedidoDAO.consultarItemPedidoByIdPedidoAndTrocadoSim(order.getId());
+					
+					if (pedidoComTodosOsItensJaTrocados.isEmpty()) {
+						order.setTodosItensTrocado("nao");
+					}
+					else {
+						order.setTodosItensTrocado("sim");
+					}
+				}
+			}
+			
+			// para cada pedido, será consultado o nome do Cliente
+			if (pedidos.size() > 0) {
+				for(Pedido order: pedidos) {
+					List<Cliente> cliente = clienteDAO.consultarClienteById(order.getIdCliente());
+					
+					order.setNomeCliente(cliente.get(0).getNome());
+				}
+			}
+			
+			// sala a REFERENCIA de todos os Pedidos em "novoPedido"
+			List<Pedido> novoPedido =  pedidos;
+			
+			// em seguida, salva somente no index 0 (primeiro pedido), todos os Pedidos do Cliente,
+			novoPedido.get(0).setPedidosCliente(pedidosCliente);
+			
+			// depois faz o CAST da lista de "novoPedido" para "EntidadeDominio",
+			// para poder retornar uma lista de "EntidadeDominio"
+			Listpedidos.addAll(novoPedido);
+			
 			rs.close();
 			stmt.close();
-			return pedidos;
+			return Listpedidos;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

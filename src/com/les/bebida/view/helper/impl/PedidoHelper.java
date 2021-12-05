@@ -22,6 +22,7 @@ import com.les.bebida.core.dominio.ItemPedido;
 import com.les.bebida.core.dominio.Pedido;
 import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.Resultado;
+import com.les.bebida.core.dominio.Usuario;
 import com.les.bebida.view.helper.IViewHelper;
 
 public class PedidoHelper implements IViewHelper {
@@ -46,12 +47,17 @@ public class PedidoHelper implements IViewHelper {
         String id_cartao_2 = null;
         String valor_cartao_2 = null;
         String total_cupons = null;
+        String id_cliente_consulta = null;
         
         List<Produto> produtosDaSessao = new ArrayList<>();
         List<Cupom> cuponsDaSessao = new ArrayList<>();
 		
 		if (("CONSULTAR").equals(operacao)) {
+			pedido = new Pedido();
 			
+			id_cliente_consulta = request.getParameter("idClienteConsulta");
+			
+			pedido.setIdClienteConsulta(id_cliente_consulta);
 		}
 		
 		else if (("SALVAR").equals(operacao)) {
@@ -134,7 +140,45 @@ public class PedidoHelper implements IViewHelper {
 		PrintWriter writer = response.getWriter();
 		
 		if (("CONSULTAR").equals(operacao)) {
-			
+			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				Usuario userLogado = new Usuario();
+				
+				// foi utilizado o getEntidades do resultado para poder pegar todos os Pedidos no sistema
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Usuario (pegando o primeiro indice de Entidade)
+				// pega somente os pedidos do Cliente, salvo somente no index 0 (primeiro pedido)
+				Pedido pedidos = (Pedido) entidades.get(0);
+				
+				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+				HttpSession sessao = request.getSession();
+				
+				// salva na sessão o objeto "todosPedidosADMIN", recebendo todos os Pedidos feitos no sistema
+				sessao.setAttribute("todosPedidosADMIN", entidades);
+				
+				// salva na sessão o objeto "todosPedidosADMIN", recebendo todos os Pedidos feitos no sistema
+				sessao.setAttribute("todosPedidosCliente", pedidos);
+				
+				// pega o objeto salvo em Sessão com o nome "usuarioLogado",
+				// e passa para o novo objeto criado com o nome "userLogado", (fazendo o CAST para o tipo Usuario)
+				userLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+				
+				if(userLogado.getTipo().equals("admin")) {
+					// Redireciona para o arquivo .JSP
+					request.getRequestDispatcher("JSP/lista-todos-pedidos-scriptletADMIN.jsp").forward(request, response);
+				}
+				if(userLogado.getTipo().equals("cliente")) {
+					// Redireciona para o arquivo .JSP
+					request.getRequestDispatcher("JSP/lista-pedidos-scriptletCLIENTE.jsp").forward(request, response);
+				}
+			}
+			else {
+				// mostra as mensagens de ERRO se houver
+				// pendura o "resultado" na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("mensagemStrategy", resultado.getMensagem());
+				
+				// Redireciona para o arquivo .jsp
+				request.getRequestDispatcher("JSP/Home_Page.jsp").forward(request, response);
+			}
 		}
 		
 		else if (("SALVAR").equals(operacao)) {

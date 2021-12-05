@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -10,14 +8,12 @@
 	<title>Listagem dos Pedidos</title>
 	
 	<!-- importações para funcionar o Header e o Footer -->
-	<link href="../CSS/bootstrap.min.css" rel="stylesheet">
-	<link href="../CSS/shop-homepage.css" rel="stylesheet">
-	<link href="../CSS/form-default.css" rel="stylesheet" type="text/css">
+	<link href="./CSS/bootstrap.min.css" rel="stylesheet">
+	<link href="./CSS/shop-homepage.css" rel="stylesheet">
+	<link href="./CSS/form-default.css" rel="stylesheet" type="text/css">
 </head>
 
 <%
-	PedidoDAO dao = new PedidoDAO();
-	ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
 	Usuario usuarioLogado = new Usuario();
 	
 	// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
@@ -26,8 +22,9 @@
 	// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
 	usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
 	
-	// consulta todos os pedidos do Cliente
-	List<Pedido> pedidos = dao.consultarPedidoByIdCliente(usuarioLogado.getId());
+	// pega o objeto salvo em Sessão com o nome "todosPedidosCliente",
+	// e passa para o novo objeto criado com o nome "pedidosCliente" (fazendo o CAST para o tipo List<Pedido>)
+	Pedido pedidosCliente = (Pedido) sessao.getAttribute("todosPedidosCliente");
 %>
 
 <body>
@@ -98,7 +95,7 @@
             <th>Status Atual</th>
         </tr>
 		<%		
-			for(Pedido order : pedidos) {
+			for(Pedido order : pedidosCliente.getPedidosCliente()) {
 			
 			boolean itemDoPedidoJaFoiTrocado = false;
 			
@@ -106,14 +103,14 @@
 			// pois se estiver, o botão de "Trocar Pedido Inteiro" será desabilitado, 
 			// para poder realizar a troca inteira somente para Pedidos com itens não trocados,
 			// caso contrário, o botão ficará habilitado,.
-			List<ItemPedido> pedidoComTodosOsItensJaTrocados = itemPedidoDAO.consultarItemPedidoByIdPedidoAndTrocadoSim(order.getId());
+			//List<ItemPedido> pedidoComTodosOsItensJaTrocados = itemPedidoDAO.consultarItemPedidoByIdPedidoAndTrocadoSim(order.getId());
 			
-			if (pedidoComTodosOsItensJaTrocados.isEmpty()) {
-				itemDoPedidoJaFoiTrocado = false;
-			}
-			else {
-				itemDoPedidoJaFoiTrocado = true;
-			}
+			//if (pedidoComTodosOsItensJaTrocados.isEmpty()) {
+			//	itemDoPedidoJaFoiTrocado = false;
+			//}
+			//else {
+			//	itemDoPedidoJaFoiTrocado = true;
+			//}
 		%>
 			<tr>
 				<td><%=order.getId() %></td>
@@ -121,7 +118,7 @@
 				<td><%=order.getStatus() %></td>
 				<td><a href="/Ecommerce_Bebida/itemPedido?idPedido=<%= order.getId()%>&operacao=CONSULTAR"><button class="btn btn-warning">Visualizar Itens</button></a></td>
 				
-				<% if(order.getStatus().equals("ENTREGA REALIZADA") && !itemDoPedidoJaFoiTrocado) { %>
+				<% if(order.getStatus().equals("ENTREGA REALIZADA") && order.getTodosItensTrocado().equals("nao")) { %>
                 	<td><a href="/Ecommerce_Bebida/pedidoTroca?idPedido=<%= order.getId()%>&trocaPedidoInteiro=<%= "1"%>&operacao=SALVAR"><button class="btn btn-danger">Trocar Pedido Inteiro</button></a></td>
                 <% } %>
                 

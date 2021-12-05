@@ -24,6 +24,9 @@ public class Pedido extends EntidadeDominio{
 	private String todosItensTrocado;
 	private List<Produto> produtos;
 	private List<Cupom> cupons;
+	private String id_cliente_consulta;
+	private List<Pedido> pedidosCliente;
+	private String nome_cliente;
 	
 	
 	public String getTotalItens() {
@@ -124,6 +127,27 @@ public class Pedido extends EntidadeDominio{
     public void setCupons(List<Cupom> cupons) {
         this.cupons = cupons;
     }
+    
+    public String getIdClienteConsulta() {
+		return id_cliente_consulta;
+	}
+	public void setIdClienteConsulta(String id_cliente_consulta) {
+		this.id_cliente_consulta = id_cliente_consulta;
+	}
+	
+	public List<Pedido> getPedidosCliente() {
+        return pedidosCliente;
+    }
+    public void setPedidosCliente(List<Pedido> pedidosCliente) {
+        this.pedidosCliente = pedidosCliente;
+    }
+    
+    public String getNomeCliente() {
+		return nome_cliente;
+	}
+	public void setNomeCliente(String nome_cliente) {
+		this.nome_cliente = nome_cliente;
+	}
 	
 	// Metodo
 	public void ValidarPrimieraCompra() {
