@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 20/10/2021 -->
+<!-- @date 05/12/2021 -->
 
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -21,11 +19,11 @@
 	</head>
 	
 	<%
-		ClienteDAO clienteDAO = new ClienteDAO();
-		Cliente cliente = new Cliente();
-		
-		// pega todos os clientes cadastrados no sistema
-		List<EntidadeDominio> allClientes = clienteDAO.consultarClienteByTipoSomenteCliente(cliente);
+		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+		HttpSession sessao = request.getSession();
+	
+		// pega todos os clientes do sistema salvo na sessão
+		List<Cliente> todosClientesSistema = (List<Cliente>)sessao.getAttribute("todasClientesSistemas");
 	%>
 	
 	<body>
@@ -91,12 +89,12 @@
 			  			<select name="idCliente" class="form-control" placeholder="Selecione um Cliente">
 					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<% 
-						      	for(EntidadeDominio e : allClientes) {
+						      	for(Cliente client : todosClientesSistema) {
 				
 								// Aplicado o CAST para poder popular o cliente,
 								// fazendo o CAST para uma referência mais genérica, no caso para o cliente,
 								// lista todos os clientes indexado com o ID do cliente dentro do "value", de cada da TAG "<option>".
-								Cliente client = (Cliente) e;
+								//Cliente client = (Cliente) e;
 							%>
 					      	<option value="<%=client.getId()%>"><%=client.getNome()%></option>
 					      	<%

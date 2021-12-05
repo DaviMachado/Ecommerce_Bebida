@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 31/10/2021 -->
+<!-- @date 05/12/2021 -->
 
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -21,27 +19,14 @@
 	</head>
 	
 	<%
-		ClienteDAO clienteDAO = new ClienteDAO();
-		CupomDAO dao = new CupomDAO();
-		Cliente cliente = new Cliente();
-		
-		// pega o id do cupom que estava pendurado na requisição,
-		// que foi enviado pelo arquivo "CupomHelper"
-		String idCupom = (String)request.getAttribute("idCupom");
-		
-		// busca o Cupom pelo ID que estava pendurado na requisição
-		List<Cupom> cupom = dao.consultarCupomById(idCupom);
-		// busca o Cliente do Cupom, pelo ID do cliente no Cupom
-		List<Cliente> clienteCupom = clienteDAO.consultarClienteById(cupom.get(0).getIdCliente());
-		
-		// ajuste do bug de quando o cupom não tiver nenhum Cliente vinculado,
-		// então será adicionado um cliente vazio na lista
-		if (clienteCupom.isEmpty()) {
-			clienteCupom.add(0, cliente);
-		}
-		
-		// pega todos os clientes cadastrados no sistema
-		List<EntidadeDominio> allClientes = clienteDAO.consultarClienteByTipoSomenteCliente(cliente);
+		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+		HttpSession sessao = request.getSession();
+	
+		// pega o cupom que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "EnderecoHelper"
+		Cupom cupom = (Cupom)request.getAttribute("cupomPesquisado");
+		// pega todos os clientes do sistema salvo na sessão
+		List<Cliente> todosClientesSistema = (List<Cliente>)sessao.getAttribute("todasClientesSistemas");
 	%>
 	
 	<body>
@@ -78,13 +63,13 @@
 					<!-- Nome -->
 				    <div class="form-group col-md-8">
 				      <label>Nome</label>
-				      <input type="text" class="form-control" name="nome" placeholder="Nome" value="<%=cupom.get(0).getNome()%>" required>
+				      <input type="text" class="form-control" name="nome" placeholder="Nome" value="<%=cupom.getNome()%>" required>
 				    </div>
 
 				    <!-- Valor -->
 				    <div class="form-group col-md-2">
 				      <label>Valor</label>
-				      <input type="text" class="form-control" name="valor" placeholder="Digite um Valor" value="<%=cupom.get(0).getValor() %>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
+				      <input type="text" class="form-control" name="valor" placeholder="Digite um Valor" value="<%=cupom.getValor() %>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
 				    </div>
 				    
 				    <!-- Utilizado -->
@@ -93,7 +78,7 @@
 
 			  			<select name="utilizado" class="form-control" placeholder="Selecione uma opção" required>
 					      	<option disabled>Selecione uma opção...</option>
-					      	<option value="<%=cupom.get(0).getUtilizado()%>"><%=cupom.get(0).getUtilizado()%></option>
+					      	<option value="<%=cupom.getUtilizado()%>"><%=cupom.getUtilizado()%></option>
 					      	<option value="sim">Sim</option>
 					      	<option value="nao">Não</option>
 				      	</select>
@@ -107,15 +92,15 @@
 
 			  			<select name="idCliente" class="form-control" placeholder="Selecione um Cliente">
 					      	<option disabled>Selecione uma opção...</option>
-					      	<option value="<%=clienteCupom.get(0).getId()%>"><%=clienteCupom.get(0).getNome()%></option>
+					      	<option value="<%=cupom.getIdCliente()%>"><%=cupom.getNomeClienteNoCupom()%></option>
 					      	<option value="null">NULL</option>
 					      	<% 
-						      	for(EntidadeDominio e : allClientes) {
+						      	for(Cliente client : todosClientesSistema) {
 				
 								// Aplicado o CAST para poder popular o cliente,
 								// fazendo o CAST para uma referência mais genérica, no caso para o cliente,
 								// lista todos os clientes indexado com o ID do cliente dentro do "value", de cada da TAG "<option>".
-								Cliente client = (Cliente) e;
+								//Cliente client = (Cliente) e;
 							%>
 					      	<option value="<%=client.getId()%>"><%=client.getNome()%></option>
 					      	<%
@@ -130,7 +115,7 @@
 
 			  			<select name="tipo" class="form-control" placeholder="Selecione um Tipo" required>
 					      	<option disabled>Selecione uma opção...</option>
-					      	<option value="<%=cupom.get(0).getTipo()%>"><%=cupom.get(0).getTipo()%></option>
+					      	<option value="<%=cupom.getTipo()%>"><%=cupom.getTipo()%></option>
 					      	<option value="promocional">Promocional</option>
 					      	<option value="troca">Troca</option>
 					      	<option value="devolucao">Devolução</option>
@@ -157,7 +142,7 @@
 				</div>
 				
 				<!-- ID do Cupom -->
-			    <input type="hidden" name="idCupom" id="idCupom" value="<%=cupom.get(0).getId() %>">
+			    <input type="hidden" name="idCupom" id="idCupom" value="<%=cupom.getId() %>">
 				<!-- Parametro que é verificado se pode alterar um Cupom ou não -->
 	    		<input type="hidden" name="alteraCupom" id="alteraCupom" value="1">
 			</form>

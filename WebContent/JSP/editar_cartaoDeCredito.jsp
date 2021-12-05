@@ -25,6 +25,7 @@
 	// que foi enviado pelo arquivo "CartaoDeCreditoHelper"
 	CartaoDeCredito cartao = (CartaoDeCredito)request.getAttribute("cartaoPesquisado");
 	
+	// pega todas as bandeiras salva na sessão
 	List<Bandeira> bandeiras = (List<Bandeira>)request.getAttribute("bandeiras");
 	
 	// teve que ser atribuidos os valores do objeto "cartao" em variaveis separadas, 

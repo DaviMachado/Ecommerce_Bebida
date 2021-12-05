@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -51,34 +49,23 @@
             <th>Cliente</th>
         </tr>
 		<%
-		CupomDAO dao = new CupomDAO();
-		ClienteDAO clienteDAO = new ClienteDAO();
-		Cupom cupom = new Cupom();
-		Cliente cliente = new Cliente();
+		// pega todos os endereços do Cliente que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "EnderecoHelper"
+		List<Cupom> cupons = (List<Cupom>)request.getAttribute("todosCuponsSistema");
 		
-		List<EntidadeDominio> cupons = dao.consultar(cupom);
-		
-		for(EntidadeDominio e : cupons) {
+		for(Cupom coupon : cupons) {
 		
 		// Aplicado o CAST para poder popular o cupom,
 		// fazendo o CAST para uma referência mais genérica, no caso para o cupom
-		Cupom coupon = (Cupom) e;
+		//Cupom coupon = (Cupom) e;
 		
-		// busca o Cliente do Cupom, pelo ID do cliente no Cupom
-		List<Cliente> clientes = clienteDAO.consultarClienteById(coupon.getIdCliente());
-		
-		// ajuste do bug de quando o cupom não tiver nenhum Cliente vinculado,
-		// então será adicionado um cliente vazio na lista
-		if (clientes.isEmpty()) {
-			clientes.add(0, cliente);
-		}
 		%>
 			<tr>
 				<td><%=coupon.getNome() %></td>
 				<td><%=coupon.getValor() %></td>
 				<td><%=coupon.getTipo() %></td>
 				<td><%=coupon.getUtilizado() %></td>
-				<td><%=clientes.get(0).getNome() %></td>
+				<td><%=coupon.getNomeClienteNoCupom()%></td>
 				<td><a href="/Ecommerce_Bebida/cupom?idCupom=<%= coupon.getId()%>&alteraCupom=<%= "0"%>&operacao=ALTERAR"><button class="btn btn-warning">Alterar</button></a></td>
                 <td><a href="/Ecommerce_Bebida/cupom?idCupom=<%= coupon.getId()%>&operacao=EXCLUIR"><button class="btn btn-danger">Deletar</button></a></td>
 			</tr>

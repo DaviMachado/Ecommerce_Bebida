@@ -1,9 +1,11 @@
 package com.les.bebida.core.dominio;
 
+import java.util.List;
+
 /**
  * Classe para representar o Cupom
  * @author Davi Rodrigues
- * @date 03/09/2021
+ * @date 05/12/2021
  */
 public class Cupom extends EntidadeDominio {
 	private String nome;
@@ -12,6 +14,9 @@ public class Cupom extends EntidadeDominio {
 	private String utilizado;
 	private String id_cliente;
 	private String AlteraCupom;
+	private List<Cupom> todosCupons;
+	private Cupom cupomPesquisado;
+	private String nomeClienteNoCupom;
 	
 	
 	public String getNome() {
@@ -50,4 +55,26 @@ public class Cupom extends EntidadeDominio {
 	public void setAlteraCupom(String AlteraCupom) {
 		this.AlteraCupom = AlteraCupom;
 	}
+	
+	public List<Cupom> getTodosCupons() {
+        return todosCupons;
+    }
+    public void setTodosCupons(List<Cupom> todosCupons) {
+        this.todosCupons = todosCupons;
+    }
+    
+	public Cupom getCupomPesquisado() {
+		return cupomPesquisado;
+	}
+	public void setCupomPesquisado(Cupom cupomPesquisado) {
+		this.cupomPesquisado = cupomPesquisado;
+	}
+	
+	public String getNomeClienteNoCupom() {
+		return nomeClienteNoCupom;
+	}
+	public void setNomeClienteNoCupom(String nomeClienteNoCupom) {
+		this.nomeClienteNoCupom = nomeClienteNoCupom;
+	}
+	
 }

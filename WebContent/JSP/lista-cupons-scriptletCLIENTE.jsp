@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -50,7 +48,6 @@
             <th>Utilizado</th>
         </tr>
 		<%
-		CupomDAO dao = new CupomDAO();
 		Usuario usuarioLogado = new Usuario();
 		
 		//cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
@@ -59,10 +56,11 @@
 		// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
 		usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
 		
-		// busca todos os cupons do Cliente
-		List<Cupom> cupons = dao.consultarCupomByIdCliente(usuarioLogado.getId());
+		// pega todos os cupons do cliente na sessão,
+		// pesquisado no LoginDAO e salvo LoginHelper
+		List<Cupom> listaTodosCuponsCliente = (List<Cupom>) sessao.getAttribute("todasCuponsCliente");
 		
-		for(Cupom coupon : cupons) {
+		for(Cupom coupon : listaTodosCuponsCliente) {
 			
 			// se o cupom ja foi utilizado, ele será apresentado com um risco vermelho na listagem
 			if (coupon.getUtilizado().equals("sim")) {

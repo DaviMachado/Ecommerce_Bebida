@@ -21,6 +21,8 @@ public class Usuario extends EntidadeDominio {
 	private String cpf;
 	private String dt_nasc;
 	private String sexo;
+	private List<Cupom> cuponsCliente;
+	private List<Cliente> todosClientes;
 	
 	
 	public String getLogin() {
@@ -119,4 +121,18 @@ public class Usuario extends EntidadeDominio {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
+	
+	public List<Cupom> getCuponsCliente() {
+        return cuponsCliente;
+    }
+    public void setCuponsCliente(List<Cupom> cuponsCliente) {
+        this.cuponsCliente = cuponsCliente;
+    }
+    
+    public List<Cliente> getTodosClientes() {
+        return todosClientes;
+    }
+    public void setTodosClientes(List<Cliente> todosClientes) {
+        this.todosClientes = todosClientes;
+    }
 }

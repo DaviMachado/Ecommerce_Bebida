@@ -170,10 +170,10 @@ public class LoginDAO extends AbstractJdbcDAO {
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
 		openConnection();
 		try {
-			Usuario usuario = (Usuario) entidade;
+			Usuario usuarioEntidade = (Usuario) entidade;
 			PreparedStatement stmt = connection.prepareStatement("select * from cliente where login=? and senha=?");
-			stmt.setString(1, usuario.getLogin());
-			stmt.setString(2, usuario.getSenha());
+			stmt.setString(1, usuarioEntidade.getLogin());
+			stmt.setString(2, usuarioEntidade.getSenha());
 			ResultSet rs = stmt.executeQuery();
 			
 			List<EntidadeDominio> usuarios = new ArrayList<>();
@@ -254,11 +254,75 @@ public class LoginDAO extends AbstractJdbcDAO {
 				bandeiras.add(bandeiraItem);
 			}
 			
+			stmt = connection.prepareStatement("select * from cupom where id_cliente=?");
+			stmt.setString(1, usuarios.get(0).getId());
+			rs = stmt.executeQuery();
+			
+			List<Cupom> cupons = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Cupom
+				Cupom cupomItem = new Cupom();
+				
+				cupomItem.setId(rs.getString("id"));
+				cupomItem.setNome(rs.getString("nome"));
+				cupomItem.setValor(rs.getString("valor"));
+				cupomItem.setTipo(rs.getString("tipo"));
+				cupomItem.setUtilizado(rs.getString("utilizado"));
+				cupomItem.setIdCliente(rs.getString("id_cliente"));
+				cupomItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				cupons.add(cupomItem);
+			}
+			
+			stmt = connection.prepareStatement("select * from cliente");
+			rs = stmt.executeQuery();
+			
+			List<Cliente> clientes = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Cliente
+				Cliente cliente = new Cliente();
+				Usuario usuario = new Usuario();
+				
+				cliente.setId(rs.getString("id"));
+				
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				
+				// descriptografando a senha que vem do banco,
+				// para não acusar erro na Strategy "ValidarSenhaIgualCliente",
+				// para poder validar se a senha esta com letra minuscula e maiscula
+				String senhaCriptografada = usuario.getSenha();
+			    // Decodifica uma string anteriormente codificada usando o método decodeBase64 e
+			    // passando o byte[] da string codificada
+			    byte[] decoded = Base64.decodeBase64(senhaCriptografada.getBytes());
+			    // Converte o byte[] decodificado de volta para a string original
+			    String decodedString = new String(decoded);
+			    usuario.setSenha(decodedString);
+				
+				cliente.setUsuario(usuario);
+				
+				cliente.setNome(rs.getString("nome"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setDt_nasc(rs.getString("dt_Nasc"));
+				cliente.setSexo(rs.getString("sexo"));
+				cliente.setTelefone(rs.getString("telefone"));
+				cliente.setCdSistema(rs.getString("cd_sistema"));
+				cliente.setStatus(rs.getString("status"));
+				cliente.setDtCadastro(rs.getString("dt_cadastro"));
+				cliente.setTipo(rs.getString("tipo"));
+				
+				// adicionando o objeto à lista
+				clientes.add(cliente);
+			}
+			
 			// crio um novo Usuario, recebendo a REFERENCIA da lista de usuario criado a cima,
 			Usuario novoUsuario = (Usuario) usuarios.get(0);
 			// com a REFERENCIA da lista de usuario, atribui a lista de Produtos somente ativos
 			novoUsuario.setProdutos(produtos);
 			novoUsuario.setBandeiras(bandeiras);
+			novoUsuario.setCuponsCliente(cupons);
+			novoUsuario.setTodosClientes(clientes);
 				
 			rs.close();
 			stmt.close();

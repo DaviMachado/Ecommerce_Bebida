@@ -2,6 +2,7 @@ package com.les.bebida.view.helper.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -118,6 +119,14 @@ public class CupomHelper implements IViewHelper{
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Cupom (pegando o primeiro indice de Entidade)
+				Cupom cupomEntidade = (Cupom) entidades.get(0);
+				
+				// pendura todos os cupons na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("todosCuponsSistema", cupomEntidade.getTodosCupons());
+				
 				// Redireciona para o arquivo .jsp
 				request.getRequestDispatcher("JSP/lista-todos-cupons-scriptletADMIN.jsp").forward(request, response);
 			} 
@@ -154,14 +163,18 @@ public class CupomHelper implements IViewHelper{
 		
 		else if (("ALTERAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Cupom (pegando o primeiro indice de Entidade)
+				Cupom cupomEntidade = (Cupom) entidades.get(0);
+				
 				String alteraCupom = request.getParameter("alteraCupom");
-				String id = request.getParameter("idCupom");
 				
 				// Se eu estiver pela tela de listagem de Cupom (lista-todos-cupons-scriptletADMIN.jsp),
 				// vou mandar o parametro "alteraCupom" igual a zero, para poder chamar o arquivo .JSP para edição do Cupom
 				if (alteraCupom.equals("0")) {
-					// pendura o "idCupom" na requisição para poder mandar para o arquivo .JSP
-					request.setAttribute("idCupom", id);
+					// pendura o obejto "cupom" na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("cupomPesquisado", cupomEntidade.getCupomPesquisado());
 					
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/editar_cupom.jsp").forward(request, response);
@@ -192,6 +205,14 @@ public class CupomHelper implements IViewHelper{
 		
 		else if (("EXCLUIR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Cupom (pegando o primeiro indice de Entidade)
+				Cupom cupomEntidade = (Cupom) entidades.get(0);
+				
+				// pendura todos os cupons na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("todosCuponsSistema", cupomEntidade.getTodosCupons());
+				
 				// Redireciona para o arquivo .jsp, para poder listar os cupons atualizados novamente
 				request.getRequestDispatcher("JSP/lista-todos-cupons-scriptletADMIN.jsp").forward(request, response);
 			} 
