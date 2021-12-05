@@ -2,9 +2,7 @@
 <!-- @author Davi Rodrigues-->
 <!-- @date 03/11/2021 -->
 
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -23,22 +21,19 @@
 </head>
 
 <%
-	ClienteDAO dao = new ClienteDAO();
-	BandeiraDAO bandeiraDAO = new BandeiraDAO();
 	Usuario usuarioLogado = new Usuario();
-	List<Bandeira> bandeiras = new ArrayList<>();
 	
 	// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 	HttpSession sessao = request.getSession();
 	// pega o objeto salvo em Sessão com o nome "usuarioLogado",
 	// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
 	usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+	// pega todas as bandeiras na sessão
+	List<Bandeira> bandeiras = (List<Bandeira>) sessao.getAttribute("todasBandeirasCartao");
 	
-	// busca todas as bandeiras cadastrados no banco
-	bandeiras = bandeiraDAO.consultar();
-	
-	// faz um consulta no banco para pegar todos os dados do cliente logado
-	List<Cliente> cliente = dao.consultarClienteById(usuarioLogado.getId());
+	// pega todos os cartões do Cliente que estava pendurado na requisição,
+	// que foi enviado pelo arquivo "CartaoDeCreditoHelper"
+	List<CartaoDeCredito> cartoes = (List<CartaoDeCredito>)request.getAttribute("cartoes");
 %>
 
 <body>
@@ -237,7 +232,7 @@
 	    </div>
 	    
 	    <!-- ID do Cliente -->
-		<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
+		<input type="hidden" name="idCliente" id="idCliente" value="<%=usuarioLogado.getId() %>">
 		<!-- Parametro que é verificado se pode alterar um Cartao de Credito ou não -->
 	    <input type="hidden" name="alteraCartao" id="alteraCartao" value="1">
     </form>
@@ -261,7 +256,7 @@
 		</div>
 		
 		<!-- ID do Cliente -->
-		<input type="hidden" name="idCliente" id="idCliente" value="<%=cliente.get(0).getId() %>">
+		<input type="hidden" name="idCliente" id="idCliente" value="<%=usuarioLogado.getId() %>">
 	</form>
 
 </body>

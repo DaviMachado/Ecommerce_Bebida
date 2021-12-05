@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.les.bebida.core.dominio.Bandeira;
 import com.les.bebida.core.dominio.Cliente;
 import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.Endereco;
@@ -196,10 +197,27 @@ public class LoginDAO extends AbstractJdbcDAO {
 				produtos.add(produtoItem);
 			}
 			
+			stmt = connection.prepareStatement("select * from bandeira");
+			rs = stmt.executeQuery();
+			
+			List<Bandeira> bandeiras = new ArrayList<>();
+			while (rs.next()) {
+				// criando o objeto Bandeira
+				Bandeira bandeiraItem = new Bandeira();
+				
+				bandeiraItem.setId(rs.getString("id"));
+				bandeiraItem.setNome(rs.getString("nome"));
+				bandeiraItem.setDtCadastro(rs.getString("dt_cadastro"));
+				
+				// adicionando o objeto à lista
+				bandeiras.add(bandeiraItem);
+			}
+			
 			// crio um novo Usuario, recebendo a REFERENCIA da lista de usuario criado a cima,
 			Usuario novoUsuario = (Usuario) usuarios.get(0);
 			// com a REFERENCIA da lista de usuario, atribui a lista de Produtos somente ativos
 			novoUsuario.setProdutos(produtos);
+			novoUsuario.setBandeiras(bandeiras);
 				
 			rs.close();
 			stmt.close();

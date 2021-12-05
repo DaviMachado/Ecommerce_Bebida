@@ -2,6 +2,7 @@ package com.les.bebida.view.helper.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -93,8 +94,10 @@ public class CartaoCreditoHelper implements IViewHelper{
         	cartaoDeCredito = new CartaoDeCredito();
         	
         	id = request.getParameter("idCartaoDeCredito");
+        	idCliente = request.getParameter("idCliente");
         	
         	cartaoDeCredito.setId(id);
+        	cartaoDeCredito.setIdCliente(idCliente);
         }
 		
 		return cartaoDeCredito;
@@ -112,16 +115,16 @@ public class CartaoCreditoHelper implements IViewHelper{
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				Usuario usuarioLogado = new Usuario();
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o CartaoDeCredito (pegando o primeiro indice de Entidade)
+				CartaoDeCredito cartaoDeCreditoEntidade = (CartaoDeCredito) entidades.get(0);
 				
-				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
-				HttpSession sessao = request.getSession();
-				// pega o objeto salvo em Sessão com o nome "usuarioLogado",
-				// e passa para o novo objeto criado com o nome "usuarioLogado", (fazendo o CAST para o tipo Usuario)
-				usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
+				// pendura todos os cartões do Cliente na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("cartoes", cartaoDeCreditoEntidade.getCartoesCliente());
 				
-				// pendura o "id" do usuario logado na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("idCliente", usuarioLogado.getId());
+				// pendura as bandeiras na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("bandeiras", cartaoDeCreditoEntidade.getBandeiras());
 				
 				// Redireciona para o arquivo .jsp
 				request.getRequestDispatcher("JSP/lista-cartaoDeCredito-scriptlet.jsp").forward(request, response);
@@ -157,14 +160,21 @@ public class CartaoCreditoHelper implements IViewHelper{
 		
 		else if (("ALTERAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o CartaoDeCredito (pegando o primeiro indice de Entidade)
+				CartaoDeCredito cartaoDeCreditoEntidade = (CartaoDeCredito) entidades.get(0);
+				
 				String alteraCartao = request.getParameter("alteraCartao");
-				String id = request.getParameter("idCartaoDeCredito");
 				
 				// Se eu estiver pela tela de listagem de Cartao de Credito (lista-cartaoDeCredito-scriplet.jsp),
 				// vou mandar o parametro "alteraCartao" igual a zero, para poder chamar o arquivo .JSP para edição do Cartao de Credito
 				if (alteraCartao.equals("0")) {
 					// pendura o "idCartaoDeCredito" na requisição para poder mandar para o arquivo .JSP
-					request.setAttribute("idCartaoDeCredito", id);
+					request.setAttribute("cartaoPesquisado", cartaoDeCreditoEntidade.getCartaoPesquisado());
+					
+					// pendura as bandeiras na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("bandeiras", cartaoDeCreditoEntidade.getBandeiras());
 					
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/editar_cartaoDeCredito.jsp").forward(request, response);
@@ -195,10 +205,13 @@ public class CartaoCreditoHelper implements IViewHelper{
 		
 		else if (("EXCLUIR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				String idCliente = request.getParameter("idCliente");
+				// foi utilizado o getEntidades do resultado para poder pegar cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o CartaoDeCredito (pegando o primeiro indice de Entidade)
+				CartaoDeCredito cartaoDeCreditoEntidade = (CartaoDeCredito) entidades.get(0);
 				
-				// pendura o "idCliente" na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("idCliente", idCliente);
+				// pendura todos os cartões do Cliente na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("cartoes", cartaoDeCreditoEntidade.getCartoesCliente());
 				
 				// Redireciona para o arquivo .jsp, para poder listar os cartões de creditos atualizados novamente
 				request.getRequestDispatcher("JSP/lista-cartaoDeCredito-scriptlet.jsp").forward(request, response);

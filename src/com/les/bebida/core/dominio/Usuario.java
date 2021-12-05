@@ -17,6 +17,7 @@ public class Usuario extends EntidadeDominio {
 	private String tipo;
 	private String cd_sistema;
 	private List<Produto> produtos;
+	private List<Bandeira> bandeiras;
 	
 	
 	public String getLogin() {
@@ -86,5 +87,12 @@ public class Usuario extends EntidadeDominio {
     }
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
+    }
+    
+	public List<Bandeira> getBandeiras() {
+        return bandeiras;
+    }
+    public void setBandeiras(List<Bandeira> bandeiras) {
+        this.bandeiras = bandeiras;
     }
 }

@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 03/11/2021 -->
+<!-- @date 05/12/2021 -->
 
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -22,36 +20,24 @@
  	<link href="./CSS/shop-homepage.css" rel="stylesheet">
 </head>
 
-<%
-	CartaoDeCreditoDAO dao = new CartaoDeCreditoDAO();
-	BandeiraDAO bandeiraDAO = new BandeiraDAO();
-	List<Bandeira> bandeiras = new ArrayList<>();
-	List<Bandeira> nome_bandeira = new ArrayList<>();
-	
+<%	
 	// pega o id do cartao de credito que estava pendurado na requisição,
 	// que foi enviado pelo arquivo "CartaoDeCreditoHelper"
-	String idCartaoDeCredito = (String)request.getAttribute("idCartaoDeCredito");
+	CartaoDeCredito cartao = (CartaoDeCredito)request.getAttribute("cartaoPesquisado");
 	
-	// busca todas as bandeiras cadastrados no banco
-	bandeiras = bandeiraDAO.consultar();
-	
-	// busca o cartão pelo ID do cartão que estava pendurado na requisição
-	List<CartaoDeCredito> cartao = dao.consultarCartaoDeCreditoById(idCartaoDeCredito);
-	
-	// busca o nome da bandeira pelo ID da Bandeira que esta vinculado no cartão
-	nome_bandeira = bandeiraDAO.consultarBandeiraById(cartao.get(0).getIdBandeira());
+	List<Bandeira> bandeiras = (List<Bandeira>)request.getAttribute("bandeiras");
 	
 	// teve que ser atribuidos os valores do objeto "cartao" em variaveis separadas, 
 	// pois estava dando erro se colocasse o objeto direto na tela,
 	// EX: se colocasse "cartao.get(0).getNome();" dentro do value do campo name, acusava erro de não existir esse campo
-	String id = cartao.get(0).getId();
-	String nome = cartao.get(0).getNome();
-	String numero = cartao.get(0).getNum_cartao();
-	String validade = cartao.get(0).getDt_validade();
-	String cdSeguranca = cartao.get(0).getCod_seguranca();
-	String idBandeira = cartao.get(0).getIdBandeira();
-	String nomeBandeira = nome_bandeira.get(0).getNome();
-	String preferencial = cartao.get(0).getFlgPreferencial();
+	String id = cartao.getId();
+	String nome = cartao.getNome();
+	String numero = cartao.getNum_cartao();
+	String validade = cartao.getDt_validade();
+	String cdSeguranca = cartao.getCod_seguranca();
+	String idBandeira = cartao.getIdBandeira();
+	String nomeBandeira = cartao.getNomeBandeira();
+	String preferencial = cartao.getFlgPreferencial();
 %>
 
 <body>
