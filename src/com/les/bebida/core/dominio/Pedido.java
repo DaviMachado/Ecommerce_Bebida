@@ -1,5 +1,7 @@
 package com.les.bebida.core.dominio;
 
+import java.util.List;
+
 /**
  * Classe para representar o Pedido
  * @author Davi Rodrigues
@@ -20,6 +22,8 @@ public class Pedido extends EntidadeDominio{
 	private String total_cupons;
 	private String trocado;
 	private String todosItensTrocado;
+	private List<Produto> produtos;
+	private List<Cupom> cupons;
 	
 	
 	public String getTotalItens() {
@@ -106,6 +110,20 @@ public class Pedido extends EntidadeDominio{
 	public void setTodosItensTrocado(String todosItensTrocado) {
 		this.todosItensTrocado = todosItensTrocado;
 	}
+	
+	public List<Produto> getProdutos() {
+        return produtos;
+    }
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
+    
+	public List<Cupom> getCupons() {
+        return cupons;
+    }
+    public void setCupons(List<Cupom> cupons) {
+        this.cupons = cupons;
+    }
 	
 	// Metodo
 	public void ValidarPrimieraCompra() {
