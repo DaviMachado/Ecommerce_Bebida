@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -24,24 +22,17 @@
 </head>
 
 	<%
-		ProdutoDAO dao = new ProdutoDAO();
-		ClienteDAO clienteDAO = new ClienteDAO();
 		Usuario userLogado = new Usuario();
 		
-		// pega o id do produto que estava pendurado na requisição,
+		// pega o Produto que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "ItemCarrinhoHelper"
-		String idProduto = (String)request.getAttribute("idProduto");
-		
-		List<Produto> produto = dao.consultarProdutoById(idProduto);
+		Produto produto = (Produto)request.getAttribute("produto");
 		
 		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 		HttpSession sessao = request.getSession();
 		// pega o objeto salvo em Sessão com o nome "usuarioLogado",
 		// e passa para o novo objeto criado com o nome "userLogado", (fazendo o CAST para o tipo Usuario)
 		userLogado = (Usuario) sessao.getAttribute("usuarioLogado");
-		
-		// faz um consulta no banco para pegar todos os dados do cliente logado
-		List<Cliente> clienteLogado = clienteDAO.consultarClienteById(userLogado.getId());
 	%>
 
 <body>
@@ -81,7 +72,7 @@
         <%
         // verifica se o cliente logado é do tipo ADMIN,
         // para mostrar somente as telas do administrador
-        	if(clienteLogado.get(0).getTipo().equals("admin")) {
+        	if(userLogado.getTipo().equals("admin")) {
         %>
        	<div class="list-group">
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_ClienteADMIN.jsp" class="list-group-item">Gerenciamento de Clientes</a>
@@ -99,7 +90,7 @@
         <%
         // verifica se o cliente logado é do tipo CLIENTE,
         // para mostrar somente as telas do cliente
-        	if(clienteLogado.get(0).getTipo().equals("cliente")) {
+        	if(userLogado.getTipo().equals("cliente")) {
         %>
         <div class="list-group">
           <a href="http://localhost:8080/Ecommerce_Bebida/JSP/formulario_Cliente.jsp" class="list-group-item">Meus Dados</a>
@@ -120,11 +111,11 @@
       <div class="col-lg-9">
 
         <div class="card mt-4" style="margin-bottom: 20px;">
-          <img class="card-img-top img-fluid" src="<%=produto.get(0).getFotoDetalhe() %>" alt="">
+          <img class="card-img-top img-fluid" src="<%=produto.getFotoDetalhe() %>" alt="">
           <div class="card-body">
-            <h3 class="card-title"><%=produto.get(0).getNome() %></h3>
-            <h4>R$ <%=produto.get(0).getPrecoDeVenda() %></h4>
-            <p class="card-text"><%=produto.get(0).getDescricao() %></p>
+            <h3 class="card-title"><%=produto.getNome() %></h3>
+            <h4>R$ <%=produto.getPrecoDeVenda() %></h4>
+            <p class="card-text"><%=produto.getDescricao() %></p>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
             4.0 stars
           </div>
@@ -155,7 +146,7 @@
 			</div>
 			
 			<!-- ID do Cliente -->
-			<input type="hidden" name="idProduto" id="idProduto" value="<%=produto.get(0).getId() %>">
+			<input type="hidden" name="idProduto" id="idProduto" value="<%=produto.getId() %>">
 		</form>
           
         </div>

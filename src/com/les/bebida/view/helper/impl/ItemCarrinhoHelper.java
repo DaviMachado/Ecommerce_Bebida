@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.les.bebida.core.dominio.Carrinho;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.ItemCarrinho;
 import com.les.bebida.core.dominio.Produto;
@@ -72,10 +73,13 @@ public class ItemCarrinhoHelper implements IViewHelper {
 		
 		else if (("SALVAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				String id = request.getParameter("idProduto");
+				// pega o ItemCarrinho que esta no resultado da requisição, que foi alterado como REFERENCIA no ItemCarrinhoDAO
+				ItemCarrinho resultadoItemCarrinho = (ItemCarrinho) resultado.getEntidades().get(0);
+				// pega o Produto preenchido que esta dentro do ItemCarrinho do resultado da requisição
+				Produto produtoSelecionado = resultadoItemCarrinho.getProduto();
 				
 				// pendura o "id" do Produto na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("idProduto", id);
+				request.setAttribute("produto", produtoSelecionado);
 				
 				// Redireciona para o arquivo .jsp
 				request.getRequestDispatcher("JSP/detalhe_produto.jsp").forward(request, response);
