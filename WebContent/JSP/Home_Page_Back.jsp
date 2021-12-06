@@ -1,5 +1,4 @@
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>

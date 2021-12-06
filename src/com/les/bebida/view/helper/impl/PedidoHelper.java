@@ -10,11 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.les.bebida.core.dao.impl.CupomDAO;
-import com.les.bebida.core.dao.impl.EstoqueDAO;
-import com.les.bebida.core.dao.impl.PedidoDAO;
-import com.les.bebida.core.dao.impl.ItemPedidoDAO;
-import com.les.bebida.core.dao.impl.ProdutoDAO;
 import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Estoque;
