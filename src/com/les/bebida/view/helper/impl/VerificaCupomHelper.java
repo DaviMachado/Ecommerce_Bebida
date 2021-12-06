@@ -75,8 +75,12 @@ public class VerificaCupomHelper implements IViewHelper {
 				String nomeCupom = request.getParameter("cupom");
 				String idCliente = request.getParameter("idCliente");
 				boolean adicionaNovoCupomNaSessao = true;
-				CupomDAO dao = new CupomDAO();
 				List<Cupom> cupomParaAdicionarNaSessao = new ArrayList<>();
+				
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o VerificaCupom (pegando o primeiro indice de Entidade)
+				VerificaCupom verificaCupomEntidade = (VerificaCupom) entidades.get(0);
 				
 				// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
 				HttpSession sessao = request.getSession();
@@ -84,11 +88,11 @@ public class VerificaCupomHelper implements IViewHelper {
 				// e passa para o "cupomParaAdicionarNaSessao" (fazendo o CAST para o tipo List<Cupom>)
 				cupomParaAdicionarNaSessao = (List<Cupom>) sessao.getAttribute("cupons");
 				
+				// o objeto que veio do banco, esta guardado no "verificaCupomEntidade.getNomeCupons()"
 				// busca todos os Cupons no sistema com o mesmo nome que foi digitado na tela
-				List<Cupom> cupons = dao.consultarCupomByNome(nomeCupom);
 				
 				// faz um laço com todos os Cupons
-				for (Cupom coupon : cupons) {
+				for (Cupom coupon : verificaCupomEntidade.getNomeCupons()) {
 					// 1º se o primeiro Cupom encontrado for do tipo "promocional",
 					if (coupon.getTipo().equals("promocional")) {
 						// verifica se na lista de cupons da sessão, já existe um cupom do tipo promocional,

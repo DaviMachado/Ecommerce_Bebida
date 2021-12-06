@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.VerificaCupom;
 
 public class VerificaCupomDAO extends AbstractJdbcDAO {
 	
@@ -49,8 +51,20 @@ public class VerificaCupomDAO extends AbstractJdbcDAO {
 	 */
 	@Override
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		VerificaCupom verificaCupomEntidade = (VerificaCupom) entidade;
+		List<EntidadeDominio> listVerificaCupom = new ArrayList<>();
+		VerificaCupom novoVerificaCupom = new VerificaCupom();
+		
+		CupomDAO cupomDAO = new CupomDAO();
+		
+		// busca todos os Cupons no sistema com o mesmo nome que foi digitado na tela
+		List<Cupom> cupons = cupomDAO.consultarCupomByNome(verificaCupomEntidade.getCupom().getNome());
+		
+		novoVerificaCupom.setNomeCupons(cupons);
+		
+		listVerificaCupom.add(novoVerificaCupom);
+		
+		return listVerificaCupom;
 	} // Consultar
 	
 }
