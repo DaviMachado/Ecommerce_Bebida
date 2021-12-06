@@ -1,5 +1,7 @@
 package com.les.bebida.core.dominio;
 
+import java.util.List;
+
 /**
  * Classe para representar o Produto
  * @author Davi Rodrigues
@@ -20,6 +22,8 @@ public class Produto extends EntidadeDominio {
 	private String alteraProduto;
 	private String quantidadeSelecionada;
 	private String cd_sistema;
+	private List<Produto> todosProdutos;
+	private Produto produtoPesquisado;
 	
 	
 	public String getNome() {
@@ -105,5 +109,19 @@ public class Produto extends EntidadeDominio {
 	}
 	public void setCdSistema(String cd_sistema) {
 		this.cd_sistema = cd_sistema;
+	}
+	
+	public List<Produto> getTodosProdutos() {
+        return todosProdutos;
+    }
+    public void setTodosProdutos(List<Produto> todosProdutos) {
+        this.todosProdutos = todosProdutos;
+    }
+    
+	public Produto getProdutoPesquisado() {
+		return produtoPesquisado;
+	}
+	public void setProdutoPesquisado(Produto produtoPesquisado) {
+		this.produtoPesquisado = produtoPesquisado;
 	}
 }

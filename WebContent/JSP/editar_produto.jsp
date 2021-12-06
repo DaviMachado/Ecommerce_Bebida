@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 01/11/2021 -->
+<!-- @date 05/12/2021 -->
 
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -21,13 +19,9 @@
 	</head>
 	
 	<%
-		ProdutoDAO dao = new ProdutoDAO();
-		
-		// pega o id do produto que estava pendurado na requisição,
-		// que foi enviado pelo arquivo "ProdutoHelper"
-		String idProduto = (String)request.getAttribute("idProduto");
-		
-		List<Produto> produto = dao.consultarProdutoById(idProduto);
+		// pega o produto que estava pendurado na requisição,
+		// que foi enviado pelo arquivo "ProdutooHelper"
+		Produto produto = (Produto)request.getAttribute("produtoPesquisado");
 	%>
 	
 	<body>
@@ -64,13 +58,13 @@
 					<!-- Nome -->
 				    <div class="form-group col-md-4">
 				      <label>Nome</label>
-				      <input type="text" class="form-control" name="nome" placeholder="Nome" value="<%=produto.get(0).getNome()%>" required>
+				      <input type="text" class="form-control" name="nome" placeholder="Nome" value="<%=produto.getNome()%>" required>
 				    </div>
 
 				    <!-- Descrição -->
 				    <div class="form-group col-md-8">
 				      <label>Descrição</label>
-				      <input type="text" class="form-control" name="descricao" placeholder="Descrição" value="<%=produto.get(0).getDescricao()%>" required>
+				      <input type="text" class="form-control" name="descricao" placeholder="Descrição" value="<%=produto.getDescricao()%>" required>
 				    </div>
 				</div>
 				
@@ -81,7 +75,7 @@
 
 			  			<select name="selecioneCategoria" class="form-control" placeholder="Selecione uma Categoria" required>
 					      	<option disabled>Selecione uma opção...</option>
-					      	<option><%=produto.get(0).getCategoria()%></option>
+					      	<option><%=produto.getCategoria()%></option>
 					      	<option value="cervejas">Cervejas</option>
 					      	<option value="destilados">Destilados</option>
 					      	<option value="refrigerantes">Refrigerantes</option>
@@ -92,25 +86,25 @@
 					<!-- Preço de Compra -->
 				    <div class="form-group col-md-2">
 				      <label>Preço de Compra</label>
-				      <input type="text" class="form-control" name="preco_de_compra" placeholder="Digite um Preço de Compra" value="<%=produto.get(0).getPrecoDeCompra()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
+				      <input type="text" class="form-control" name="preco_de_compra" placeholder="Digite um Preço de Compra" value="<%=produto.getPrecoDeCompra()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
 				    </div>
 				    
 				    <!-- Preço de Venda -->
 				    <div class="form-group col-md-2">
 				      <label>Preço de Venda</label>
-				      <input type="text" class="form-control" name="preco_de_venda" placeholder="Digite um Preço de Venda" value="<%=produto.get(0).getPrecoDeVenda()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
+				      <input type="text" class="form-control" name="preco_de_venda" placeholder="Digite um Preço de Venda" value="<%=produto.getPrecoDeVenda()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="4" required>
 				    </div>
 				    
    				    <!-- Quantidade -->
 				    <div class="form-group col-md-2">
 				      <label>Quantidade</label>
-				      <input type="text" class="form-control" placeholder="Quantidade" value="<%=produto.get(0).getQuantidade()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" disabled>
+				      <input type="text" class="form-control" placeholder="Quantidade" value="<%=produto.getQuantidade()%>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="3" disabled>
 				    </div>
 				    
    				    <!-- Grupo de Precificacao -->
 				    <div class="form-group col-md-4">
 				      <label>Grupo de Precificacao</label>
-				      <input type="text" class="form-control" name="grupo_de_precificacao" placeholder="Grupo de Precificacao" value="<%=produto.get(0).getGrupoDePrecificacao()%>" required>
+				      <input type="text" class="form-control" name="grupo_de_precificacao" placeholder="Grupo de Precificacao" value="<%=produto.getGrupoDePrecificacao()%>" required>
 				    </div>
 			  	</div>
 			  	
@@ -118,13 +112,13 @@
 				    <!-- Foto -->
 				    <div class="form-group col-md-5">
 				      <label>Foto</label>
-				      <input type="text" class="form-control" name="foto" placeholder="Digite o caminho da pasta que esta localizada a Foto ..." value="<%=produto.get(0).getFoto()%>" required>
+				      <input type="text" class="form-control" name="foto" placeholder="Digite o caminho da pasta que esta localizada a Foto ..." value="<%=produto.getFoto()%>" required>
 				    </div>
 				    
 				    <!-- Foto Detalhe -->
 				    <div class="form-group col-md-5">
 				      <label>Foto Detalhe</label>
-				      <input type="text" class="form-control" name="foto_detalhe" placeholder="Digite o caminho da pasta que esta localizada o Detalhe da Foto ..." value="<%=produto.get(0).getFotoDetalhe()%>" required>
+				      <input type="text" class="form-control" name="foto_detalhe" placeholder="Digite o caminho da pasta que esta localizada o Detalhe da Foto ..." value="<%=produto.getFotoDetalhe()%>" required>
 				    </div>
 				    
 				    <!-- Status -->
@@ -133,7 +127,7 @@
 
 			  			<select name="status" class="form-control" placeholder="Selecione um Status" required>
 					      	<option disabled>Selecione uma opção...</option>
-					      	<option><%=produto.get(0).getStatus()%></option>
+					      	<option><%=produto.getStatus()%></option>
 					      	<option value="ativo">Ativo</option>
 					      	<option value="inativo">Inativo</option>
 				      	</select>
@@ -144,7 +138,7 @@
 			  		<!-- Observação -->
 				    <div class="form-group col-md-12">
 				      <label>Observação</label>
-				      <textarea  class="form-control" name="observacao" placeholder="Observação" rows="3"><%=produto.get(0).getObservacao()%></textarea> <!-- required -->
+				      <textarea  class="form-control" name="observacao" placeholder="Observação" rows="3"><%=produto.getObservacao()%></textarea> <!-- required -->
 				    </div>
 			  	</div>
 			  	
@@ -166,13 +160,13 @@
 				</div>
 				
 				<!-- ID do Produto -->
-			    <input type="hidden" name="idProduto" id="idProduto" value="<%=produto.get(0).getId() %>">
+			    <input type="hidden" name="idProduto" id="idProduto" value="<%=produto.getId() %>">
 			    <!-- Parametro que é verificado se pode alterar um Produto ou não -->
 	    		<input type="hidden" name="alteraProduto" id="alteraProduto" value="1">
 	    		<!-- foi necessario deixar o campo de "quantidade" como hidden, -->
 	    		<!-- pois a tag "disabled" desabilitava o campo e ao cair no ViewHelper, ele não reconhecia o name e deixava como NULL-->
 	    		<!-- posteriormente também caia na Strategy e retornava a mensagem de erro -->
-			    <input type="hidden" name="quantidade" id="quantidade" value="<%=produto.get(0).getQuantidade() %>">
+			    <input type="hidden" name="quantidade" id="quantidade" value="<%=produto.getQuantidade() %>">
 			</form>
 		</fieldset>
 		

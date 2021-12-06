@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -52,18 +50,16 @@
             <th>Quantidade</th>
             <th>Status</th>
         </tr>
-		<%
-		List<EntidadeDominio> produtos = new ArrayList<>();
-		
+		<%		
 		// pega a lista de produtos que estava pendurado na requisição,
 		// que foi enviado pelo arquivo "ProdutoHelper"
-		produtos = (List<EntidadeDominio>)request.getAttribute("entidadesProdutos");
+		List<Produto> todosProdutos = (List<Produto>)request.getAttribute("todosProdutos");
 		
-		for(EntidadeDominio e : produtos) {
+		for(Produto product : todosProdutos) {
 		
 		// Aplicado o CAST para poder popular o produto,
 		// fazendo o CAST para uma referência mais genérica, no caso para o produto
-		Produto product = (Produto) e;
+		//Produto product = (Produto) e;
 		%>
 			<tr>
 				<td><%=product.getNome() %></td>

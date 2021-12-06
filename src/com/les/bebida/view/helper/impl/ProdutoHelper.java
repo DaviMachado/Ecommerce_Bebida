@@ -133,11 +133,13 @@ public class ProdutoHelper implements IViewHelper{
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				// foi utilizado o getEntidades do resultado para poder pegar o Login consultado
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
 				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Produto (pegando o primeiro indice de Entidade)
+				Produto produtoEntidade = (Produto) entidades.get(0);
 				
-				// pendura o "entidadesProdutos" na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("entidadesProdutos", entidades);
+				// pendura todos os cupons na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("todosProdutos", produtoEntidade.getTodosProdutos());
 				
 				// Redireciona para o arquivo .jsp
 				request.getRequestDispatcher("JSP/lista-produtos-scriptlet.jsp").forward(request, response);
@@ -152,29 +154,6 @@ public class ProdutoHelper implements IViewHelper{
 		
 		else if (("SALVAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				ProdutoDAO dao = new ProdutoDAO();
-				EstoqueDAO estoqueDAO = new EstoqueDAO();
-				Produto produto = new Produto();
-				Estoque estoque = new Estoque();
-				
-				// consulta o ultimo Produto cadastrado para poder pegar o ID do Produto,
-				// e salvar na primeira entrada do Estoque
-				List<Produto> ultimoProduto = dao.consultarUltimoProdutoCadastrado(produto);
-				
-				// salva os atributos do ultimo Produto cadastrado no Estoque, 
-				// pra poder dar a primeira entrada no Estoque
-				estoque.setIdProduto(ultimoProduto.get(0).getId());
-				estoque.setTipo("entrada");
-				estoque.setQuantidadeEntradaSaida(ultimoProduto.get(0).getQuantidade());
-				estoque.setValorCusto(ultimoProduto.get(0).getPrecoDeCompra());
-				estoque.setFornecedor("Primeira entrada no Estoque");
-				estoque.setDtEntrada(ultimoProduto.get(0).getDtCadastro());
-				estoque.setQuantidadeFinal(ultimoProduto.get(0).getQuantidade());
-				estoque.setDtCadastro(ultimoProduto.get(0).getDtCadastro());
-				
-				// cria a primeira entrada do produto no "Estoque"
-				estoqueDAO.salvar(estoque);
-				
 				// atribui a nova mensagem para poder mostra na pagina .JSP
 				resultado.setMensagem("Cadastro do Produto salvo com sucesso!");
 				
@@ -196,14 +175,18 @@ public class ProdutoHelper implements IViewHelper{
 		
 		else if (("ALTERAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Produto (pegando o primeiro indice de Entidade)
+				Produto produtoEntidade = (Produto) entidades.get(0);
+
 				String alteraProduto = request.getParameter("alteraProduto");
-				String id = request.getParameter("idProduto");
 				
 				// Se eu estiver pela tela de listagem de Produtos (lista-produtos-scriplet.jsp),
 				// vou mandar o parametro "alteraProduto" igual a zero, para poder chamar o arquivo .JSP para edição do Produto
 				if (alteraProduto.equals("0")) {
-					// pendura o "idProduto" na requisição para poder mandar para o arquivo .JSP
-					request.setAttribute("idProduto", id);
+					// pendura todos o produto na requisição para poder mandar para o arquivo .JSP
+					request.setAttribute("produtoPesquisado", produtoEntidade.getProdutoPesquisado());
 					
 					// Redireciona para o arquivo .jsp
 					request.getRequestDispatcher("JSP/editar_produto.jsp").forward(request, response);
@@ -234,6 +217,14 @@ public class ProdutoHelper implements IViewHelper{
 		
 		else if (("EXCLUIR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Produto (pegando o primeiro indice de Entidade)
+				Produto produtoEntidade = (Produto) entidades.get(0);
+				
+				// pendura todos os cupons na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("todosProdutos", produtoEntidade.getTodosProdutos());
+				
 				// Redireciona para o arquivo .jsp, para poder listar os produtos atualizados novamente
 				request.getRequestDispatcher("JSP/lista-produtos-scriptlet.jsp").forward(request, response);
 			} 
