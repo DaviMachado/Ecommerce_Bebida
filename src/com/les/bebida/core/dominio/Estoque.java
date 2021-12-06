@@ -1,9 +1,11 @@
 package com.les.bebida.core.dominio;
 
+import java.util.List;
+
 /**
  * Classe para representar o Estoque
  * @author Davi Rodrigues
- * @date 15/08/2021
+ * @date 05/12/2021
  */
 public class Estoque extends EntidadeDominio {
 	private String id_produto;
@@ -13,6 +15,8 @@ public class Estoque extends EntidadeDominio {
 	private String fornecedor;
 	private String dt_entrada;
 	private String quantidade_final;
+	private List<Estoque> estoqueDoProduto;
+	private String nome_produto;
 
 	
 	public String getIdProduto() {
@@ -56,6 +60,20 @@ public class Estoque extends EntidadeDominio {
 	}
 	public void setQuantidadeFinal(String quantidade_final) {
 		this.quantidade_final = quantidade_final;
+	}
+	
+	public List<Estoque> getEstoqueDoProduto() {
+        return estoqueDoProduto;
+    }
+    public void setEstoqueDoProduto(List<Estoque> estoqueDoProduto) {
+        this.estoqueDoProduto = estoqueDoProduto;
+    }
+    
+	public String getNomeProduto() {
+		return nome_produto;
+	}
+	public void setNomeProduto(String nome_produto) {
+		this.nome_produto = nome_produto;
 	}
 	
 }

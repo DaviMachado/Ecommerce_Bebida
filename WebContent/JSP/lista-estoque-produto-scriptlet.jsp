@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -15,22 +13,9 @@
 </head>
 
 <%
-	EstoqueDAO dao = new EstoqueDAO();
-	ProdutoDAO produtoDAO = new ProdutoDAO();
-	Estoque estoque = new Estoque();
-	
-	// pega o "id" do produto que estava pendurado na requisição,
-	// que foi enviado pelo arquivo "EstoqueHelper"
-	String idProduto = (String)request.getAttribute("idProduto");
-	
-	// pesquisa o produto que esta sendo passado pela requisição,
-	// para poder pegar o nome e adicionar o nome na listagem da tabela
-	List<Produto> produto = produtoDAO.consultarProdutoById(idProduto);
-	
-	// seta o atributo "id_produto" do objeto "estoque", com o valor que estava pendurado na requisição (idProduto)
-	estoque.setIdProduto(idProduto);
-	// consulta somente o estoque do produto que esta sendo mandado na requisição
-	List<EntidadeDominio> estoques = dao.consultar(estoque);
+	//pega todos os endereços do Cliente que estava pendurado na requisição,
+	// que foi enviado pelo arquivo "EnderecoHelper"
+	List<Estoque> estoqueDoProduto = (List<Estoque>)request.getAttribute("estoqueDoProduto");
 %>
 
 <body>
@@ -59,7 +44,7 @@
   </nav>
   <!-- Fim Header -->
   
-  	<h2 style="margin-top: 30px; margin-left: 10px">Listagem do Estoque: <%=produto.get(0).getNome() %></h2>
+  	<h2 style="margin-top: 30px; margin-left: 10px">Listagem do Estoque: <%=estoqueDoProduto.get(0).getNomeProduto() %></h2>
 
 	<table border="1" style="margin-top: 30px;" class="table table-striped">
 		<tr>
@@ -72,14 +57,14 @@
             <th>Quantidade Final</th>
         </tr>
 		<%
-		for(EntidadeDominio e : estoques) {
+		for(Estoque stock : estoqueDoProduto) {
 		
 		// Aplicado o CAST para poder popular o estoque,
 		// fazendo o CAST para uma referência mais genérica, no caso para o estoque
-		Estoque stock = (Estoque) e;
+		//Estoque stock = (Estoque) e;
 		%>
 			<tr>
-				<td><%=produto.get(0).getNome() %></td>
+				<td><%=stock.getNomeProduto() %></td>
 				<td><%=stock.getTipo() %></td>
 				<td><%=stock.getQuantidadeEntradaSaida() %></td>
 				<td><%=stock.getValorCusto() %></td>

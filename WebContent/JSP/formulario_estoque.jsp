@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <!-- @author Davi Rodrigues-->
-<!-- @date 25/08/2021 -->
+<!-- @date 05/12/2021 -->
 
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -21,13 +19,11 @@
 	</head>
 	
 	<%
-		ProdutoDAO dao = new ProdutoDAO();
-		Produto produto = new Produto();	
+		// cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+		HttpSession sessao = request.getSession();
 	
-		// pega todos os produtos cadastrados no sistema
-		List<EntidadeDominio> allProdutos = dao.consultar(produto);
-		// pega todos os produtos ativos cadastrados no sistema
-		List<EntidadeDominio> allProdutosAtivos = dao.consultarSomenteAtivo(produto);
+		// pega todos os clientes do sistema salvo na sessão
+		List<Produto> produtosAtivos = (List<Produto>)sessao.getAttribute("produtosAtivos");
 	%>
 	
 	<body>
@@ -68,12 +64,12 @@
 			  			<select name="selecioneProduto" class="form-control" placeholder="Selecione um Produto" required>
 					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<% 
-						      	for(EntidadeDominio e : allProdutosAtivos) {
+						      	for(Produto product : produtosAtivos) {
 				
 								// Aplicado o CAST para poder popular o produto,
 								// fazendo o CAST para uma referência mais genérica, no caso para o produto,
 								// lista todos os produtos indexado com o ID do produto dentro do "value", de cada da TAG "<option>".
-								Produto product = (Produto) e;
+								//Produto product = (Produto) e;
 							%>
 					      	<option value="<%=product.getId()%>"><%=product.getNome()%></option>
 					      	<%
@@ -152,12 +148,12 @@
 			  			<select name="selecioneProduto" class="form-control" placeholder="Selecione um Produto" required>
 					      	<option value="" disabled selected>Selecione uma opção...</option>
 					      	<% 
-						      	for(EntidadeDominio e : allProdutos) {
+						      	for(Produto product : produtosAtivos) {
 				
 								// Aplicado o CAST para poder popular o produto,
 								// fazendo o CAST para uma referência mais genérica, no caso para o produto,
 								// lista todos os produtos indexado com o ID do produto dentro do "value", de cada da TAG "<option>".
-								Produto product = (Produto) e;
+								//Produto product = (Produto) e;
 							%>
 					      	<option value="<%=product.getId()%>"><%=product.getNome()%></option>
 					      	<%

@@ -84,10 +84,13 @@ public class EstoqueHelper implements IViewHelper {
 		
 		if (("CONSULTAR").equals(operacao)) {
 			if (resultado.getMensagem() == null || resultado.getMensagem().equals("")) {
-				String id_produto = request.getParameter("selecioneProduto");
+				// foi utilizado o getEntidades do resultado para poder pegar o cartao
+				List<EntidadeDominio> entidades = resultado.getEntidades();
+				// feito o CAST de Entidade para o Estoque (pegando o primeiro indice de Entidade)
+				Estoque estoqueEntidade = (Estoque) entidades.get(0);
 				
-				// pendura o "idProduto" na requisição para poder mandar para o arquivo .JSP
-				request.setAttribute("idProduto", id_produto);
+				// pendura todos os cupons na requisição para poder mandar para o arquivo .JSP
+				request.setAttribute("estoqueDoProduto", estoqueEntidade.getEstoqueDoProduto());
 				
 				// Redireciona para o arquivo .jsp
 				request.getRequestDispatcher("JSP/lista-estoque-produto-scriptlet.jsp").forward(request, response);

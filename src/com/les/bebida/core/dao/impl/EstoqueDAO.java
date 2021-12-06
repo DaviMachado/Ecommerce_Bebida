@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.les.bebida.core.dominio.EntidadeDominio;
 import com.les.bebida.core.dominio.Estoque;
+import com.les.bebida.core.dominio.Produto;
 
 public class EstoqueDAO extends AbstractJdbcDAO {
 	
@@ -76,12 +77,17 @@ public class EstoqueDAO extends AbstractJdbcDAO {
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
 		openConnection();
 		try {
-			Estoque estoque = (Estoque) entidade;
+			Estoque estoqueEntidade = (Estoque) entidade;
+			List<EntidadeDominio> listEstoque = new ArrayList<>();
+			Estoque novoEstoque = new Estoque();
+			
+			ProdutoDAO produtoDAO = new ProdutoDAO();
+			
 			PreparedStatement stmt = connection.prepareStatement("select * from estoque where id_produto=?");
-			stmt.setString(1, estoque.getIdProduto());
+			stmt.setString(1, estoqueEntidade.getIdProduto());
 			ResultSet rs = stmt.executeQuery();
 			
-			List<EntidadeDominio> estoques = new ArrayList<>();
+			List<Estoque> estoques = new ArrayList<>();
 			while (rs.next()) {
 				// criando o objeto Estoque
 				Estoque estqoueItem = new Estoque();
@@ -99,10 +105,24 @@ public class EstoqueDAO extends AbstractJdbcDAO {
 				// adicionando o objeto à lista
 				estoques.add(estqoueItem);
 			}
+			
+			if (estoques.size() > 0) {
+				for(Estoque stock : estoques) {
+					// busca o Produto do Estoque, pelo ID do cliente no Estoque
+					List<Produto> produto = produtoDAO.consultarProdutoById(stock.getIdProduto());
+					
+					// salva o nome do Produto no Estoque
+					stock.setNomeProduto(produto.get(0).getNome());
+				}
+			}
+			
+			novoEstoque.setEstoqueDoProduto(estoques);
+			
+			listEstoque.add(novoEstoque);
 				
 			rs.close();
 			stmt.close();
-			return estoques;
+			return listEstoque;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
