@@ -13,6 +13,7 @@ import com.les.bebida.core.dominio.Cliente;
 import com.les.bebida.core.dominio.Cupom;
 import com.les.bebida.core.dominio.Endereco;
 import com.les.bebida.core.dominio.EntidadeDominio;
+import com.les.bebida.core.dominio.Pedido;
 import com.les.bebida.core.dominio.Produto;
 import com.les.bebida.core.dominio.Usuario;
 
@@ -176,6 +177,9 @@ public class LoginDAO extends AbstractJdbcDAO {
 			stmt.setString(2, usuarioEntidade.getSenha());
 			ResultSet rs = stmt.executeQuery();
 			
+			PedidoDAO pedidoDAO = new PedidoDAO();
+			ClienteDAO clienteDAO = new ClienteDAO();
+			
 			List<EntidadeDominio> usuarios = new ArrayList<>();
 			while (rs.next()) {
 				// criando o objeto Usuario
@@ -316,6 +320,19 @@ public class LoginDAO extends AbstractJdbcDAO {
 				clientes.add(cliente);
 			}
 			
+			// consulta os 3 Clientes com maior compra
+			List<Pedido> pedidos = pedidoDAO.consultar3ClientesMaiorCompra();
+			
+			if (pedidos.size() > 0) {
+				for(Pedido order : pedidos) {
+					// busca o Cliente, pelo ID do cliente no Pedido
+					List<Cliente> clienteInteiro = clienteDAO.consultarClienteById(order.getIdCliente());
+					
+					// salva o nome do Cliente no Pedido
+					order.setNomeCliente(clienteInteiro.get(0).getNome());
+				}
+			}
+			
 			// crio um novo Usuario, recebendo a REFERENCIA da lista de usuario criado a cima,
 			Usuario novoUsuario = (Usuario) usuarios.get(0);
 			// com a REFERENCIA da lista de usuario, atribui a lista de Produtos somente ativos
@@ -323,6 +340,7 @@ public class LoginDAO extends AbstractJdbcDAO {
 			novoUsuario.setBandeiras(bandeiras);
 			novoUsuario.setCuponsCliente(cupons);
 			novoUsuario.setTodosClientes(clientes);
+			novoUsuario.setClientesMaiorCompra(pedidos);
 				
 			rs.close();
 			stmt.close();

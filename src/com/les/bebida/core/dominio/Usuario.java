@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Classe para representar o Usuario
  * @author Davi Rodrigues
- * @date 13/11/2021
+ * @date 05/12/2021
  */
 public class Usuario extends EntidadeDominio {
 	private String login;
@@ -23,6 +23,7 @@ public class Usuario extends EntidadeDominio {
 	private String sexo;
 	private List<Cupom> cuponsCliente;
 	private List<Cliente> todosClientes;
+	private List<Pedido> clientesMaiorCompra;
 	
 	
 	public String getLogin() {
@@ -135,4 +136,12 @@ public class Usuario extends EntidadeDominio {
     public void setTodosClientes(List<Cliente> todosClientes) {
         this.todosClientes = todosClientes;
     }
+    
+    public List<Pedido> getClientesMaiorCompra() {
+        return clientesMaiorCompra;
+    }
+    public void setClientesMaiorCompra(List<Pedido> clientesMaiorCompra) {
+        this.clientesMaiorCompra = clientesMaiorCompra;
+    }
+    
 }

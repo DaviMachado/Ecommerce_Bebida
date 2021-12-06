@@ -1,6 +1,4 @@
-<%@page import='com.les.bebida.core.dao.*'%>
 <%@page import='com.les.bebida.core.dominio.*'%>
-<%@page import='com.les.bebida.core.dao.impl.*'%>
 
 <%@page import="java.util.List"%>
 
@@ -15,11 +13,12 @@
 </head>
 
 	<%
-		PedidoDAO pedidoDAO = new PedidoDAO();
-		ClienteDAO clienteDAO = new ClienteDAO();
-		
-		// consulta os 3 Clientes com maior compra
-		List<Pedido> pedidos = pedidoDAO.consultar3ClientesMaiorCompra();
+		//cria um objeto "sessao" para poder usar o JSESSAOID criado pelo TomCat
+		HttpSession sessao = request.getSession();
+	
+		// pega os 3 Clientes com maior compra na sessão,
+		// pesquisado no LoginDAO e salvo LoginHelper
+		List<Pedido> clientesMaiorCompra = (List<Pedido>) sessao.getAttribute("clientesMaiorCompraSistema");
 		
 		// variavel para representar a colocação do cliente
 		int i = 0;
@@ -60,17 +59,14 @@
             <th>Total de Compras</th>
         </tr>
 		<%
-		for(Pedido order : pedidos) {
-		
-		// busca o Cliente, pelo ID do cliente no Pedido
-		List<Cliente> clientes = clienteDAO.consultarClienteById(order.getIdCliente());
+		for(Pedido order : clientesMaiorCompra) {
 		
 		// incremento da colocação do cliente
 		i++;
 		%>
 			<tr>
 				<td><%=i %></td>
-				<td><%=clientes.get(0).getNome() %></td>
+				<td><%=order.getNomeCliente() %></td>
 				<td><%=order.getTotalPedido() %></td>
 			</tr>
 		<%
