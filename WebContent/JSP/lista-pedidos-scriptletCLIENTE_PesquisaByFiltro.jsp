@@ -75,11 +75,11 @@
 			      	<option value="TROCA AUTORIZADA">TROCA AUTORIZADA</option>
 			      	<option value="TROCA REJEITADA">TROCA REJEITADA</option>
 			      	<option value="TROCA ACEITA">TROCA ACEITA</option>
-			      	<option style="color: #008B00;" value="TROCA EFETUADA">TROCA EFETUADA</option>
+			      	<option value="TROCA EFETUADA">TROCA EFETUADA</option>
 			      	<option value="CANCELAMENTO SOLICITADO">CANCELAMENTO SOLICITADO</option>
 			      	<option value="CANCELAMENTO REJEITADA">CANCELAMENTO REJEITADA</option>
 			      	<option value="CANCELAMENTO ACEITO">CANCELAMENTO ACEITO</option>
-			      	<option style="color: #008B00;" value="CANCELAMENTO EFETUADO">CANCELAMENTO EFETUADO</option>
+			      	<option value="CANCELAMENTO EFETUADO">CANCELAMENTO EFETUADO</option>
 			      	<option value="ENTREGA REALIZADA">ENTREGA REALIZADA</option>
 		      	</select>
 			</div>
